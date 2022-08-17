@@ -11,7 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import com.util.JDBCUtil;
 
 public class EmpDAO implements I_EmpDAO {
 	private static final String INSERT = "INSERT INTO EMP(emp_acc,emp_pwd,emp_name,emp_email,emp_state)VALUES(?,?,?,?,?)";
