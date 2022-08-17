@@ -1,6 +1,6 @@
 # CGA103G1
 其他人請使用 Fork，複製到自己Github Repo
-# :warning:	**請勿「更動 或 上傳 util類 & 配置檔 & 他人程式」，請通知** :warning:
+# :warning:	**請勿「更動 或 上傳 util類 & 配置檔 & 他人程式」** :warning:
 
 8/17 專案目錄(Folder) 持續更新
 ```bash
