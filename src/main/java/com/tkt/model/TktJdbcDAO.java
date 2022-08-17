@@ -12,9 +12,9 @@ import java.util.List;
 
 public class TktJdbcDAO implements I_TktDAO {
 
-	private static final String INSERT_COUP = "INSERT INTO tkt (tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`,  instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind) "
+	private static final String INSERT = "INSERT INTO tkt (tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`,  instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE_COUP = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
+	private static final String UPDATE = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
 	private static final String GET_ONE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
@@ -24,7 +24,7 @@ public class TktJdbcDAO implements I_TktDAO {
 	public void insert(TktVO tktVO) {
 
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(INSERT_COUP)) {
+				PreparedStatement ps = conn.prepareStatement(INSERT)) {
 
 			ps.setString(1, tktVO.getTkt_name());
 			ps.setInt(2, tktVO.getOriginal_amount());
@@ -53,7 +53,7 @@ public class TktJdbcDAO implements I_TktDAO {
 	public void update(TktVO tktVO) {
 
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(UPDATE_COUP)) {
+				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
 			ps.setInt(1, tktVO.getPrice());
 			ps.setString(2, tktVO.getTkt_name());
@@ -151,51 +151,51 @@ public class TktJdbcDAO implements I_TktDAO {
 		TktJdbcDAO dao = new TktJdbcDAO();
 
 		// insert
-//		TktVO voInsert = new TktVO();
-//		
-//		voInsert.setTkt_name("義大遊樂世界");
-//		voInsert.setOriginal_amount(999);
-//		voInsert.setPrice(666);
-//		voInsert.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
-//		voInsert.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
-//		voInsert.setLocate("高雄");
-//		voInsert.setInstruction("義大遊樂世界一日遊門票");
-//		voInsert.setAddress("高雄市大樹區學城路一段10號");
-//		voInsert.setNotice("請在指定日期前使用");
-//		voInsert.setHowuse("抵達義大遊樂世界門口出示 QR Code");
-//		voInsert.setCanxpolicy("請洽客服系統");
-//		voInsert.setTkt_status(1);
-//		voInsert.setSold_amount(0);
-//		voInsert.setKind(1);
-//		
-//		dao.insert(voInsert);
+		TktVO voInsert = new TktVO();
+		
+		voInsert.setTkt_name("義大遊樂世界");
+		voInsert.setOriginal_amount(999);
+		voInsert.setPrice(666);
+		voInsert.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
+		voInsert.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
+		voInsert.setLocate("高雄");
+		voInsert.setInstruction("義大遊樂世界一日遊門票");
+		voInsert.setAddress("高雄市大樹區學城路一段10號");
+		voInsert.setNotice("請在指定日期前使用");
+		voInsert.setHowuse("抵達義大遊樂世界門口出示 QR Code");
+		voInsert.setCanxpolicy("請洽客服系統");
+		voInsert.setTkt_status(1);
+		voInsert.setSold_amount(0);
+		voInsert.setKind(1);
+		
+		dao.insert(voInsert);
 
 		// update
-//		TktVO voUpdate = new TktVO();
-//		
-//		voUpdate.setPrice(777);
-//		voUpdate.setTkt_name("義大遊樂世界");
-//		
-//		dao.update(voUpdate);
+		TktVO voUpdate = new TktVO();
+		
+		voUpdate.setPrice(777);
+		voUpdate.setTkt_name("義大遊樂世界");
+		
+		dao.update(voUpdate);
 
 		// findByPrimaryKey
-//		TktVO voPk = dao.findByPrimaryKey(3);
-//		
-//		System.out.println(voPk.getTkt_no());
-//		System.out.println(voPk.getTkt_name());
-//		System.out.println(voPk.getOriginal_amount());
-//		System.out.println(voPk.getPrice());
-//		System.out.println(voPk.getTkt_startdate());
-//		System.out.println(voPk.getTkt_enddate());
-//		System.out.println(voPk.getLocate());
-//		System.out.println(voPk.getInstruction());
-//		System.out.println(voPk.getAddress());
-//		System.out.println(voPk.getNotice());
-//		System.out.println(voPk.getHowuse());
-//		System.out.println(voPk.getCanxpolicy());
-//		System.out.println(voPk.getTkt_status());
-//		System.out.println(voPk.getSold_amount());
-//		System.out.println(voPk.getKind());
+		TktVO voPk = dao.findByPrimaryKey(3);
+		
+		System.out.println(voPk.getTkt_no());
+		System.out.println(voPk.getTkt_name());
+		System.out.println(voPk.getOriginal_amount());
+		System.out.println(voPk.getPrice());
+		System.out.println(voPk.getTkt_startdate());
+		System.out.println(voPk.getTkt_enddate());
+		System.out.println(voPk.getLocate());
+		System.out.println(voPk.getInstruction());
+		System.out.println(voPk.getAddress());
+		System.out.println(voPk.getNotice());
+		System.out.println(voPk.getHowuse());
+		System.out.println(voPk.getCanxpolicy());
+		System.out.println(voPk.getTkt_status());
+		System.out.println(voPk.getSold_amount());
+		System.out.println(voPk.getKind());
 
 		// getAll
 		List<TktVO> list = dao.getAll();
