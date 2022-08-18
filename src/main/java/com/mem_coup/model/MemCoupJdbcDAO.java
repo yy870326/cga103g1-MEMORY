@@ -12,8 +12,8 @@ import java.util.List;
 
 public class MemCoupJdbcDAO implements I_MemCoupDAO {
 
-	private static final String INSERT_COUP = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, ?);";
-	private static final String UPDATE_COUP = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
+	private static final String INSERT = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, ?);";
+	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
 	private static final String GET_ONE = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_coup_no = ?;";
 	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no;";
 
@@ -21,7 +21,7 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 	public void insert(MemCoupVO memCoupVO) {
 
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(INSERT_COUP)) {
+				PreparedStatement ps = conn.prepareStatement(INSERT)) {
 
 			ps.setInt(1, memCoupVO.getMem_no());
 			ps.setInt(2, memCoupVO.getCoup_no());
@@ -39,7 +39,7 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 	public void update(MemCoupVO memCoupVO) {
 
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(UPDATE_COUP)) {
+				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
 			ps.setInt(1, memCoupVO.getCoup_no());
 			ps.setInt(2, memCoupVO.getMem_no());
@@ -117,30 +117,30 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		MemCoupJdbcDAO dao = new MemCoupJdbcDAO();
 
 		// insert
-//		MemCoupVO voInsert = new MemCoupVO();
-//		
-//		voInsert.setMem_no(1);
-//		voInsert.setCoup_no(2);
-//		voInsert.setCoup_state(0);
-//		
-//		dao.insert(voInsert);
+		MemCoupVO voInsert = new MemCoupVO();
+		
+		voInsert.setMem_no(1);
+		voInsert.setCoup_no(2);
+		voInsert.setCoup_state(0);
+		
+		dao.insert(voInsert);
 
 		// update
-//		MemCoupVO voUpdate = new MemCoupVO();
-//		
-//		voUpdate.setCoup_no(6);
-//		voUpdate.setMem_no(1);
-//		
-//		dao.update(voUpdate);
+		MemCoupVO voUpdate = new MemCoupVO();
+		
+		voUpdate.setCoup_no(6);
+		voUpdate.setMem_no(1);
+		
+		dao.update(voUpdate);
 
 		// findByPrimaryKey
-//		MemCoupVO voPk = dao.findByPrimaryKey(1);
-//		
-//		System.out.println(voPk.getMem_coup_no());
-//		System.out.println(voPk.getMem_no());
-//		System.out.println(voPk.getCoup_no());
-//		System.out.println(voPk.getTkt_order_no());
-//		System.out.println(voPk.getCoup_state());
+		MemCoupVO voPk = dao.findByPrimaryKey(1);
+		
+		System.out.println(voPk.getMem_coup_no());
+		System.out.println(voPk.getMem_no());
+		System.out.println(voPk.getCoup_no());
+		System.out.println(voPk.getTkt_order_no());
+		System.out.println(voPk.getCoup_state());
 
 		// getAll
 		List<MemCoupVO> list = dao.getAll();
