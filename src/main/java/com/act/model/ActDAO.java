@@ -1,18 +1,30 @@
 package com.act.model;
 
-import static com.util.JdbcUtil.*;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActJDBCDAO implements I_ActDAO{
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ActDAO implements I_ActDAO{
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	private static final String INSERT = "insert into act( "
 			+ "mem_no, act_type_no, act_title, "
@@ -125,7 +137,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	
 	@Override
 	public void insert(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(INSERT)) {
 			ps.setInt(1, actVO.getMen_no());
 			ps.setInt(2, actVO.getAct_type_no());
@@ -149,7 +161,7 @@ public class ActJDBCDAO implements I_ActDAO{
 
 	@Override
 	public void update(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 			ps.setInt(1, actVO.getAct_type_no());
 			ps.setString(2, actVO.getAct_title());
@@ -174,7 +186,7 @@ public class ActJDBCDAO implements I_ActDAO{
 
 	@Override
 	public void updateActStatus(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE_ACT_STATUS)) {
 			ps.setInt(1, actVO.getAct_status());
 			ps.setInt(2, actVO.getAct_no());			
@@ -187,7 +199,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	
 	@Override
 	public void updateRateEval(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE_ACT_RATE_AND_EVAL)) {
 			ps.setInt(1, actVO.getAct_rate_sum());
 			ps.setInt(2, actVO.getEval_sum());
@@ -203,7 +215,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> getAll() {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_ALL);) {			
 			ResultSet rs1 = ps.executeQuery();
 			while (rs1.next()) {
@@ -248,7 +260,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> getHostAct(Integer memNo) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_HOST_ACT);) {
 			ps.setInt(1, memNo);
 			ResultSet rs1 = ps.executeQuery();
@@ -293,7 +305,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByType(Integer actTypeNo) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_ACT_BY_TYPE)) {
 			ps.setInt(1, actTypeNo);
 			ResultSet rs1 = ps.executeQuery();
@@ -337,7 +349,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByAEB(LocalDateTime actEnrollBegin) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_AEB)) {
 			ps.setObject(1, actEnrollBegin);
 			ResultSet rs1 = ps.executeQuery();
@@ -381,7 +393,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByAEE(LocalDateTime actEnrollEnd) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_AEE)) {
 			ps.setObject(1, actEnrollEnd);
 			ResultSet rs1 = ps.executeQuery();
@@ -425,7 +437,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByAEBE(LocalDateTime actEnrollBegin, LocalDateTime actEnrollEnd) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_AEBE)) {
 			ps.setObject(1, actEnrollBegin);
 			ps.setObject(2, actEnrollEnd);
@@ -470,7 +482,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByASBE(LocalDateTime actStart, LocalDateTime actEnd) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_ASBE)) {
 				ps.setObject(1, actStart);
 				ps.setObject(2, actEnd);
@@ -515,7 +527,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> getActEvalAvg(Integer starAvg) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_ACT_EVAL_AVG)) {
 			ps.setInt(1, starAvg);
 			ResultSet rs1 = ps.executeQuery();
@@ -558,7 +570,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> getActLoc(Integer actLoc) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_ACT_LOC)) {
 			ps.setInt(1, actLoc);
 			ResultSet rs1 = ps.executeQuery();
@@ -601,7 +613,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByMinCount(Integer minCount) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_ACT_BY_MIN_COUNT)) {
 			ps.setInt(1, minCount);
 			ResultSet rs1 = ps.executeQuery();
@@ -642,7 +654,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByMaxCount(Integer maxCount) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_ACT_BY_MAX_COUNT)) {
 			ps.setInt(1, maxCount);
 			ResultSet rs1 = ps.executeQuery();
@@ -683,7 +695,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findActByCurrentCount(Integer currentCount) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_ACC)) {
 			ps.setInt(1, currentCount);
 			ResultSet rs1 = ps.executeQuery();
@@ -724,7 +736,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	@Override
 	public List<ActVO> findPeriodCount(Integer minCount, Integer maxCount) {
 		List<ActVO> acts = new ArrayList<ActVO>();
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(FIND_PERIOD_COUNT)) {
 			ps.setObject(1, minCount);
 			ps.setObject(2, maxCount);
@@ -766,7 +778,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	
 	@Override
 	public void updateRateSum(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE_RATE_SUM)) {
 			ps.setInt(1, actVO.getAct_rate_sum());
 			ps.setInt(2, actVO.getAct_no());			
@@ -779,7 +791,7 @@ public class ActJDBCDAO implements I_ActDAO{
 	
 	@Override
 	public void updateEvalSum(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE_EVAL_SUM)) {
 			ps.setInt(1, actVO.getEval_sum());
 			ps.setInt(2, actVO.getAct_no());			
@@ -788,134 +800,4 @@ public class ActJDBCDAO implements I_ActDAO{
 			e.printStackTrace();
 		}		
 	}
-
-	// ====== Main ======
-		
-	
-	
-	public static void main(String[] args) {
-			ActJDBCDAO actJBCDDAO = new ActJDBCDAO();
-			
-			// insert
-			ActVO actVO1 = new ActVO();
-//			actVO1.setMen_no(1);
-//			actVO1.setAct_type_no(2);
-//			actVO1.setAct_title("羽球團");
-//			actVO1.setAct_content("歡迎新手加入，一起運動趣!");
-//			actVO1.setAct_current_count(1);
-//			actVO1.setAct_min_count(4);
-//			actVO1.setAct_max_count(100);
-//			actVO1.setAct_enroll_begin(LocalDateTime.of(2022,10,10,14,00,00));
-//			actVO1.setAct_enroll_end(LocalDateTime.of(2022,10,18,14,00,00));
-//			actVO1.setAct_start(LocalDateTime.of(2022,10,20,14,00,00));
-//			actVO1.setAct_end(LocalDateTime.of(2022,10,20,14,00,00));
-//			actVO1.setAct_loc(0);
-//			actVO1.setAct_pl("中山區 中山國小 羽球場");
-//			actJBCDDAO.insert(actVO1);
-			
-			// update
-	//		actVO1.setAct_type_no(2);
-	//		actVO1.setAct_title("Tibame 羽球團");
-	//		actVO1.setAct_content("歡迎新手加入，一起運動趣喔!");
-	//		actVO1.setAct_current_count(3);
-	//		actVO1.setAct_min_count(6);
-	//		actVO1.setAct_max_count(50);
-	//		actVO1.setAct_enroll_begin(LocalDateTime.of(2022,10,11,12,00,00));
-	//		actVO1.setAct_enroll_end(LocalDateTime.of(2022,10,19,12,00,00));
-	//		actVO1.setAct_start(LocalDateTime.of(2022,10,21,18,00,00));
-	//		actVO1.setAct_end(LocalDateTime.of(2022,10,21,18,00,00));
-	//		actVO1.setAct_loc(0);
-	//		actVO1.setAct_pl("中山區 中山國小 裡面的 羽球場");
-	//		actVO1.setAct_no(8);
-	//		actVO1.setMen_no(1);
-	//		actJBCDDAO.update(actVO1);
-			
-			// updateActStatus
-//			actVO1.setAct_status(1);
-//			actVO1.setAct_no(8);
-//			actJBCDDAO.updateActStatus(actVO1);
-	
-			//updateRateEval(ActVO)
-//			actVO1.setAct_rate_sum(20);
-//			actVO1.setEval_sum(4);
-//			actVO1.setAct_no(8);
-//			actJBCDDAO.updateRateEval(actVO1);
-					
-			// getAll()
-			List<ActVO> acts = actJBCDDAO.getAll();
-			System.out.println(acts);
-			acts.forEach(act -> System.out.println(act));
-				
-			// getHostAct(Integer)
-//			List<ActVO> acts = actJBCDDAO.getHostAct(3);
-//			acts.forEach(System.out::println);
-
-			// findActByType(Integer)
-//			List<ActVO> acts = actJBCDDAO.findActByType(2);
-//			acts.forEach(System.out::println);
-			
-			// findActByAEB(LocalDateTime)
-//			List<ActVO> acts = actJBCDDAO.findActByAEB(LocalDateTime.of(
-//					2022,8, 15,11,00));
-//			acts.forEach(System.out::println);
-			
-			// findActByAEE(LocalDateTime)
-//			List<ActVO> acts = actJBCDDAO.findActByAEB(LocalDateTime.of(
-//					2022,10, 11,12,00));
-//			acts.forEach(System.out::println);
-			
-			// findActByAEBE(LocalDateTime, LocalDateTime)
-//			List<ActVO> acts = actJBCDDAO.findActByAEBE(LocalDateTime.of(
-//			2022,10, 11,11,00),
-//					LocalDateTime.of(
-//					2022,10, 20,12,00));
-//			acts.forEach(System.out::println);
-	
-	
-			// findActByASBE(LocalDateTime, LocalDateTime)
-//				List<ActVO> acts = actJBCDDAO.findActByASBE(LocalDateTime.of(
-//			2022,10, 20,11,00),
-//			LocalDateTime.of(
-//			2022,10, 22,12,00));
-//				acts.forEach(System.out::println);
-			
-			// getActEvalAvg(Integer, Integer)
-//			List<ActVO> acts = actJBCDDAO.getActEvalAvg(3);
-//			acts.forEach(System.out::println);
-							
-			// getActLoc(Integer)
-//			List<ActVO> acts = actJBCDDAO.getActLoc(0);
-//			acts.forEach(System.out::println);
-						
-			// findActByMinCount(Integer)
-//			List<ActVO> acts = actJBCDDAO.findActByMinCount(3);
-//			acts.forEach(System.out::println);
-			
-			// findActByMaxCount(Integer)
-//			List<ActVO> acts = actJBCDDAO.findActByMaxCount(6);
-//			acts.forEach(System.out::println);
-			
-			// findActByCurrentCount
-//			List<ActVO> acts = actJBCDDAO.findActByCurrentCount(7);
-//			acts.forEach(System.out::println);
-			
-			// findPeriodCount(Integer, Integer)
-//			List<ActVO> acts = actJBCDDAO.findPeriodCount(4,10);
-//			acts.forEach(System.out::println);
-			
-			// updateRateSum(ActVO)
-//			actVO1.setAct_rate_sum(30);
-//			actVO1.setAct_no(1);
-//			actJBCDDAO.updateRateSum(actVO1);
-//			
-			// updateEvalSum(ActVO)
-//			actVO1.setEval_sum(6);
-//			actVO1.setAct_no(1);
-//			actJBCDDAO.updateEvalSum(actVO1);
-		}
-
-	
-
-
-
 }
