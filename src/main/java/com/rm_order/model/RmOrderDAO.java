@@ -1,5 +1,6 @@
 package com.rm_order.model;
 
+import java.awt.PrintGraphics;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
 	private static final String GET_ALL = "SELECT * FROM rm_order";
+	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
 	private static DataSource ds = null;
 	static {
 		try {
@@ -153,6 +155,43 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rmAll.add(rm);
 			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return rmAll;
+	}
+	public List<RmOrderVO> getAllStatus(Integer rm_order_status) {
+		List<RmOrderVO> rmAll = new ArrayList<>();
+		ResultSet rs = null;
+		RmOrderVO rm = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_ALL_STATUS);
+			ps.setInt(1, rm_order_status);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				rm = new RmOrderVO();
+				rm.setRm_order_no(rs.getInt("rm_order_no"));
+				rm.setMem_no(rs.getInt("mem_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setOrder_date(rs.getDate("order_date"));
+				rm.setRm_order_status(rs.getInt("rm_order_status"));
+				rm.setRm_charge(rs.getInt("rm_charge"));
+				rm.setRm_review(rs.getInt("rm_review"));
+				
+				rmAll.add(rm);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
