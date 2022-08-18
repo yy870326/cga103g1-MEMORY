@@ -10,6 +10,6 @@ public interface I_ActReplyDAO {
 	//刪除留言
 	public void delete(ActReplyVO actReplyVO);
 	//顯示留言
-	public List<ActReplyVO> getall();
+	public List<ActReplyVO> getall(ActReplyVO actReplyVO);
 	
 }

@@ -1,16 +1,18 @@
 package com.system_notification_message.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.util.JdbcUtil;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class SystemNotificationMessageJdbcDAO implements I_SystemNotificationMessageDAO {
+public class SystemNotificationMessageDAO implements I_SystemNotificationMessageDAO {
 	// 新增訊息
 	private final String INSERT = "INSERT INTO system_notfication_message(msg,msg_img,msg_time,emp_no,emp_read)  VALUES (?, ?, NOW(),?, ?)";
 	// 下架訊息
@@ -18,24 +20,29 @@ public class SystemNotificationMessageJdbcDAO implements I_SystemNotificationMes
 	// 顯示訊息
 	private final String GETALL = "select * from system_notfication_message order by msg_no desc";
 
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void insert(SystemNotificationMessageVO systemNotificationMessageVO) {
-		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(INSERT)) {
-
-			pstmt.setString(1, systemNotificationMessageVO.getMsg());
-			pstmt.setBytes(2, systemNotificationMessageVO.getMsg_img());
-			pstmt.setInt(3, systemNotificationMessageVO.getEmp_no());
-			pstmt.setInt(4, systemNotificationMessageVO.getEmp_read());
-			pstmt.executeUpdate();
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(INSERT);
+			
+			ps.setString(1, systemNotificationMessageVO.getMsg());
+			ps.setBytes(2, systemNotificationMessageVO.getMsg_img());
+			ps.setInt(3, systemNotificationMessageVO.getEmp_no());
+			ps.setInt(4, systemNotificationMessageVO.getEmp_read());
+			ps.executeUpdate();
 
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -44,15 +51,18 @@ public class SystemNotificationMessageJdbcDAO implements I_SystemNotificationMes
 
 	@Override
 	public void delete(SystemNotificationMessageVO systemNotificationMessageVO) {
-		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(DELETE)){
-				
-				pstmt.setInt(1,systemNotificationMessageVO.getMsg_no());
-				pstmt.executeUpdate();
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(DELETE);
+			
+			ps.setInt(1, systemNotificationMessageVO.getMsg_no());
+			ps.executeUpdate();
 
-			} catch (SQLException se) {
-				se.printStackTrace();
-			} 
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
 	}
 
 	@Override
@@ -60,9 +70,13 @@ public class SystemNotificationMessageJdbcDAO implements I_SystemNotificationMes
 		List<SystemNotificationMessageVO> snmALL = new ArrayList<>();
 		SystemNotificationMessageVO snm = null;
 		ResultSet rs = null;
-		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD); // 輸入在try內會自動關閉
-				PreparedStatement pstmt = con.prepareStatement(GETALL);) {
-			rs = pstmt.executeQuery();
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GETALL);
+			
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				snm = new SystemNotificationMessageVO();
 				snm.setMsg_no(rs.getInt("msg_no"));
@@ -88,5 +102,4 @@ public class SystemNotificationMessageJdbcDAO implements I_SystemNotificationMes
 		}
 		return snmALL;
 	}
-
 }

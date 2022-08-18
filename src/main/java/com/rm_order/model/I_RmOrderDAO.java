@@ -14,4 +14,7 @@ public interface I_RmOrderDAO {
 
 	public List<RmOrderVO> getAll(); // 查詢全部
 	
+	public List<RmOrderVO> getAllStatus(Integer rm_order_no); // 查詢各狀態筆數
+	
+	
 }
