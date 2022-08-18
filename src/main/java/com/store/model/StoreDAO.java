@@ -6,11 +6,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import static common.Common.URL;
-import static common.Common.USER;
-import static common.Common.PASSWORD;
 
-public class StoreJDBCDAO implements I_StoreDAO{
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
+
+public class StoreDAO implements I_StoreDAO{
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public void insert(StoreVO storeVO) {
@@ -42,7 +55,7 @@ public class StoreJDBCDAO implements I_StoreDAO{
 				+ " store_report_count \r\n"
 				+ ") \r\n"
 				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try(Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try(Connection con = ds.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			ps.setString(1, storeVO.getStore_acc());
 			ps.setString(2, storeVO.getStore_pwd());
@@ -105,8 +118,8 @@ public class StoreJDBCDAO implements I_StoreDAO{
 				+ " store_report_count = ?\r\n"
 				+ " WHERE \r\n"
 				+ " store_no = ?;";
-		try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = connection.prepareStatement(sql)){
+		try(Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql)){
 					ps.setString(1, storeVO.getStore_acc());
 					ps.setString(2, storeVO.getStore_pwd());
 					ps.setInt(3,storeVO.getAcc_status());
@@ -143,9 +156,8 @@ public class StoreJDBCDAO implements I_StoreDAO{
 	@Override
 	public void delete(Integer store_no) {
 		String sql = "DELETE FROM store WHERE store_no = ?";
-		try(
-		Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)){
-			PreparedStatement ps = connection.prepareStatement(sql);
+			try(Connection con = ds.getConnection();){
+			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, store_no);
 			
 			ps.executeUpdate();
@@ -159,8 +171,8 @@ public class StoreJDBCDAO implements I_StoreDAO{
 	public StoreVO queryStore(Integer store_no) {
 		String sql = "SELECT * FROM store WHERE store_no = ? ORDER BY store_no;";
 		StoreVO	storeVO = new StoreVO();
-		try(Connection connectoin = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = connectoin.prepareStatement(sql);
+		try(Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
 								){
 			ps.setInt(1, store_no);
 			
@@ -207,9 +219,8 @@ public class StoreJDBCDAO implements I_StoreDAO{
 		StoreVO storeVO = new StoreVO();
 		 
 		
-		try(
-		Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = connection.prepareStatement(sql);
+		try(Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
 				
 				){
 			ResultSet rs =ps.executeQuery();
