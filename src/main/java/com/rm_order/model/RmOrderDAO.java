@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import com.util.JdbcUtil;
 
 public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge, rm_review)VALUES(?,?,NOW(),?,?,?)";
@@ -188,18 +189,17 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
 				rmAll.add(rm);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					e.printStackTrace(System.err);
 				}
 			}
 		}
