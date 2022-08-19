@@ -842,10 +842,10 @@ public class ActJDBCDAO implements I_ActDAO{
 //			actJBCDDAO.updateRateEval(actVO1);
 					
 			// getAll()
-//			List<ActVO> acts = actJBCDDAO.getAll();
-//			System.out.println(acts);
-//			acts.forEach(act -> System.out.println(act));
-//				
+			List<ActVO> acts = actJBCDDAO.getAll();
+			System.out.println(acts);
+			acts.forEach(act -> System.out.println(act));
+				
 			// getHostAct(Integer)
 //			List<ActVO> acts = actJBCDDAO.getHostAct(3);
 //			acts.forEach(System.out::println);
@@ -880,8 +880,8 @@ public class ActJDBCDAO implements I_ActDAO{
 //				acts.forEach(System.out::println);
 			
 			// getActEvalAvg(Integer, Integer)
-			List<ActVO> acts = actJBCDDAO.getActEvalAvg(3);
-			acts.forEach(System.out::println);
+//			List<ActVO> acts = actJBCDDAO.getActEvalAvg(3);
+//			acts.forEach(System.out::println);
 							
 			// getActLoc(Integer)
 //			List<ActVO> acts = actJBCDDAO.getActLoc(0);

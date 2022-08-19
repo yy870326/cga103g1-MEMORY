@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         id="WebApp_ID" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
+id="WebApp_ID" version="4.0">
+
+<!-- 如果 4.0 版本報錯，但 Run Web 沒問題，想讓紅線消失，可以選擇換回 3.0版本 -->
+<!-- 或將 XML Validation 取消，4.0 報錯原因不知 -->
+<!-- <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- xmlns="http://java.sun.com/xml/ns/javaee" -->
+<!-- xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" -->
+<!-- id="WebApp_ID" version="3.0"> -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -11,4 +18,118 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<!-- 設定所有的Servlet都是UTF-8 -->
+	<filter>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<filter-class>com.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
+<!-- 	以下 Filter 為範例 尚未修改 -->
+	
+	<!-- 	會員如果未登入，要求該使用者登入 ，範例 尚未修改-->
+<!-- 	<filter> -->
+<!-- 		<filter-name>MemberLoginFilter</filter-name> -->
+<!-- 		<filter-class>com.filters.MemberLoginFilter</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>MemberLoginFilter</filter-name> -->
+<!-- 		<url-pattern>/frontend/memCoupon/lookUpOneMemCoupon.jsp</url-pattern> -->
+<!-- 		<url-pattern>/frontend/mem/updateMemberData.html</url-pattern> -->
+<!-- 		<url-pattern>/mem/MemEditServlet</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidApplyListInsert</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidApplyListMemNo</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidApplyListSeller</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidProductCheckout</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidProductSeller</url-pattern> -->
+<!-- 		<url-pattern>/bid/bidProductWonByMemNo</url-pattern> -->
+<!-- 		<url-pattern>/frontend/Product/shopping-cart.html</url-pattern> -->
+<!-- 		<url-pattern>/frontend/Product/postComment.html</url-pattern> -->
+<!-- 		<url-pattern>/frontend/Product/HomePageinProduct-wishlist.jsp</url-pattern> -->
+<!-- 		<url-pattern>/frontend/Product/account-order.jsp</url-pattern> -->
+<!-- 		<url-pattern>/forum/forumPostInsert</url-pattern> -->
+<!-- 		<url-pattern>/forum/forumPostCollectionInsert</url-pattern> -->
+<!-- 		<url-pattern>/frontend/forum/editForumPostReport.jsp</url-pattern> -->
+<!-- 		<url-pattern>/forum/forumMsgInsert</url-pattern> -->
+<!-- 		<url-pattern>/frontend/forum/editForumMsgReport.jsp</url-pattern> -->
+<!-- 		<url-pattern>/frontend/bid/addbidapplylist.jsp</url-pattern> -->
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 		<dispatcher>ERROR</dispatcher> -->
+<!-- 		<dispatcher>ASYNC</dispatcher> -->
+<!-- 	</filter-mapping> -->
+	
+	<!-- 	管理員如果未登入，要求該使用者登入，範例 尚未修改 -->
+<!-- 	<filter> -->
+<!-- 		<filter-name>ManagerLoginFilter</filter-name> -->
+<!-- 		<filter-class>com.filters.ManagerLoginFilter</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 	<filter-name>ManagerLoginFilter</filter-name> -->
+<!-- 	<url-pattern>/backend/manager/getAllManager.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/managerauth/getAllManagerAuth.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/product/productAdd.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/bid/listAllBidApplyList.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/bid/listAllBid.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/bid/listAllBidOrder.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/mem/listAllMem.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/forum/selectReportHome.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/forum/listAllForum.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/forum/listAllForumMasterPost.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/servicechatroom/ServiceChatroom.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/fq/KeyWord-final.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/gameplatformtype/GetAllGamePlatformType.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/gametype/GetAllGameType.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/gamecompany/GetAllGameCompany.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/news/GameNews-final.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/couponType/listAllCouponType.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/couponType/addCouponType.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/memCoupon/showMemCoupon.jsp</url-pattern> -->
+<!-- 	<url-pattern>/backend/memCoupon/sendMemCoupon.jsp</url-pattern> -->
+	
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 		<dispatcher>ERROR</dispatcher> -->
+<!-- 		<dispatcher>ASYNC</dispatcher> -->
+<!-- 	</filter-mapping> -->
+	
+	<!-- 管理員 -->
+<!-- 	<filter> -->
+<!-- 		<filter-name>A名稱</filter-name> -->
+<!-- 		<filter-class>package名稱.class名稱</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>A名稱</filter-name> -->
+<!-- 		<url-pattern></url-pattern> -->
+<!-- 		<url-pattern></url-pattern> -->
+
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 		<dispatcher>ERROR</dispatcher> -->
+<!-- 		<dispatcher>ASYNC</dispatcher> -->
+<!-- 	</filter-mapping> -->
+	
+	
+	
+	
+	
+	
+	
+	
 </web-app>
