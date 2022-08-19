@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.rm_order.model.RmOrderService;
 import com.rm_order.model.RmOrderVO;
 
-@WebServlet(name="RmOrderServlet", urlPatterns={"/RmOrder"})
+@WebServlet("/RmOrder")
 public class RmOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,12 +36,12 @@ public class RmOrderServlet extends HttpServlet {
 
 				/*************************** 查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("orderlist", orderlist); // 資料庫取出的VO物件,存入req
-				String url = "/backend/listAllOrder.jsp";
+				String url = "/frontend/room/listStoreOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				req.getRequestDispatcher("/backend/listAllOrder.jsp").forward(req, res);
+				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
 			}
 		}
 
@@ -58,12 +58,12 @@ public class RmOrderServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("rm_order_status", rm_order_status);
 				req.setAttribute("orderlist", orderlist); // 資料庫取出的VO物件,存入req
-				String url = "/backend/listAllOrder.jsp";
+				String url = "/frontend/room/listStoreOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				req.getRequestDispatcher("/backend/listAllOrder.jsp").forward(req, res);
+				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
 			}
 		}
 	}
