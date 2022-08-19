@@ -7,6 +7,7 @@ public class RmPicVO implements Serializable{
 	private Integer rm_pic_no;
 	private Integer rm_type_no;
 	private byte[] rm_pic_img;
+	
 	public Integer getRm_pic_no() {
 		return rm_pic_no;
 	}

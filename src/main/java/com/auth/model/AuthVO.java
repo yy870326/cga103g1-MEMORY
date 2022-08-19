@@ -6,6 +6,7 @@ public class AuthVO implements Serializable{
 	
 	private Integer fun_no;
 	private Integer emp_no;
+	
 	public Integer getFun_no() {
 		return fun_no;
 	}
