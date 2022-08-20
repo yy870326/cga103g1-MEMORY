@@ -2,7 +2,9 @@ package com.rm_msg.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -105,14 +107,80 @@ public class Rm_msgDAO implements I_Rm_msgDAO{
 
 	@Override
 	public Rm_msgVO findByPrimaryKey(Integer rm_msg_no) {
-
-		return null;
+		String sql = "SELECT "
+				+ "emp_no,\r\n"
+				+ "mem_no,\r\n"
+				+ "store_no,\r\n"
+				+ "rm_msg_reason,\r\n"
+				+ "rm_msg_date,\r\n"
+				+ "rm_msg_status,\r\n"
+				+ "rm_msg_donetime \r\n"
+				+ "FROM \r\n"
+				+ "rm_msg \r\n"
+				+ "WHERE \r\n"
+				+ "rm_msg_no = ?;";
+		Rm_msgVO rm = null;
+		
+		try(
+			Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
+				){
+			ps.setInt(1, rm_msg_no);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				rm = new Rm_msgVO();
+				rm.setEmp_no(rs.getInt("emp_no"));
+				rm.setMem_no(rs.getInt("mem_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setRm_msg_reason(rs.getString("rm_msg_reason"));
+				rm.setRm_msg_date(rs.getDate("rm_msg_date"));
+				rm.setRm_msg_status(rs.getInt("rm_msg_status"));
+				rm.setRm_msg_donetime(rs.getDate("rm_msg_donetime"));
+			}
+		}catch(
+		SQLException e) {
+			e.getStackTrace();
+		}
+		return rm;
 	}
 
 	@Override
 	public List<Rm_msgVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Rm_msgVO> list = new ArrayList<Rm_msgVO>();
+		Rm_msgVO rm = new Rm_msgVO();
+		String sql = "SELECT "
+				+ "emp_no,\r\n"
+				+ "mem_no,\r\n"
+				+ "store_no,\r\n"
+				+ "rm_msg_reason,\r\n"
+				+ "rm_msg_date,\r\n"
+				+ "rm_msg_status,\r\n"
+				+ "rm_msg_donetime \r\n"
+				+ "FROM \r\n"
+				+ "rm_msg \r\n"
+				+ "WHERE \r\n"
+				+ "rm_msg_no = ?;";
+		ResultSet rs = null;
+		try(Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);)
+		{   	rs = ps.executeQuery();
+			while(rs.next()) {
+				rm.setEmp_no(rs.getInt("emp_no"));
+				rm.setMem_no(rs.getInt("mem_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setRm_msg_reason(rs.getString("rm_msg_reason"));
+				rm.setRm_msg_date(rs.getDate("rm_msg_date"));
+				rm.setRm_msg_status(rs.getInt("rm_msg_status"));
+				rm.setRm_msg_donetime(rs.getDate("rm_msg_donetime"));
+				
+				
+			}
+			
+		}catch(
+			SQLException e	) {
+			e.getStackTrace();
+		}
+		return list;
 	}
 	
 }
