@@ -13,10 +13,10 @@ import java.util.List;
 public class MemCoupJdbcDAO implements I_MemCoupDAO {
 
 	private static final String INSERT = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, ?);";
-	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
+//	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
 	private static final String GET_ONE = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_coup_no = ?;";
 	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no;";
-
+	
 	@Override
 	public void insert(MemCoupVO memCoupVO) {
 
@@ -35,22 +35,22 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 
 	}
 
-	@Override
-	public void update(MemCoupVO memCoupVO) {
-
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
-
-			ps.setInt(1, memCoupVO.getCoup_no());
-			ps.setInt(2, memCoupVO.getMem_no());
-
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	@Override
+//	public void update(MemCoupVO memCoupVO) {
+//
+//		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+//
+//			ps.setInt(1, memCoupVO.getCoup_no());
+//			ps.setInt(2, memCoupVO.getMem_no());
+//
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	@Override
 	public MemCoupVO findByPrimaryKey(Integer mem_coup_no) {
@@ -117,21 +117,21 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		MemCoupJdbcDAO dao = new MemCoupJdbcDAO();
 
 		// insert
-		MemCoupVO voInsert = new MemCoupVO();
-		
-		voInsert.setMem_no(1);
-		voInsert.setCoup_no(2);
-		voInsert.setCoup_state(0);
-		
-		dao.insert(voInsert);
+//		MemCoupVO voInsert = new MemCoupVO();
+//		
+//		voInsert.setMem_no(1);
+//		voInsert.setCoup_no(2);
+//		voInsert.setCoup_state(0);
+//		
+//		dao.insert(voInsert);
 
 		// update
-		MemCoupVO voUpdate = new MemCoupVO();
-		
-		voUpdate.setCoup_no(6);
-		voUpdate.setMem_no(1);
-		
-		dao.update(voUpdate);
+//		MemCoupVO voUpdate = new MemCoupVO();
+//		
+//		voUpdate.setCoup_no(6);
+//		voUpdate.setMem_no(1);
+//		
+//		dao.update(voUpdate);
 
 		// findByPrimaryKey
 		MemCoupVO voPk = dao.findByPrimaryKey(1);
@@ -154,5 +154,4 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		}
 		
 	}
-
 }

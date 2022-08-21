@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class TktService {
+	
 	private I_TktDAO dao;
 	
 	public TktService() {
@@ -71,5 +72,6 @@ public class TktService {
 	public List<TktVO> getAll() {
 		return dao.getAll();
 	}
+	
 }
 	

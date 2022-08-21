@@ -15,10 +15,12 @@ import javax.sql.DataSource;
 public class CoupDAO implements I_CoupDAO {
 
 	private static final String INSERT = "INSERT INTO coup (coup_name, introduce, discount, startdate, enddate, `status`) VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE = "UPDATE coup SET discount = ? WHERE coup_name = ?;";
+	private static final String UPDATE = "UPDATE coup SET coup_name = ?, introduce = ?, discount = ?, startdate = ?, enddate = ?, `status` = ? WHERE coup_no = ?;";
+	private static final String UPDATE_STATUS = "UPDATE coup SET status = ? WHERE enddate = ?;";
 	private static final String GET_ONE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE coup_no = ?;";
 	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no;";
 
+	
 	private static DataSource ds = null;
 
 	static {
@@ -55,6 +57,21 @@ public class CoupDAO implements I_CoupDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -69,16 +86,72 @@ public class CoupDAO implements I_CoupDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, coupVO.getDiscount());
-			ps.setString(2, coupVO.getCoup_name());
+			ps.setString(1, coupVO.getCoup_name());
+			ps.setString(2, coupVO.getIntroduce());
+			ps.setInt(3, coupVO.getDiscount());
+			ps.setObject(4, coupVO.getStartdate());
+			ps.setObject(5, coupVO.getEnddate());
+			ps.setInt(6, coupVO.getStatus());
+			ps.setInt(7, coupVO.getCoup_no());
 
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 	}
+	
+	@Override
+	public void updateStatus(CoupVO coupVO) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			con = ds.getConnection();
+			ps = con.prepareStatement(UPDATE_STATUS);
+
+			ps.setInt(1, coupVO.getStatus());
+			ps.setDate(2, coupVO.getEnddate());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	};
 
 	@Override
 	public CoupVO findByPrimaryKey(Integer coup_no) {
@@ -110,6 +183,21 @@ public class CoupDAO implements I_CoupDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return coupVO;
@@ -147,6 +235,21 @@ public class CoupDAO implements I_CoupDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return list;
