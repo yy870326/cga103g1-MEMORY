@@ -23,7 +23,6 @@ public class CoupDAO implements I_CoupDAO {
 	
 	private static DataSource ds = null;
 
-	
 	static {
 
 		try {

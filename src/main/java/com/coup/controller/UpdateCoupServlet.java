@@ -31,7 +31,7 @@ public class UpdateCoupServlet extends HttpServlet {
 
 		if ("coupUpdate".equals(action)) {
 
-			// ------------------------- 輸入格式錯誤處理 ----------------
+			// ------------------------- 輸入格式錯誤處理 -----------------
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

@@ -208,5 +208,6 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		return list;
 	}
+	
 }
 

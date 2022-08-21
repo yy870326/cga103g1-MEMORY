@@ -8,6 +8,7 @@ public interface I_MemCoupDAO {
 //    public void update(MemCoupVO memCoupVO);
     public MemCoupVO findByPrimaryKey(Integer mem_coup_no);
     public List<MemCoupVO> getAll();
+  
 //  public void delete(Integer memCoupVO);
     
 }

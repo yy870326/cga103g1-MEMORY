@@ -258,7 +258,6 @@ public class TktJdbcDAO implements I_TktDAO {
 //			System.out.println(voAll.getKind());
 //		}
 
-		
 
 	}
 

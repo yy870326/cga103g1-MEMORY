@@ -154,5 +154,4 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		}
 		
 	}
-
 }

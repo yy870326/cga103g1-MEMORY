@@ -103,8 +103,6 @@ td, div {
 				<h1 class="coup-list-h1">優惠券修改</h1>
 			</div>
 
-
-
 			<div class="col-12">
 				<form action="<%=request.getContextPath()%>/coup/updateCoup.do" method="post" class="modal-content">
 					<div class="modal-header">

@@ -9,6 +9,7 @@ public interface I_CoupDAO {
     public void updateStatus(CoupVO coupVO);
     public CoupVO findByPrimaryKey(Integer coup_no);
     public List<CoupVO> getAll();
+    
 //  public void delete(Integer coupVO);
     
 }

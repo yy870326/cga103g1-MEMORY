@@ -9,6 +9,7 @@ public interface I_TktDAO {
 //    public void delete(Integer tkt_no);
     public TktVO findByPrimaryKey(Integer tkt_no);
     public List<TktVO> getAll();
+    
 //    public List<TktVO> getLocate(String locate);
     
 }
