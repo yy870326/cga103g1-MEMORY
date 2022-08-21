@@ -3,6 +3,7 @@ package com.mem_coup.model;
 import java.util.List;
 
 public class MemCoupService {
+	
 	private I_MemCoupDAO dao;
 	
 	public MemCoupService() {
@@ -16,5 +17,6 @@ public class MemCoupService {
 	public List<MemCoupVO> getAll() {
 		return dao.getAll();
 	}
+	
 	
 }

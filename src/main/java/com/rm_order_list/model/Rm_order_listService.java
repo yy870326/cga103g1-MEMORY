@@ -48,7 +48,7 @@ public class Rm_order_listService {
 		dao.delete(rm_order_list_no);
 	}
 	
-	public Rm_order_listVO getOneRm_order_listVO(Integer rm_order_list_no) {
+	public Rm_order_listVO getOneRm_order_list(Integer rm_order_list_no) {
 		return dao.findByPrimaryKey(rm_order_list_no);
 	}
 	
