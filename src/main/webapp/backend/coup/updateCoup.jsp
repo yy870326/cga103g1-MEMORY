@@ -144,8 +144,8 @@ td, div {
 								<input type="date" class="form-control" id="endDate"  value="${coupVO.enddate}" required>
 							</div>
 						</div>
-						
 					</div>
+					
 					<div class="modal-footer">
 					
 					<!-- hidden input -->

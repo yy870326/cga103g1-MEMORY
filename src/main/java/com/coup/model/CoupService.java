@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class CoupService {
+	
 	private I_CoupDAO dao;
 
 	public CoupService() {

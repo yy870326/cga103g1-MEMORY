@@ -137,7 +137,7 @@ public class CoupJdbcDAO implements I_CoupDAO {
 	};
 
 	public static void main(String[] args) {
-		CoupJdbcDAO dao = new CoupJdbcDAO();
+//		CoupJdbcDAO dao = new CoupJdbcDAO();
 
 		// insert
 //		CoupVO voInsert = new CoupVO();
@@ -151,17 +151,17 @@ public class CoupJdbcDAO implements I_CoupDAO {
 //		dao.insert(voInsert);
 
 		// update
-		CoupVO voUpdate = new CoupVO();
-		
-		voUpdate.setCoup_name("88節優惠");
-		voUpdate.setIntroduce("88節檔期限時折扣288");
-		voUpdate.setDiscount(288);
-		voUpdate.setStartdate(java.sql.Date.valueOf("2022-08-03"));
-		voUpdate.setEnddate(java.sql.Date.valueOf("2022-08-20"));
-		voUpdate.setStatus(1);
-		voUpdate.setCoup_no(1);
-
-		dao.update(voUpdate);
+//		CoupVO voUpdate = new CoupVO();
+//		
+//		voUpdate.setCoup_name("88節優惠");
+//		voUpdate.setIntroduce("88節檔期限時折扣288");
+//		voUpdate.setDiscount(288);
+//		voUpdate.setStartdate(java.sql.Date.valueOf("2022-08-03"));
+//		voUpdate.setEnddate(java.sql.Date.valueOf("2022-08-20"));
+//		voUpdate.setStatus(1);
+//		voUpdate.setCoup_no(1);
+//
+//		dao.update(voUpdate);
 
 		// update status
 //		CoupVO voUpdateStatus = new CoupVO();

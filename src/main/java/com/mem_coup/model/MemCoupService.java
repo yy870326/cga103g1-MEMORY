@@ -3,6 +3,7 @@ package com.mem_coup.model;
 import java.util.List;
 
 public class MemCoupService {
+	
 	private I_MemCoupDAO dao;
 	
 	public MemCoupService() {

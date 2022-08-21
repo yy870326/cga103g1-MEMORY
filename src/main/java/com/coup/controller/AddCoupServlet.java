@@ -30,7 +30,7 @@ public class AddCoupServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("coupAdd".equals(action)) {
-			// ------------------------- 輸入格式錯誤處理 ------------
+			// ------------------------- 輸入格式錯誤處理 ----------------
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

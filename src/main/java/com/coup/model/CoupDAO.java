@@ -20,8 +20,10 @@ public class CoupDAO implements I_CoupDAO {
 	private static final String GET_ONE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE coup_no = ?;";
 	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no;";
 
+	
 	private static DataSource ds = null;
 
+	
 	static {
 
 		try {

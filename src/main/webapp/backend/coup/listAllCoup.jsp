@@ -113,7 +113,6 @@ td, div {
 			</div>
 
 
-
 			<div class="col-12">
 				<table class="table fold-table">
 					<thead class="thead-dark">

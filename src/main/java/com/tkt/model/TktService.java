@@ -71,5 +71,6 @@ public class TktService {
 	public List<TktVO> getAll() {
 		return dao.getAll();
 	}
+	
 }
 	

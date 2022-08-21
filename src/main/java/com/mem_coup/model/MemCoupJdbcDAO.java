@@ -117,13 +117,13 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		MemCoupJdbcDAO dao = new MemCoupJdbcDAO();
 
 		// insert
-		MemCoupVO voInsert = new MemCoupVO();
-		
-		voInsert.setMem_no(1);
-		voInsert.setCoup_no(2);
-		voInsert.setCoup_state(0);
-		
-		dao.insert(voInsert);
+//		MemCoupVO voInsert = new MemCoupVO();
+//		
+//		voInsert.setMem_no(1);
+//		voInsert.setCoup_no(2);
+//		voInsert.setCoup_state(0);
+//		
+//		dao.insert(voInsert);
 
 		// update
 //		MemCoupVO voUpdate = new MemCoupVO();
