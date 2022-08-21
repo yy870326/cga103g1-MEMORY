@@ -16,7 +16,8 @@ public class TktDAO implements I_TktDAO {
 
 	private static final String INSERT = "INSERT INTO tkt (tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`,  instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
+	private static final String UPDATE = "UPDATE tkt SET tkt_name = ?, original_amount = ?, price = ?, tkt_startdate = ?, tkt_enddate = ?, `locate` = ?,  instruction = ?, address = ?, notice = ?, howuse = ?, canxpolicy = ?, tkt_status = ?, sold_amount = ?, kind = ? WHERE tkt_no = ?;";
+//	private static final String UPDATE = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
 	private static final String GET_ONE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
@@ -66,6 +67,21 @@ public class TktDAO implements I_TktDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 	}
@@ -81,13 +97,41 @@ public class TktDAO implements I_TktDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, tktVO.getPrice());
-			ps.setString(2, tktVO.getTkt_name());
+			ps.setString(1, tktVO.getTkt_name());
+			ps.setInt(2, tktVO.getOriginal_amount());
+			ps.setInt(3, tktVO.getPrice());
+			ps.setObject(4, tktVO.getTkt_startdate());
+			ps.setObject(5, tktVO.getTkt_enddate());
+			ps.setString(6, tktVO.getLocate());
+			ps.setString(7, tktVO.getInstruction());
+			ps.setString(8, tktVO.getAddress());
+			ps.setString(9, tktVO.getNotice());
+			ps.setString(10, tktVO.getHowuse());
+			ps.setString(11, tktVO.getCanxpolicy());
+			ps.setInt(12, tktVO.getTkt_status());
+			ps.setInt(13, tktVO.getSold_amount());
+			ps.setInt(14, tktVO.getKind());
+			ps.setInt(15, tktVO.getTkt_no());
 
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 	}
@@ -132,6 +176,21 @@ public class TktDAO implements I_TktDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return tktVO;
@@ -178,6 +237,21 @@ public class TktDAO implements I_TktDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return list;

@@ -14,11 +14,22 @@ public class TktJdbcDAO implements I_TktDAO {
 
 	private static final String INSERT = "INSERT INTO tkt (tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`,  instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
+	private static final String UPDATE = "UPDATE tkt SET tkt_name = ?, original_amount = ?, price = ?, tkt_startdate = ?, tkt_enddate = ?, `locate` = ?,  instruction = ?, address = ?, notice = ?, howuse = ?, canxpolicy = ?, tkt_status = ?, sold_amount = ?, kind = ? WHERE tkt_no = ?;";
+//	private static final String UPDATE = "UPDATE tkt SET price = ? WHERE tkt_name = ?;";
 	private static final String GET_ONE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt ORDER BY tkt_no;";
+//	private static final String GET_LOCATE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+//			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE locate = ? ORDER BY tkt_no;";
+//	private static final String GET_ATTRACTIONS = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+//			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE kind = 0 ORDER BY tkt_no;";
+//
+//	private static final String GET_THEME_PARK = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+//			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE kind = 1 ORDER BY tkt_no;";
+//
+//	private static final String GET_MUSEUM = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+//			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE kind = 2 ORDER BY tkt_no;";
 
 	@Override
 	public void insert(TktVO tktVO) {
@@ -55,8 +66,21 @@ public class TktJdbcDAO implements I_TktDAO {
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
-			ps.setInt(1, tktVO.getPrice());
-			ps.setString(2, tktVO.getTkt_name());
+			ps.setString(1, tktVO.getTkt_name());
+			ps.setInt(2, tktVO.getOriginal_amount());
+			ps.setInt(3, tktVO.getPrice());
+			ps.setObject(4, tktVO.getTkt_startdate());
+			ps.setObject(5, tktVO.getTkt_enddate());
+			ps.setString(6, tktVO.getLocate());
+			ps.setString(7, tktVO.getInstruction());
+			ps.setString(8, tktVO.getAddress());
+			ps.setString(9, tktVO.getNotice());
+			ps.setString(10, tktVO.getHowuse());
+			ps.setString(11, tktVO.getCanxpolicy());
+			ps.setInt(12, tktVO.getTkt_status());
+			ps.setInt(13, tktVO.getSold_amount());
+			ps.setInt(14, tktVO.getKind());
+			ps.setInt(15, tktVO.getTkt_no());
 
 			ps.executeUpdate();
 
@@ -115,7 +139,7 @@ public class TktJdbcDAO implements I_TktDAO {
 
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement ps = conn.prepareStatement(GET_ALL)) {
-			
+
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -136,7 +160,7 @@ public class TktJdbcDAO implements I_TktDAO {
 				tktVO.setTkt_status(rs.getInt("tkt_status"));
 				tktVO.setSold_amount(rs.getInt("sold_amount"));
 				tktVO.setKind(rs.getInt("kind"));
-				
+
 				list.add(tktVO);
 			}
 
@@ -147,77 +171,94 @@ public class TktJdbcDAO implements I_TktDAO {
 		return list;
 	}
 
+	
+
 	public static void main(String[] args) {
 		TktJdbcDAO dao = new TktJdbcDAO();
 
 		// insert
-		TktVO voInsert = new TktVO();
-		
-		voInsert.setTkt_name("義大遊樂世界");
-		voInsert.setOriginal_amount(999);
-		voInsert.setPrice(666);
-		voInsert.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
-		voInsert.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
-		voInsert.setLocate("高雄");
-		voInsert.setInstruction("義大遊樂世界一日遊門票");
-		voInsert.setAddress("高雄市大樹區學城路一段10號");
-		voInsert.setNotice("請在指定日期前使用");
-		voInsert.setHowuse("抵達義大遊樂世界門口出示 QR Code");
-		voInsert.setCanxpolicy("請洽客服系統");
-		voInsert.setTkt_status(1);
-		voInsert.setSold_amount(0);
-		voInsert.setKind(1);
-		
-		dao.insert(voInsert);
+//		TktVO voInsert = new TktVO();
+//		
+//		voInsert.setTkt_name("台北兒童新樂園");
+//		voInsert.setOriginal_amount(999);
+//		voInsert.setPrice(180);
+//		voInsert.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
+//		voInsert.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
+//		voInsert.setLocate("台北市");
+//		voInsert.setInstruction("台北兒童新樂園門票");
+//		voInsert.setAddress("台北市士林區承德路五段55號");
+//		voInsert.setNotice("請在指定日期前使用");
+//		voInsert.setHowuse("抵達台北兒童新樂園門口出示 QR Code");
+//		voInsert.setCanxpolicy("請洽客服系統");
+//		voInsert.setTkt_status(1);
+//		voInsert.setSold_amount(0);
+//		voInsert.setKind(1);
+//		
+//		dao.insert(voInsert);
 
 		// update
 		TktVO voUpdate = new TktVO();
 		
+		voUpdate.setTkt_name("麗寶樂園度假區門票");
+		voUpdate.setOriginal_amount(999);
 		voUpdate.setPrice(777);
-		voUpdate.setTkt_name("義大遊樂世界");
+		voUpdate.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
+		voUpdate.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
+		voUpdate.setLocate("台中市");
+		voUpdate.setInstruction("麗寶樂園度假區門票");
+		voUpdate.setAddress("台中市后里區福容路8號");
+		voUpdate.setNotice("請在指定日期前使用");
+		voUpdate.setHowuse("抵達麗寶樂園度假區門口出示 QR Code");
+		voUpdate.setCanxpolicy("請洽客服系統");
+		voUpdate.setTkt_status(1);
+		voUpdate.setSold_amount(0);
+		voUpdate.setKind(1);
+		voUpdate.setTkt_no(2);
 		
 		dao.update(voUpdate);
 
 		// findByPrimaryKey
-		TktVO voPk = dao.findByPrimaryKey(3);
-		
-		System.out.println(voPk.getTkt_no());
-		System.out.println(voPk.getTkt_name());
-		System.out.println(voPk.getOriginal_amount());
-		System.out.println(voPk.getPrice());
-		System.out.println(voPk.getTkt_startdate());
-		System.out.println(voPk.getTkt_enddate());
-		System.out.println(voPk.getLocate());
-		System.out.println(voPk.getInstruction());
-		System.out.println(voPk.getAddress());
-		System.out.println(voPk.getNotice());
-		System.out.println(voPk.getHowuse());
-		System.out.println(voPk.getCanxpolicy());
-		System.out.println(voPk.getTkt_status());
-		System.out.println(voPk.getSold_amount());
-		System.out.println(voPk.getKind());
+//		TktVO voPk = dao.findByPrimaryKey(3);
+//		
+//		System.out.println(voPk.getTkt_no());
+//		System.out.println(voPk.getTkt_name());
+//		System.out.println(voPk.getOriginal_amount());
+//		System.out.println(voPk.getPrice());
+//		System.out.println(voPk.getTkt_startdate());
+//		System.out.println(voPk.getTkt_enddate());
+//		System.out.println(voPk.getLocate());
+//		System.out.println(voPk.getInstruction());
+//		System.out.println(voPk.getAddress());
+//		System.out.println(voPk.getNotice());
+//		System.out.println(voPk.getHowuse());
+//		System.out.println(voPk.getCanxpolicy());
+//		System.out.println(voPk.getTkt_status());
+//		System.out.println(voPk.getSold_amount());
+//		System.out.println(voPk.getKind());
 
 		// getAll
-		List<TktVO> list = dao.getAll();
+//		List<TktVO> list = dao.getAll();
+//		
+//		for (TktVO voAll : list) {
+//			System.out.println(voAll.getTkt_no());
+//			System.out.println(voAll.getTkt_name());
+//			System.out.println(voAll.getOriginal_amount());
+//			System.out.println(voAll.getPrice());
+//			System.out.println(voAll.getTkt_startdate());
+//			System.out.println(voAll.getTkt_enddate());
+//			System.out.println(voAll.getLocate());
+//			System.out.println(voAll.getInstruction());
+//			System.out.println(voAll.getAddress());
+//			System.out.println(voAll.getNotice());
+//			System.out.println(voAll.getHowuse());
+//			System.out.println(voAll.getCanxpolicy());
+//			System.out.println(voAll.getTkt_status());
+//			System.out.println(voAll.getSold_amount());
+//			System.out.println(voAll.getKind());
+//		}
+
 		
-		for (TktVO voAll : list) {
-			System.out.println(voAll.getTkt_no());
-			System.out.println(voAll.getTkt_name());
-			System.out.println(voAll.getOriginal_amount());
-			System.out.println(voAll.getPrice());
-			System.out.println(voAll.getTkt_startdate());
-			System.out.println(voAll.getTkt_enddate());
-			System.out.println(voAll.getLocate());
-			System.out.println(voAll.getInstruction());
-			System.out.println(voAll.getAddress());
-			System.out.println(voAll.getNotice());
-			System.out.println(voAll.getHowuse());
-			System.out.println(voAll.getCanxpolicy());
-			System.out.println(voAll.getTkt_status());
-			System.out.println(voAll.getSold_amount());
-			System.out.println(voAll.getKind());
-		}
-		
+
 	}
 
 }
