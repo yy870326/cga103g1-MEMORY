@@ -344,6 +344,7 @@ public class MemjdbcDAO implements I_MemDAO {
 //			memVO01.setMem_dist("中和");
 //			memVO01.setMem_addr("中和");
 //			memVO01.setMem_reg_date(java.sql.Date.valueOf("2002-01-01"));
+			
 //			memVO01.setMem_pic(null);
 //			memVO01.setMem_report_count(2);
 //			memVO01.setMem_card("3333333");
