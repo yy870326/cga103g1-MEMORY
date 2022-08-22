@@ -34,13 +34,20 @@ public class RmOrderService {
 
 
 	public void update(RmOrderVO rmOrderVO) {
+	
 		
 		
 	}
 
 	
-	public void updateStatus(RmOrderVO rmOrderVO) {
-		
-		
+	public RmOrderVO cancel(Integer rm_order_no) {
+
+		RmOrderVO rmOrderVO = new RmOrderVO();
+		rmOrderVO.setRm_order_status(3);
+		rmOrderVO.setRm_charge(0);
+		rmOrderVO.setRm_order_no(rm_order_no);
+
+		dao.updateStatus(rmOrderVO);
+		return rmOrderVO;
 	}
 }

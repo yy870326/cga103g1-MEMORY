@@ -2,6 +2,11 @@ package com.rm_type.model;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class RmTypeVO implements Serializable {
 	private Integer rm_type_no;
 	private Integer store_no;

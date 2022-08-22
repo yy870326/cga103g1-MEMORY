@@ -4,17 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.rm_order.model.*"%>
+<%@ page import="com.mem.model.*"%>
+<%@ page import="com.rm_order_list.model.*"%>
+<%@ page import="com.rm_type.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="rmOderSvc" class="com.rm_order.model.RmOrderService" />
 
-<%
-// 計算各狀態有幾筆資料
-// pageContext.setAttribute("rmOderSvc", rmOderSvc);
-if (request.getAttribute("orderlist") == null) {
-List<RmOrderVO> orderlist = rmOderSvc.getAllRmOrder();
-pageContext.setAttribute("orderlist", orderlist);
-}
-%>
+<jsp:useBean id="memSvc" class="com.mem.model.MemService" />
+<jsp:useBean id="rmOrderSvc" class="com.rm_order.model.RmOrderService" />
+<jsp:useBean id="rmOrderListSvc"
+	class="com.rm_order_list.model.RmOrderListService" />
+<jsp:useBean id="rmTypeSvc" class="com.rm_type.model.RmTypeService" />
 
 <!DOCTYPE html>
 <html>
@@ -23,8 +22,8 @@ pageContext.setAttribute("orderlist", orderlist);
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-<%@ include file="/backend/commonCSS.file"%>
 <!-- 基本CSS檔案 -->
+<%@ include file="/backend/commonCSS.file"%>
 <style>
 table.fold-table tbody tr.view {
 	cursor: pointer;
@@ -138,12 +137,24 @@ table i {
 	text-align: center;
 	border-radius: .5rem;
 }
+
+div.main-content {
+	margin-top: 30px;
+	margin-left: 30px;
+	margin-bottom: 300px;
+}
+
+.mt-3, .my-3 {
+	margin-top: 0rem !important;
+}
 </style>
+
+<%@ include file="/frontend/commonCSS.file"%>
+<!-- CSS -->
 </head>
 
 <body>
-	
-	<!-- sidebar -->
+	<%@ include file="/frontend/header.file"%>
 
 	<div class="main-content">
 		<%-- 錯誤表列 --%>
@@ -155,76 +166,74 @@ table i {
 				</c:forEach>
 			</ul>
 		</c:if>
+
 		<div class="d-flex mb-4 align-items-center flex-wrap">
 			<div class="dropdown custom-dropdown">
 				<button type="button" class="btn btn-sm btn-secondary"
 					data-bs-toggle="dropdown">
 					<c:choose>
-						<c:when test="${store_no==0}">依房型篩選<i
+						<c:when test="${rmTypeVO.rm_type_no == 0}">依房型篩選<i
 								class='bx bxs-chevron-down'></i>
 						</c:when>
-						<c:when test="${store_no!=0}">依房型篩選<i
+						<c:when test="${rmTypeVO.rm_type_no != 0}">依房型篩選<i
 								class='bx bxs-chevron-down'></i>
 						</c:when>
 					</c:choose>
 				</button>
 				<div class="dropdown-menu dropdown-menu-end">
-					<c:forEach var="RmTypeVO" items="${RmTypeSvc.allRmType}">
+					<c:forEach var="rmTypeVO" items="${rmTypeSvc.getAllRm()}">
 						<a class="dropdown-item"
-							href="<%=request.getContextPath()%>/RmOrder?rm_type_no=${RmTypeVO.rm_type_no}&action=getAllByType">${RmTypeVO.rm_name}</a>
+							href="<%=request.getContextPath()%>/RmType?rm_type_no=${rmTypeVO.rm_type_no}&action=getAll">${rmTypeVO.rm_name}</a>
 					</c:forEach>
 				</div>
 			</div>
-			<div class="card-tabs mt-3 mt-sm-0">
+			<div class="card-tabs mt-3 mt-sm-0"
+				style="margin-top: 0rem !important">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/RmOrder?action=getAllRmOrder">所有訂單
-							(${rmOderSvc.getAllRmOrder().size()})</a></li>
+							(${rmOrderSvc.getAllRmOrder().size()})</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=1&action=getAllStatus">入住中
-							(${rmOderSvc.getAllStatus(1).size()})</a></li>
+						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=0&action=getAllStatus">入住中
+							(${rmOrderSvc.getAllStatus(0).size()})</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=2&action=getAllStatus">正常
-							(${rmOderSvc.getAllStatus(2).size()})</a></li>
+						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=1&action=getAllStatus">正常
+							(${rmOrderSvc.getAllStatus(1).size()})</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=3&action=getAllStatus">已實現
-							(${rmOderSvc.getAllStatus(3).size()})</a></li>
+						href="<%=request.getContextPath()%>/RmOrder?rm_order_status=2&action=getAllStatus">已實現
+							(${rmOrderSvc.getAllStatus(2).size()})</a></li>
 				</ul>
 			</div>
-			<div class="input-group search-area">
-				<input type="text" class="form-control" placeholder="Search here">
-				<span class="input-group-text"><a href="javascript:void(0)">
-						<i class="flaticon-381-search-2"></i>
-				</a></span>
-			</div>
 		</div>
-		<div></div>
+
 		<table class="table fold-table">
 			<thead>
 				<tr>
 					<th>訂單編號</th>
 					<th>會員編號</th>
-					<th>廠商編號</th>
-					<th>入住日期</th>
+					<th>訂單日期</th>
 					<th>訂單總金額</th>
 					<th>訂單狀態</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="rmOrderVO" items="${orderlist}">
+				<c:forEach var="rmOrderVO" items="${rmOrderSvc.getAllRmOrder()}">
 					<tr class="view">
 						<td>${rmOrderVO.rm_order_no}</td>
 						<td>${rmOrderVO.mem_no}</td>
-						<td>${rmOrderVO.store_no}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td>${rmOrderVO.rm_charge}</td>
 						<td><c:choose>
-								<c:when test="${rmOrderVO.rm_order_status==1}">
+								<c:when test="${rmOrderVO.rm_order_status==0}">
 									<i class='bx bxs-circle' style='color: red'></i>入住中</c:when>
-								<c:when test="${rmOrderVO.rm_order_status==2}">
+								<c:when test="${rmOrderVO.rm_order_status==1}">
 									<i class='bx bxs-circle' style='color: green'></i>正常</c:when>
-								<c:when test="${rmOrderVO.rm_order_status==3}">
+								<c:when
+									test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge!=0}">
 									<i class='bx bxs-circle' style='color: #aaa'></i>已實現</c:when>
+								<c:when
+									test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
+									<i class='bx bxs-circle' style='color: yellow'></i>已取消</c:when>
 							</c:choose></td>
 					</tr>
 					<tr class="fold">
@@ -234,41 +243,57 @@ table i {
 									<h4>
 										<i class='bx bxs-user-voice'></i> 訂購人資料
 									</h4>
-									<div>付款人：</div>
-									<div>評價：${rmOrderVO.rm_review}</div>
-									<div>Email:</div>
+									<div>付款人：${memSvc.getOne(rmOrderVO.mem_no).mem_name}</div>
+									<div>電話：${memSvc.getOne(rmOrderVO.mem_no).mem_mobile}</div>
+									<div>Email:${memSvc.getOne(rmOrderVO.mem_no).mem_email}</div>
 								</div>
 								<div class="col-4 order-data">
 									<h4>
 										<i class='bx bx-credit-card'></i> 付款資料
 									</h4>
-									<%-- 									<div>訂單成立日期： <fmt:formatDate value="${RmOrderVO.ord_date}" pattern="yyyy-MM-dd HH:mm:ss" /></div> --%>
-									<div>訂單成立日期：${rmOrderVO.order_date}</div>
-									<div>信用卡號碼：</div>
-									<div>備註：</div>
+									<div>訂單成立日期： ${rmOrderVO.order_date}</div>
+									<div>信用卡號碼：${memSvc.getOne(rmOrderVO.mem_no).mem_card}</div>
 								</div>
 							</div>
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th>訂單編號</th>
 										<th>明細編號</th>
-										<th>住房日期</th>
-										<th>退房日期</th>
 										<th>房型</th>
+										<th>單價</th>
+										<th>間數</th>
+										<th>入住日期</th>
+										<th>退房日期</th>
+										<th>入住人姓名</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="detailVO"
-										items="${detailSvc.getAllByOrdno(orderVO.ord_no)}">
+									<c:forEach var="rmOrderListVO"
+										items="${rmOrderListSvc.getAllByRmOrderNo(rmOrderVO.rm_order_no)}">
 										<tr>
-											<td>${detailVO.ord_no}</td>
-											<td>${detailVO.detail_no}</td>
-											<td>${detailVO.checkin_date}</td>
-											<td>${detailVO.checkout_date}</td>
+											<td><div>${rmOrderListVO.rm_order_list_no}</div></td>
+											<td><div>${rmTypeSvc.getOneRm(rmOrderListVO.rm_type_no).rm_name}</div></td>
+											<td><div>${rmOrderListVO.rm_price}</div></td>
+											<td><div>${rmOrderListVO.rm_amount}</div></td>
+											<td><div>${rmOrderListVO.arrival_date}</div></td>
+											<td><div>${rmOrderListVO.departure_date}</div></td>
+											<td><div>${rmOrderListVO.rm_check_in}</div></td>
 										</tr>
 									</c:forEach>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>總金額<fmt:formatNumber value="${rmOrderVO.rm_charge}" pattern="$###,###,###" />
+												<c:if test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
+												<div>(已扣掉取消後退款金額)</div>
+											</c:if>
+										</td>
+									</tr>
+								</tfoot>
 							</table>
 						</td>
 					</tr>
@@ -276,7 +301,8 @@ table i {
 			</tbody>
 		</table>
 	</div>
-	<%@ include file="/backend/commonJS.file"%>
+	<%@ include file="/frontend/footer.file"%>
+	<%@ include file="/frontend/commonJS.file"%>
 	<!-- 放置基本JS檔案 -->
 	<script>
 		$(document).ready(
@@ -288,8 +314,8 @@ table i {
 								$(this).toggleClass("open").next(".fold")
 										.toggleClass("open");
 							});
-					$("li.nav-item:eq(${rm_order_status})").children()
-							.addClass("nav-link active");
+					$("li.nav-item:eq(${ord_state+1})").children().addClass(
+							"nav-link active");
 				});
 	</script>
 </body>
