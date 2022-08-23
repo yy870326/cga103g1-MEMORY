@@ -1,9 +1,12 @@
 package com.store.model;
-
+import static com.util.JdbcUtil.URL;
+import static com.util.JdbcUtil.USERNAME;
+import static com.util.JdbcUtil.PASSWORD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,7 @@ import javax.sql.DataSource;
 
 public class StoreDAO implements I_StoreDAO{
 	private static DataSource ds = null;
+	private static final String getAll = "SELECT * FROM store;";
 	static {
 		try {
 			Context ctx = new InitialContext();
@@ -26,7 +30,7 @@ public class StoreDAO implements I_StoreDAO{
 	}
 	
 	@Override
-	public void insert(StoreVO storeVO) {
+	public StoreVO insert(StoreVO storeVO) {
 		 
 		String sql = "INSERT INTO store (\r\n"
 				+ " \r\n"
@@ -54,9 +58,9 @@ public class StoreDAO implements I_StoreDAO{
 				+ " store_act_rating_count,\r\n"
 				+ " store_report_count \r\n"
 				+ ") \r\n"
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)){
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?,?,?,?,?,?,?,?,?,?)";
+		try{Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, storeVO.getStore_acc());
 			ps.setString(2, storeVO.getStore_pwd());
 			ps.setInt(3,storeVO.getAcc_status());
@@ -82,12 +86,12 @@ public class StoreDAO implements I_StoreDAO{
 			ps.setInt(23,storeVO.getStore_report_count());
 			
 			ps.executeUpdate();
-		}catch(Exception e){
+		}catch(SQLException e){
 			
 			e.printStackTrace();
 		}
 		
-		
+		return storeVO;
 	}
 
 	@Override
@@ -146,7 +150,7 @@ public class StoreDAO implements I_StoreDAO{
 					ps.setInt(24, storeVO.getStore_no());
 					
 					ps.executeUpdate();
-		}catch(Exception e){
+		}catch(SQLException e){
 			e.printStackTrace();
 		};
 
@@ -156,7 +160,8 @@ public class StoreDAO implements I_StoreDAO{
 	@Override
 	public void delete(Integer store_no) {
 		String sql = "DELETE FROM store WHERE store_no = ?";
-			try(Connection con = ds.getConnection();){
+			try(Connection con = ds.getConnection();
+					){
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, store_no);
 			
@@ -171,7 +176,7 @@ public class StoreDAO implements I_StoreDAO{
 	public StoreVO queryStore(Integer store_no) {
 		String sql = "SELECT * FROM store WHERE store_no = ? ORDER BY store_no;";
 		StoreVO	storeVO = new StoreVO();
-		try(Connection con = ds.getConnection();
+		try(Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement ps = con.prepareStatement(sql);
 								){
 			ps.setInt(1, store_no);
@@ -183,7 +188,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_no(rs.getInt("store_no"));
 				storeVO.setStore_acc(rs.getString("store_acc"));
 				storeVO.setStore_pwd(rs.getString("store_pwd"));
-				storeVO.setAcc_status(rs.getByte("acc_status"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
 				storeVO.setStore_name(rs.getString("store_name"));
 				storeVO.setStore_gui(rs.getString("store_gui"));
 				storeVO.setStore_rep(rs.getString("store_rep"));
@@ -213,22 +218,26 @@ public class StoreDAO implements I_StoreDAO{
 	}
 
 	@Override
-	public List<StoreVO> getAll() {
-		String sql = "SELECT * FROM store ORDER BY store_no;";
+	public List<StoreVO> getAllStore() {
+//		String sql = "SELECT store_no, store_acc, store_pwd, acc_status, store_name, store_gui, store_rep,store_tel,  store_fax, store_add, store_poc,store_con_phone,store_con_add FROM store;";
+		String sql = "SELECT * FROM store";
+//		String sql = "SELECT store_tkt_rating_scoure FROM store";
 		List<StoreVO> list = new ArrayList<StoreVO>();
-		StoreVO storeVO = new StoreVO();
-		 
+		StoreVO storeVO = null;
+		Connection con = null; 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-				
-				){
-			ResultSet rs =ps.executeQuery();
+		try{ 
+				con = ds.getConnection();
+				 ps = con.prepareStatement(sql);
+					 rs =ps.executeQuery();
 			while(rs.next()) {
+				storeVO = new StoreVO();
 				storeVO.setStore_no(rs.getInt("store_no"));
 				storeVO.setStore_acc(rs.getString("store_acc"));
 				storeVO.setStore_pwd(rs.getString("store_pwd"));
-				storeVO.setAcc_status(rs.getByte("acc_status"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
 				storeVO.setStore_name(rs.getString("store_name"));
 				storeVO.setStore_gui(rs.getString("store_gui"));
 				storeVO.setStore_rep(rs.getString("store_rep"));
@@ -241,7 +250,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_scoure"));
+				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_score"));
 				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
 				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
@@ -249,14 +258,25 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
 				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
+				list.add(storeVO);
 				
 			}
 			
-		}catch(Exception e) {
+		}catch(SQLException e) {
 					e.getStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
 				}
+			}
+		}
 		
 		return list;
 	}
+	
+	
 	
 }
