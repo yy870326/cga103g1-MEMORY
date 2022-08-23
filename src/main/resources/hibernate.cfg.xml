@@ -16,9 +16,5 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		
-		<mapping class="web.member.entity.Member"/>
-		<mapping class="web.order.entity.Customer"/>
-		<mapping class="web.order.entity.Order"/>
-		
 	</session-factory>
 </hibernate-configuration>
