@@ -79,7 +79,7 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 	
 
 	@Override
-	public void update(TktImgVO tktimgVO) {
+	public void update(TktImgVO tktimgno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -89,9 +89,9 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, tktimgVO.gettktNO());
-			pstmt.setBytes(2, tktimgVO.gettktimg());
-			pstmt.setInt(3, tktimgVO.gettktImgNO());
+			pstmt.setInt(1, tktimgno.gettktNO());
+			pstmt.setBytes(2, tktimgno.gettktimg());
+			pstmt.setInt(3, tktimgno.gettktImgNO());
 
 			pstmt.executeUpdate();
 
@@ -171,7 +171,7 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 	}
 
 	@Override
-	public TktImgVO findByPrimaryKey(Integer TktImgVO) {
+	public TktImgVO findByPrimaryKey(Integer tktImgno) {
 		TktImgVO tktimgVo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -183,7 +183,7 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, TktImgVO);
+			pstmt.setInt(1, tktImgno);
 
 			rs = pstmt.executeQuery();
 

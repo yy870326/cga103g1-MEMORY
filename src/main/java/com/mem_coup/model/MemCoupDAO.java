@@ -13,8 +13,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class MemCoupDAO implements I_MemCoupDAO{
+	
 	private static final String INSERT = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, ?);";
-	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
+//	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
 	private static final String GET_ONE = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_coup_no = ?;";
 	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no;";
 
@@ -51,31 +52,61 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 	}
 
-	@Override
-	public void update(MemCoupVO memCoupVO) {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		
-		try {
-			
-			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATE);
-
-			ps.setInt(1, memCoupVO.getCoup_no());
-			ps.setInt(2, memCoupVO.getMem_no());
-
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	@Override
+//	public void update(MemCoupVO memCoupVO) {
+//
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		
+//		try {
+//			
+//			con = ds.getConnection();
+//			ps = con.prepareStatement(UPDATE);
+//
+//			ps.setInt(1, memCoupVO.getCoup_no());
+//			ps.setInt(2, memCoupVO.getMem_no());
+//
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (ps != null) {
+//				try {
+//					ps.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//
+//	}
 
 	@Override
 	public MemCoupVO findByPrimaryKey(Integer mem_coup_no) {
@@ -107,6 +138,21 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return memCoupVO;
@@ -143,9 +189,25 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return list;
 	}
+	
 }
 

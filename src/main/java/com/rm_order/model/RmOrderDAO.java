@@ -12,14 +12,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import com.util.JdbcUtil;
 
 public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge, rm_review)VALUES(?,?,NOW(),?,?,?)";
 	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=? WHERE rm_order_no=?";
 	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
-	private static final String GET_ALL = "SELECT * FROM rm_order";
+	private static final String GET_ALL = "SELECT * FROM rm_order ORDER BY rm_order_no DESC";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
 	private static DataSource ds = null;
 	static {

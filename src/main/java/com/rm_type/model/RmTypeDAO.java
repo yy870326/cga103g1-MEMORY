@@ -11,10 +11,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import com.util.JdbcUtil;
 
 public class RmTypeDAO implements I_RmTypeDAO {
-	private static final String INSERT = "INSERT INTO rm_type(store_no, rm_name, rm_total, rm_people, rm_price, rm_area, rm_intro, rm_rate_sum, rm_eval_sum, rm_update)VALUES(?,?,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE = "UPDATE rm_type SET store_no=?, rm_name=?, rm_total=?, rm_people=?, rm_price=?, rm_area=?, rm_intro=?, rm_rate_sum=?, "
+	private static final String INSERT = "INSERT INTO rm_type(store_no, rm_name, rm_total, rm_people, rm_price, rm_area, rm_intro, rm_update)VALUES(?,?,?,?,?,?,?,0)";
+	private static final String UPDATE = "UPDATE rm_type SET rm_name=?, rm_total=?, rm_people=?, rm_price=?, rm_area=?, rm_intro=?, rm_rate_sum=?, "
 			+ "rm_eval_sum=?, rm_update=? WHERE rm_type_no=?";
 	private static final String CHANGE_STATE = "UPDATE rm_type SET rm_update=? WHERE rm_type_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_type WHERE rm_type_no=?";
@@ -45,9 +46,6 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			ps.setInt(5, rmtypeVO.getRm_price());
 			ps.setInt(6, rmtypeVO.getRm_area());
 			ps.setString(7, rmtypeVO.getRm_intro());
-			ps.setInt(8, rmtypeVO.getRm_rate_sum());
-			ps.setInt(9, rmtypeVO.getRm_eval_sum());
-			ps.setBoolean(10, rmtypeVO.getRm_update());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -64,17 +62,16 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, rmtypeVO.getStore_no());
-			ps.setString(2, rmtypeVO.getRm_name());
-			ps.setInt(3, rmtypeVO.getRm_total());
-			ps.setInt(4, rmtypeVO.getRm_people());
-			ps.setInt(5, rmtypeVO.getRm_price());
-			ps.setInt(6, rmtypeVO.getRm_area());
-			ps.setString(7, rmtypeVO.getRm_intro());
-			ps.setInt(8, rmtypeVO.getRm_rate_sum());
-			ps.setInt(9, rmtypeVO.getRm_eval_sum());
-			ps.setBoolean(10, rmtypeVO.getRm_update());
-			ps.setInt(11, rmtypeVO.getRm_type_no());
+			ps.setString(1, rmtypeVO.getRm_name());
+			ps.setInt(2, rmtypeVO.getRm_total());
+			ps.setInt(3, rmtypeVO.getRm_people());
+			ps.setInt(4, rmtypeVO.getRm_price());
+			ps.setInt(5, rmtypeVO.getRm_area());
+			ps.setString(6, rmtypeVO.getRm_intro());
+			ps.setInt(7, rmtypeVO.getRm_rate_sum());
+			ps.setInt(8, rmtypeVO.getRm_eval_sum());
+			ps.setBoolean(9, rmtypeVO.getRm_update());
+			ps.setInt(10, rmtypeVO.getRm_type_no());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
