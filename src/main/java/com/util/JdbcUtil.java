@@ -10,6 +10,7 @@ public class JdbcUtil {
 	public static final String USERNAME = "帳號";
 	public static final String PASSWORD = "密碼";
 
+
 }
 
 	

@@ -81,7 +81,8 @@ public class Rm_order_listDAO implements I_Rm_order_listDAO {
 					ps.setDate(6, rm_order_list.getDeparture_date());
 					ps.setString(7, rm_order_list.getRm_check_in());
 					ps.setInt(8, rm_order_list.getRm_type_no());
-			
+					
+					ps.executeUpdate();
 			
 		}catch(Exception e) {
 					e.addSuppressed(e);
