@@ -6,6 +6,15 @@ public class AuthVO implements Serializable{
 	
 	private Integer fun_no;
 	private Integer emp_no;
+	
+	
+	public AuthVO() {}
+	
+	public AuthVO(Integer fun_no, Integer emp_no) {
+		super();
+		this.fun_no = fun_no;
+		this.emp_no = emp_no;
+	}
 	public Integer getFun_no() {
 		return fun_no;
 	}

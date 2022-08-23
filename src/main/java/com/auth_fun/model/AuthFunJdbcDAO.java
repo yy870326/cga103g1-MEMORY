@@ -1,7 +1,5 @@
-package com.rm_pic.model;
+package com.auth_fun.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,29 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import com.auth.model.AuthVO;
 import com.util.JdbcUtil;
 
-public class RmPicJdbcDAO implements I_RmPicDAO {
+public class AuthFunJdbcDAO implements I_AuthFunDAO {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/cga103g1?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "06210323";
 
-	private static final String INSERT = "INSERT INTO rm_pic(rm_type_no, rm_pic_img)VALUES(?,?)";
-	private static final String UPDATE = "UPDATE rm_pic SET rm_type_no=?, rm_pic_img=? WHERE rm_pic_no=?";
-	private static final String DELETE = "DELETE FROM rm_pic WHERE rm_pic_no=?";
-	private static final String GET_ONE = "SELECT * FROM rm_pic WHERE rm_pic_no=?";
-	private static final String GET_ALL = "SELECT * FROM rm_pic";
+	private static final String INSERT = "INSERT INTO auth_fun (fun_no,fun_name) VALUES (?,?)";
+	private static final String UPDATE = "UPDATE auth_fun SET fun_no=? WHERE fun_name=?";
+	private static final String DELETE = "DELETE FROM auth_fun WHERE fun_no=?";
+	private static final String GET_ONE = "SELECT * FROM auth_fun WHERE fun_no=?";
+	private static final String GET_ALL = "SELECT * FROM auth_fun";
 
 	@Override
-	public void insert(RmPicVO rmPicVO) {
+	public void insert(AuthFunVO authFunVO) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -43,8 +36,8 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			ps = con.prepareStatement(INSERT);
 
-			ps.setInt(1, rmPicVO.getRm_pic_no());
-			ps.setBytes(2, rmPicVO.getRm_pic_img());
+			ps.setInt(1, authFunVO.getFun_no());
+			ps.setString(2, authFunVO.getFun_name());
 			ps.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -73,7 +66,7 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 	}
 
 	@Override
-	public void update(RmPicVO rmPicVO) {
+	public void update(AuthFunVO authFunVO) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -84,11 +77,9 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, rmPicVO.getRm_type_no());
-			ps.setBytes(2, rmPicVO.getRm_pic_img());
-			ps.setInt(3, rmPicVO.getRm_pic_no());
+			ps.setInt(1, authFunVO.getFun_no());
+			ps.setString(2, authFunVO.getFun_name());
 			ps.executeUpdate();
-
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
@@ -115,7 +106,7 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 	}
 
 	@Override
-	public void delete(Integer rm_pic_no) {
+	public void delete(Integer fun_no) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -126,9 +117,10 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			ps = con.prepareStatement(DELETE);
 
-			ps.setInt(1, rm_pic_no);
+			ps.setInt(1, fun_no);
 			ps.executeUpdate();
 
+			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
@@ -155,8 +147,9 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 	}
 
 	@Override
-	public RmPicVO findByPrimaryKey(Integer rm_pic_no) {
-		RmPicVO rmPicVO = null;
+	public AuthFunVO findByPrimaryKey(Integer fun_no) {
+
+		AuthFunVO authFunVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -167,14 +160,16 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			ps = con.prepareStatement(GET_ONE);
 
-			ps.setInt(1, rm_pic_no);
+			ps.setInt(1, fun_no);
+
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				rmPicVO = new RmPicVO();
-				rmPicVO.setRm_pic_no(rs.getInt("rm_pic_no"));
-				rmPicVO.setRm_type_no(rs.getInt("rm_type_no"));
-				rmPicVO.setRm_pic_img(rs.getBytes("rm_pic_img"));
+				authFunVO = new AuthFunVO();
+				authFunVO.setFun_no(rs.getInt("fun_no"));
+				authFunVO.setFun_name(rs.getString("fun_name"));
 			}
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
@@ -204,13 +199,13 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 				}
 			}
 		}
-		return rmPicVO;
+		return authFunVO;
 	}
 
 	@Override
-	public List<RmPicVO> getAll() {
-		List<RmPicVO> list = new ArrayList<RmPicVO>();
-		RmPicVO rmPicVO = null;
+	public List<AuthFunVO> getAll() {
+		List<AuthFunVO> list = new ArrayList<AuthFunVO>();
+		AuthFunVO authFunVO = null;
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -223,13 +218,12 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				rmPicVO = new RmPicVO();
-				rmPicVO.setRm_pic_no(rs.getInt("rm_pic_no"));
-				rmPicVO.setRm_type_no(rs.getInt("rm_type_no"));
-				rmPicVO.setRm_pic_img(rs.getBytes("rm_pic_img"));
-				list.add(rmPicVO);
-
+				authFunVO = new AuthFunVO();
+				authFunVO.setFun_no(rs.getInt("fun_no"));
+				authFunVO.setFun_name(rs.getString("fun_name"));
+				list.add(authFunVO);
 			}
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
@@ -263,41 +257,35 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 	}
 
 	public static void main(String[] args) {
-		RmPicJdbcDAO dao = new RmPicJdbcDAO();
+		AuthFunJdbcDAO dao = new AuthFunJdbcDAO();
 
 		// 新增
-//		RmPicVO rmPicVO1 = new RmPicVO();
-//		rmPicVO1.setrm_type_no(1);
-//		rmPicVO1.setrm_pic_img(pic);
-//		dao.insert(rmPicVO1);
-//		System.out.println("新增成功");
+//		AuthFunVO authFunVO1 = new AuthFunVO();
+//		authFunVO1.setFun_no(10);
+//		authFunVO1.setFun_name("留言狀態管理員");
+//		dao.insert(authFunVO1);
 
 		// 修改
-//		RmPicVO rmPicVO2 = new RmPicVO();
-//		rmPicVO2.setRm_type_no(1);
-//		rmPicVO2.setRm_pic_img(pic);
-//		rmPicVO2.setRm_pic_no(1);
-//		dao.update(rmPicVO2);
-//		System.out.println("修改成功");
+//		AuthFunVO authFunVO2 = new AuthFunVO();
+//		authFunVO2.setFun_no(8);
+//		authFunVO2.setFun_name("打雜管理員");
+//		dao.update(authFunVO2);
 
-		// 刪除
-//		dao.delete(1);
-//		System.out.println("刪除成功");
+//	//刪除
+//		dao.delete(10);
 
-		// 查詢一筆
-		RmPicVO rmPicVO3 = dao.findByPrimaryKey(1);
-		System.out.println(rmPicVO3.getRm_pic_no() + ",");
-		System.out.println(rmPicVO3.getRm_type_no() + ",");
-		System.out.println(rmPicVO3.getRm_pic_img() + ",");
+		// 查詢
+		AuthFunVO authFunVO3 = dao.findByPrimaryKey(1);
+		System.out.println(authFunVO3.getFun_no() + ",");
+		System.out.println(authFunVO3.getFun_name() + ",");
 		System.out.println("----------------------");
 
-		List<RmPicVO> list = dao.getAll();
-		for (RmPicVO rPic : list) {
-			System.out.println(rmPicVO3.getRm_pic_no() + ",");
-			System.out.println(rmPicVO3.getRm_type_no() + ",");
-			System.out.println(rmPicVO3.getRm_pic_img() + ",");
+		// 查詢多筆資料
+		List<AuthFunVO> list = dao.getAll();
+		for (AuthFunVO aAuthFun : list) {
+			System.out.println(aAuthFun.getFun_no() + ",");
+			System.out.println(aAuthFun.getFun_name() + ",");
 			System.out.println();
 		}
-
 	}
 }
