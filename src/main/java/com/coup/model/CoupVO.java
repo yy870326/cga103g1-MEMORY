@@ -1,10 +1,14 @@
 package com.coup.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 
 
-public class CoupVO {
+public class CoupVO implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Integer coup_no;
 	private String coup_name;
 	private String introduce;
