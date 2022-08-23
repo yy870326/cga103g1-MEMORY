@@ -3,6 +3,9 @@ package com.rm_type.model;
 import java.io.Serializable;
 
 public class RmTypeVO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer rm_type_no;
 	private Integer store_no;
 	private String rm_name;
