@@ -16,7 +16,7 @@ public class AuthService {
 		AuthVO authVO = new AuthVO();
 		
 		authVO.setFun_no(fun_no);
-		authVO.setFun_no(fun_no);
+		authVO.setEmp_no(emp_no);
 		dao.insert(authVO);
 		
 		return authVO;
@@ -26,7 +26,7 @@ public class AuthService {
 		AuthVO authVO = new AuthVO();
 		
 		authVO.setFun_no(fun_no);
-		authVO.setFun_no(fun_no);
+		authVO.setEmp_no(emp_no);
 		dao.update(authVO);
 		
 		return authVO;
@@ -36,8 +36,8 @@ public class AuthService {
 	public AuthVO getOneAuth(Integer fun_no) {
 		return dao.findByPrimaryKey(fun_no);
 }
-	public List<AuthVO> getAll() {
-		return dao.getAll();
+	public List<AuthVO> getAllAuth() {
+		return dao.getAllAuth();
 }
 	
 }

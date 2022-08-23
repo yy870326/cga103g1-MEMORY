@@ -198,7 +198,7 @@ public class AuthDAO implements I_AuthDAO{
 	}
 
 	@Override
-	public List<AuthVO> getAll() {
+	public List<AuthVO> getAllAuth() {
 		List<AuthVO> list = new ArrayList<AuthVO>();
 		AuthVO authVO=null;
 		

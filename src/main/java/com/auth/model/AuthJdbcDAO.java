@@ -22,7 +22,7 @@ public class AuthJdbcDAO implements I_AuthDAO {
 	private static final String UPDATE = "UPDATE auth SET emp_no=? where fun_no=?";
 	private static final String CANCEL = "UPDATE * FROM auth WHERE fun_no=?";
 	private static final String GET_ONE = "SELECT * FROM auth WHERE fun_no=?";
-	private static final String GET_ALL = "SELECT * FROM auth WHERE fun_no=?";
+	private static final String GET_ALL = "SELECT * FROM auth";
 
 	@Override
 	public void insert(AuthVO authVO) {
@@ -201,7 +201,7 @@ public class AuthJdbcDAO implements I_AuthDAO {
 	}
 
 	@Override
-	public List<AuthVO> getAll() {
+	public List<AuthVO> getAllAuth() {
 		List<AuthVO> list = new ArrayList<AuthVO>();
 		AuthVO authVO = null;
 
@@ -254,36 +254,36 @@ public class AuthJdbcDAO implements I_AuthDAO {
 		return list;
 	}
 
+
 	public static void main(String[] args) {
 		AuthJdbcDAO dao = new AuthJdbcDAO();
 
 		// 新增
 //		AuthVO authVO1 = new AuthVO();
-//		authVO1.setFun_no(10);
-//		authVO1.setEmp_no(10);
+//		authVO1.setFun_no(7);
+//		authVO1.setEmp_no(5);
 //		dao.insert(authVO1);
 //		System.out.println("新增成功");
 
 		// 修改
-		AuthVO authVO2 = new AuthVO();
-		authVO2.setEmp_no(8);
-		authVO2.setFun_no(10);
-		dao.update(authVO2);
-		System.out.println("修改成功");
-
-		// 查詢單一筆資料
-		AuthVO authVO3 = dao.findByPrimaryKey(1);
-		System.out.println(authVO3.getFun_no() + ",");
-		System.out.println(authVO3.getEmp_no() + ",");
-		System.out.println("----------------------");
-
-		// 查詢多筆資料
-		List<AuthVO> list = dao.getAll();
+//		AuthVO authVO2 = new AuthVO();
+//		authVO2.setEmp_no(5);
+//		authVO2.setFun_no(1);
+//		dao.update(authVO2);
+//		System.out.println("修改成功");
+//
+//		// 查詢單一筆資料
+//		AuthVO authVO3 = dao.findByPrimaryKey(5);
+//		System.out.print(authVO3.getFun_no() + ",");
+//		System.out.println(authVO3.getEmp_no());
+//		System.out.println("----------------------");
+//
+//		// 查詢多筆資料
+		List<AuthVO> list = dao.getAllAuth();
 		for (AuthVO aAuth : list) {
-			System.out.println(aAuth.getFun_no() + ",");
-			System.out.println(aAuth.getEmp_no() + ",");
+			System.out.print(aAuth.getFun_no() + ",");
+			System.out.println(aAuth.getEmp_no());
 			System.out.println();
 		}
-
 	}
 }
