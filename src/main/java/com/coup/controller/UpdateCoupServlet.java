@@ -28,9 +28,27 @@ public class UpdateCoupServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		String action = req.getParameter("action");
+		
+		///////////////////////////// getOneUpdate ////////////////////////
 
+		if ("getOneUpdate".equals(action)) {
+			
+			// ------------- getParameter -------------
+			Integer coup_no = Integer.valueOf(req.getParameter("coup_no"));
+			
+			// -------------- getOne -------------
+			CoupService coupSrv = new CoupService();
+			CoupVO coupVO = coupSrv.getOneCoup(coup_no);
+			
+			// ------------- forward -------------
+			req.setAttribute("coupVO", coupVO);
+			RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/updateCoup.jsp");
+			successView.forward(req, res);
+		}
+		
+		///////////////////////////// update ////////////////////////
+		
 		if ("coupUpdate".equals(action)) {
-
 			// ------------------------- 輸入格式錯誤處理 -----------------
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -41,21 +59,28 @@ public class UpdateCoupServlet extends HttpServlet {
 
 			// coup_name
 			String coup_name = req.getParameter("coup_name");
+			
 			if (coup_name == null || coup_name.length() == 0) {
 				errorMsgs.add("請填入優惠券名稱");
 			}
 
 			// introduce
 			String introduce = req.getParameter("introduce");
+			
 			if (introduce == null || introduce.length() == 0) {
 				errorMsgs.add("請填入優惠券介紹");
 			}
 
 			// discount
-			Integer discount = Integer.valueOf(req.getParameter("discount"));
-			if (discount == null) {
+			Integer discount = null;
+			
+			try {
+				discount = Integer.valueOf(req.getParameter("discount"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 				errorMsgs.add("請填入優惠券折扣金額");
 			}
+			
 
 			// startdate
 			Date startdate = null;
@@ -78,10 +103,15 @@ public class UpdateCoupServlet extends HttpServlet {
 			}
 
 			// status
-			Integer status = Integer.valueOf(req.getParameter("status"));
-			if (status == null) {
+			Integer status = null;
+			
+			try {
+				status = Integer.valueOf(req.getParameter("status"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 				errorMsgs.add("請選擇優惠券狀態");
 			}
+			
 
 			CoupVO coupVO = new CoupVO();
 			coupVO.setCoup_no(coup_no);
@@ -107,8 +137,8 @@ public class UpdateCoupServlet extends HttpServlet {
 			req.setAttribute("coupVO", coupVO);
 			RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/listAllCoup.jsp");
 			successView.forward(req, res);
-
 		}
+
 
 	}
 
