@@ -18,7 +18,7 @@
 						<span class="nav-text">會員管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/member/selectMemberPage.jsp">會員列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/mem/listMemPage.jsp">會員列表</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">會員通知訊息</a></li>
 					</ul>
 				</li>
@@ -28,10 +28,10 @@
 						<span class="nav-text">廠商管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/roomWork/todayWorkList.jsp">廠商列表</a></li>
-						<li><a href="<%=request.getContextPath()%>/backend/roomOrder/listAllOrder.jsp">審核廠商</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/xxx/todayWorkList.jsp">廠商列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/XXX/XXX.jsp">審核廠商</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">廠商檢舉管理</a></li>
-						<li><a href="javascript:void()" aria-expanded="false">訂房訂單查詢</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/listAllOrder.jsp">訂房訂單查詢</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">廠商通知訊息</a></li>
 					</ul>
 				</li>

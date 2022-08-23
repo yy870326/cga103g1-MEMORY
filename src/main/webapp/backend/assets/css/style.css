@@ -22,7 +22,7 @@
 :root {
     --primary: #00ADB5;
     --secondary: #8fc2c2;
-    --primary-hover: #c27cb9;
+    --primary-hover: #8fc2c2;
     --primary-light: #aac7fe;
     --primary-dark: #012875;
     --rgba-primary-1: rgba(179,140,97, 0.1);
@@ -3251,13 +3251,13 @@
      border-color: var(--primary);
      background-color: var(--primary);
      color: #ffffff;
-     box-shadow: 0px 2px 2px 1px #c27cb9;
+     box-shadow: 0px 2px 2px 1px #8fc2c2;
  }
 
  .btn-primary:hover {
     color: #ffffff;
-     background-color: #c27cb9;
-     box-shadow: 0px 0px 0px 0px #c27cb9;
+     background-color: #8fc2c2;
+     box-shadow: 0px 0px 0px 0px #8fc2c2;
  }
 
  .btn-check:focus+.btn-primary,
@@ -14835,7 +14835,7 @@
  :root {
      --primary: #00ADB5;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-light: #aac7fe;
      --primary-dark: #012875;
      --rgba-primary-1: rgba(19, 98, 252, 0.1);
@@ -15110,7 +15110,7 @@
  :root {
      --primary: #00ADB5;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-light: #aac7fe;
      --primary-dark: #012875;
      --rgba-primary-1: rgba(19, 98, 252, 0.1);
@@ -15477,7 +15477,7 @@
  :root {
      --primary: #00ADB5;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-light: #aac7fe;
      --primary-dark: #012875;
      --rgba-primary-1: rgba(19, 98, 252, 0.1);
@@ -24747,7 +24747,7 @@
  [data-primary="color_2"] {
      --primary: #6610f2;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-dark: #290564;
      --rgba-primary-1: rgba(102, 16, 242, 0.1);
      --rgba-primary-2: rgba(102, 16, 242, 0.2);
@@ -24763,7 +24763,7 @@
  [data-primary="color_3"] {
      --primary: #00ADB5;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-dark: #012875;
      --rgba-primary-1: rgba(19, 98, 252, 0.1);
      --rgba-primary-2: rgba(19, 98, 252, 0.2);
@@ -31310,7 +31310,7 @@
      border-color: var(--primary);
      background-color: var(--primary);
      color: #ffffff;
-     box-shadow: 0px 2px 2px 1px rgba(194,124,184,0.2);
+     box-shadow: 0px 2px 2px 1px #8fc2c2;
  }
 
  .btn-primary:active,
@@ -37462,7 +37462,7 @@
  :root {
      --primary: #00ADB5;
      --secondary: #627EEA;
-     --primary-hover: #c27cb9;
+     --primary-hover: #8fc2c2;
      --primary-light: #aac7fe;
      --primary-dark: #012875;
      --rgba-primary-1: rgba(19, 98, 252, 0.1);

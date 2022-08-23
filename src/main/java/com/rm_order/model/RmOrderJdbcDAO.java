@@ -1,6 +1,5 @@
 package com.rm_order.model;
 
-import java.awt.PrintGraphics;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,35 +7,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import com.util.JdbcUtil;
 
-public class RmOrderDAO implements I_RmOrderDAO {
+public class RmOrderJdbcDAO implements I_RmOrderDAO {
 	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge, rm_review)VALUES(?,?,NOW(),?,?,?)";
 	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=? WHERE rm_order_no=?";
 	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
-	private static final String GET_ALL = "SELECT * FROM rm_order ORDER BY rm_order_no DESC";
+	private static final String GET_ALL = "SELECT * FROM rm_order";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
-	private static DataSource ds = null;
-	static {
+
+	static { // 資料庫連線
 		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
+			Class.forName(JdbcUtil.DRIVER);
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public RmOrderVO insert(RmOrderVO rmOrderVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(INSERT);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(INSERT)) {
 
 			ps.setInt(1, rmOrderVO.getMem_no());
 			ps.setInt(2, rmOrderVO.getStore_no());
@@ -54,11 +46,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 
 	@Override
 	public void update(RmOrderVO rmOrderVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATE);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(UPDATE)) {
 
 			ps.setInt(1, rmOrderVO.getMem_no());
 			ps.setInt(2, rmOrderVO.getStore_no());
@@ -76,11 +65,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 
 	@Override
 	public void updateStatus(RmOrderVO rmOrderVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATESTATUS);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(UPDATESTATUS)) {
 
 			ps.setInt(1, rmOrderVO.getRm_order_status());
 			ps.setInt(2, rmOrderVO.getRm_charge());
@@ -97,11 +83,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	public RmOrderVO getOne(Integer rm_order_no) {
 		ResultSet rs = null;
 		RmOrderVO rm = null;
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(GET_ONE);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ONE)) {
 
 			ps.setInt(1, rm_order_no);
 			rs = ps.executeQuery();
@@ -135,11 +118,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
 		RmOrderVO rm = null;
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(GET_ALL);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ALL)) {
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -172,11 +152,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
 		RmOrderVO rm = null;
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(GET_ALL_STATUS);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ALL_STATUS)){
 			ps.setInt(1, rm_order_status);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -188,17 +165,18 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
+				
 				rmAll.add(rm);
 			}
 			
 		} catch (SQLException e) {
-			throw new RuntimeException("A database error occured. " + e.getMessage());
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					e.printStackTrace(System.err);
+					e.printStackTrace();
 				}
 			}
 		}
