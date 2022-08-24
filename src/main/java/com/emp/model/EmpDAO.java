@@ -43,8 +43,16 @@ public class EmpDAO implements I_EmpDAO {
 			ps.setBoolean(5, empVO.getEmp_state());
 			ps.executeUpdate();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -64,8 +72,16 @@ public class EmpDAO implements I_EmpDAO {
 			ps.setInt(6, empVO.getEmp_no());
 			ps.executeUpdate();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -91,14 +107,14 @@ public class EmpDAO implements I_EmpDAO {
 				emp.setEmp_state(rs.getBoolean("emp_state"));
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -128,14 +144,14 @@ public class EmpDAO implements I_EmpDAO {
 				empAll.add(emp);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -163,14 +179,14 @@ public class EmpDAO implements I_EmpDAO {
 				emp.setEmp_state(rs.getBoolean("emp_state"));
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}

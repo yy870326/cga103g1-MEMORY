@@ -48,8 +48,16 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			ps.setString(7, rmOrderListVO.getRm_check_in());
 			
 			ps.executeUpdate();
-		}catch(Exception e){
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return rmOrderListVO;
 	}
@@ -71,14 +79,21 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 					ps.setInt(8, rmOrderListVO.getRm_type_no());
 			
 			
-		}catch(Exception e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
+			}
+		}
 	}
 
 	@Override
 	public void delete(Integer rm_order_list_no) {
-		RmOrderListVO rm = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -87,10 +102,17 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 				
 			ps.setInt(1, rm_order_list_no);
 			ps.executeUpdate();
-		}catch(Exception e) { 
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-	
 	}
 
 	@Override
@@ -116,10 +138,17 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 					rm.setRm_check_in(rs.getString("rm_check_in"));
 					
 				}
-		}catch(Exception e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
-
+			}
+		}
 		return rm;
 	}
 
@@ -148,10 +177,17 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			rmAll.add(rm);
 		}
 			
-		}catch(Exception e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		
 		return rmAll;
 	}
 

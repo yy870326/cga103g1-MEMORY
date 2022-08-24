@@ -1,6 +1,7 @@
 package com.ac_pic.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import com.util.JdbcUtil;
 
 public class AcPicDAO implements I_AcPicDAO {
 	private static final String INSERT = "INSERT INTO ac_pic(ac_no, ac_pic_img)VALUES(?,?)";
@@ -39,8 +41,16 @@ public class AcPicDAO implements I_AcPicDAO {
 			ps.setBytes(2, acPicVO.getAc_pic_img());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -57,10 +67,17 @@ public class AcPicDAO implements I_AcPicDAO {
 			ps.setInt(3, acPicVO.getAc_pic_no());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-
 	}
 
 	@Override
@@ -74,10 +91,17 @@ public class AcPicDAO implements I_AcPicDAO {
 			ps.setInt(1, ac_pic_no);
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-
 	}
 
 	@Override
@@ -97,14 +121,14 @@ public class AcPicDAO implements I_AcPicDAO {
 				ac.setAc_no(rs.getInt("ac_no"));
 				ac.setAc_pic_img(rs.getBytes("ac_pic_img"));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -130,14 +154,14 @@ public class AcPicDAO implements I_AcPicDAO {
 				ac.setAc_pic_img(rs.getBytes("ac_pic_img"));
 				acAll.add(ac);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
