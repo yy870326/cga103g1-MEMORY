@@ -8,8 +8,12 @@ public interface I_AuthFunDAO {
 	
 	public void update(AuthFunVO authFunVO);
 	
-	public AuthFunVO getOne(Integer authFunVo);
+	public void delete(Integer fun_no);
+	
+	public AuthFunVO findByPrimaryKey(Integer fun_no);
 	
 	public List<AuthFunVO> getAll();
+
+
 	
 }

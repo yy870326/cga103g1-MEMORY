@@ -1,6 +1,11 @@
 package com.mem_coup.model;
 
-public class MemCoupVO {
+import java.io.Serializable;
+
+public class MemCoupVO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer mem_coup_no;
 	private Integer mem_no;
 	private Integer coup_no;

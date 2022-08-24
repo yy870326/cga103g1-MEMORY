@@ -27,9 +27,9 @@ public class AddCoupServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
-		String action = req.getParameter("action");
-
-		if ("coupAdd".equals(action)) {
+//		String action = req.getParameter("action");
+//
+//		if ("coupAdd".equals(action)) {
 			
 			// ------------------------- 輸入格式錯誤處理 ----------------
 
@@ -49,9 +49,14 @@ public class AddCoupServlet extends HttpServlet {
 			}
 
 			// discount
-			Integer discount = Integer.valueOf(req.getParameter("discount"));
-			if (discount == null || discount == '0') {
-				errorMsgs.add("請填入優惠券折扣金額");
+			Integer discount = null;
+			try {
+				discount = Integer.valueOf(req.getParameter("discount"));
+				if (discount == null || discount == '0') {
+					errorMsgs.add("請填入優惠券折扣金額");
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 			}
 
 			// startdate
@@ -75,9 +80,15 @@ public class AddCoupServlet extends HttpServlet {
 			}
 
 			// status
-			Integer status = Integer.valueOf(req.getParameter("status"));
-			if (status == null) {
-				errorMsgs.add("請選擇優惠券狀態");
+			Integer status = null;
+			
+			try {
+				status = Integer.valueOf(req.getParameter("status"));
+				if (status == null) {
+					errorMsgs.add("請選擇優惠券狀態");
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 			}
 
 			CoupVO coupVO = new CoupVO();
@@ -104,7 +115,7 @@ public class AddCoupServlet extends HttpServlet {
 			req.setAttribute("coupVO", coupVO);
 			RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/listAllCoup.jsp");
 			successView.forward(req, res);
-		}
+//		}
 
 	}
 

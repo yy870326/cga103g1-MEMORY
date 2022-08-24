@@ -8,10 +8,11 @@ public interface I_RmPicDAO {
 
 	public void update(RmPicVO rmPicVO);      // 修改
 
-	public void delete(Integer rmPicVO);    // 刪除
+	public void delete(Integer rm_pic_no);    // 刪除
 	
-	public RmPicVO getOne(Integer rmPicVO); // 查詢一筆
+	public RmPicVO findByPrimaryKey(Integer rm_pic_no); // 查詢一筆
 	
 	public List<RmPicVO> getAll();  // 查詢全部
+
 	
 }
