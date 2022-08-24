@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import com.util.JdbcUtil;
 
 public class AcTypeDAO implements I_AcTypeDAO {
 	private static final String INSERT = "INSERT INTO ac_type (ac_type_name) VALUES (?)";
@@ -38,8 +39,16 @@ public class AcTypeDAO implements I_AcTypeDAO {
 			ps.setString(1, acTypeVO.getAc_type_name());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -55,8 +64,16 @@ public class AcTypeDAO implements I_AcTypeDAO {
 			ps.setInt(2, acTypeVO.getAc_type_no());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -77,14 +94,14 @@ public class AcTypeDAO implements I_AcTypeDAO {
 			ac.setAc_type_no(rs.getInt("ac_type_no"));
 			ac.setAc_type_name(rs.getString("ac_type_name"));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -110,14 +127,14 @@ public class AcTypeDAO implements I_AcTypeDAO {
 				acAll.add(ac);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
