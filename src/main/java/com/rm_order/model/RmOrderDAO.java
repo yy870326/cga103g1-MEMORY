@@ -17,6 +17,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge, rm_review)VALUES(?,?,NOW(),?,?,?)";
 	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=? WHERE rm_order_no=?";
 	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
+	private static final String CHECKIN = "UPDATE rm_order SET rm_order_status=0 WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
 	private static final String GET_ALL = "SELECT * FROM rm_order ORDER BY rm_order_no DESC";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
@@ -46,8 +47,16 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(6, rmOrderVO.getRm_order_no());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return rmOrderVO;
 	}
@@ -69,8 +78,16 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(7, rmOrderVO.getRm_order_no());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -88,8 +105,41 @@ public class RmOrderDAO implements I_RmOrderDAO {
 
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void checkIn(Integer rm_order_no) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHECKIN);
+			
+			ps.setInt(1, rm_order_no);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -116,14 +166,14 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_review(rs.getInt("rm_review"));
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -155,14 +205,14 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rmAll.add(rm);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -191,13 +241,13 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rmAll.add(rm);
 			}
 			
-		} catch (SQLException e) {
-			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
+					con.close();
+				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
 			}

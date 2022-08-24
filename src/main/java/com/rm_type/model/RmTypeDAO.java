@@ -14,12 +14,16 @@ import javax.sql.DataSource;
 import com.util.JdbcUtil;
 
 public class RmTypeDAO implements I_RmTypeDAO {
-	private static final String INSERT = "INSERT INTO rm_type(store_no, rm_name, rm_total, rm_people, rm_price, rm_area, rm_intro, rm_update)VALUES(?,?,?,?,?,?,?,0)";
-	private static final String UPDATE = "UPDATE rm_type SET rm_name=?, rm_total=?, rm_people=?, rm_price=?, rm_area=?, rm_intro=?, rm_rate_sum=?, "
-			+ "rm_eval_sum=?, rm_update=? WHERE rm_type_no=?";
+	private static final String INSERT = "INSERT INTO rm_type(store_no, rm_name, rm_total, rm_people, rm_price"
+			+ ", rm_area, rm_intro, rm_update)VALUES(?,?,?,?,?,?,?,0)";
+	
+	private static final String UPDATE = "UPDATE rm_type SET rm_name=?, rm_total=?, rm_people=?, rm_price=?"
+			+ ", rm_area=?, rm_intro=?, rm_rate_sum=?, rm_eval_sum=?, rm_update=? WHERE rm_type_no=?";
+	
 	private static final String CHANGE_STATE = "UPDATE rm_type SET rm_update=? WHERE rm_type_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_type WHERE rm_type_no=?";
 	private static final String GET_ALL = "SELECT * FROM rm_type";
+	private static final String GET_ALL_BY_STORE = "SELECT * FROM rm_type WHERE store_no=?";
 	private static final String GET_ALL_RSV = "SELECT * FROM rm_type WHERE rm_update=1";
 	private static DataSource ds = null;
 	static {
@@ -38,7 +42,7 @@ public class RmTypeDAO implements I_RmTypeDAO {
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
-
+			
 			ps.setInt(1, rmtypeVO.getStore_no());
 			ps.setString(2, rmtypeVO.getRm_name());
 			ps.setInt(3, rmtypeVO.getRm_total());
@@ -48,8 +52,16 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			ps.setString(7, rmtypeVO.getRm_intro());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return rmtypeVO;
 	}
@@ -74,8 +86,16 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			ps.setInt(10, rmtypeVO.getRm_type_no());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return rmtypeVO;
 	}
@@ -92,8 +112,16 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			ps.setInt(2, rm_type_no);
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -123,14 +151,14 @@ public class RmTypeDAO implements I_RmTypeDAO {
 				rm.setRm_update(rs.getBoolean("rm_update"));
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -166,14 +194,14 @@ public class RmTypeDAO implements I_RmTypeDAO {
 				rmAll.add(rm);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -209,17 +237,60 @@ public class RmTypeDAO implements I_RmTypeDAO {
 				rmAllRsv.add(rm);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
 		return rmAllRsv;
+	}
+
+	@Override
+	public List<RmTypeVO> getAllByStoreNo(Integer store_no) {
+		List<RmTypeVO> rmAll = new ArrayList<>();
+		ResultSet rs = null;
+		RmTypeVO rm = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_ALL_BY_STORE);
+
+			ps.setInt(1, store_no);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				rm = new RmTypeVO();
+				rm.setRm_type_no(rs.getInt("rm_type_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setRm_name(rs.getString("rm_name"));
+				rm.setRm_total(rs.getInt("rm_total"));
+				rm.setRm_people(rs.getInt("rm_people"));
+				rm.setRm_price(rs.getInt("rm_price"));
+				rm.setRm_area(rs.getInt("rm_area"));
+				rm.setRm_intro(rs.getString("rm_intro"));
+				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
+				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
+				rm.setRm_update(rs.getBoolean("rm_update"));
+				rmAll.add(rm);
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return rmAll;
 	}
 }
