@@ -131,7 +131,7 @@ td, div {
 										<c:forEach var="empVO" items="${empSvc.all}">
 											<option value="${empVO.emp_no}"
 												${(authVO.emp_no==empVO.emp_no)?'selected':'' }>${empVO.emp_no}</option>
-										</c:forEach>>
+										</c:forEach>
 										<%-- <option>${authVO.emp_no}</option> --%>
 									</select>
 								</div>
