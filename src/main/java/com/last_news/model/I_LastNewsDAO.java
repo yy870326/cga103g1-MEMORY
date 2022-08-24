@@ -9,5 +9,9 @@ public interface I_LastNewsDAO {
 	public void delete(LastNewsVO lastNewsVO);
 	//顯示訊息
 	public List<LastNewsVO> getall();
+	
+	public LastNewsVO getone(Integer news_no);
+	
+	public LastNewsVO  getOnePic(Integer news_no);
 
 }
