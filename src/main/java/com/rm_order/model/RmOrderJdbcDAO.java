@@ -182,4 +182,10 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
+
+	@Override
+	public void checkIn(Integer rm_order_no) {
+		// TODO Auto-generated method stub
+		
+	}
 }
