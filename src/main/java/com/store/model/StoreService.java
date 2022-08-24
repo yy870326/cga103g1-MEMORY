@@ -3,8 +3,6 @@ package com.store.model;
 import java.sql.Date;
 import java.util.List;
 
-import com.rm_order_list.model.Rm_order_listVO;
-
 public class StoreService {
 	private I_StoreDAO dao;
 	
