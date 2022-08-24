@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.auth.model.AuthService;
-import com.auth.model.AuthVO;
+import com.auth.model.*;
+import com.emp.model.*;
 
 @WebServlet(name = "AddAuthServlet", urlPatterns = { "/auth/addAuth.do" })
 public class AddAuthServlet extends HttpServlet {
@@ -20,7 +20,7 @@ public class AddAuthServlet extends HttpServlet {
 	
 	
     @Override   
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
 	}
 
@@ -51,21 +51,26 @@ public class AddAuthServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				AuthService authSvc = new AuthService();
+				EmpService empSvc = new EmpService();
 
-				Integer fun_no = Integer.valueOf(req.getParameter("fun_no"));
-				if(authSvc.getOneAuth(fun_no) !=null) {
-					errorMsgs.add("已存在相同的權限編號，請重新新增");
-					AuthVO authVO = authSvc.getOneAuth(fun_no);
-					req.setAttribute("authVO", authVO); //撈出該權限VO，存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/auth/addAuth.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷		
+				Integer fun_no = Integer.valueOf(req.getParameter("fun_no").trim());
+				if(authSvc.getOneAuth(fun_no) == null) {
+					errorMsgs.add("不存在的權限編號，請重新新增");
 				} else if (fun_no == null) {
 					errorMsgs.add("權限編號 請勿空白");
 				} 
 				
 				
 				Integer emp_no = Integer.valueOf(req.getParameter("emp_no").trim());
+				if(empSvc.getOneEmp(emp_no) == null) {
+					errorMsgs.add("不存在的員工編號，請重新新增");	
+				} else if (emp_no == null) {
+					errorMsgs.add("員工編號 請勿空白");
+				}
+				
+				if (authSvc.getOneByEmp(emp_no) != null) {   // 判斷此員工是否已存在權限
+					errorMsgs.add("該員工已有設定權限");
+				}
 				
 				AuthVO authVO = new AuthVO();
 				authVO.setFun_no(fun_no);
@@ -79,7 +84,7 @@ public class AddAuthServlet extends HttpServlet {
 				}
 				/*************************** 2.開始新增資料 ****************************************/
 				authVO = authSvc.addAuth(fun_no, emp_no);
-				/*************************** 3.新增權限完成,準備轉交(Send the Success view) ************/
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("authVO", authVO); // 資料庫取出的VO物件,存入req
 				String url = "/backend/auth/listAllAuth.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -95,34 +100,3 @@ public class AddAuthServlet extends HttpServlet {
 
 	}
 }
-
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-	
-		
-		
-	
-
-

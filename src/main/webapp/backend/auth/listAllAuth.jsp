@@ -58,7 +58,7 @@ pageContext.setAttribute("authSvc", authSvc);
 				<div class="card-tabs mt-3 mt-sm-0">
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link" href="<%=request.getContextPath()%>/auth/addAuth.do?action=getAllAuth">所有權限列表 (${authSvc.getAllAuth().size()})</a>
+							<a class="nav-link" href="<%=request.getContextPath()%>/auth/addAuth.do?action=getAll">所有權限列表(${authSvc.getAllAuth().size()})</a>
 						</li>
 					</ul>
 				</div>
