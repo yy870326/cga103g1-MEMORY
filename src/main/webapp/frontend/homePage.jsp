@@ -23,7 +23,7 @@
 	<%@ include file="/frontend/header.file" %>
 
   	<!-- Main Banner -->
-	<%@ include file="/frontend/banner.file" %> 
+	<%@ include file="/frontend/homePageBanner.file" %> 
     <!-- Main banner -->
 
 	
