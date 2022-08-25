@@ -30,8 +30,8 @@ public class LastNewsService {
 //			return lastNewsVO;
 //		}
 		
-		public void deleteLastNews(LastNewsVO lastNewsVO) {
-			dao.delete(lastNewsVO);
+		public void deleteLastNews(Integer news_no) {
+			dao.delete(news_no);
 		}
 		
 		public List<LastNewsVO> getLastNewsAll() {
@@ -44,5 +44,9 @@ public class LastNewsService {
 		
 		public LastNewsVO getOnePic(Integer news_no) {
 			return dao.getOnePic(news_no);
+		}
+		
+		public LastNewsVO getLastNewsONE() {
+			return dao.getlast();
 		}
 }

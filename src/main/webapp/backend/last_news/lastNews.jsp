@@ -41,6 +41,7 @@ pageContext.setAttribute("lastNews", lastNews);
 					<th>文字</th>
 					<th>圖片</th>
 					<th>時間</th>
+					<th>#</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -50,8 +51,17 @@ pageContext.setAttribute("lastNews", lastNews);
 						<td>${lastNewsVO.news}</td>
 						<td><img
 							src="<%=request.getContextPath()%>/lastNews?news_no=${lastNewsVO.news_no}&action=getOnePic"
-							width="150" height="150"></td>
+							width="100" height="100"></td>
 						<td>${lastNewsVO.news_time}</td>
+						<td>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/lastNews"
+								style="margin-bottom: 0px;">
+								<input type="submit" value="刪除"> 
+								<input type="hidden" name="news_no" value="${lastNewsVO.news_no}"> 
+								<input type="hidden" name="action" value="delete">
+							</FORM>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

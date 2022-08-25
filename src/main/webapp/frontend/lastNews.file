@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.last_news.model.*"%>
+
+<%
+LastNewsService lnSvc = new LastNewsService();
+LastNewsVO lastNews = lnSvc.getLastNewsONE();
+pageContext.setAttribute("lastNews", lastNews);
+%>
+
+
+<marquee>
+	${lastNews.news}
+	 <img src="<%=request.getContextPath()%>/lastNews?news_no=${lastNews.news_no}&action=getOnePic" width="50" height="50">
+	</marquee>
