@@ -199,4 +199,10 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 		}
 		return rmAllRsv;
 	}
+
+	@Override
+	public List<RmTypeVO> getAllByStoreNo(Integer store_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
