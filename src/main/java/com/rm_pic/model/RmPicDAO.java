@@ -1,7 +1,5 @@
 package com.rm_pic.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,15 +13,19 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.auth.model.AuthVO;
 import com.util.JdbcUtil;
 
-public class RmPicJdbcDAO implements I_RmPicDAO {
+public class RmPicDAO implements I_RmPicDAO {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/cga103g1?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "06210323";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT = "INSERT INTO rm_pic(rm_type_no, rm_pic_img)VALUES(?,?)";
 	private static final String UPDATE = "UPDATE rm_pic SET rm_type_no=?, rm_pic_img=? WHERE rm_pic_no=?";
@@ -33,22 +35,17 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 
 	@Override
 	public void insert(RmPicVO rmPicVO) {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 
 			ps.setInt(1, rmPicVO.getRm_pic_no());
 			ps.setBytes(2, rmPicVO.getRm_pic_img());
 			ps.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -79,19 +76,14 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
 			ps.setInt(1, rmPicVO.getRm_type_no());
 			ps.setBytes(2, rmPicVO.getRm_pic_img());
 			ps.setInt(3, rmPicVO.getRm_pic_no());
 			ps.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -121,17 +113,12 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(DELETE);
 
 			ps.setInt(1, rm_pic_no);
 			ps.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -156,18 +143,18 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 
 	@Override
 	public RmPicVO findByPrimaryKey(Integer rm_pic_no) {
+
 		RmPicVO rmPicVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE);
 
 			ps.setInt(1, rm_pic_no);
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				rmPicVO = new RmPicVO();
@@ -175,9 +162,7 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 				rmPicVO.setRm_type_no(rs.getInt("rm_type_no"));
 				rmPicVO.setRm_pic_img(rs.getBytes("rm_pic_img"));
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -217,8 +202,7 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL);
 			rs = ps.executeQuery();
 
@@ -228,11 +212,8 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 				rmPicVO.setRm_type_no(rs.getInt("rm_type_no"));
 				rmPicVO.setRm_pic_img(rs.getBytes("rm_pic_img"));
 				list.add(rmPicVO);
-
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -260,44 +241,5 @@ public class RmPicJdbcDAO implements I_RmPicDAO {
 			}
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-		RmPicJdbcDAO dao = new RmPicJdbcDAO();
-
-		// 新增
-//		RmPicVO rmPicVO1 = new RmPicVO();
-//		rmPicVO1.setrm_type_no(1);
-//		rmPicVO1.setrm_pic_img(pic);
-//		dao.insert(rmPicVO1);
-//		System.out.println("新增成功");
-
-		// 修改
-//		RmPicVO rmPicVO2 = new RmPicVO();
-//		rmPicVO2.setRm_type_no(1);
-//		rmPicVO2.setRm_pic_img(pic);
-//		rmPicVO2.setRm_pic_no(1);
-//		dao.update(rmPicVO2);
-//		System.out.println("修改成功");
-
-		// 刪除
-//		dao.delete(1);
-//		System.out.println("刪除成功");
-
-		// 查詢一筆
-		RmPicVO rmPicVO3 = dao.findByPrimaryKey(1);
-		System.out.println(rmPicVO3.getRm_pic_no() + ",");
-		System.out.println(rmPicVO3.getRm_type_no() + ",");
-		System.out.println(rmPicVO3.getRm_pic_img() + ",");
-		System.out.println("----------------------");
-
-		List<RmPicVO> list = dao.getAll();
-		for (RmPicVO rPic : list) {
-			System.out.println(rmPicVO3.getRm_pic_no() + ",");
-			System.out.println(rmPicVO3.getRm_type_no() + ",");
-			System.out.println(rmPicVO3.getRm_pic_img() + ",");
-			System.out.println();
-		}
-
 	}
 }

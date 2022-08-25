@@ -1,8 +1,13 @@
 package com.tkt.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class TktVO {
+public class TktVO implements Serializable{
+	
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer tkt_no;
 	private String tkt_name;
 	private Integer original_amount;

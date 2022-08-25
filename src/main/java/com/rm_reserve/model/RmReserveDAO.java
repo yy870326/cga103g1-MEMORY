@@ -8,14 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.util.JdbcUtil;
 
-public class RmReservejdbcDAO implements I_RmReserveDAO {
+public class RmReserveDAO implements I_RmReserveDAO {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/cga103g1?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "06210323";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT = "INSERT INTO RM_RESERVE(rm_type_no,rm_type_amount,rm_schedule_date,reservation_amount)VALUES(?,?,?,?)";
 	private static final String UPDATE = "UPDATE RM_RESERVE SET rm_type_no=?,rm_type_amount=?, rm_schedule_date=?,reservation_amount=? WHERE serial_no=?";
@@ -30,20 +40,15 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 
 			ps.setInt(1, rmreserveVO.getRm_type_no());
 			ps.setInt(2, rmreserveVO.getRm_type_amount());
 			ps.setDate(3, rmreserveVO.getRm_schedule_date());
 			ps.setInt(4, rmreserveVO.getReservation_amount());
-
 			ps.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -74,9 +79,7 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
 			ps.setInt(1, rmreserveVO.getRm_type_no());
@@ -86,8 +89,6 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 			ps.setInt(5, rmreserveVO.getSerial_no());
 			ps.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -118,16 +119,12 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 		PreparedStatement ps = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(CANCEL);
 
 			ps.setInt(1, rmreserveVO.getSerial_no());
 			ps.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -161,8 +158,7 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE);
 
 			ps.setInt(1, serial_no);
@@ -175,10 +171,7 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 				rmReserveVO.setRm_schedule_date(rs.getDate("rm_schedule_date"));
 				rmReserveVO.setReservation_amount(rs.getInt("reservation_amount"));
 			}
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -211,7 +204,6 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 	@Override
 	public List<RmReserveVO> getAll() {
 		List<RmReserveVO> list = new ArrayList<RmReserveVO>();
-
 		RmReserveVO rmReserveVO = null;
 
 		Connection con = null;
@@ -219,24 +211,20 @@ public class RmReservejdbcDAO implements I_RmReserveDAO {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL);
-			rs = ps.executeQuery();
 
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				rmReserveVO = new RmReserveVO();
 				rmReserveVO.setSerial_no(rs.getInt("serial_NO"));
 				rmReserveVO.setRm_type_no(rs.getInt("rm_type_no"));
-				rmReserveVO.setRm_type_amount(rs.getInt("rm_type_amout"));
+				rmReserveVO.setRm_type_amount(rs.getInt("rm_type_amount"));
 				rmReserveVO.setRm_schedule_date(rs.getDate("rm_schedule_date"));
 				rmReserveVO.setReservation_amount(rs.getInt("reservation_amount"));
 				list.add(rmReserveVO);
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources

@@ -1,4 +1,4 @@
-package com.ac_pic.model;
+package com.auth_fun.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,18 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
 import com.util.JdbcUtil;
 
-public class AcPicDAO implements I_AcPicDAO {
-	private static final String INSERT = "INSERT INTO ac_pic(ac_no, ac_pic_img)VALUES(?,?)";
-	private static final String UPDATE = "UPDATE ac_pic SET ac_no=?, ac_pic_img=? WHERE ac_pic_no=?";
-	private static final String DELETE = "DELETE FROM ac_pic WHERE ac_pic_no=?";
-	private static final String GET_ONE = "SELECT * FROM ac_pic WHERE ac_pic_no=?";
-	private static final String GET_ALL = "SELECT * FROM ac_pic";
+public class AuthFunDAO implements I_AuthFunDAO {
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -29,21 +27,36 @@ public class AcPicDAO implements I_AcPicDAO {
 		}
 	}
 
+	private static final String INSERT = "INSERT INTO auth_fun (fun_no,fun_name) VALUES (?,?)";
+	private static final String UPDATE = "UPDATE auth_fun SET fun_no=? WHERE fun_name=?";
+	private static final String DELETE = "DELETE FROM auth_fun WHERE fun_no=?";
+	private static final String GET_ONE = "SELECT * FROM auth_fun WHERE fun_no=?";
+	private static final String GET_ALL = "SELECT * FROM auth_fun";
+
 	@Override
-	public void insert(AcPicVO acPicVO) {
+	public void insert(AuthFunVO authFunVO) {
 		Connection con = null;
 		PreparedStatement ps = null;
+
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 
-			ps.setInt(1, acPicVO.getAc_no());
-			ps.setBytes(2, acPicVO.getAc_pic_img());
+			ps.setInt(1, authFunVO.getFun_no());
+			ps.setString(2, authFunVO.getFun_name());
 			ps.executeUpdate();
-
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
@@ -52,24 +65,35 @@ public class AcPicDAO implements I_AcPicDAO {
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public void update(AcPicVO acPicVO) {
+	public void update(AuthFunVO authFunVO) {
+
 		Connection con = null;
 		PreparedStatement ps = null;
+
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, acPicVO.getAc_no());
-			ps.setBytes(2, acPicVO.getAc_pic_img());
-			ps.setInt(3, acPicVO.getAc_pic_no());
+			ps.setInt(1, authFunVO.getFun_no());
+			ps.setString(2, authFunVO.getFun_name());
 			ps.executeUpdate();
 
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
@@ -78,22 +102,33 @@ public class AcPicDAO implements I_AcPicDAO {
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public void delete(Integer ac_pic_no) {
+	public void delete(Integer fun_no) {
+
 		Connection con = null;
 		PreparedStatement ps = null;
+
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(DELETE);
 
-			ps.setInt(1, ac_pic_no);
+			ps.setInt(1, fun_no);
 			ps.executeUpdate();
-
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
@@ -102,28 +137,48 @@ public class AcPicDAO implements I_AcPicDAO {
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public AcPicVO getOne(Integer ac_pic_no) {
-		ResultSet rs = null;
-		AcPicVO ac = null;
+	public AuthFunVO findByPrimaryKey(Integer fun_no) {
+
+		AuthFunVO authFunVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
+
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE);
-			ps.setInt(1, ac_pic_no);
+
+			ps.setInt(1, fun_no);
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
-				ac = new AcPicVO();
-				ac.setAc_pic_no(rs.getInt("ac_pic_no"));
-				ac.setAc_no(rs.getInt("ac_no"));
-				ac.setAc_pic_img(rs.getBytes("ac_pic_img"));
+				authFunVO = new AuthFunVO();
+				authFunVO.setFun_no(rs.getInt("fun_no"));
+				authFunVO.setFun_name(rs.getString("fun_name"));
 			}
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
@@ -132,31 +187,49 @@ public class AcPicDAO implements I_AcPicDAO {
 				}
 			}
 		}
-		return ac;
+		return authFunVO;
 	}
 
 	@Override
-	public List<AcPicVO> getAll() {
-		List<AcPicVO> acAll = new ArrayList<>();
-		ResultSet rs = null;
-		AcPicVO ac = null;
+	public List<AuthFunVO> getAll() {
+		List<AuthFunVO> list = new ArrayList<AuthFunVO>();
+		AuthFunVO authFunVO = null;
+
 		Connection con = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
+
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL);
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				ac = new AcPicVO();
-				ac.setAc_pic_no(rs.getInt("ac_pic_no"));
-				ac.setAc_no(rs.getInt("ac_no"));
-				ac.setAc_pic_img(rs.getBytes("ac_pic_img"));
-				acAll.add(ac);
+				authFunVO = new AuthFunVO();
+				authFunVO.setFun_no(rs.getInt("fun_no"));
+				authFunVO.setFun_name(rs.getString("fun_name"));
+				list.add(authFunVO);
 			}
+
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
@@ -165,6 +238,6 @@ public class AcPicDAO implements I_AcPicDAO {
 				}
 			}
 		}
-		return acAll;
+		return list;
 	}
 }

@@ -1,6 +1,11 @@
 package com.cart.model;
 
-public class CartVO {
+import java.io.Serializable;
+
+public class CartVO implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Integer tkt_no;
 	private Integer mem_no;
 	

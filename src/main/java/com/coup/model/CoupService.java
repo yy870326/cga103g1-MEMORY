@@ -40,6 +40,8 @@ public class CoupService {
 		coupVO.setStartdate(startdate);
 		coupVO.setEnddate(enddate);
 		coupVO.setStatus(status);
+		
+		dao.update(coupVO);
 
 		return coupVO;
 	}
@@ -49,6 +51,8 @@ public class CoupService {
 		CoupVO coupVO = new CoupVO();
 
 		coupVO.setStatus(status);
+		
+		dao.updateStatus(coupVO);
 
 		return coupVO;
 	}

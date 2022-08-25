@@ -5,11 +5,17 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.coup.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="coupSvc" class="com.coup.model.CoupService" />
+<%-- <jsp:useBean id="coupSvc" class="com.coup.model.CoupService" /> --%>
 
 <%
+CoupService coupSvc = new CoupService();
 List<CoupVO> coupList = coupSvc.getAll();
 pageContext.setAttribute("coupList", coupList);
+
+/* System.out.println("listAll -s"); // 印出來看
+CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); //
+System.out.println(coupVO); // 印出來看
+System.out.println("listAll -e"); // 印出來看 */
 %>
 
 <html>
@@ -144,7 +150,7 @@ td, div {
 									<form method="post" action="<%=request.getContextPath()%>/coup/updateCoup.do">
 										<input type="submit" class="btn btn-warning" value="修改"> 
 										<input type="hidden" name="coup_no" value="${coupVO.coup_no}">
-										<input type="hidden" name="action" value="coupUpdate">
+										<input type="hidden" name="action" value="getOneUpdate">
 									</form>
 									
 								</td>
@@ -155,6 +161,20 @@ td, div {
 
 					</tbody>
 				</table>
+				
+				<nav aria-label="Page navigation example">
+ 		 		<ul class="pagination justify-content-center">
+    				<li class="page-item disabled">
+      					<a class="page-link">第一頁</a>
+    				</li>
+    				<li class="page-item"><a class="page-link" href="#">1</a></li>
+    				<li class="page-item"><a class="page-link" href="#">2</a></li>
+    				<li class="page-item"><a class="page-link" href="#">3</a></li>
+    				<li class="page-item">
+      					<a class="page-link" href="#">最後一頁</a>
+    				</li>
+  				</ul>
+				</nav>
 
 			</div>
 		</div>

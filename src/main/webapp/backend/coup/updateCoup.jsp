@@ -5,10 +5,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.coup.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="coupSvc" class="com.coup.model.CoupService" />
 
 <%
 CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
+System.out.print(coupVO); // 看資料有沒有傳過來
 %>
 
 
@@ -106,21 +106,21 @@ td, div {
 			<div class="col-12">
 				<form action="<%=request.getContextPath()%>/coup/updateCoup.do" method="post" class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title" id="updateCoupModalLabel">${coupVO.coup_no} 優惠券修改</h3>
+						<h3 class="modal-title" id="updateCoupModalLabel">${coupVO.coup_no} ${coupVO.coup_name} 修改</h3>
 					</div>
 					<div class="modal-body">
 						<div class="form-row input-mb d-flex">
 							<div class="form-group col-md-5 input-mr">
 								<label for="coupName">優惠券名稱</label> 
-								<input type="text" class="form-control" id="coupName" value="${coupVO.coup_name}" required>
+								<input type="text" class="form-control" id="coupName" name="coup_name" value="${coupVO.coup_name}">
 							</div>
 							<div class="form-group col-md-4 input-mr">
 								<label for="discount">折扣金額</label> 
-								<input type="number" class="form-control" id="discount" value="${coupVO.discount}" required>
+								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
 							<label for="status">狀態</label> 
-							<input type="number" class="form-control" id="discount" value="${coupVO.status}">
+							<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}">
 								<!-- <p>狀態</p> 
 								<select class="custom-select custom-select-lg mb-3" id="status">
 									<option value="0" selected>未上架</option>
@@ -130,16 +130,16 @@ td, div {
 						</div>
 						<div class="form-group col-md-12 input-mb">
 							<label for="introduce">優惠券介紹</label>
-							<textarea class="form-control" id="introduce" rows="3"> ${coupVO.introduce}</textarea>
+							<textarea class="form-control" id="introduce" name="introduce" rows="3"> ${coupVO.introduce}</textarea>
 						</div>
 						<div class="form-row d-flex input-mb">
 							<div class="form-group col-md-5 input-mr">
 								<label for="startDate">開始日期</label> 
-								<input type="date" class="form-control" id="startDate"  value="${coupVO.startdate}" required>
+								<input type="date" class="form-control" id="startDate" name="startdate"  value="${coupVO.startdate}">
 							</div>
 							<div class="form-group col-md-5">
 								<label for="endDate">結束日期</label> 
-								<input type="date" class="form-control" id="endDate"  value="${coupVO.enddate}" required>
+								<input type="date" class="form-control" id="endDate" name="enddate"  value="${coupVO.enddate}">
 							</div>
 						</div>
 					</div>
@@ -150,8 +150,8 @@ td, div {
 						<input type="hidden" name="coup_no" value="${coupVO.coup_no}">
 						<input type="hidden" name="action" value="coupUpdate">
 						
-						<a href="listAllCoup.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
-						<button type="submit" class="btn btn-primary" id="updateSave">儲存</button>
+						<a href="<%=request.getContextPath()%>/backend/coup/listAllCoup.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
+						<input type="submit" class="btn btn-primary" id="updateSave" value="儲存">
 					</div>
 				</form>
 

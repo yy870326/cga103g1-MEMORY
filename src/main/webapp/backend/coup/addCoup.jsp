@@ -7,9 +7,12 @@
 <%@ page import="java.time.LocalDate"%>
 <jsp:useBean id="coupSvc" class="com.coup.model.CoupService" />
 
-<%
-CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
-%>
+ <%
+System.out.println("add -s"); // 印出來看
+CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); // 
+System.out.println(coupVO); // 印出來看
+System.out.println("add -e"); // 印出來看
+%> 
 
 <html>
 <head>
@@ -85,6 +88,11 @@ td, div {
 .input-mb {
 	margin-bottom: 1rem;
 }
+
+.error-list-mb{
+	margin-bottom: 0.6rem;
+}
+ 
 </style>
 
 </head>
@@ -96,15 +104,7 @@ td, div {
 	<!-- sidebar -->
 	<%@ include file="/backend/sidebar.file"%>
 	
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color:red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color:red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+	
 	
 
 	<!-- main -->
@@ -113,6 +113,16 @@ td, div {
 			<div class="col-12 d-flex justify-content-between mb-5">
 				<h1 class="coup-list-h1">新增優惠券</h1>
 			</div>
+			
+			<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color:red" class="error-list-mb">${message}</li>
+					</c:forEach>
+				</ul>
+		</c:if>
 
 
 			<div class="col-12">
@@ -124,21 +134,29 @@ td, div {
 						<div class="form-row input-mb d-flex">
 							<div class="form-group col-md-5 input-mr">
 								<label for="coupName">優惠券名稱</label> 
-								<input type="text" class="form-control" id="coupName" name="coup_name" value="${coupVO.coup_name}" required>
+								<input type="text" class="form-control" id="coupName" name="coup_name" value="${coupVO.coup_name}">
 							</div>
 							<div class="form-group col-md-4 input-mr">
 								<label for="discount">折扣金額</label> 
-								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}" required>
+								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
 								<label for="status">狀態</label> 
-								<input type="number" class="form-control" id="discount" name="status" value="${coupVO.status}">
+								<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}">
 								
 								<!-- <p>狀態</p>
 								<select class="custom-select custom-select-lg mb-3" id="status">
 									<option value="0" selected>未上架</option>
 									<option value="1">已上架</option>
 								</select> -->
+								
+							<%-- <td>
+								<select size="1" name="OrderState" required>
+									<option value="0" <c:if test="${coupVO.status == 0}"><c:out value="selected"></c:out></c:if>>未上架</option>
+									<option value="1" <c:if test="${coupVO.status == 1}"><c:out value="selected"></c:out></c:if>>已上架</option>
+								</select>
+							</td> --%>
+								
 							</div>
 						</div>
 						<div class="form-group col-md-12 input-mb">
@@ -148,11 +166,11 @@ td, div {
 						<div class="form-row d-flex input-mb">
 							<div class="form-group col-md-5 input-mr">
 								<label for="startDate">開始日期</label> 
-								<input type="date" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}" required>
+								<input type="date" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}">
 							</div>
 							<div class="form-group col-md-5">
 								<label for="endDate">結束日期</label> 
-								<input type="date" class="form-control" id="endDate" name="enddate" value="${coupVO.enddate}" required>
+								<input type="date" class="form-control" id="endDate" name="enddate" value="${coupVO.enddate}">
 							</div>
 						</div>
 
@@ -161,8 +179,8 @@ td, div {
 						<!-- hidden input -->
 						<input type="hidden" name="action" value="coupAdd">
 						
-						<a href="listAllCoup.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
-						<button type="submit" class="btn btn-primary">儲存</button>
+						<a href="<%=request.getContextPath()%>/backend/coup/listAllCoup.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
+						<input type="submit" class="btn btn-primary" value="儲存">
 					</div>
 				</form>
 
