@@ -60,14 +60,14 @@ public class UpdateCoupServlet extends HttpServlet {
 			// coup_name
 			String coup_name = req.getParameter("coup_name");
 			
-			if (coup_name == null || coup_name.length() == 0) {
+			if (coup_name == null || coup_name.trim().length() == 0) {
 				errorMsgs.add("請填入優惠券名稱");
 			}
 
 			// introduce
 			String introduce = req.getParameter("introduce");
 			
-			if (introduce == null || introduce.length() == 0) {
+			if (introduce == null || introduce.trim().length() == 0) {
 				errorMsgs.add("請填入優惠券介紹");
 			}
 
@@ -75,9 +75,8 @@ public class UpdateCoupServlet extends HttpServlet {
 			Integer discount = null;
 			
 			try {
-				discount = Integer.valueOf(req.getParameter("discount"));
+				discount = Integer.valueOf(req.getParameter("discount").trim());
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
 				errorMsgs.add("請填入優惠券折扣金額");
 			}
 			
@@ -86,9 +85,8 @@ public class UpdateCoupServlet extends HttpServlet {
 			Date startdate = null;
 
 			try {
-				startdate = Date.valueOf(req.getParameter("startdate"));
+				startdate = Date.valueOf(req.getParameter("startdate").trim());
 			} catch (IllegalArgumentException e) {
-				startdate = new Date(System.currentTimeMillis());
 				errorMsgs.add("請填入優惠券起始日期");
 			}
 
@@ -96,9 +94,8 @@ public class UpdateCoupServlet extends HttpServlet {
 			Date enddate = null;
 
 			try {
-				enddate = Date.valueOf(req.getParameter("enddate"));
+				enddate = Date.valueOf(req.getParameter("enddate").trim());
 			} catch (IllegalArgumentException e) {
-				enddate = new Date(System.currentTimeMillis());
 				errorMsgs.add("請填入優惠券起始日期");
 			}
 
@@ -106,9 +103,8 @@ public class UpdateCoupServlet extends HttpServlet {
 			Integer status = null;
 			
 			try {
-				status = Integer.valueOf(req.getParameter("status"));
+				status = Integer.valueOf(req.getParameter("status").trim());
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
 				errorMsgs.add("請選擇優惠券狀態");
 			}
 			

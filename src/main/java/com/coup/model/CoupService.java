@@ -65,5 +65,8 @@ public class CoupService {
 		return dao.getAll();
 	}
 
+	public List<CoupVO> getByEndDate(Date enddate) {
+		return dao.getByEndDate(enddate);
+	}
 	
 }

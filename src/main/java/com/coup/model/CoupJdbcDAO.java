@@ -3,6 +3,7 @@ package com.coup.model;
 import static com.util.JdbcUtil.*;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,8 @@ public class CoupJdbcDAO implements I_CoupDAO {
 	private static final String UPDATE_STATUS = "UPDATE coup SET status = ? WHERE enddate = ?;";
 	private static final String GET_ONE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE coup_no = ?;";
 	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no;";
-
+	private static final String GET_ONE_BY_ENDDATE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE enddate = ? ORDER BY coup_no;";
+	
 	@Override
 	public void insert(CoupVO coupVO) {
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -135,9 +137,42 @@ public class CoupJdbcDAO implements I_CoupDAO {
 
 		return list;
 	};
+	
+	@Override
+	public List<CoupVO> getByEndDate(Date enddate) {
+		List<CoupVO> list = new ArrayList<CoupVO>();
+		CoupVO coupVO = null;
+		ResultSet rs = null;
+
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(GET_ONE_BY_ENDDATE)) {
+
+			ps.setObject(1, enddate);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				coupVO = new CoupVO();
+
+				coupVO.setCoup_no(rs.getInt("coup_no"));
+				coupVO.setCoup_name(rs.getString("coup_name"));
+				coupVO.setIntroduce(rs.getString("introduce"));
+				coupVO.setDiscount(rs.getInt("discount"));
+				coupVO.setStartdate(rs.getDate("startdate"));
+				coupVO.setEnddate(rs.getDate("enddate"));
+				coupVO.setStatus(rs.getInt("status"));
+
+				list.add(coupVO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 
 	public static void main(String[] args) {
-//		CoupJdbcDAO dao = new CoupJdbcDAO();
+		CoupJdbcDAO dao = new CoupJdbcDAO();
 
 		// insert
 //		CoupVO voInsert = new CoupVO();
@@ -194,5 +229,19 @@ public class CoupJdbcDAO implements I_CoupDAO {
 //			System.out.println(voAll.getStatus());
 //		}
 		
+		// getOneByEndDate
+		List<CoupVO> list2 = dao.getByEndDate(java.sql.Date.valueOf("2022-08-31"));
+		for (CoupVO voEndDate : list2) {
+			System.out.println(voEndDate.getCoup_no());
+			System.out.println(voEndDate.getCoup_name());
+			System.out.println(voEndDate.getIntroduce());
+			System.out.println(voEndDate.getDiscount());
+			System.out.println(voEndDate.getStartdate());
+			System.out.println(voEndDate.getEnddate());
+			System.out.println(voEndDate.getStatus());
+		}
+		
 	}
+
+
 }
