@@ -127,4 +127,10 @@ public class AcPicJdbcDAO implements I_AcPicDAO {
 		}
 		return acAll;
 	}
+
+	@Override
+	public List<AcPicVO> getOneByAcNo(Integer acNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
