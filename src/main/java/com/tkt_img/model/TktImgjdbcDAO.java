@@ -248,7 +248,7 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ä¹Ÿç¨±ç‚º Domain objects
 				tktimgVO = new TktImgVO();
 				tktimgVO.settktImgNO(rs.getInt("tkt_img_no"));
 				tktimgVO.settktNO(rs.getInt("tkt_no"));
@@ -292,30 +292,30 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 	}
 	public static void main(String[] args) {
 		TktImgjdbcDAO dao = new TktImgjdbcDAO();
-		// ·s¼W
+		// æ–°å¢ž
 //		TktImgVO tktimg01 = new TktImgVO();
 //
 //		tktimg01.settktNO(5);
 //		tktimg01.settktimg(null);
 //		dao.insert(tktimg01);
 //		
-		// ­×§ï
+		// ä¿®æ”¹
 //		TktImgVO tktimg02 = new TktImgVO();
 //		tktimg02.settktImgNO(1);
 //		tktimg02.settktNO(99);
 //		tktimg02.settktimg(null);
 //		dao.update(tktimg02);
 //		
-//		// §R°£
+//		// åˆªé™¤
 //		dao.delete(1);
 //		
-//		// ¬d¸ß
+//		// æŸ¥è©¢
 //		TktImgVO tktimg03 = dao.findByPrimaryKey(2);
 //		System.out.println(tktimg03.gettktImgNO()+",");
 //		System.out.println(tktimg03.gettktNO()+",");
 //		System.out.println(tktimg03.gettktimg()+",");
 //		System.out.println("---------------------");
-//		// ¬d¸ß
+//		// æŸ¥è©¢
 		List<TktImgVO> list = dao.getAll();
 		for(TktImgVO aTktImg : list) {
 			System.out.println(aTktImg.gettktImgNO()+",");

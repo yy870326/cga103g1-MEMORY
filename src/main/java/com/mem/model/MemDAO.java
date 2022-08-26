@@ -9,7 +9,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class MemDAO implements I_MemDAO{
-	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
 	private static DataSource ds = null;
 	static {
 		try {
@@ -190,7 +189,6 @@ public class MemDAO implements I_MemDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo 也稱為 Domain objects
 				memvo = new MemVO();
 				memvo.setMem_no(rs.getInt("mem_no"));
 				memvo.setMem_acc(rs.getString("mem_acc"));
@@ -256,7 +254,6 @@ public class MemDAO implements I_MemDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO 也稱為 Domain objects
 				memVO = new MemVO();
 				memVO.setMem_no(rs.getInt("mem_no"));
 				memVO.setMem_acc(rs.getString("mem_acc"));
