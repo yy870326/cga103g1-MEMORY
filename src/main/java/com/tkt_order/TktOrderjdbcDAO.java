@@ -188,7 +188,7 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ä¹Ÿç¨±ç‚º Domain objects
 				tktOrderVO  = new TktOrderVO();
 				tktOrderVO.setTkt_order_no(rs.getInt("tkt_order_no"));
 				tktOrderVO.setMem_no(rs.getInt("mem_no"));
@@ -251,7 +251,7 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ä¹Ÿç¨±ç‚º Domain objects
 				tktOrderVO  = new TktOrderVO();
 				tktOrderVO.setTkt_order_no(rs.getInt("tkt_order_no"));
 				tktOrderVO.setMem_no(rs.getInt("mem_no"));
@@ -299,7 +299,7 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 	}
 	public static void main(String[] args) {
 		TktOrderjdbcDAO	dao = new TktOrderjdbcDAO();
-		//·s¼W
+		//æ–°å¢ž
 //		TktOrderVO	tktOrderVO1 = new TktOrderVO();
 //		tktOrderVO1.setTkt_order_no(5);
 //		tktOrderVO1.setMem_no(2);
@@ -309,7 +309,7 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 //		tktOrderVO1.setOrderdate(java.sql.Date.valueOf("2002-01-01"));
 //		tktOrderVO1.setTTL_PRICE(9);
 //		dao.insert(tktOrderVO1);
-		//­×§ï
+		//ä¿®æ”¹
 //		TktOrderVO tktOrderVO2 = new TktOrderVO();
 //		tktOrderVO2.setTkt_order_no(1);
 //		tktOrderVO2.setMem_no(9);
@@ -319,9 +319,9 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 //		tktOrderVO2.setOrderdate(java.sql.Date.valueOf("2002-01-01"));
 //		tktOrderVO2.setTTL_PRICE(9);
 //		dao.update(tktOrderVO2);
-//		§R°£
+//		åˆªé™¤
 //		dao.delete(1);
-		//¬d¸ß
+		//æŸ¥è©¢
 //		TktOrderVO tktOrderVO3 = dao.findByPrimaryKey(3);
 //		System.out.print(tktOrderVO3.getTkt_order_no()+",");
 //		System.out.print(tktOrderVO3.getMem_no()+",");
@@ -330,7 +330,7 @@ public class TktOrderjdbcDAO implements I_TktOrderDAO{
 //		System.out.print(tktOrderVO3.getOriginal_price()+",");
 //		System.out.print(tktOrderVO3.getOrderdate()+",");
 //		System.out.print(tktOrderVO3.getTTL_PRICE()+",");
-		//¬d¸ß
+		//æŸ¥è©¢
 		List<TktOrderVO> list = dao.getAll();
 		for(TktOrderVO tktOrderVO4 :list) {
 			System.out.print(tktOrderVO4.getTkt_order_no()+",");

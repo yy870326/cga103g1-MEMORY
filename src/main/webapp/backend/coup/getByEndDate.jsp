@@ -8,21 +8,22 @@
 <%-- <jsp:useBean id="coupSvc" class="com.coup.model.CoupService" /> --%>
 
 <%
-CoupService coupSvc = new CoupService();
-List<CoupVO> list = coupSvc.getAll();
+CoupService coupSrv = new CoupService();
+/* CoupVO coupVO = new CoupVO(); */
+/* List<CoupVO> list = coupSrv.getByEndDate(enddate);*/
+List<CoupVO> list = coupSrv.getByEndDate(java.sql.Date.valueOf("2022-08-31")); // 這邊動態抓不到，施工中
 pageContext.setAttribute("list", list);
-CoupVO coupVO = new CoupVO();
-request.setAttribute("coupVO", coupVO);
 
 /* System.out.println("listAll -s"); // 印出來看
-System.out.println(coupVO); // 印出來看
+CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); //
+System.out.println(list); // 印出來看
 System.out.println("listAll -e"); // 印出來看 */
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>優惠券列表 - Memory</title>
+<title>優惠券截止日期列表 - Memory</title>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
@@ -92,6 +93,10 @@ td, div {
 	padding: 1rem 2.5rem 0.5rem 2.5rem;
 }
 
+.go-listAll-btn {
+	margin-right: 4rem;
+}
+
 </style>
 
 </head>
@@ -107,17 +112,8 @@ td, div {
 	<div class="content-body">
 		<div class="container-fluid">
 			<div class="col-12 d-flex justify-content-between mb-5">
-				<div class="d-flex">
-					<h1 class="coup-lis list-h1">優惠券列表</h1>
-					<a href="<%=request.getContextPath()%>/backend/coup/addCoup.jsp" class="btn btn-primary add-btn">新增</a>
-				</div>
-				<!-- search -->
-				<form method="post" action="<%=request.getContextPath()%>/coup/getByEnddate.do" class="input-group search-area">
-					<input type="text" class="form-control" placeholder="輸入截止日期" name="enddate" value="${coupVO.enddate}">
-					<span class="input-group-text"> 
-						<i class="flaticon-381-search-2"></i>
-					</span>
-				</form>
+					<h1 class="coup-lis list-h1">優惠券截止日期列表</h1>
+					<a href="<%=request.getContextPath()%>/backend/coup/listAllCoup.jsp" class="btn btn-primary add-btn go-listAll-btn">返回優惠券列表</a>
 			</div>
 
 			<div class="col-12">
