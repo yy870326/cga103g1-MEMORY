@@ -14,4 +14,6 @@ public interface I_AcPicDAO {
 	
 	public List<AcPicVO> getAll();  // 查詢全部
 	
+	public List<AcPicVO> getOneByAcNo(Integer acNo);
+
 }
