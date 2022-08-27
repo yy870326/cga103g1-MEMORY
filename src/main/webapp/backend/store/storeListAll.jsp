@@ -5,15 +5,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="storeSvc" class="com.store.model.StoreService" />
+
 
 <%
 // 取得自己的store所有資訊存放至pageContext
-// StoreService storeSvc = new StoreService();
+ StoreService storeSvc = new StoreService();
 
-List<StoreVO> storeVO = storeSvc.getAllStore();
+List<StoreVO> list = storeSvc.getAllStore();
 
-pageContext.setAttribute("storeVO", storeVO);
+pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
 <html>
@@ -61,11 +61,12 @@ pageContext.setAttribute("storeVO", storeVO);
 					<th>訂房總評價數</th>
 					<th>活動總分數</th>
 					<th>活動總評價數</th>
-			<%--		<th>被檢舉計點</th>  --%>
+					<th>被檢舉計點</th>
+					<th>修改資料</th>  
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="storeVO" items="${storeVO}">
+				<c:forEach var="storeVO" items="${list}">
 					<tr class="view">
 						<td>${storeVO.store_no}</td>
 						<td>${storeVO.store_acc}</td>
@@ -99,7 +100,13 @@ pageContext.setAttribute("storeVO", storeVO);
 						<td>${storeVO.store_act_rating_score}</td>
 						<td>${storeVO.store_act_rating_count}</td>
 						<td>${storeVO.store_report_count}</td>  
-					
+						<td>
+							<form method="post" action="<%=request.getContextPath()%>/store.do">
+								<input type="submit" value="修改">
+								<input type="hidden" name="store_no" value="${storeVO.store_no}">
+								<input type="hidden" name="action" value="updateStore">
+							</form>
+						</td>
 						</tr>
 				</c:forEach>
 			</tbody>
