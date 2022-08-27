@@ -15,6 +15,7 @@ public interface I_RmTypeDAO {
 	public List<RmTypeVO> getAll();  // 查詢全部
 	
 	public List<RmTypeVO> getAllRsv();  // 查詢全部已上架
-	
+
+	public List<RmTypeVO> getAllByStoreNo(Integer store_no);  // 廠商所有房型
 
 }

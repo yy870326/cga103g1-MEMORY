@@ -3,10 +3,34 @@ package com.ac_pic.model;
 import java.io.Serializable;
 
 public class AcPicVO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private Integer ac_pic_no;
 	private Integer ac_no;
 	private byte[] ac_pic_img;
 	
+	public AcPicVO() {
+		super();
+	}
+	
+	
+	public AcPicVO(byte[] ac_pic_img) {
+		super();
+		this.ac_pic_img = ac_pic_img;
+	}
+
+
+	public AcPicVO(Integer ac_pic_no, Integer ac_no, byte[] ac_pic_img) {
+		super();
+		this.ac_pic_no = ac_pic_no;
+		this.ac_no = ac_no;
+		this.ac_pic_img = ac_pic_img;
+	}
+
+
+
+
+
 	public Integer getAc_pic_no() {
 		return ac_pic_no;
 	}

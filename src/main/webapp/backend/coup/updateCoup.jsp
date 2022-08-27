@@ -8,10 +8,10 @@
 
 <%
 CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
-System.out.print(coupVO); // 看資料有沒有傳過來
+/* System.out.print(coupVO); // 看資料有沒有傳過來 */
 %>
 
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>優惠券修改 - Memory</title>
@@ -102,6 +102,16 @@ td, div {
 			<div class="col-12 d-flex justify-content-between mb-5">
 				<h1 class="coup-list-h1">優惠券修改</h1>
 			</div>
+			
+			<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color:red" class="error-list-mb">${message}</li>
+					</c:forEach>
+				</ul>
+		</c:if>
 
 			<div class="col-12">
 				<form action="<%=request.getContextPath()%>/coup/updateCoup.do" method="post" class="modal-content">
@@ -119,8 +129,23 @@ td, div {
 								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
-							<label for="status">狀態</label> 
-							<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}">
+							<%-- <label for="status">狀態</label> 
+							<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}"> --%>
+							
+							<label for="status">狀態</label>
+							<div class="form-check">
+          						<input class="form-check-input" type="radio" name="status" id="statusOn" value="0" checked>
+          						<label class="form-check-label" for="statusOn">
+            						未上架
+          						</label>
+        					</div>
+        					<div class="form-check">
+          						<input class="form-check-input" type="radio" name="status" id="statusOff" value="1">
+          						<label class="form-check-label" for="statusOff">
+            						上架
+          						</label>
+        					</div>
+							
 								<!-- <p>狀態</p> 
 								<select class="custom-select custom-select-lg mb-3" id="status">
 									<option value="0" selected>未上架</option>

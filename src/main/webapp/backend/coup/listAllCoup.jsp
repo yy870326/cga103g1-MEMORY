@@ -9,15 +9,17 @@
 
 <%
 CoupService coupSvc = new CoupService();
-List<CoupVO> coupList = coupSvc.getAll();
-pageContext.setAttribute("coupList", coupList);
+List<CoupVO> list = coupSvc.getAll();
+pageContext.setAttribute("list", list);
+CoupVO coupVO = new CoupVO();
+request.setAttribute("coupVO", coupVO);
 
 /* System.out.println("listAll -s"); // 印出來看
-CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); //
 System.out.println(coupVO); // 印出來看
 System.out.println("listAll -e"); // 印出來看 */
 %>
 
+<!DOCTYPE html>
 <html>
 <head>
 <title>優惠券列表 - Memory</title>
@@ -82,11 +84,11 @@ td, div {
 
 /* coup css */
 
-.coup-list-h1 {
+.list-h1 {
 	margin-right: 2rem;
 }
 
-.coup-add-btn {
+.add-btn {
 	padding: 1rem 2.5rem 0.5rem 2.5rem;
 }
 
@@ -106,16 +108,16 @@ td, div {
 		<div class="container-fluid">
 			<div class="col-12 d-flex justify-content-between mb-5">
 				<div class="d-flex">
-					<h1 class="coup-list-h1">優惠券列表</h1>
-					<a href="addCoup.jsp" class="btn btn-primary coup-add-btn">新增</a>
+					<h1 class="coup-lis list-h1">優惠券列表</h1>
+					<a href="<%=request.getContextPath()%>/backend/coup/addCoup.jsp" class="btn btn-primary add-btn">新增</a>
 				</div>
-				<div class="input-group search-area">
-					<input type="text" class="form-control" placeholder="Search here">
-					<span class="input-group-text"> <a href="javascript:void(0)">
-							<i class="flaticon-381-search-2"></i>
-					</a>
+				<!-- search -->
+				<form method="post" action="<%=request.getContextPath()%>/coup/getByEnddate.do" class="input-group search-area">
+					<input type="text" class="form-control" placeholder="輸入截止日期" name="enddate" value="${coupVO.enddate}">
+					<span class="input-group-text"> 
+						<i class="flaticon-381-search-2"></i>
 					</span>
-				</div>
+				</form>
 			</div>
 
 			<div class="col-12">
@@ -132,8 +134,12 @@ td, div {
 							<th scope="col"></th>
 						</tr>
 					</thead>
+					
 					<tbody>
-						<c:forEach var="coupVO" items="${coupList}">
+					
+					<%@ include file="/backend/coup/pageIndex.file"%>
+					
+					<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${coupVO.coup_no}</td>
 								<td>${coupVO.coup_name}</td>
@@ -141,7 +147,15 @@ td, div {
 								<td>${coupVO.discount}</td>
 								<td>${coupVO.startdate}</td>
 								<td>${coupVO.enddate}</td>
-								<td>${coupVO.status}</td>
+								<%-- <td>${coupVO.status}</td> --%>
+								<td>
+									<c:if test="${coupVO.status == 0 }">
+										未上架
+									</c:if>
+									<c:if test="${coupVO.status == 1 }">
+										已上架
+									</c:if>
+								</td>
 								<td>
 									<!-- 之後看能不能用 boostrap modal 跳彈跳視窗出來修改資料 -->
 									<!-- <button type="button" class="btn btn-warning"
@@ -162,19 +176,20 @@ td, div {
 					</tbody>
 				</table>
 				
-				<nav aria-label="Page navigation example">
+				<%@ include file="/backend/coup/pagination.file"%>
+				
+				<!-- 之後看有沒有空改 fetch -->
+				<!-- <nav aria-label="Page navigation example">
  		 		<ul class="pagination justify-content-center">
     				<li class="page-item disabled">
       					<a class="page-link">第一頁</a>
     				</li>
     				<li class="page-item"><a class="page-link" href="#">1</a></li>
-    				<li class="page-item"><a class="page-link" href="#">2</a></li>
-    				<li class="page-item"><a class="page-link" href="#">3</a></li>
     				<li class="page-item">
       					<a class="page-link" href="#">最後一頁</a>
     				</li>
   				</ul>
-				</nav>
+				</nav> -->
 
 			</div>
 		</div>

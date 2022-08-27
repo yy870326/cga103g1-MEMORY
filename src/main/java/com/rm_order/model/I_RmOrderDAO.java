@@ -16,4 +16,6 @@ public interface I_RmOrderDAO {
 	
 	public List<RmOrderVO> getAllStatus(Integer rm_order_no); // 查詢各狀態筆數
 
+	public void checkIn(Integer rm_order_no);  // CHECKIN
+
 }

@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 public class TktImgDAO implements I_TktImgDAO{
 
-	// ¤@­ÓÀ³¥Îµ{¦¡¤¤,°w¹ï¤@­Ó¸ê®Æ®w ,¦@¥Î¤@­ÓDataSource§Y¥i
+	// ä¸€å€‹æ‡‰ç”¨ç¨‹å¼ä¸­,é‡å°ä¸€å€‹è³‡æ–™åº« ,å…±ç”¨ä¸€å€‹DataSourceå³å¯
 		private static DataSource ds = null;
 		static {
 			try {
@@ -166,7 +166,7 @@ public class TktImgDAO implements I_TktImgDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ä¹Ÿç¨±ç‚º Domain objects
 				tktImgVO = new TktImgVO();
 				tktImgVO.settktImgNO(rs.getInt("tkt_img_no"));
 				tktImgVO.settktNO(rs.getInt("tkt_no"));
@@ -220,7 +220,7 @@ public class TktImgDAO implements I_TktImgDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ä¹Ÿç¨±ç‚º Domain objects
 				tktimgVO = new TktImgVO();
 				tktimgVO.settktImgNO(rs.getInt("tkt_img_no"));
 				tktimgVO.settktNO(rs.getInt("tkt_no"));
