@@ -8,12 +8,13 @@
 <jsp:useBean id="coupSvc" class="com.coup.model.CoupService" />
 
  <%
-System.out.println("add -s"); // 印出來看
-CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); // 
-System.out.println(coupVO); // 印出來看
-System.out.println("add -e"); // 印出來看
+/* System.out.println("add -s"); // 印出來看 */
+/* CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); //  */
+/* System.out.println(coupVO); // 印出來看
+System.out.println("add -e"); // 印出來看 */
 %> 
 
+<!DOCTYPE html>
 <html>
 <head>
 <title>新增優惠券 - Memory</title>
@@ -22,6 +23,11 @@ System.out.println("add -e"); // 印出來看
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
+	
+<!-- jquery-ui -->	
+<!-- <link rel="stylesheet" type="text/css"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" /> -->
+	
 
 <!-- bootstrap cdn 用了會跑版先註解 -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
@@ -141,14 +147,36 @@ td, div {
 								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
-								<label for="status">狀態</label> 
-								<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}">
+								<%-- <label for="status">狀態</label> 
+								<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}"> --%>
 								
-								<!-- <p>狀態</p>
+								<label for="status">狀態</label>
+								<div class="form-check">
+          							<input class="form-check-input" type="radio" name="status" id="statusOn" value="0" checked>
+          							<label class="form-check-label" for="statusOn">
+            							未上架
+          							</label>
+        						</div>
+        						<div class="form-check">
+          							<input class="form-check-input" type="radio" name="status" id="statusOff" value="1">
+          							<label class="form-check-label" for="statusOff">
+            							上架
+          							</label>
+        						</div>
+								
+								<%-- <label>狀態</label>
 								<select class="custom-select custom-select-lg mb-3" id="status">
-									<option value="0" selected>未上架</option>
-									<option value="1">已上架</option>
-								</select> -->
+									<option value="0" selected>
+										<c:if test="${coupVO.status == 0 }" var="true">
+											未上架
+										</c:if>
+									</option>
+									<option value="1">
+										<c:if test="${coupVO.status == 1 }" var="true">
+											未上架
+										</c:if>
+									</option>
+								</select> --%>
 								
 							<%-- <td>
 								<select size="1" name="OrderState" required>
@@ -156,6 +184,9 @@ td, div {
 									<option value="1" <c:if test="${coupVO.status == 1}"><c:out value="selected"></c:out></c:if>>已上架</option>
 								</select>
 							</td> --%>
+							
+							
+							
 								
 							</div>
 						</div>
@@ -167,6 +198,8 @@ td, div {
 							<div class="form-group col-md-5 input-mr">
 								<label for="startDate">開始日期</label> 
 								<input type="date" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}">
+								<!-- 用 jquery-ui 抓不到日期值 -->
+								<%-- <input type="text" id="datepicker" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}"> --%>
 							</div>
 							<div class="form-group col-md-5">
 								<label for="endDate">結束日期</label> 
@@ -190,7 +223,14 @@ td, div {
 
 	<%@ include file="/backend/commonJS.file"%>
 	
-
+	<!-- jquery-ui -->
+	<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script>
+		$( function() {
+	    	$( "#datepicker" ).datepicker();
+	 	} );
+	</script> -->
 
 	<!-- bootstrap cdn 用了會跑版先註解-->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

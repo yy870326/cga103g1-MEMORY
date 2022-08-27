@@ -273,7 +273,7 @@ public class MemjdbcDAO implements I_MemDAO {
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {
-					// empVO §]∫Ÿ¨∞ Domain objects
+					// empVO ‰πüÁ®±ÁÇ∫ Domain objects
 					memVO = new MemVO();
 					memVO.setMem_no(rs.getInt("mem_no"));
 					memVO.setMem_acc(rs.getString("mem_acc"));
@@ -331,18 +331,18 @@ public class MemjdbcDAO implements I_MemDAO {
 
 
 			MemjdbcDAO dao = new MemjdbcDAO();
-//			// ∑sºW
+//			// Êñ∞Â¢û
 //			MemVO memVO01 = new MemVO();
 //			memVO01.setMem_acc("Swwwwww");
 //			memVO01.setMem_pwd("qwwwwww");
 //			memVO01.setAcc_status(2);
-//			memVO01.setMem_name("§p");
+//			memVO01.setMem_name("Â∞è");
 //			memVO01.setMem_gender("F");
 //			memVO01.setMem_email("@wwwww");
 //			memVO01.setMem_mobile("09888");
-//			memVO01.setMem_city("•x•_");
-//			memVO01.setMem_dist("§§©M");
-//			memVO01.setMem_addr("§§©M");
+//			memVO01.setMem_city("Âè∞Âåó");
+//			memVO01.setMem_dist("‰∏≠Âíå");
+//			memVO01.setMem_addr("‰∏≠Âíå");
 //			memVO01.setMem_reg_date(java.sql.Date.valueOf("2002-01-01"));
 			
 //			memVO01.setMem_pic(null);
@@ -351,19 +351,19 @@ public class MemjdbcDAO implements I_MemDAO {
 //			dao.insert(memVO01);
 			
 			
-//			// ≠◊ßÔ
+//			// ‰øÆÊîπ
 			MemVO memVO02 = new MemVO();
 			memVO02.setMem_no(4);
 			memVO02.setMem_acc("cccccc");
 			memVO02.setMem_pwd("1111111");
 			memVO02.setAcc_status(1);
-			memVO02.setMem_name("§Ù");
+			memVO02.setMem_name("Ê∞¥");
 			memVO02.setMem_gender("F");
 			memVO02.setMem_email("@wwwww");
 			memVO02.setMem_mobile("09888666");
-			memVO02.setMem_city("•x•_");
-			memVO02.setMem_dist("§§©M");
-			memVO02.setMem_addr("§§©M");
+			memVO02.setMem_city("Âè∞Âåó");
+			memVO02.setMem_dist("‰∏≠Âíå");
+			memVO02.setMem_addr("‰∏≠Âíå");
 			memVO02.setMem_reg_date(java.sql.Date.valueOf("2005-01-01"));
 			memVO02.setMem_pic(null);
 			memVO02.setMem_report_count(3);
@@ -371,10 +371,10 @@ public class MemjdbcDAO implements I_MemDAO {
 			
 			dao.update(memVO02);
 //
-//			// ßR∞£
+//			// Âà™Èô§
 			dao.delete(4);
 //
-//			// ¨d∏ﬂ
+//			// Êü•Ë©¢
 //			MemVO memVO03 = dao.findByPrimaryKey(2);
 //			System.out.println(memVO03.getMem_no()+",");
 //			System.out.println(memVO03.getMem_acc()+",");
@@ -392,7 +392,7 @@ public class MemjdbcDAO implements I_MemDAO {
 //			System.out.println(memVO03.getMem_report_count()+",");
 //			System.out.println(memVO03.getMem_card()+",");
 			
-//			// ¨d∏ﬂ
+//			// Êü•Ë©¢
 //			List<MemVO> list = dao.getAll();
 //			for(MemVO aMem : list) {
 //				System.out.println(aMem.getMem_no()+",");
