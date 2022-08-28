@@ -38,7 +38,7 @@ public class AddAuthServlet extends HttpServlet {
 			
 			/*************************** 查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("list", list); // 資料庫取出的VO物件,存入req
-			String url = "/backend/auth/listAllauth.jsp";
+			String url = "/backend/auth/listAllAuth.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -68,10 +68,6 @@ public class AddAuthServlet extends HttpServlet {
 					errorMsgs.add("員工編號 請勿空白");
 				}
 				
-				if (authSvc.getOneByEmp(emp_no) != null) {   // 判斷此員工是否已存在權限
-					errorMsgs.add("該員工已有設定權限");
-				}
-				
 				AuthVO authVO = new AuthVO();
 				authVO.setFun_no(fun_no);
 				authVO.setEmp_no(emp_no);
@@ -92,6 +88,7 @@ public class AddAuthServlet extends HttpServlet {
 				
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("新增權限資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/auth/addAuth.jsp");
 				failureView.forward(req, res);

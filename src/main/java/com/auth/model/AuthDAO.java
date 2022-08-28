@@ -28,11 +28,11 @@ public class AuthDAO implements I_AuthDAO{
 	}
 	
 	private static final String INSERT = "INSERT INTO auth(fun_no,emp_no)VALUES (?,?)";
-	private static final String UPDATE = "UPDATE auth SET fun_no=? , emp_no=? where emp_no=?";
+	private static final String UPDATE = "UPDATE auth SET emp_no=? where fun_no=?";
 	private static final String CANCEL=  "SELECT * FROM auth WHERE fun_no=?";
-	private static final String GET_ONE= "SELECT * FROM auth WHERE fun_no=?";
+	private static final String GET_ONE= "SELECT * FROM auth_fun WHERE fun_no=?";
 	private static final String GET_BY_EMP_NO= "SELECT * FROM auth WHERE emp_no=?";
-	private static final String GET_ALL="SELECT * FROM auth";
+	private static final String GET_ALL="SELECT * FROM auth order by fun_no";
 
 	
 	@Override
@@ -82,8 +82,8 @@ public class AuthDAO implements I_AuthDAO{
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 			
-			ps.setInt(1,authVO.getFun_no());
-			ps.setInt(2,authVO.getEmp_no());
+			ps.setInt(1,authVO.getEmp_no());
+			ps.setInt(2,authVO.getFun_no());
 			ps.executeUpdate();
 			
 			// Handle any driver errors
@@ -165,7 +165,7 @@ public class AuthDAO implements I_AuthDAO{
 			while(rs.next()) {
 				authVO = new AuthVO();
 				authVO.setFun_no(rs.getInt("fun_no"));
-				authVO.setEmp_no(rs.getInt("emp_no"));
+//				authVO.setEmp_no(rs.getInt("emp_no"));
 			}
 			
 		} catch (SQLException se) {

@@ -70,7 +70,7 @@ td, div {
 	letter-spacing: 0.5px;
 }
 
-/* coup css */
+/*  css */
 .coup-list-h1 {
 	margin-right: 2rem;
 }
@@ -118,22 +118,42 @@ td, div {
 				<div class="modal-body">
 					<div class="form-row input-mb d-flex">
 						<div class="form-group col-md-5 input-mr">
-							<label for="fun_no">權限編號</label> <input type="text"
-								class="form-control" id="fun_no" name="fun_no"
-								value="<%=(authVO == null) ? "" : authVO.getFun_no()%>">
+							<label for="fun_no">權限名稱</label> 
+							<%-- <input type="text" class="form-control" id="fun_no" name="fun_no"
+								value="<%=(authVO == null) ? "" : authVO.getFun_no()%>"> --%>
+								<select class="form-control" name="fun_no" >
+									<jsp:useBean id="authFunSvc" scope="page"
+										class="com.auth_fun.model.AuthFunService" />
+									<c:forEach var="authFunVO" items="${authFunSvc.all}">
+										<option value="${authFunVO.fun_no}"
+											${(authVO.fun_no==authFunVO.fun_no)?'selected':''}>${authFunVO.fun_name}</option>
+									</c:forEach>
+								</select>
 						</div>
 						<div class="form-group col-md-5 input-mr">
-							<label for="emp_no">員工編號</label> <input type="text"
-								class="form-control" id="emp_no" name="emp_no"
-								value="<%=(authVO == null) ? "" : authVO.getEmp_no()%>">
+						<label for="emp_no">員工姓名</label>
+							<%-- <input type="text" class="form-control" id="emp_no" name="emp_no"
+								value="<%=(authVO == null) ? "" : authVO.getEmp_no()%>"> --%>
+								<!-- <div class="form-control"> -->
+								<select class="form-control" name="emp_no" >
+									<jsp:useBean id="empSvc" scope="page"
+										class="com.emp.model.EmpService" />
+									<c:forEach var="empVO" items="${empSvc.all}">
+										<option value="${empVO.emp_no}"
+											${(authVO.emp_no==empVO.emp_no)?'selected':''}>${empVO.emp_name}</option>
+									</c:forEach>
+								</select>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<!-- hidden input -->
-					<input type="hidden" name="action" value="insert"> <a
+					<a
 						href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp" class="btn btn-secondary"
 						data-dismiss="modal">取消</a>
+						<input type="hidden" name="action" value="insert"> 
+						<input type="hidden" name="fun_no" value="${authVO.fun_no}"> 
+						<!-- <input type="hidden" name="emp_no" value="1"> -->
 					<button type="submit" class="btn btn-primary">儲存</button>
 				</div>
 			</form>

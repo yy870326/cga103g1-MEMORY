@@ -112,7 +112,7 @@ td, div {
 			<div class="col-11">
 				<form method="post"
 					action="<%=request.getContextPath()%>/auth/updateAuth.do"
-					name="update">
+					name="update" class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title">修改權限</h3>
 					</div>
@@ -120,40 +120,41 @@ td, div {
 						<div class="form-row input-mb d-flex">
 							<div class="form-group col-md-5 input-mr">
 								<label for="fun_no">權限編號</label>
-								<div class="pk col-sm-8">${authVO.fun_no}</div>
+<%-- 								<div class="form-control">${authVO.fun_no}</div> --%>
+									<div class="form-control"><%=request.getParameter("fun_no")%></div>
 							</div>
 							<div class="form-group col-md-5 input-mr">
-								<label for="emp_no">員工編號</label>
-								<div class="col-sm-8">
-									<select class="mt-2 form-select name="emp_no">
-										<jsp:useBean id="empSvc" scope="page"
-											class="com.emp.model.EmpService" />
-										<c:forEach var="empVO" items="${empSvc.all}">
-											<option value="${empVO.emp_no}"
-												${(authVO.emp_no==empVO.emp_no)?'selected':'' }>${empVO.emp_no}</option>
-										</c:forEach>
-										<%-- <option>${authVO.emp_no}</option> --%>
-									</select>
-								</div>
+								<label for="emp_no">員工姓名</label>
+								<!-- <div class="form-control"> -->
+								<select class="form-control" name="emp_no" >
+									<jsp:useBean id="empSvc" scope="page"
+										class="com.emp.model.EmpService" />
+									<c:forEach var="empVO" items="${empSvc.all}">
+										<option value="${empVO.emp_no}"
+											${(authVO.emp_no==empVO.emp_no)?'selected':''}>${empVO.emp_name}</option>
+									</c:forEach>
+								</select>
 							</div>
 						</div>
 					</div>
+					<div class="modal-footer">
+						<a
+							href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp"
+							class="btn btn-secondary" data-dismiss="modal">取消</a> 
+							<input type="hidden" name="action" value="update"> 
+							<input type="hidden" name="fun_no" value="<%=request.getParameter("fun_no")%>"> 
+							<!-- <input type="hidden" name="emp_no" value="1"> -->
+						<button type="submit" class="btn btn-primary">儲存</button>
+					</div>
+				</form>
 			</div>
-		</div>
-	</div>
-	<div class="mb-3 d-flex justify-content-center align-items-center">
-		<input type="hidden" name="action" value="update"><a
-			href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
-		<button type="submit" class="btn btn-primary">儲存</button>
-	</div>
-	</form>
-	</div>
-	
-	<%@ include file="/backend/commonJS.file"%>
-	<!-- JS -->
-	<script>
-		// 		header標題
-		$("#pagename").text("MEMORY 後台管理");
-	</script>
+
+			<%@ include file="/backend/commonJS.file"%>
+			<!-- JS -->
+			<script>
+				// 		header標題
+				$("#pagename").text("MEMORY 後台管理");
+			</script>
 </body>
+
 </html>

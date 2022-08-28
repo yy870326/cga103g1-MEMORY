@@ -26,7 +26,7 @@ public class AuthService {
 		AuthVO authVO = new AuthVO();
 		
 		authVO.setFun_no(fun_no);
-		authVO.setFun_no(fun_no);
+		authVO.setEmp_no(emp_no);
 		dao.update(authVO);
 		
 		return authVO;

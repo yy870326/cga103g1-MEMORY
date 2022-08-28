@@ -8,8 +8,13 @@
 						<span class="nav-text">員工管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="javascript:void()" aria-expanded="false">員工列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/xxx/xxxist.jsp">員工列表</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">新增員工</a></li>
+						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">權限管理</a>
+							<ul aria-expanded="false">
+								<li><a href="<%=request.getContextPath()%>/backend/authfun/listAllAuthFun.jsp">所有權限列表</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp">員工權限列表</a></li>
+							</ul>
 					</ul>
 				</li>
 				<li>
