@@ -1,9 +1,12 @@
 package com.store.model;
-
+import static com.util.JdbcUtil.URL;
+import static com.util.JdbcUtil.USERNAME;
+import static com.util.JdbcUtil.PASSWORD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,39 +27,37 @@ public class StoreDAO implements I_StoreDAO{
 			e.printStackTrace();
 		}
 	}
-	
+	private static final String INSERT = 
+			"INSERT INTO store (\r\n"
+			+ " store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
+			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count \r\n"
+			+ ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String GETALL = 
+			" SELECT store_no,store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
+			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store ORDER BY store_no";
+	private static final String GETONE = 
+			" SELECT store_no,store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
+			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_no = ?";
+	private static final String DELETE = 
+			"DELETE FROM store WHERE store_no= ?";
+	private static final String	UPDATE = 
+			" UPDATE store SET \r\n"
+			+ " store_acc = ?, store_pwd = ?,acc_status = ?,store_name = ?,store_gui = ?,store_rep = ?,store_tel = ?,store_fax = ?,\r\n"
+			+ " store_add = ?,store_poc = ?,store_con_phone = ?,store_con_add = ?,store_email = ?,store_reg_date = ?,bank_account = ?,\r\n"
+			+ " store_tkt_rating_score = ?,store_tkt_rating_count = ?,store_tkt_rating = ?,store_rm_rating_score = ?,\r\n"
+			+ " store_rm_rating_count = ?,store_act_rating_score = ?, store_act_rating_count = ?,store_report_count = ?\r\n"
+			+ " WHERE store_no = ?";
 	@Override
 	public void insert(StoreVO storeVO) {
-		 
-		String sql = "INSERT INTO store (\r\n"
-				+ " \r\n"
-				+ " store_acc, \r\n"
-				+ " store_pwd,\r\n"
-				+ " acc_status,\r\n"
-				+ " store_name,\r\n"
-				+ " store_gui,\r\n"
-				+ " store_rep,\r\n"
-				+ " store_tel,\r\n"
-				+ " store_fax,\r\n"
-				+ " store_add,\r\n"
-				+ " store_poc,\r\n"
-				+ " store_con_phone,\r\n"
-				+ " store_con_add,\r\n"
-				+ " store_email,\r\n"
-				+ " store_reg_date,\r\n"
-				+ " bank_account,\r\n"
-				+ " store_tkt_rating_score,\r\n"
-				+ " store_tkt_rating_count,\r\n"
-				+ " store_tkt_rating,\r\n"
-				+ " store_rm_rating_score,\r\n"
-				+ " store_rm_rating_count,\r\n"
-				+ " store_act_rating_score, \r\n"
-				+ " store_act_rating_count,\r\n"
-				+ " store_report_count \r\n"
-				+ ") \r\n"
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)){
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		
+		try{
+				con = ds.getConnection();
+				ps = con.prepareStatement(INSERT);
 			ps.setString(1, storeVO.getStore_acc());
 			ps.setString(2, storeVO.getStore_pwd());
 			ps.setInt(3,storeVO.getAcc_status());
@@ -82,9 +83,24 @@ public class StoreDAO implements I_StoreDAO{
 			ps.setInt(23,storeVO.getStore_report_count());
 			
 			ps.executeUpdate();
-		}catch(Exception e){
-			
-			e.printStackTrace();
+		}catch(SQLException e){
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
+		}finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		
 		
@@ -92,34 +108,10 @@ public class StoreDAO implements I_StoreDAO{
 
 	@Override
 	public void update(StoreVO storeVO) {
-		String sql = "UPDATE store SET \r\n"
-				+ " store_acc = ?, \r\n"
-				+ " store_pwd = ?,\r\n"
-				+ " acc_status = ?,\r\n"
-				+ " store_name = ?,\r\n"
-				+ " store_gui = ?,\r\n"
-				+ " store_rep = ?,\r\n"
-				+ " store_tel = ?,\r\n"
-				+ " store_fax = ?,\r\n"
-				+ " store_add = ?,\r\n"
-				+ " store_poc = ?,\r\n"
-				+ " store_con_phone = ?,\r\n"
-				+ " store_con_add = ?,\r\n"
-				+ " store_email = ?,\r\n"
-				+ " store_reg_date = ?,\r\n"
-				+ " bank_account = ?,\r\n"
-				+ " store_tkt_rating_score = ?,\r\n"
-				+ " store_tkt_rating_count = ?,\r\n"
-				+ " store_tkt_rating = ?,\r\n"
-				+ " store_rm_rating_score = ?,\r\n"
-				+ " store_rm_rating_count = ?,\r\n"
-				+ " store_act_rating_score = ?, \r\n"
-				+ " store_act_rating_count = ?,\r\n"
-				+ " store_report_count = ?\r\n"
-				+ " WHERE \r\n"
-				+ " store_no = ?;";
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql)){
+		Connection con = null;
+			PreparedStatement ps = null;
+		try { con = ds.getConnection();
+				ps = con.prepareStatement(UPDATE);
 					ps.setString(1, storeVO.getStore_acc());
 					ps.setString(2, storeVO.getStore_pwd());
 					ps.setInt(3,storeVO.getAcc_status());
@@ -146,44 +138,84 @@ public class StoreDAO implements I_StoreDAO{
 					ps.setInt(24, storeVO.getStore_no());
 					
 					ps.executeUpdate();
-		}catch(Exception e){
-			e.printStackTrace();
-		};
+		}catch(SQLException e){
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
+		}finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 		
 	}
 
 	@Override
 	public void delete(Integer store_no) {
-		String sql = "DELETE FROM store WHERE store_no = ?";
-			try(Connection con = ds.getConnection();){
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, store_no);
-			
-			ps.executeUpdate();
-		}catch(Exception e) {
-			e.getStackTrace();
-		};
+			Connection con = null;
+			PreparedStatement ps =null;
+			try{
+				con = ds.getConnection();
+				ps = con.prepareStatement(DELETE);
+				
+				ps.setInt(1, store_no);
+				
+				ps.executeUpdate();
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 		
 	}
 
 	@Override
-	public StoreVO queryStore(Integer store_no) {
-		String sql = "SELECT * FROM store WHERE store_no = ? ORDER BY store_no;";
-		StoreVO	storeVO = new StoreVO();
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-								){
+	public StoreVO getOneStore(Integer store_no) {
+		
+		StoreVO	storeVO = null;
+		Connection con= null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try{   con = ds.getConnection();
+				 ps = con.prepareStatement(GETONE);
+								
 			ps.setInt(1, store_no);
 			
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			
 			while(rs.next()) {
+				storeVO = new StoreVO();
 				storeVO.setStore_no(rs.getInt("store_no"));
 				storeVO.setStore_acc(rs.getString("store_acc"));
 				storeVO.setStore_pwd(rs.getString("store_pwd"));
-				storeVO.setAcc_status(rs.getByte("acc_status"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
 				storeVO.setStore_name(rs.getString("store_name"));
 				storeVO.setStore_gui(rs.getString("store_gui"));
 				storeVO.setStore_rep(rs.getString("store_rep"));
@@ -196,7 +228,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_scoure"));
+				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_score"));
 				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
 				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
@@ -205,30 +237,57 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 			}
-		}catch(Exception e) {
-					e.getStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 		
 		return storeVO;
 	}
 
 	@Override
-	public List<StoreVO> getAll() {
-		String sql = "SELECT * FROM store ORDER BY store_no;";
+	public List<StoreVO> getAllStore() {
+
 		List<StoreVO> list = new ArrayList<StoreVO>();
-		StoreVO storeVO = new StoreVO();
-		 
+		StoreVO storeVO = null;
 		
-		try(Connection con = ds.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-				
-				){
-			ResultSet rs =ps.executeQuery();
+		Connection con = null; 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{ 
+				con = ds.getConnection();
+				 ps = con.prepareStatement(GETALL);
+					 rs =ps.executeQuery();
 			while(rs.next()) {
+				storeVO = new StoreVO();
 				storeVO.setStore_no(rs.getInt("store_no"));
 				storeVO.setStore_acc(rs.getString("store_acc"));
 				storeVO.setStore_pwd(rs.getString("store_pwd"));
-				storeVO.setAcc_status(rs.getByte("acc_status"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
 				storeVO.setStore_name(rs.getString("store_name"));
 				storeVO.setStore_gui(rs.getString("store_gui"));
 				storeVO.setStore_rep(rs.getString("store_rep"));
@@ -241,7 +300,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_scoure"));
+				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_score"));
 				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
 				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
@@ -249,14 +308,41 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
 				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
+				list.add(storeVO);
 				
 			}
 			
-		}catch(Exception e) {
-					e.getStackTrace();
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 		
 		return list;
 	}
+	
+	
 	
 }

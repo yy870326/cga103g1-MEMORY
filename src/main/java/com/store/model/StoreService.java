@@ -10,10 +10,10 @@ public class StoreService {
 		dao = new StoreDAO();
 	}
 	
-	public StoreVO addStoreService(
+	public StoreVO addStore(
 	 String store_acc,
 	 String store_pwd,
-	 Byte acc_status,
+	 Integer acc_status,
 	 String store_name,
 	 String store_gui,
 	 String store_rep,
@@ -60,17 +60,18 @@ public class StoreService {
 		storeVO.setStore_act_rating_count(store_act_rating_count);
 		storeVO.setStore_act_rating_score(store_act_rating_score);
 		storeVO.setStore_report_count(store_report_count);
-		dao.insert(storeVO);
 		
+		
+		dao.insert(storeVO);
 		return storeVO;
 	}
 	
-	public StoreVO updateStoreService (
+	public StoreVO updateStore (
 			
 			 Integer store_no,
 			 String store_acc,
 			 String store_pwd,
-			 Byte acc_status,
+			 Integer acc_status,
 			 String store_name,
 			 String store_gui,
 			 String store_rep,
@@ -130,10 +131,10 @@ public class StoreService {
 	}
 	
 	public StoreVO getOneStore(Integer store_no) {
-		return dao.queryStore(store_no);
+		return dao.getOneStore(store_no);
 	}
 	
-	public List<StoreVO> getAll(){
-		return dao.getAll();
+	public List<StoreVO> getAllStore(){
+		return dao.getAllStore();
 	}
 }
