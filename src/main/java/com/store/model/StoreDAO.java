@@ -73,7 +73,7 @@ public class StoreDAO implements I_StoreDAO{
 			ps.setString(13,storeVO.getStore_email());
 			ps.setDate(14,storeVO.getStore_reg_date());
 			ps.setString(15,storeVO.getBank_account());
-			ps.setInt(16,storeVO.getStore_tkt_rating_scoure());
+			ps.setInt(16,storeVO.getStore_tkt_rating_score());
 			ps.setInt(17,storeVO.getStore_tkt_rating_count());
 			ps.setInt(18,storeVO.getStore_tkt_rating());
 			ps.setInt(19,storeVO.getStore_rm_rating_score());
@@ -127,7 +127,7 @@ public class StoreDAO implements I_StoreDAO{
 					ps.setString(13,storeVO.getStore_email());
 					ps.setDate(14,storeVO.getStore_reg_date());
 					ps.setString(15,storeVO.getBank_account());
-					ps.setInt(16,storeVO.getStore_tkt_rating_scoure());
+					ps.setInt(16,storeVO.getStore_tkt_rating_score());
 					ps.setInt(17,storeVO.getStore_tkt_rating_count());
 					ps.setInt(18,storeVO.getStore_tkt_rating());
 					ps.setInt(19,storeVO.getStore_rm_rating_score());
@@ -228,7 +228,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_score"));
+				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
 				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
 				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
@@ -300,7 +300,7 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_scoure(rs.getInt("store_tkt_rating_score"));
+				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
 				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
 				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));

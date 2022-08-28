@@ -92,7 +92,7 @@ pageContext.setAttribute("list", list);
 						<td>${storeVO.store_email}</td>
 						<td>${storeVO.store_reg_date}</td>
 						<td>${storeVO.bank_account}</td>
-						<td>${storeVO.store_tkt_rating_scoure}</td>
+						<td>${storeVO.store_tkt_rating_score}</td>
 						<td>${storeVO.store_tkt_rating_count}</td>
 						<td>${storeVO.store_tkt_rating}</td>
 						<td>${storeVO.store_rm_rating_score}</td>

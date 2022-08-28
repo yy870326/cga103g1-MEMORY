@@ -129,10 +129,10 @@ public class StoreVO implements Serializable{
 	public void setBank_account(String bank_account) {
 		this.bank_account = bank_account;
 	}
-	public Integer getStore_tkt_rating_scoure() {
+	public Integer getStore_tkt_rating_score() {
 		return store_tkt_rating_score;
 	}
-	public void setStore_tkt_rating_scoure(Integer store_tkt_rating_score) {
+	public void setStore_tkt_rating_score(Integer store_tkt_rating_score) {
 		this.store_tkt_rating_score = store_tkt_rating_score;
 	}
 	public Integer getStore_tkt_rating_count() {

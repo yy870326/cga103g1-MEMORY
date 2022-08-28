@@ -69,14 +69,12 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					<td>${storeVO.store_no}</td>
 					<td><input type="text" name="store_acc" value="${storeVO.store_acc}"></td>
 					<td><input type="text" name="store_pwd" value="${storeVO.store_pwd}"></td>
-				<jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService"/>	
-					<td>
-						
+					<td>	
 						<select  name="acc_status" size="1">
     							<option value="0">帳號未啟用</option>
 							    <option value="1">帳號已啟用</option>
 							    <option value="2">帳號停權</option>
-  						  </select>
+  						 </select>
 					</td>
 					<td><input type="text" name="store_name" value="${storeVO.store_name}"></td>
 					<td><input type="text" name="store_gui" value="${storeVO.store_gui}"></td>
@@ -90,7 +88,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					<td><input type="text" name="store_email" value="${storeVO.store_email}"></td>
 					<td><input type="date" name="store_reg_date" value="${storeVO.store_reg_date}"></td>
 					<td><input type="text" name="bank_account" value="${storeVO.bank_account}"></td>
-					<td><input type="text" name="store_tkt_rating_scoure" value="${storeVO.store_tkt_rating_scoure}"></td>
+					<td><input type="text" name="store_tkt_rating_score" value="${storeVO.store_tkt_rating_score}"></td>
 					<td><input type="text" name="store_tkt_rating_count" value="${storeVO.store_tkt_rating_count}"></td>
 					<td><input type="text" name="store_tkt_rating" value="${storeVO.store_tkt_rating}"></td>
 					<td><input type="text" name="store_rm_rating_score" value="${storeVO.store_rm_rating_score}"></td>
@@ -102,7 +100,22 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 				 	<input type="hidden" name="action" value="update">
 					<input type="hidden" name="store_no" value="${storeVO.store_no}">
 					<input type="submit" value="送出修改">	
+					
+					
+					
+					
 					</td>		
+				 </tr>
+				 <tr>
+				 <td>
+				 ${errorMsgs.store_acc}${errorMsgs.store_pwd}
+				 ${errorMsgs.store_name}${errorMsgs.store_gui}
+				 ${errorMsgs.store_rep}
+				 ${errorMsgs.store_tel}${errorMsgs.store_add}
+				 ${errorMsgs.store_email}${errorMsgs.store_reg_date}
+				 ${errorMsgs.bank_account}
+				 </td>
+				 
 				 </tr>
 				</tbody>
 			 </table>
