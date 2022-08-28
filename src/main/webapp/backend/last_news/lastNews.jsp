@@ -74,12 +74,12 @@ pageContext.setAttribute("lastNews", lastNews);
 	<%@ include file="/backend/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script>
-		$(document).ready(
-				$("#pagename").text("最新消息管理");
-				function() {
-					$(document).ready(function() {
-						   $('#example4').DataTable();
-				});
+	$("#pagename").text("MEMORY 後台管理");
+// 		$(document).ready(
+// 				function() {
+// 					$(document).ready(function() {
+// 						   $('#example4').DataTable();
+// 				});
 	</script>
 </body>
 </html>

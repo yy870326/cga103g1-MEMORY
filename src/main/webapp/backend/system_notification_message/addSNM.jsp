@@ -3,14 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.last_news.model.*"%>
-<%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="lastNewsSvc"
-	class="com.last_news.model.LastNewsService" />
+<%@ page import="com.system_notification_message.model.*"%>
+<jsp:useBean id="CSMSvc"
+	class="com.system_notification_message.model.SystemNotificationMessageService"	/>
 
-<%
-LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
-%>
+<%SystemNotificationMessageVO SNMVO = (SystemNotificationMessageVO) request.getAttribute("SNMVO");%>
 
 <html>
 <head>
@@ -25,11 +22,11 @@ LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
 	<%@ include file="/backend/sidebar.file"%>
 	<!-- sidebar -->
 
-
 	<div class="main-content">
 		<hr>
 		<br> <br>
-		<h3>新增最新消息</h3>
+		<h3>新增系統訊息</h3>
+		
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
@@ -39,20 +36,22 @@ LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
 				</c:forEach>
 			</ul>
 		</c:if>
-		<form METHOD="post" ACTION="<%=request.getContextPath()%>/lastNews"	enctype="multipart/form-data">
+		
+		<form METHOD="post" ACTION="<%=request.getContextPath()%>/snm"	enctype="multipart/form-data">
 			<table>
 				<thead>
 					<tr>
 
-						<th>文字</th>
+						<th>系統訊息</th>
 						<th>圖片</th>
-						<th>#</th>
+						<th>員工編號</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><textarea name="news" rows="3"></textarea></td>
-						<td><input type="file" name="news_img"	 accept="image/*" /></td>
+						<td><textarea name="msg" rows="3" cols="30" ><%= (SNMVO==null)? "": SNMVO.getMsg()%></textarea></td>
+						<td><input type="file" name="msg_img"	 accept="image/*" /></td>
+						<td><input type="text" name="emp_no" value="<%= (SNMVO==null)? "": SNMVO.getEmp_no()%>" /></td>
 						<td><input type="hidden" name="action" value="insert" /></td>
 						<td><input type="submit" value="送出新增" /></td>
 
