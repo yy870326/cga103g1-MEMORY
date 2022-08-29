@@ -1,4 +1,4 @@
-package com.tkt_item.com;
+package com.tkt_item.model;
 
 import java.util.*;
 import java.sql.*;
@@ -174,7 +174,7 @@ public class TktItemjdbcDAO implements I_TktItemDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo 也稱為 Domain objects
+				// empVo �]�٬� Domain objects
 			tktItemVO = new TktItemVO();
 			tktItemVO.setTkt_no(rs.getInt("tkt_no"));
 			tktItemVO.setTKT_ORDER_NO(rs.getInt("tkt_order_no"));
@@ -234,7 +234,7 @@ public class TktItemjdbcDAO implements I_TktItemDAO{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO 也稱為 Domain objects
+				// empVO �]�٬� Domain objects
 				 tktItemVO = new TktItemVO();
 				tktItemVO.setTkt_no(rs.getInt("tkt_no"));
 				tktItemVO.setTKT_ORDER_NO(rs.getInt("tkt_order_no"));
@@ -280,7 +280,7 @@ public class TktItemjdbcDAO implements I_TktItemDAO{
 	}
 	public static void main(String[] args) {
 		TktItemjdbcDAO dao = new TktItemjdbcDAO();
-		//新增
+		//�s�W
 //		TktItemVO tktkItemVO1 = new TktItemVO();
 //		tktkItemVO1.setTkt_no(4);
 //		tktkItemVO1.setTKT_ORDER_NO(9);
@@ -289,7 +289,7 @@ public class TktItemjdbcDAO implements I_TktItemDAO{
 //		tktkItemVO1.setTkt_ori_price(9);
 //		dao.insert(tktkItemVO1);
 //		
-//		//修改
+//		//�ק�
 //		TktItemVO tktItemVO2 = new TktItemVO();
 //		tktItemVO2.setTkt_no(3);
 //		tktItemVO2.setTKT_ORDER_NO(8);
@@ -298,9 +298,9 @@ public class TktItemjdbcDAO implements I_TktItemDAO{
 //		tktItemVO2.setTkt_ori_price(9);
 //		dao.update(tktItemVO2);
 //		
-		//刪除
+		//�R��
 //		dao.delete(1);
-		//查詢
+		//�d��
 //		TktItemVO tktItemVO3 = dao.findByPrimaryKey(1);
 //		System.out.println(tktItemVO3.getTkt_no()+"+");
 //		System.out.println(tktItemVO3.getTKT_ORDER_NO()+"+");

@@ -1,4 +1,4 @@
-package com.tkt_order;
+package com.tkt_order.model;
 
 import java.sql.Date;
 

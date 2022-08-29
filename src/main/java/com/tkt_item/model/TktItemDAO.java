@@ -1,37 +1,42 @@
-package com.tkt_img.model;
+package com.tkt_item.model;
 
-import java.util.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.tkt_img.model.TktImgVO;
 
-public class TktImgDAO implements I_TktImgDAO{
+public class TktItemDAO implements I_TktItemDAO{
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/cga103g1");
-		} catch (NamingException e) {
-			e.printStackTrace();
+		private static DataSource ds = null;
+		static {
+			try {
+				Context ctx = new InitialContext();
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/cga103g1");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 		}
-	}
 		private static final String INSERT_STMT = 
-				"INSERT INTO tkt_img (tkt_no,tkt_img) VALUES ( ?, ?)";
+				"INSERT INTO tkt_item (tkt_no,tkt_order_no,amount,qrcode,tkt_ori_price) VALUES (?, ?, ?, ?,?)";
 			private static final String GET_ALL_STMT = 
-				"SELECT tkt_img_no,tkt_no,tkt_img FROM tkt_img order by tkt_img_no";
+				"SELECT tkt_no,tkt_order_no,amount,qrcode,tkt_ori_price FROM tkt_item order by tkt_no";
 			private static final String GET_ONE_STMT = 
-				"SELECT tkt_img_no,tkt_no,tkt_img FROM tkt_img where tkt_img_no = ?";
+				"SELECT tkt_no,tkt_order_no,amount,qrcode,tkt_ori_price FROM tkt_item where tkt_no = ?";
 			private static final String DELETE = 
-				"DELETE FROM tkt_img where tkt_img_no = ?";
+				"DELETE FROM tkt_item where tkt_no = ?";
 			private static final String UPDATE = 
-				"UPDATE tkt_img set  tkt_no=?, tkt_img=? where tkt_img_no = ?";
+				"UPDATE tkt_item set tkt_order_no=?, amount=?, qrcode=?, tkt_ori_price=?  where tkt_no = ?";
 	@Override
-	public void insert(TktImgVO tktImgVO) {
+	public void insert(TktItemVO tktitemVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -40,8 +45,11 @@ public class TktImgDAO implements I_TktImgDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, tktImgVO.gettktNO());
-			pstmt.setBytes(2, tktImgVO.gettktimg());
+			pstmt.setInt(1, tktitemVO.getTkt_no());
+			pstmt.setInt(2, tktitemVO.getTKT_ORDER_NO());
+			pstmt.setInt(3, tktitemVO.getAmount());
+			pstmt.setBytes(4, tktitemVO.getQrcode());
+			pstmt.setInt(5, tktitemVO.getTkt_ori_price());
 			pstmt.executeUpdate();
 			// Handle any SQL errors
 		} catch (SQLException se) {
@@ -64,12 +72,11 @@ public class TktImgDAO implements I_TktImgDAO{
 				}
 			}
 		}
-
 		
 	}
 
 	@Override
-	public void update(TktImgVO tktimgVO) {
+	public void update(TktItemVO tktitemVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -78,10 +85,12 @@ public class TktImgDAO implements I_TktImgDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, tktimgVO.gettktNO());
-			pstmt.setBytes(2, tktimgVO.gettktimg());
-			pstmt.setInt(3, tktimgVO.gettktImgNO());
-
+			pstmt.setInt(1, tktitemVO.getTKT_ORDER_NO());
+			pstmt.setInt(2, tktitemVO.getAmount());
+			pstmt.setBytes(3, tktitemVO.getQrcode());
+			pstmt.setInt(4, tktitemVO.getTKT_ORDER_NO());
+			pstmt.setInt(5, tktitemVO.getTkt_no());
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -109,7 +118,7 @@ public class TktImgDAO implements I_TktImgDAO{
 	}
 
 	@Override
-	public void delete(Integer TktImgVO) {
+	public void delete(Integer tktno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -118,7 +127,7 @@ public class TktImgDAO implements I_TktImgDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, TktImgVO);
+			pstmt.setInt(1, tktno);
 
 			pstmt.executeUpdate();
 
@@ -147,9 +156,8 @@ public class TktImgDAO implements I_TktImgDAO{
 	}
 
 	@Override
-	public TktImgVO findByPrimaryKey(Integer TktImgVO) {
-
-		TktImgVO tktImgVO = null;
+	public TktItemVO findByPrimaryKey(Integer tktno) {
+		TktItemVO tktItemVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -159,16 +167,18 @@ public class TktImgDAO implements I_TktImgDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, TktImgVO);
+			pstmt.setInt(1, tktno);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// empVo 也稱為 Domain objects
-				tktImgVO = new TktImgVO();
-				tktImgVO.settktImgNO(rs.getInt("tkt_img_no"));
-				tktImgVO.settktNO(rs.getInt("tkt_no"));
-				tktImgVO.settktimg(rs.getBytes("tkt_img"));
+				tktItemVO = new TktItemVO();
+				tktItemVO.setTkt_no(rs.getInt("tkt_no"));
+				tktItemVO.setTKT_ORDER_NO(rs.getInt("tkt_order_no"));
+				tktItemVO.setAmount(rs.getInt("amount"));
+				tktItemVO.setQrcode(rs.getBytes("qrcode"));
+				tktItemVO.setTkt_ori_price(rs.getInt("tkt_ori_price"));
 			}
 
 			// Handle any driver errors
@@ -199,14 +209,13 @@ public class TktImgDAO implements I_TktImgDAO{
 				}
 			}
 		}
-		return tktImgVO;
+		return tktItemVO;
 	}
 
 	@Override
-	public List<TktImgVO> getAll() {
-		List<TktImgVO> list = new ArrayList<TktImgVO>();
-		TktImgVO tktimgVO = null;
-
+	public List<TktItemVO> getAll() {
+		List<TktItemVO> list = new ArrayList<TktItemVO>();
+		TktItemVO tktItemVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -219,11 +228,13 @@ public class TktImgDAO implements I_TktImgDAO{
 
 			while (rs.next()) {
 				// empVO 也稱為 Domain objects
-				tktimgVO = new TktImgVO();
-				tktimgVO.settktImgNO(rs.getInt("tkt_img_no"));
-				tktimgVO.settktNO(rs.getInt("tkt_no"));
-				tktimgVO.settktimg(rs.getBytes("tkt_img"));
-				list.add(tktimgVO);
+				 tktItemVO = new TktItemVO();
+					tktItemVO.setTkt_no(rs.getInt("tkt_no"));
+					tktItemVO.setTKT_ORDER_NO(rs.getInt("tkt_order_no"));
+					tktItemVO.setAmount(rs.getInt("amount"));
+					tktItemVO.setQrcode(rs.getBytes("qrcode"));
+					tktItemVO.setTkt_ori_price(rs.getInt("tkt_ori_price"));
+					list.add(tktItemVO);
 			}
 
 			// Handle any driver errors
@@ -256,14 +267,5 @@ public class TktImgDAO implements I_TktImgDAO{
 		}
 		return list;
 	}
-	public static void main(String[] args) {
-		TktImgDAO dao = new TktImgDAO();
-		
-		//新增
-		TktImgVO tktImgVO1 = new TktImgVO();
-		
-		tktImgVO1.settktNO(4);
-		tktImgVO1.settktimg(null);
-		dao.insert(tktImgVO1);
-	}
+	
 }
