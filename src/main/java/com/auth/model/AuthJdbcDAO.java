@@ -199,6 +199,12 @@ public class AuthJdbcDAO implements I_AuthDAO {
 		}
 		return authVO;
 	}
+	
+
+	@Override
+	public AuthVO findByFk(Integer emp_no) {
+		return null;
+	}
 
 	@Override
 	public List<AuthVO> getAllAuth() {
@@ -286,4 +292,5 @@ public class AuthJdbcDAO implements I_AuthDAO {
 			System.out.println();
 		}
 	}
+
 }

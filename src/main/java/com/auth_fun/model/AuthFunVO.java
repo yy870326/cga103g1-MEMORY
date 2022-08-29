@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class AuthFunVO implements Serializable {
 	private Integer fun_no;
 	private String fun_name;
+	
+	
 	public Integer getFun_no() {
 		return fun_no;
 	}
@@ -17,6 +19,6 @@ public class AuthFunVO implements Serializable {
 	public void setFun_name(String fun_name) {
 		this.fun_name = fun_name;
 	}
-	
-	
+
+   
 }
