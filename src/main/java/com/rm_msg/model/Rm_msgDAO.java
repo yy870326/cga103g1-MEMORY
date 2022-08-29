@@ -172,7 +172,7 @@ public class Rm_msgDAO implements I_Rm_msgDAO{
 				rm.setRm_msg_date(rs.getDate("rm_msg_date"));
 				rm.setRm_msg_status(rs.getInt("rm_msg_status"));
 				rm.setRm_msg_donetime(rs.getDate("rm_msg_donetime"));
-				
+				list.add(rm);
 				
 			}
 			

@@ -1,12 +1,17 @@
 package com.store.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class StoreVO {
+public class StoreVO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer store_no;
 	private String store_acc;
 	private String store_pwd;
-	private Byte acc_status;
+	private Integer acc_status;
 	private String store_name;
 	private String store_gui;
 	private String store_rep;
@@ -19,7 +24,7 @@ public class StoreVO {
 	private String store_email;
 	private Date store_reg_date;
 	private String bank_account;
-	private Integer store_tkt_rating_scoure;
+	private Integer store_tkt_rating_score;
 	private Integer store_tkt_rating_count;
 	private Integer store_tkt_rating;
 	private Integer store_rm_rating_score;
@@ -27,6 +32,7 @@ public class StoreVO {
 	private Integer store_act_rating_score;
 	private Integer store_act_rating_count;
 	private Integer store_report_count;
+	
 	public Integer getStore_no() {
 		return store_no;
 	}
@@ -45,10 +51,10 @@ public class StoreVO {
 	public void setStore_pwd(String store_pwd) {
 		this.store_pwd = store_pwd;
 	}
-	public Byte getAcc_status() {
+	public Integer getAcc_status() {
 		return acc_status;
 	}
-	public void setAcc_status(Byte acc_status) {
+	public void setAcc_status(Integer acc_status) {
 		this.acc_status = acc_status;
 	}
 	public String getStore_name() {
@@ -124,10 +130,10 @@ public class StoreVO {
 		this.bank_account = bank_account;
 	}
 	public Integer getStore_tkt_rating_scoure() {
-		return store_tkt_rating_scoure;
+		return store_tkt_rating_score;
 	}
-	public void setStore_tkt_rating_scoure(Integer store_tkt_rating_scoure) {
-		this.store_tkt_rating_scoure = store_tkt_rating_scoure;
+	public void setStore_tkt_rating_scoure(Integer store_tkt_rating_score) {
+		this.store_tkt_rating_score = store_tkt_rating_score;
 	}
 	public Integer getStore_tkt_rating_count() {
 		return store_tkt_rating_count;
@@ -171,6 +177,9 @@ public class StoreVO {
 	public void setStore_report_count(Integer store_report_count) {
 		this.store_report_count = store_report_count;
 	}
+	
+	
+	
 		
 	
 	
