@@ -10,7 +10,7 @@ public class MemService {
 		dao = new MemDAO();
 	}
 
-	public MemVO addMem(Integer mem_no, String mem_acc, String mem_pwd, Integer acc_status, String mem_name,
+	public MemVO addMem( String mem_acc, String mem_pwd, Integer acc_status, String mem_name,
 			String mem_gender, String mem_email, String mem_mobile, String mem_city, String mem_dist, String mem_addr,
 			Date mem_reg_date, byte[] mem_pic, Integer mem_report_count, String mem_card
 
@@ -35,9 +35,9 @@ public class MemService {
 
 		return memVO;
 	}
-	public MemVO updateMem(Integer mem_no, String mem_acc, String mem_pwd, Integer acc_status, String mem_name,
+	public MemVO updateMem( String mem_acc, String mem_pwd, Integer acc_status, String mem_name,
 			String mem_gender, String mem_email, String mem_mobile, String mem_city, String mem_dist, String mem_addr,
-			Date mem_reg_date, byte[] mem_pic, Integer mem_report_count, String mem_card
+			Date mem_reg_date, byte[] mem_pic, Integer mem_report_count, String mem_card, Integer mem_no
 
 	) {
 		MemVO memVO = new MemVO();
@@ -56,6 +56,7 @@ public class MemService {
 		memVO.setMem_pic(mem_pic);
 		memVO.setMem_report_count(mem_report_count);
 		memVO.setMem_card(mem_card);
+		memVO.setMem_no(mem_no);
 		dao.update(memVO);
 
 		return memVO;
