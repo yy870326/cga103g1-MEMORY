@@ -11,6 +11,8 @@ public  interface  I_StoreDAO {
 	
 	public StoreVO getOneStore(Integer store_no);
 	
+	public StoreVO getOneStoreByAcc(String store_acc);
+	
 	public List<StoreVO> getAllStore();
 	
 }
