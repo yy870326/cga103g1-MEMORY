@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.auth.model.AuthService;
 import com.auth.model.AuthVO;
+import com.emp.model.EmpService;
 
 @WebServlet(name = "UpdateAuthServlet", urlPatterns = { "/auth/updateAuth.do" })
 public class UpdateAuthServlet extends HttpServlet {
@@ -20,12 +21,12 @@ public class UpdateAuthServlet extends HttpServlet {
 	
 	
     @Override   
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
 	}
 
     @Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	
     	req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -36,9 +37,8 @@ public class UpdateAuthServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				Integer	emp_no = Integer.valueOf(req.getParameter("emp_no"));
+				Integer	emp_no = new Integer(req.getParameter("emp_no"));
 				
 				/*************************** 2.開始查詢資料 ****************************************/
 				AuthService authSvc = new AuthService();
@@ -47,26 +47,38 @@ public class UpdateAuthServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("authVO", authVO); // 資料庫取出的VO物件,存入req
 				String url = "/backend/auth/updateAuth.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("連到權限詳情失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/auth/listAllAuth.jsp");
-				failureView.forward(req, res);
-			}
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
 		}
-		
+				/*************************** 其他可能的錯誤處理 **********************************/
+			
 		if ("update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				Integer fun_no = Integer.valueOf(req.getParameter("fun_no"));
-				Integer emp_no = Integer.valueOf(req.getParameter("emp_no"));
+				AuthService authSvc = new AuthService();
+				EmpService empSvc = new EmpService();
+
+				Integer fun_no = Integer.valueOf(req.getParameter("fun_no").trim());
+//				if(authSvc.getOneAuth(fun_no) == null) {
+//					errorMsgs.add("不存在的權限編號，請重新新增");
+//				} else if (fun_no == null) {
+//					errorMsgs.add("權限編號 請勿空白");
+//				} 
+
+				Integer emp_no = Integer.valueOf(req.getParameter("emp_no").trim());
+//				if(empSvc.getOneEmp(emp_no) == null) {
+//					errorMsgs.add("不存在的員工編號，請重新新增");	
+//				} else if (emp_no == null) {
+//					errorMsgs.add("員工編號 請勿空白");
+//				}
+				
+//				if (authSvc.getOneByEmp(emp_no) != null) {   // 判斷此員工是否已存在權限
+//					errorMsgs.add("該員工已有設定權限");
+//				}
 				
 				AuthVO authVO = new AuthVO();
 				authVO.setFun_no(fun_no);
@@ -79,7 +91,6 @@ public class UpdateAuthServlet extends HttpServlet {
 					return;
 				}
 				/*************************** 2.開始修改資料 ****************************************/
-				AuthService authSvc = new AuthService();
 				authVO = authSvc.updateAuth(fun_no, emp_no);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("authVO", authVO); // 資料庫取出的VO物件,存入req
@@ -88,11 +99,11 @@ public class UpdateAuthServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改權限資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/Auth/updateAuth.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("修改權限資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/backend/auth/updateAuth.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 	}

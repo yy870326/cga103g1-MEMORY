@@ -9,6 +9,7 @@ public interface I_AuthDAO {
 	public void cancel(AuthVO authVO); //權限取消
 	public AuthVO findByPrimaryKey(Integer fun_no); //查詢一筆
 	public List<AuthVO> getAllAuth(); //查詢全部
+	public AuthVO findByFk(Integer emp_no);
 	
 	
 }
