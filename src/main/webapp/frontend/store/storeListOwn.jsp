@@ -5,20 +5,25 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="StoreService" class="com.store.model.StoreService" />
+
 
 <%
-// 取得store所有資訊存放至pageContext
-StoreVO storeVO =(StoreVO) request.getAttribute("store_no");
-pageContext.setAttribute("storeVO", storeVO);
+StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
+String sacc = storeVO.getStore_acc();
+StoreService storeSvc = new StoreService();
+StoreVO storeVO1 = storeSvc.getOneStoreByAcc(sacc);
+
+pageContext.setAttribute("storeVO1",storeVO1);
 %>
+<!--
+-->
 <!DOCTYPE html>
 <html>
 
 	<head>
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" type="text/css"
+	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	</head>
@@ -32,80 +37,132 @@ pageContext.setAttribute("storeVO", storeVO);
 
 <!-- 	內容寫在main-content這個div內    -->
 <div class="main-content card card-body table-responsive">
-			<table id="example4" class="display" style="min-width: 845px">
-				<thead>
+		<table id="example4" class="display" style="min-width: 845px">
 				<tr>
-					<th>廠商會員編號</th>
-					<th>帳號</th>
-					<th>密碼</th>
-					<th>帳號狀態</th>
-					<th>店家名稱</th>
-					<th>統編</th>
-					<th>負責人</th>
-					<th>電話</th>
-					<th>傳真</th>
-					<th>登記地址</th>
-					<th>聯絡人</th>
-					<th>連絡電話</th>
-					<th>聯絡地址</th>
-					<th>信箱</th>
-					<th>加入時間</th>
-					<th>轉帳帳號</th>
-					<th>票券總分數</th>
-					<th>票券總評價數</th>
-					<th>票券平均評價數</th>
-					<th>訂房總分數</th>
-					<th>訂房總評價數</th>
-					<th>活動總分數</th>
-					<th>活動總評價數</th>
-					<th>被檢舉計點</th>
+					<td>廠商會員編號</td>
+					<td>${storeVO1.store_no}</td>
 				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="storeVO" items="${storelist}">
-					<tr class="view">
-						<td>${storeVO.store_no}</td>
-						<td>${storeVO.store_acc}</td>
-						<td>${storeVO.store_pwd}</td>
-						<td><c:choose>
-								<c:when test="${storeVO.acc_status==0}">
-									<i class='bx bxs-circle' style='color: red'></i>帳號未啟用</c:when>
-								<c:when test="${storeVO.acc_status==1}">
+				<tr>	
+					<td>帳號</td>
+					<td>${storeVO1.store_acc}</td>
+				</tr>	
+				<tr>
+					<td>密碼</td>
+					<td>${storeVO1.store_pwd}</td>
+				</tr>
+				<tr>	
+					<td>帳號狀態</td>
+					<td><c:choose>
+						<c:when test="${storeVO1.acc_status==0}">									
+								    <i class='bx bxs-circle' style='color: red'></i>帳號未啟用</c:when>
+						<c:when test="${storeVO1.acc_status==1}">
 									<i class='bx bxs-circle' style='color: green'></i>帳號已啟用</c:when>
-								<c:when test="${storeVO.acc_status==2}">
+						<c:when test="${storeVO1.acc_status==2}">
 									<i class='bx bxs-circle' style='color: #aaa'></i>帳號停權</c:when>
-							</c:choose>
-						</td>
-						<td>${storeVO.store_name}</td>
-						<td>${storeVO.store_gui}</td>
-						<td>${storeVO.store_rep}</td>
-						<td>${storeVO.store_tel}</td>
-						<td>${storeVO.store_fax}</td>
-						<td>${storeVO.store_add}</td>
-						<td>${storeVO.store_poc}</td>
-						<td>${storeVO.store_con_phone}</td>
-						<td>${storeVO.store_con_add}</td>
-						<td>${storeVO.store_email}</td>
-						<td>${storeVO.store_reg_date}</td>
-						<td>${storeVO.bank_account}</td>
-						<td>${storeVO.store_tkt_rating_scoure}</td>
-						<td>${storeVO.store_tkt_rating_count}</td>
-						<td>${storeVO.store_tkt_rating}</td>
-						<td>${storeVO.store_rm_rating_score}</td>
-						<td>${storeVO.store_rm_rating_count}</td>
-						<td>${storeVO.store_act_rating_score}</td>
-						<td>${storeVO.store_act_rating_count}</td>
-						<td>${storeVO.store_report_count}</td>
-						</tr>
-				</c:forEach>
-			</tbody>
-			</table>
+					</c:choose></td>
+				</tr>
+				<tr>	
+					<td>店家名稱</td>
+					<td>${storeVO1.store_name}</td>
+				</tr>
+				<tr>	
+					<td>統編</td>
+					<td>${storeVO1.store_gui}</td>
+				</tr>
+				<tr>	
+					<td>負責人</td>
+					<td>${storeVO1.store_rep}</td>
+				</tr>
+				<tr>	
+					<td>電話</td>
+					<td>${storeVO1.store_tel}</td>
+				</tr>
+				<tr>
+					<td>傳真</td>
+					<td>${storeVO1.store_fax}</td>
+				</tr>
+				<tr>
+					<td>登記地址</td>
+					<td>${storeVO1.store_add}</td>
+				</tr>
+				<tr>
+					<td>聯絡人</td>
+					<td>${storeVO1.store_poc}</td>
+				</tr>
+				<tr>	
+					<td>連絡電話</td>
+					<td>${storeVO1.store_con_phone}</td>
+				</tr>
+				<tr>	
+					<td>聯絡地址</td>
+					<td>${storeVO1.store_con_add}</td>
+				</tr>
+				<tr>	
+					<td>信箱</td>
+					<td>${storeVO1.store_email}</td>
+				</tr>
+				<tr>	
+					<td>加入時間</td>
+					<td>${storeVO1.store_reg_date}</td>
+				</tr>
+				<tr>	
+					<td>轉帳帳號</td>
+					<td>${storeVO1.bank_account}</td>
+				</tr>
+				<tr>	
+					<td>票券總分數</td>
+					<td>${storeVO1.store_tkt_rating_score}</td>
+				</tr>
+				<tr>	
+					<td>票券總評價數</td>
+					<td>${storeVO1.store_tkt_rating_count}</td>
+				</tr>
+				<tr>	
+					<td>票券平均評價數</td>
+					<td>${storeVO1.store_tkt_rating}</td>
+				</tr>
+				<tr>	
+					<td>訂房總分數</td>
+					<td>${storeVO1.store_rm_rating_score}</td>
+				</tr>
+				<tr>	
+					<td>訂房總評價數</td>
+					<td>${storeVO1.store_rm_rating_count}</td>
+				</tr>
+				<tr>	
+					<td>活動總分數</td>
+					<td>${storeVO1.store_act_rating_score}</td>
+				</tr>
+				<tr>	
+					<td>活動總評價數</td>
+					<td>${storeVO1.store_act_rating_count}</td>
+				</tr>
+				<tr>	
+					<td>被檢舉計點</td>
+					<td>${storeVO1.store_report_count}</td>
+				</tr>
+				<tr>	
+					<td>修改資料</td>
+					<td>
+						<form method="post" action="<%=request.getContextPath()%>/store.do">
+							<input type="submit" value="修改">
+		  					<input type="hidden" name="store_no" value="${storeVO1.store_no}">
+							<input type="hidden" name="action" value="updateStore">
+						</form>
+					</td> 
+				</tr>
+			
+			 	
+			 	 <tr class="view">
+				
+				 </tr>
+			 </table>
 		</div>
 
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
 		<script>
 // 		header標題
-			$("#pagename").text("MEMORY 後台管理");
+			$("#pagename").text("MEMORY");
 		</script>
 	</body>
 </html>
