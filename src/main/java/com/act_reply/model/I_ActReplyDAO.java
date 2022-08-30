@@ -8,8 +8,8 @@ public interface I_ActReplyDAO {
 	//新增留言
 	public void insert(ActReplyVO actReplyVO);
 	//刪除留言
-	public void delete(ActReplyVO actReplyVO);
+	public void delete(Integer act_reply_no);
 	//顯示留言
-	public List<ActReplyVO> getall(ActReplyVO actReplyVO);
+	public List<ActReplyVO> getall();
 	
 }
