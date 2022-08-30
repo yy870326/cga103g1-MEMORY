@@ -2,6 +2,8 @@ package com.rm_order.model;
 
 import java.util.List;
 
+import com.rm_order_list.model.RmOrderListVO;
+
 public interface I_RmOrderDAO {
 
 	public RmOrderVO insert(RmOrderVO rmOrderVO); // 新增
@@ -18,4 +20,9 @@ public interface I_RmOrderDAO {
 
 	public void checkIn(Integer rm_order_no);  // CHECKIN
 
+	public List<RmOrderVO> getAllByStore(Integer store_no); // 廠商編號找訂單
+	
+	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status); // 廠商編號找訂單狀態
+
+    public void insertWithLists(RmOrderVO rmOrderVO , List<RmOrderListVO> list); // 同時新增訂單與多筆訂單明細
 }
