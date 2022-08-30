@@ -1,7 +1,7 @@
 package com.rm_order.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class RmOrderVO implements Serializable {
 	private Integer rm_order_no;
@@ -11,7 +11,25 @@ public class RmOrderVO implements Serializable {
 	private Integer rm_order_status;
 	private Integer rm_charge;
 	private Integer rm_review;
+	private Date start_date;
+	private Date end_date;
 
+	public Date getStart_date() {
+		return start_date;
+	}
+	
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+	
+	public Date getEnd_date() {
+		return end_date;
+	}
+	
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+	
 	public Integer getRm_order_no() {
 		return rm_order_no;
 	}
