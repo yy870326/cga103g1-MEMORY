@@ -28,10 +28,11 @@ public class AuthDAO implements I_AuthDAO{
 	}
 	
 	private static final String INSERT = "INSERT INTO auth(fun_no,emp_no)VALUES (?,?)";
-	private static final String UPDATE = "UPDATE auth SET fun_no=? , emp_no=? where emp_no=?";
+	private static final String UPDATE = "UPDATE auth SET emp_no=? where fun_no=?";
 	private static final String CANCEL=  "SELECT * FROM auth WHERE fun_no=?";
-	private static final String GET_ONE= "SELECT * FROM auth WHERE fun_no=?";
-	private static final String GET_ALL="SELECT * FROM auth";
+	private static final String GET_ONE= "SELECT * FROM auth_fun WHERE fun_no=?";
+	private static final String GET_BY_EMP_NO= "SELECT * FROM auth WHERE emp_no=?";
+	private static final String GET_ALL="SELECT * FROM auth order by fun_no";
 
 	
 	@Override
@@ -81,8 +82,8 @@ public class AuthDAO implements I_AuthDAO{
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 			
-			ps.setInt(1,authVO.getFun_no());
-			ps.setInt(2,authVO.getEmp_no());
+			ps.setInt(1,authVO.getEmp_no());
+			ps.setInt(2,authVO.getFun_no());
 			ps.executeUpdate();
 			
 			// Handle any driver errors
@@ -159,6 +160,56 @@ public class AuthDAO implements I_AuthDAO{
 			ps = con.prepareStatement(GET_ONE);
 			
 			ps.setInt(1,fun_no);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				authVO = new AuthVO();
+				authVO.setFun_no(rs.getInt("fun_no"));
+//				authVO.setEmp_no(rs.getInt("emp_no"));
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return authVO;
+	}
+	@Override
+	public AuthVO findByFk(Integer emp_no) {
+		
+		AuthVO authVO = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_BY_EMP_NO);
+			
+			ps.setInt(1,emp_no);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {

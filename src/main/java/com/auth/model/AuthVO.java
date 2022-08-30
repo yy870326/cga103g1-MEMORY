@@ -2,6 +2,8 @@ package com.auth.model;
 
 import java.io.Serializable;
 
+import com.auth_fun.model.AuthFunService;
+
 public class AuthVO implements Serializable{
 	
 	private Integer fun_no;
@@ -27,6 +29,15 @@ public class AuthVO implements Serializable{
 	public void setEmp_no(Integer emp_no) {
 		this.emp_no = emp_no;
 	}
-	
+	public com.emp.model.EmpVO getEmpVO() {
+	    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+	    com.emp.model.EmpVO empVO = empSvc.getOneEmp(emp_no);
+	    return empVO;
+    }
+	public com.auth_fun.model.AuthFunVO getAuthFunVO() {
+	    com.auth_fun.model.AuthFunService authFunSvc = new com.auth_fun.model.AuthFunService();
+	    com.auth_fun.model.AuthFunVO authFunVO = authFunSvc.getOneAuthFun(fun_no);
+	    return authFunVO;
+    }
 	
 }
