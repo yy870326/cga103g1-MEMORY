@@ -38,18 +38,18 @@ public class LastNewsServlet extends HttpServlet {
 		if ("getOnePic".equals(action)) {
 
 			/*************************** 1.接收請求參數 ****************************************/
-			Integer news_no = new Integer(req.getParameter("news_no"));
-
-			/*************************** 2.開始查詢資料 ****************************************/
-			LastNewsService lnSvc = new LastNewsService();
-			LastNewsVO lastNewsVO = lnSvc.getLastNewsOne(news_no);
-
-			/*************************** 3.輸出圖片 ************/
-			byte[] content = lastNewsVO.getNews_img();
-			ServletOutputStream out = res.getOutputStream();
-			out.write(content);
-			out.close();
-			return;
+//			Integer news_no = new Integer(req.getParameter("news_no"));
+//
+//			/*************************** 2.開始查詢資料 ****************************************/
+//			LastNewsService lnSvc = new LastNewsService();
+//			LastNewsVO lastNewsVO = lnSvc.getLastNewsOne(news_no);
+//
+//			/*************************** 3.輸出圖片 ************/
+//			byte[] content = lastNewsVO.getNews_img();
+//			ServletOutputStream out = res.getOutputStream();
+//			out.write(content);
+//			out.close();
+//			return;
 		}
 
 		if ("insert".equals(action)) {

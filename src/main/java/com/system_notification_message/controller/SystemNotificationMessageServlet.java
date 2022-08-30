@@ -30,7 +30,7 @@ public class SystemNotificationMessageServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+//		doPost(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -92,19 +92,19 @@ public class SystemNotificationMessageServlet extends HttpServlet {
 	
 	if ("getpic".equals(action)) {
 
-		/*************************** 1.接收請求參數 ****************************************/
-		Integer msg_no = new Integer(req.getParameter("msg_no"));
-
-		/*************************** 2.開始查詢資料 ****************************************/
-		SystemNotificationMessageService snmSvc = new SystemNotificationMessageService();
-		SystemNotificationMessageVO snmVO = snmSvc.getone(msg_no);
-
-		/*************************** 3.輸出圖片 ************/
-		byte[] content = snmVO.getMsg_img();
-		ServletOutputStream out = res.getOutputStream();
-		out.write(content);
-		out.close();
-		return;
+//		/*************************** 1.接收請求參數 ****************************************/
+//		Integer msg_no = new Integer(req.getParameter("msg_no"));
+//
+//		/*************************** 2.開始查詢資料 ****************************************/
+//		SystemNotificationMessageService snmSvc = new SystemNotificationMessageService();
+//		SystemNotificationMessageVO snmVO = snmSvc.getone(msg_no);
+//
+//		/*************************** 3.輸出圖片 ************/
+//		byte[] content = snmVO.getMsg_img();
+//		ServletOutputStream out = res.getOutputStream();
+//		out.write(content);
+//		out.close();
+//		return;
 	}
 	
 	if("delete".equals(action)) {
