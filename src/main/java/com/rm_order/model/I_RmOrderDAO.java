@@ -25,4 +25,6 @@ public interface I_RmOrderDAO {
 	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status); // 廠商編號找訂單狀態
 
     public void insertWithLists(RmOrderVO rmOrderVO , List<RmOrderListVO> list); // 同時新增訂單與多筆訂單明細
+    
+    public void overdue(); // 修改預期訂單狀態為已完成(排程器用)
 }

@@ -27,6 +27,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String GET_ALL_BY_STORE = "SELECT * FROM rm_order WHERE store_no=? ORDER BY store_no DESC";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
 	private static final String GET_STORE_STATUS = "SELECT * FROM rm_order WHERE store_no = ? AND rm_order_status = ?";
+	private static final String OVERDUE = "UPDATE rm_order SET rm_order_status = 2 WHERE end_date <= CURDATE()";
 	private static DataSource ds = null;
 	static {
 		try {
@@ -401,4 +402,28 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
+	
+	@Override
+	public void overdue() {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(OVERDUE);
+			ps.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 }
