@@ -270,11 +270,19 @@ public class StoreServlet extends HttpServlet {
 		if("insert".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			StoreService storeSvc = new StoreService();
+			List<StoreVO> allStores = storeSvc.getAllStore();
 			
 			//========================接收請求參數===========================
 			
 			//廠商帳號
 			String store_acc = req.getParameter("store_acc");
+			for(StoreVO allStore : allStores) {
+				if(allStore.getStore_acc().equals(store_acc)) {
+					errorMsgs.put("store_acc", "帳號重複請重新輸入");
+					
+				}
+			}
 			//帳號密碼正規表示
 			String reg = "^[(a-zA-Z0-9)]{7,20}$";
 			if(store_acc == null|| store_acc.trim().length() == 0) {
@@ -386,7 +394,7 @@ public class StoreServlet extends HttpServlet {
 			//===================資料存取===========================
 			
 			
-			StoreService storeSvc = new StoreService();
+			storeSvc = new StoreService();
 			storeVO = storeSvc.addStore(store_acc, store_pwd, store_name, store_gui, store_rep, store_tel, store_fax, store_add, store_pwd, store_con_phone, store_con_add, store_email, bank_account);
 			
 			

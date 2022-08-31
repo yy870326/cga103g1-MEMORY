@@ -54,6 +54,10 @@ public class StoreDAO implements I_StoreDAO{
 			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
 			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_acc = ?";
 	
+	private static final String LOGIN = " SELECT store_no,store_acc,store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
+			+ "			+ store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
+			+ "			+ store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_acc = ? AND store_pwd =?;";
+	
 	private static final String DELETE = 
 			"DELETE FROM store WHERE store_no= ?";
 	private static final String	UPDATE = 
@@ -419,6 +423,77 @@ public class StoreDAO implements I_StoreDAO{
 		}
 		
 		return list;
+	}
+	
+	public StoreVO Login(String store_acc, String Store_pwd) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		StoreVO storeVO = null;
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(LOGIN);
+			ps.setString(1, store_acc);
+			ps.setString(2, Store_pwd);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				storeVO = new StoreVO();
+				storeVO.setStore_no(rs.getInt("store_no"));
+				storeVO.setStore_acc(rs.getString("store_acc"));
+				storeVO.setStore_pwd(rs.getString("store_pwd"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_gui(rs.getString("store_gui"));
+				storeVO.setStore_rep(rs.getString("store_rep"));
+				storeVO.setStore_tel(rs.getString("store_tel"));
+				storeVO.setStore_fax(rs.getString("store_fax"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_poc(rs.getString("store_poc"));
+				storeVO.setStore_con_phone(rs.getString("store_con_phone"));
+				storeVO.setStore_con_add(rs.getString("store_con_add"));
+				storeVO.setStore_email(rs.getString("store_email"));
+				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
+				storeVO.setBank_account(rs.getString("bank_account"));
+				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
+				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
+				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
+				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
+				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
+				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
+				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
+				storeVO.setStore_report_count(rs.getInt("store_report_count"));
+			}
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return storeVO;
+		
 	}
 	
 	

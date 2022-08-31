@@ -50,15 +50,15 @@
                                 <h3>歡迎回來</h3>
                                 <p>請輸入帳號及密碼登入</p>
                             </div>
-                            <form class="login-form" action="front.html">
+                            <form class="login-form" action="<%=request.getContextPath()%>/StoreLoginControl">
                                 <div class="row">
                                     <div class="col-md-12 email">
                                         <label>帳號:</label>
-                                        <input type="text" name="text" placeholder="輸入您的帳號" value="${storeVO}">
+                                        <input type="text" name="store_acc" placeholder="輸入您的帳號">
                                     </div>
                                     <div class="col-md-12 password">
                                         <label>密碼:</label>
-                                        <input type="text" name="email" placeholder="在這輸入密碼" value="${storeVO}">
+                                        <input type="text" name="store_pwd" placeholder="在這輸入密碼">
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div class="chqbox">
@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <button type="submit" name="button">登入</button>
+                                        <button type="submit" name="action">登入</button><font>${errorMsgs.storevo}</font>
                                     </div>
                                 </div>
                             </form>
