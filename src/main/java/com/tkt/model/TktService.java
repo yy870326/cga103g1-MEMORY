@@ -13,7 +13,7 @@ public class TktService {
 	
 	public TktVO addTkt(String tkt_name, Integer original_amount, Integer price, Date tkt_startdate,
 			Date tkt_enddate, String locate, String instruction, String address, String notice, String howuse,
-			String canxpolicy, Integer tkt_status, Integer sold_amount, Integer kind) {
+			String canxpolicy, Integer tkt_status, Integer kind) {
 		
 		TktVO tktVO = new TktVO();
 		
@@ -29,7 +29,7 @@ public class TktService {
 		tktVO.setHowuse(howuse);
 		tktVO.setCanxpolicy(canxpolicy);
 		tktVO.setTkt_status(tkt_status);
-		tktVO.setSold_amount(sold_amount);
+//		tktVO.setSold_amount(sold_amount);
 		tktVO.setKind(kind);
 		
 		dao.insert(tktVO);
@@ -38,7 +38,7 @@ public class TktService {
 		
 	}
 	
-	public TktVO updateTktVO(Integer tkt_no, String tkt_name, Integer original_amount, Integer price, Date tkt_startdate,
+	public TktVO updateTkt(Integer tkt_no, String tkt_name, Integer original_amount, Integer price, Date tkt_startdate,
 			Date tkt_enddate, String locate, String instruction, String address, String notice, String howuse,
 			String canxpolicy, Integer tkt_status, Integer sold_amount, Integer kind) {
 		
