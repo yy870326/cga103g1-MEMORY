@@ -1,6 +1,7 @@
 package com.rm_order.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,11 +29,13 @@ public class RmOrderServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getAllRmOrder".equals(action)) {
+		if ("getAllRmOrder".equals(action)) { // 取得該廠商所有訂單
 			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer store_no = new Integer(req.getParameter("store_no"));
 				/*************************** 開始查詢資料 ****************************************/
 				RmOrderService rmOrderSvc = new RmOrderService();
-				List<RmOrderVO> orderlist = rmOrderSvc.getAllRmOrder();
+				List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
 
 				/*************************** 查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("orderlist", orderlist);
@@ -45,18 +48,19 @@ public class RmOrderServlet extends HttpServlet {
 			}
 		}
 
-		if ("getAllStatus".equals(action)) { // 切換訂單狀態list
+		if ("getStoreStatus".equals(action)) { // 取得該廠商訂單狀態
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
+				Integer store_no = new Integer(req.getParameter("store_no"));
 				Integer rm_order_status = new Integer(req.getParameter("rm_order_status"));
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				RmOrderService rmOrderSvc = new RmOrderService();
-				List<RmOrderVO> orderlist = rmOrderSvc.getAllStatus(rm_order_status);
+				List<RmOrderVO> orderlist = rmOrderSvc.getStoreStatus(store_no, rm_order_status);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("rm_order_status", rm_order_status);
+
 				req.setAttribute("orderlist", orderlist);
 				String url = "/frontend/room/listStoreOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -66,6 +70,41 @@ public class RmOrderServlet extends HttpServlet {
 				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
 			}
 		}
+		if ("getOne".equals(action)) {
+
+			try {
+				
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer rm_order_no = new Integer(req.getParameter("rm_order_no"));
+				Integer store_no = new Integer(req.getParameter("store_no"));
+				I_RmOrderDAO irm = new RmOrderDAO();
+				Integer exp = irm.getOne(rm_order_no).getStore_no();
+				
+				System.out.println(exp);
+				System.out.println(store_no);
+				
+				if (!exp.equals(store_no)) {
+					RequestDispatcher failview = req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp");
+					failview.forward(req, res);
+					return;
+				}
+				
+				/*************************** 2.開始查詢資料 ****************************************/
+				RmOrderService rmOrderSvc = new RmOrderService();
+				List<RmOrderVO> orderlist = new ArrayList<RmOrderVO>();
+				orderlist.add(rmOrderSvc.getOne(rm_order_no));
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+
+				req.setAttribute("orderlist", orderlist);
+				String url = "/frontend/room/listStoreOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
+			}
+		}
+
 		if ("cancel".equals(action)) { // 取消訂單
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -73,18 +112,18 @@ public class RmOrderServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer rm_order_no = new Integer(req.getParameter("rm_order_no"));
-				
+
 				/*************************** 2.開始查詢資料 ****************************************/
 				RmOrderVO rmOrderVO = new RmOrderVO();
 				RmOrderService rmOrderSvc = new RmOrderService();
 				rmOrderVO = rmOrderSvc.cancel(rm_order_no);
-				
+
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("rmOrderVO", rmOrderVO);
 				String url = "/frontend/room/listStoreOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
+
 			} catch (Exception e) {
 				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
 			}

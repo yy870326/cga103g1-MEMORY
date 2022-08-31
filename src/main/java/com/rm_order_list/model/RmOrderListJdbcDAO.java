@@ -5,9 +5,13 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.util.JdbcUtil;
+
 import java.sql.*;
 
-public class RmOrderListDAO implements I_RmOrderListDAO {
+public class RmOrderListJdbcDAO implements I_RmOrderListDAO {
+	
 	private static final String INSERT = "INSERT INTO rm_order_list (rm_type_no, rm_order_no, rm_amount, rm_price, arrival_date"
 			+ ", departure_date, rm_check_in) VALUES (?,?,?,?,?,?,?);";
 	private static final String UPDATE = "UPDATE rm_order_list SET rm_type_no = ?, rm_order_no = ?, rm_amount = ?, rm_price = ?"
@@ -21,22 +25,19 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 	private static final String GET_ALL_BY_ORDNO = "SELECT * FROM rm_order_list WHERE rm_order_no = ?";
 	private static final String GET_ALL_BY_RMTYPE = "SELECT * FROM rm_order_list WHERE rm_type_no = ?";
 	private static DataSource ds = null;
-	static {
+	static { // 資料庫連線
 		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-		}catch(Exception e) {
-			e.getStackTrace();
+			Class.forName(JdbcUtil.DRIVER);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		
 	}
 	@Override
 	public RmOrderListVO insert(RmOrderListVO rmOrderListVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(INSERT);
+		
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(INSERT)) {
+
 			ps.setInt(1, rmOrderListVO.getRm_type_no());
 			ps.setInt(2, rmOrderListVO.getRm_order_no());
 			ps.setInt(3, rmOrderListVO.getRm_amount());
@@ -48,25 +49,15 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			ps.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return rmOrderListVO;
 	}
 		
 	@Override
 	public void update(RmOrderListVO rmOrderListVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATE);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(UPDATE)) {
+
 					ps.setInt(1, rmOrderListVO.getRm_type_no());
 					ps.setInt(2, rmOrderListVO.getRm_order_no());
 					ps.setInt(3, rmOrderListVO.getRm_amount());
@@ -79,24 +70,14 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 	
 	@Override
 	public void changeROL(RmOrderListVO rmOrderListVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATE);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(UPDATE)) {
+		
 			ps.setInt(1, rmOrderListVO.getRm_type_no());
 			ps.setInt(2, rmOrderListVO.getRm_amount());
 			ps.setInt(3, rmOrderListVO.getRm_price());
@@ -108,37 +89,18 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 
 	@Override
 	public void delete(Integer rm_order_list_no) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(DELETE);
-				
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(DELETE)) {
+			
 			ps.setInt(1, rm_order_list_no);
 			ps.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 
@@ -146,11 +108,10 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 	public RmOrderListVO findByPrimaryKey(Integer rm_order_list_no) {
 		ResultSet rs = null;
 		RmOrderListVO rm = null;
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(GET_ONE);
+		
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ONE)) {
+			
 				
 			ps.setInt(1, rm_order_list_no);
 			rs = ps.executeQuery();
@@ -167,14 +128,6 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 				}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return rm;
 	}
@@ -184,11 +137,8 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 		List<RmOrderListVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
 		RmOrderListVO rm = null;
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(GET_ALL);
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ALL)) {
 
 			rs = ps.executeQuery();
 		
@@ -206,14 +156,6 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return rmAll;
 	}
@@ -222,17 +164,16 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 
 	@Override
 	public List<RmOrderListVO> getAllByRmOrderNo(Integer rm_order_no) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+		
 		List<RmOrderListVO> list = new ArrayList<>();
 		RmOrderListVO rmOrderListVO = null;
 		ResultSet rs = null;
 
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_BY_ORDNO);
-			pstmt.setInt(1, rm_order_no);
-			rs = pstmt.executeQuery();
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ALL_BY_ORDNO)) {
+			
+			ps.setInt(1, rm_order_no);
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				rmOrderListVO = new RmOrderListVO();
@@ -253,31 +194,22 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return list;
 	}
 	
 	@Override
 	public List<RmOrderListVO> getAllByRmTypeNo(Integer rm_type_no) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+		
 		List<RmOrderListVO> list = new ArrayList<>();
 		RmOrderListVO rmOrderListVO = null;
 		ResultSet rs = null;
 		
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_BY_RMTYPE);
-			pstmt.setInt(1, rm_type_no);
-			rs = pstmt.executeQuery();
+		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
+				PreparedStatement ps = con.prepareStatement(GET_ALL_BY_RMTYPE)) {
+			
+			ps.setInt(1, rm_type_no);
+			rs = ps.executeQuery();
 			
 			while (rs.next()) {
 				rmOrderListVO = new RmOrderListVO();
@@ -298,14 +230,6 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return list;
 	}
@@ -313,10 +237,8 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 	@Override
 	public void insert2(RmOrderListVO rmOrderListVO, Connection con) {
 		
-		PreparedStatement ps = null;
 		try {
-			con = ds.getConnection();
-			ps = con.prepareStatement(INSERT);
+			PreparedStatement ps = con.prepareStatement(INSERT);
 			ps.setInt(1, rmOrderListVO.getRm_type_no());
 			ps.setInt(2, rmOrderListVO.getRm_order_no());
 			ps.setInt(3, rmOrderListVO.getRm_amount());
@@ -343,14 +265,6 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			}
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 

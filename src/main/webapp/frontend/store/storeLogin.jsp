@@ -41,16 +41,45 @@
 	<%@ include file="/frontend/header.file" %>
 	
 <div class="loginSection">	
-	<h1>廠商登入:</h1>
-	
-	<form action="" method="post" class="accPass">
-		
-			<label>請輸入帳號:</label>
-			<input type="text" id="store_acc" >
-			<label>請輸入密碼:</label>
-			<input type="password" id="store_pwd" name="store_pwd">
-			<input type="submit">		
-	</form>	
+	<section class="login-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="login-box">
+                            <div class="login-top">
+                                <h3>歡迎回來</h3>
+                                <p>請輸入帳號及密碼登入</p>
+                            </div>
+                            <form class="login-form" action="front.html">
+                                <div class="row">
+                                    <div class="col-md-12 email">
+                                        <label>帳號:</label>
+                                        <input type="text" name="text" placeholder="輸入您的帳號" value="${storeVO}">
+                                    </div>
+                                    <div class="col-md-12 password">
+                                        <label>密碼:</label>
+                                        <input type="text" name="email" placeholder="在這輸入密碼" value="${storeVO}">
+                                    </div>
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <div class="chqbox">
+                                            <input type="checkbox" name="rememberme" id="rmme">
+                                            <label for="rmme">記住我的帳號</label>
+                                        </div>
+                                        <div class="forget-btn">
+                                            <a href="">忘記密碼?</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" name="button">登入</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 </div>	
     
   

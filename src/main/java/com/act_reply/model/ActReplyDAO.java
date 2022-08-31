@@ -45,28 +45,44 @@ public class ActReplyDAO implements I_ActReplyDAO {
 
 		} catch (SQLException se) {
 			se.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
 	@Override
-	public void delete(ActReplyVO actReplyVO) {
+	public void delete(Integer act_reply_no) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(DELETE);
 
-			ps.setInt(1, actReplyVO.getAct_reply_no());
+			ps.setInt(1, act_reply_no);
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
 			se.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
 
 	@Override
-	public List<ActReplyVO> getall(ActReplyVO actReplyVO) {
+	public List<ActReplyVO> getall() {
 		List<ActReplyVO> actreplyALL = new ArrayList<>();
 		ActReplyVO ar = null;
 		ResultSet rs = null;
@@ -89,9 +105,9 @@ public class ActReplyDAO implements I_ActReplyDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
+					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

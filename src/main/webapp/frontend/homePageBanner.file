@@ -3,7 +3,7 @@
     <section
       class="p-0 height-700 parallax-bg"
       style="
-        background: url(<%=request.getContextPath()%>/frontend/assets/imgs/airplane.jpg) no-repeat 65% 0%;
+        background: url(<%=request.getContextPath()%>/frontend/imgs/airplane.jpg) no-repeat 65% 0%;
         background-size: cover;
       "
     >
