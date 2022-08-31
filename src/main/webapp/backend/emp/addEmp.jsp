@@ -3,25 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.auth_fun.model.*"%>
+<%@ page import="com.emp.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="authFunService"
-	class="com.auth_fun.model.AuthFunService" />
+<jsp:useBean id="empSvc" class="com.emp.model.EmpService" />
+
+ <%
+ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+%> 
 
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>新增權限 - Memory</title>
+<title>新增員工資料 - Memory</title>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-
-<!-- jquery-ui -->
-<!-- <link rel="stylesheet" type="text/css"
-	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" /> -->
 
 
 <%@ include file="/backend/commonCSS.file"%>
@@ -74,7 +73,7 @@ td, div {
 }
 
 /* coup css */
-.auth-list-h1 {
+.coup-list-h1 {
 	margin-right: 2rem;
 }
 
@@ -86,9 +85,10 @@ td, div {
 	margin-bottom: 1rem;
 }
 
-.error-list-mb {
+.error-list-mb{
 	margin-bottom: 0.6rem;
 }
+ 
 </style>
 
 </head>
@@ -99,49 +99,65 @@ td, div {
 	<%@ include file="/backend/header.file"%>
 	<!-- sidebar -->
 	<%@ include file="/backend/sidebar.file"%>
-
-
-
+	
+	
+	
 
 	<!-- main -->
 	<div class="content-body">
 		<div class="container-fluid">
 			<div class="col-12 d-flex justify-content-between mb-5">
-				<h1 class="auth-list-h1">新增權限</h1>
+				<h1 class="coup-list-h1">新增員工資料</h1>
 			</div>
-
+			
 			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
 				<ul>
 					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red" class="error-list-mb">${message}</li>
+						<li style="color:red" class="error-list-mb">${message}</li>
 					</c:forEach>
 				</ul>
-			</c:if>
+		</c:if>
 
 
 			<div class="col-12">
-				<form action="<%=request.getContextPath()%>/authfun/addAuthFun.do"
-					method="post" class="modal-content">
+				<form action="<%=request.getContextPath()%>/emp/emp.do" method="post" class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title">新增權限</h3>
+						<h3 class="modal-title">新增員工</h3>
 					</div>
+					
+					
 					<div class="modal-body">
 						<div class="form-row input-mb d-flex">
-							<div class="form-group col-md-6 input-mr">
-								<label for="coupName">權限名稱</label> <input type="text"
-									class="form-control" id="authFunName" name="fun_name"
-									value="${authFunVO.fun_name}">
+							<div class="form-group col-md-5 input-mr">
+								<label for="emp_name">姓名</label> 
+								<input type="text" class="form-control" id="emp_name" name="emp_name" value="${empVO.emp_name}">
 							</div>
-						</div>
+							<div class="form-group col-md-3 input-mr">
+								<label for="emp_acc">帳號</label> 
+								<input type="text" class="form-control" id="emp_acc" name="emp_acc" value="${empVO.emp_acc}">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="emp_pwd">密碼</label> 
+								<input type="text" class="form-control" id="emp_pwd" name="emp_pwd" value="${empVO.emp_pwd}">
+							</div>
+							</div>
+							
+							<div class="form-row d-flex input-mb">
+							<div class="form-group col-md-5 input-mr">
+								<label for="emp_email">Email</label> 
+								<input type="text" class="form-control" id="emp_email" name="emp_email" value="${empVO.emp_email}">
+							</div>
+							</div>
 					</div>
-							<div class="modal-footer">
-								 <a href="<%=request.getContextPath()%>backend/authfun/listAllAuthFun.jsp"
-									class="btn btn-secondary" data-dismiss="modal">取消</a> 
-									<input type="hidden" name="action" value="${authFunVO.fun_name}">
-									<input type="submit" class="btn btn-primary" value="儲存">
-							</div>
+					<div class="modal-footer">
+						<!-- hidden input -->
+						<a href="<%=request.getContextPath()%>/backend/emp/listAllEmp.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
+						<input type="hidden" name="action" value="insert">
+						<input type="hidden" name="emp_state" value="1">
+						<input type="submit" class="btn btn-primary" value="儲存">
+					</div>
 				</form>
 
 			</div>
@@ -149,22 +165,6 @@ td, div {
 	</div>
 
 	<%@ include file="/backend/commonJS.file"%>
-
-	<!-- jquery-ui -->
-	<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-	<script>
-		$( function() {
-	    	$( "#datepicker" ).datepicker();
-	 	} );
-	</script> -->
-
-	<!-- bootstrap cdn 用了會跑版先註解-->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script> -->
+	
 </body>
 </html>

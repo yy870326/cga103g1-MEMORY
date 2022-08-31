@@ -25,11 +25,11 @@ public class AuthFunService {
 	}
 	
 	
-	public AuthFunVO updateAuthFunVO(Integer fun_no, String fun_name) {
+	public AuthFunVO updateAuthFunVO(String fun_name,Integer fun_no) {
 		AuthFunVO authFunVO = new AuthFunVO();
 		
-		authFunVO.setFun_no(fun_no);
 		authFunVO.setFun_name(fun_name);
+		authFunVO.setFun_no(fun_no);
 		dao.update(authFunVO);
 
 		return authFunVO;

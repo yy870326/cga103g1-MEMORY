@@ -3,12 +3,13 @@ package com.emp.model;
 import java.io.Serializable;
 
 public class EmpVO implements Serializable{
+	
 	private Integer emp_no;
 	private String emp_acc;
 	private String emp_pwd;
 	private String emp_name;
 	private String emp_email;
-	private Boolean emp_state;
+	private Integer emp_state;
 	
 
 	public Integer getEmp_no() {
@@ -51,14 +52,13 @@ public class EmpVO implements Serializable{
 		this.emp_email = emp_email;
 	}
 
-	public Boolean getEmp_state() {
+	public Integer getEmp_state() {
 		return emp_state;
 	}
 
-	public void setEmp_state(Boolean emp_state) {
+	public void setEmp_state(Integer emp_state) {
 		this.emp_state = emp_state;
 	}
-	
-	
+
 
 }

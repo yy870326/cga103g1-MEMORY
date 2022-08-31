@@ -10,25 +10,20 @@
 
 <%
 AuthFunVO authFunVO = (AuthFunVO) request.getAttribute("authFunVO");
-System.out.print(authFunVO); // 看資料有沒有傳過來 */
+
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>權限修改 - Memory</title>
+<title>修改權限 - Memory</title>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 
-<!-- bootstrap cdn 用了會跑版先註解 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
-
 <%@ include file="/backend/commonCSS.file"%>
-
 
 <style>
 table.fold-table tbody tr.view {
@@ -76,7 +71,6 @@ td, div {
 	letter-spacing: 0.5px;
 }
 
-/* coup css */
 .coup-list-h1 {
 	margin-right: 2rem;
 }
@@ -99,10 +93,11 @@ td, div {
 	<%@ include file="/backend/sidebar.file"%>
 
 	<!-- main -->
-	<div class="content-body">
+	<div class="main-content">
+		<a class="btn btn-secondary light"
+			href="<%=request.getContextPath()%>/backend/authfun/listAllAuthFun.jsp">&lt;回權限列表</a>
 		<div class="container-fluid">
-			<div class="col-12 d-flex justify-content-between mb-5">
-				<h1 class="coup-list-h1">權限名稱修改</h1>
+			<div class="col-10 d-flex justify-content-between mb-5">
 			</div>
 			
 			<%-- 錯誤表列 --%>
@@ -115,16 +110,20 @@ td, div {
 				</ul>
 		</c:if>
 
-			<div class="col-12">
-				<form action="<%=request.getContextPath()%>/authfun/updateAuthFun.do" method="post" class="modal-content">
+			<div class="col-11">
+				<form action="<%=request.getContextPath()%>/authfun/updateAuthFun.do" name="update" method="post" class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title" id="updateAuthFun">${authFunVO.fun_no} ${authFunVO.fun_name} 修改</h3>
+						<h3 class="modal-title" >修改權限名稱</h3>
 					</div>
 					<div class="modal-body">
 						<div class="form-row input-mb d-flex">
 							<div class="form-group col-md-5 input-mr">
-								<label for="authName">權限名稱</label> 
-								<input type="text" class="form-control" id="authName" name="auth_name" value="${authFunVO.fun_name}">
+							<label for="fun_no">權限編號</label>
+									<div class="form-control"><%=request.getParameter("fun_no")%></div>
+							</div>
+							<div class="form-group col-md-5 input-mr">
+								<label for="fun_name">權限名稱</label> 
+								<input type="text" class="form-control" name="fun_name" value="<%=authFunVO.getFun_name()%>">
 							</div>
 					</div>		
 					</div>
@@ -132,10 +131,9 @@ td, div {
 					<div class="modal-footer">
 					
 					<!-- hidden input -->
-						<input type="hidden" name="authFun_no" value="${authFunVO.fun_no}">
-						<input type="hidden" name="action" value="update">
-						
 						<a href="<%=request.getContextPath()%>/backend/authfun/listAllAuthFun.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
+						<input type="hidden" name="action" value="update">
+						<input type="hidden" name="fun_no" value="<%=authFunVO.getFun_no()%>">
 						<input type="submit" class="btn btn-primary" id="updateSave" value="儲存">
 					</div>
 				</form>
@@ -145,7 +143,10 @@ td, div {
 	</div>
 
 	<%@ include file="/backend/commonJS.file"%>
-	
+	<script>
+				// 		header標題
+				$("#pagename").text("MEMORY 權限管理");
+			</script>
 	
 </body>
 </html>

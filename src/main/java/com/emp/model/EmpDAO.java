@@ -12,13 +12,17 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.mem.model.MemVO;
+
 public class EmpDAO implements I_EmpDAO {
 	private static final String INSERT = "INSERT INTO EMP(emp_acc,emp_pwd,emp_name,emp_email,emp_state)VALUES(?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE EMP SET emp_acc=?,emp_pwd=?, emp_name=?,emp_email=?,emp_state=? WHERE emp_no=?";
 	private static final String GET_ONE = "SELECT * FROM EMP WHERE emp_no=?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
+	private static final String UPDATE_STATUS = "UPDATE emp set emp_state=? where emp_no = ?";
 	private static final String LOGIN = "SELECT * FROM EMP WHERE emp_acc=? and emp_pwd =?";
 	private static DataSource ds = null;
+	
 	static {
 		try {
 			Context ctx = new InitialContext();
@@ -40,7 +44,7 @@ public class EmpDAO implements I_EmpDAO {
 			ps.setString(2, empVO.getEmp_pwd());
 			ps.setString(3, empVO.getEmp_name());
 			ps.setString(4, empVO.getEmp_email());
-			ps.setBoolean(5, empVO.getEmp_state());
+			ps.setInt(5, empVO.getEmp_state());
 			ps.executeUpdate();
 			
 		} catch (SQLException se) {
@@ -68,7 +72,7 @@ public class EmpDAO implements I_EmpDAO {
 			ps.setString(2, empVO.getEmp_pwd());
 			ps.setString(3, empVO.getEmp_name());
 			ps.setString(4, empVO.getEmp_email());
-			ps.setBoolean(5, empVO.getEmp_state());
+			ps.setInt(5, empVO.getEmp_state());
 			ps.setInt(6, empVO.getEmp_no());
 			ps.executeUpdate();
 			
@@ -104,7 +108,7 @@ public class EmpDAO implements I_EmpDAO {
 				emp.setEmp_pwd(rs.getString("emp_pwd"));
 				emp.setEmp_name(rs.getString("emp_name"));
 				emp.setEmp_email(rs.getString("emp_email"));
-				emp.setEmp_state(rs.getBoolean("emp_state"));
+				emp.setEmp_state(rs.getInt("emp_state"));
 			}
 
 		} catch (SQLException se) {
@@ -139,7 +143,7 @@ public class EmpDAO implements I_EmpDAO {
 				emp.setEmp_acc(rs.getString("emp_acc"));
 				emp.setEmp_name(rs.getString("emp_name"));
 				emp.setEmp_email(rs.getString("emp_email"));
-				emp.setEmp_state(rs.getBoolean("emp_state"));
+				emp.setEmp_state(rs.getInt("emp_state"));
 
 				empAll.add(emp);
 			}
@@ -176,7 +180,7 @@ public class EmpDAO implements I_EmpDAO {
 				emp.setEmp_acc(rs.getString("emp_acc"));
 				emp.setEmp_name(rs.getString("emp_name"));
 				emp.setEmp_email(rs.getString("emp_email"));
-				emp.setEmp_state(rs.getBoolean("emp_state"));
+				emp.setEmp_state(rs.getInt("emp_state"));
 			}
 
 		} catch (SQLException se) {
@@ -191,5 +195,40 @@ public class EmpDAO implements I_EmpDAO {
 			}
 		}
 		return emp;
+	}
+
+	@Override
+	public void updateStatus(EmpVO empVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+			pstmt.setInt(1, empVO.getEmp_state());
+			pstmt.setInt(2, empVO.getEmp_no());
+			
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }
