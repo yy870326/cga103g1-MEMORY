@@ -9,7 +9,7 @@ import javax.tools.JavaFileObject;
 public class RmReserveVO implements Serializable{
 	private Integer serial_no;
 	private Integer rm_type_no;
-	private Integer rm_type_amount;
+	private Integer rm_total;
 	private Date rm_schedule_date;
 	private Integer reservation_amount;
 	public Integer getSerial_no() {
@@ -24,11 +24,11 @@ public class RmReserveVO implements Serializable{
 	public void setRm_type_no(Integer rm_type_no) {
 		this.rm_type_no = rm_type_no;
 	}
-	public Integer getRm_type_amount() {
-		return rm_type_amount;
+	public Integer getRm_total() {
+		return rm_total;
 	}
-	public void setRm_type_amount(Integer rm_type_amount) {
-		this.rm_type_amount = rm_type_amount;
+	public void setRm_total(Integer rm_total) {
+		this.rm_total = rm_total;
 	}
 	public Date getRm_schedule_date() {
 		return rm_schedule_date;

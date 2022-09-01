@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.auth_fun.model.AuthFunService;
 import com.auth_fun.model.AuthFunVO;
-import com.coup.model.CoupService;
-import com.coup.model.CoupVO;
+
 
 @WebServlet(name = "AddAuthFunServlet", urlPatterns = { "/authfun/addAuthFun.do" })
 public class AddAuthFunServlet extends HttpServlet {

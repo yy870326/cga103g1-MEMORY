@@ -135,7 +135,7 @@ td, div {
 									value="${authFunVO.fun_name}">
 							</div>
 						</div>
-
+					</div>
 							<div class="modal-footer">
 								 <a href="<%=request.getContextPath()%>backend/authfun/listAllAuthFun.jsp"
 									class="btn btn-secondary" data-dismiss="modal">取消</a> 

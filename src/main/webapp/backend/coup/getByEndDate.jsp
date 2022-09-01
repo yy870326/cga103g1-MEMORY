@@ -9,8 +9,8 @@
 
 <%
 CoupService coupSrv = new CoupService();
-/* CoupVO coupVO = new CoupVO(); */
-/* List<CoupVO> list = coupSrv.getByEndDate(enddate);*/
+CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
+/* List<CoupVO> list = coupSrv.getByEndDate(enddate); */
 List<CoupVO> list = coupSrv.getByEndDate(java.sql.Date.valueOf("2022-08-31")); // 這邊動態抓不到，施工中
 pageContext.setAttribute("list", list);
 
@@ -146,10 +146,10 @@ td, div {
 								<%-- <td>${coupVO.status}</td> --%>
 								<td>
 									<c:if test="${coupVO.status == 0 }">
-										未上架
+										<span class="badge badge-danger light">未上架</span>
 									</c:if>
 									<c:if test="${coupVO.status == 1 }">
-										已上架
+										<span class="badge badge-primary light">已上架</span>
 									</c:if>
 								</td>
 								<td>
@@ -158,7 +158,9 @@ td, div {
 										 data-toggle="modal" data-target="#updateCoupModal">修改</button> -->
 
 									<form method="post" action="<%=request.getContextPath()%>/coup/updateCoup.do">
-										<input type="submit" class="btn btn-warning" value="修改"> 
+										<button type="submit" class="fa fa-pencil-alt btn" value="">
+											<!-- <i class="fa fa-pencil-alt"></i> -->
+										</button>
 										<input type="hidden" name="coup_no" value="${coupVO.coup_no}">
 										<input type="hidden" name="action" value="getOneUpdate">
 									</form>

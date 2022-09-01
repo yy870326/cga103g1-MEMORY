@@ -1,6 +1,7 @@
 package com.rm_reserve.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,14 +28,33 @@ public class RmReserveDAO implements I_RmReserveDAO {
 		}
 	}
 
-	private static final String INSERT = "INSERT INTO RM_RESERVE(rm_type_no,rm_type_amount,rm_schedule_date,reservation_amount)VALUES(?,?,?,?)";
-	private static final String UPDATE = "UPDATE RM_RESERVE SET rm_type_no=?,rm_type_amount=?, rm_schedule_date=?,reservation_amount=? WHERE serial_no=?";
-	private static final String CANCEL = "SELECT * FROM RM_RESERVE WHERE serial_no=?";
+	private static final String INSERT = "INSERT INTO rm_reserve(rm_type_no, rm_schedule_date, rm_total) "
+			+ "WITH RECURSIVE dates (v_date) AS "
+			+ "(SELECT CURDATE() "
+			+ "UNION ALL "
+			+ "SELECT v_date + INTERVAL 1 DAY "
+			+ "FROM dates "
+			+ "WHERE v_date + INTERVAL 1 DAY <= ADDDATE(CURDATE(), INTERVAL 1 MONTH)) "
+			+ "SELECT z.rm_type_no, d.v_date, z.rm_total "
+			+ "FROM dates d "
+			+ "CROSS JOIN rm_type z "
+			+ "LEFT JOIN rm_reserve r on (d.v_date = r.rm_schedule_date AND z.rm_type_no = r.rm_type_no) "
+			+ "WHERE r.rm_schedule_date IS NULL";
+	
+	private static final String RESERVE = "UPDATE rm_reserve SET reservation_amount = reservation_amount+? "
+			+ "WHERE rm_type_no = ? AND (rm_schedule_date BETWEEN ? AND SUBDATE( ?, INTERVAL 1 DAY))";
+	
+	private static final String CANCEL = "UPDATE rm_reserve SET reservation_amount = reservation_amount-? "
+			+ "WHERE rm_type_no = ? AND (rm_schedule_date BETWEEN ? AND SUBDATE( ?, INTERVAL 1 DAY))";
+	
+	private static final String DELETE = "DELETE FROM rm_reserve WHERE rm_schedule_date < CURDATE()";
+	
+	private static final String UPDATE = "UPDATE RM_RESERVE SET rm_type_no=?, rm_total=?, rm_schedule_date=?, reservation_amount=? WHERE serial_no=?";
 	private static final String GET_ONE = "SELECT * FROM RM_RESERVE WHERE serial_no=?";
 	private static final String GET_ALL = "SELECT * FROM RM_RESERVE";
 
 	@Override
-	public void insert(RmReserveVO rmreserveVO) {
+	public void insert() {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -42,17 +62,11 @@ public class RmReserveDAO implements I_RmReserveDAO {
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
-
-			ps.setInt(1, rmreserveVO.getRm_type_no());
-			ps.setInt(2, rmreserveVO.getRm_type_amount());
-			ps.setDate(3, rmreserveVO.getRm_schedule_date());
-			ps.setInt(4, rmreserveVO.getReservation_amount());
 			ps.executeUpdate();
 
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
 		} finally {
 			if (ps != null) {
 				try {
@@ -73,7 +87,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 	}
 
 	@Override
-	public void update(RmReserveVO rmreserveVO) {
+	public void reserve(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -82,11 +96,10 @@ public class RmReserveDAO implements I_RmReserveDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, rmreserveVO.getRm_type_no());
-			ps.setInt(2, rmreserveVO.getRm_type_amount());
-			ps.setDate(3, rmreserveVO.getRm_schedule_date());
-			ps.setInt(4, rmreserveVO.getReservation_amount());
-			ps.setInt(5, rmreserveVO.getSerial_no());
+			ps.setInt(1, qty);
+			ps.setInt(2, rm_type_no);
+			ps.setDate(3, start_date);
+			ps.setDate(4, end_date);
 			ps.executeUpdate();
 
 			// Handle any SQL errors
@@ -113,7 +126,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 	}
 
 	@Override
-	public void chanel(RmReserveVO rmreserveVO) {
+	public void cancel(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -122,7 +135,10 @@ public class RmReserveDAO implements I_RmReserveDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(CANCEL);
 
-			ps.setInt(1, rmreserveVO.getSerial_no());
+			ps.setInt(1, qty);
+			ps.setInt(2, rm_type_no);
+			ps.setDate(3, start_date);
+			ps.setDate(4, end_date);
 			ps.executeUpdate();
 
 			// Handle any SQL errors
@@ -148,6 +164,32 @@ public class RmReserveDAO implements I_RmReserveDAO {
 
 	}
 
+	@Override
+	public void delete() {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(DELETE);
+			ps.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 	@Override
 	public RmReserveVO findByPrimaryKey(Integer serial_no) {
 
@@ -167,7 +209,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 			while (rs.next()) {
 				rmReserveVO = new RmReserveVO();
 				rmReserveVO.setRm_type_no(rs.getInt("rm_type_no"));
-				rmReserveVO.setRm_type_amount(rs.getInt("rm_type_no"));
+				rmReserveVO.setRm_total(rs.getInt("rm_total"));
 				rmReserveVO.setRm_schedule_date(rs.getDate("rm_schedule_date"));
 				rmReserveVO.setReservation_amount(rs.getInt("reservation_amount"));
 			}
@@ -219,7 +261,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 				rmReserveVO = new RmReserveVO();
 				rmReserveVO.setSerial_no(rs.getInt("serial_NO"));
 				rmReserveVO.setRm_type_no(rs.getInt("rm_type_no"));
-				rmReserveVO.setRm_type_amount(rs.getInt("rm_type_amount"));
+				rmReserveVO.setRm_total(rs.getInt("rm_total"));
 				rmReserveVO.setRm_schedule_date(rs.getDate("rm_schedule_date"));
 				rmReserveVO.setReservation_amount(rs.getInt("reservation_amount"));
 				list.add(rmReserveVO);

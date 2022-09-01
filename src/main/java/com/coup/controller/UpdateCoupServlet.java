@@ -31,20 +31,20 @@ public class UpdateCoupServlet extends HttpServlet {
 		
 		///////////////////////////// getOneUpdate ////////////////////////
 
-		if ("getOneUpdate".equals(action)) {
-			
-			// ------------- getParameter -------------
-			Integer coup_no = Integer.valueOf(req.getParameter("coup_no"));
-			
-			// -------------- getOne -------------
-			CoupService coupSrv = new CoupService();
-			CoupVO coupVO = coupSrv.getOneCoup(coup_no);
-			
-			// ------------- forward -------------
-			req.setAttribute("coupVO", coupVO);
-			RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/updateCoup.jsp");
-			successView.forward(req, res);
-		}
+				if ("getOneUpdate".equals(action)) {
+					
+					// ------------- getParameter -------------
+					Integer coup_no = Integer.valueOf(req.getParameter("coup_no"));
+					
+					// -------------- getOne -------------
+					CoupService coupSrv = new CoupService();
+					CoupVO coupVO = coupSrv.getOneCoup(coup_no);
+					
+					// ------------- forward -------------
+					req.setAttribute("coupVO", coupVO);
+					RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/updateCoup.jsp");
+					successView.forward(req, res);
+				}
 		
 		///////////////////////////// update ////////////////////////
 		

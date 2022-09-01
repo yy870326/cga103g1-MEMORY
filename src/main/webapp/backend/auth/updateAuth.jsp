@@ -14,6 +14,7 @@ AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 <html>
 
 <head>
+<title>權限資料修改 - Memory</title>
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
@@ -67,7 +68,6 @@ td, div {
 	letter-spacing: 0.5px;
 }
 
-/* coup css */
 .coup-list-h1 {
 	margin-right: 2rem;
 }
@@ -96,10 +96,9 @@ td, div {
 	<!-- 	內容寫在main-content這個div內    -->
 	<div class="main-content">
 		<a class="btn btn-secondary light"
-			href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp">&lt;回權限列表</a>
+			href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp">&lt;回員工權限列表</a>
 		<div class="container-fluid">
 			<div class="col-10 d-flex justify-content-between mb-5">
-				<h1 class="coup-list-h1">修改權限</h1>
 			</div>
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -120,7 +119,6 @@ td, div {
 						<div class="form-row input-mb d-flex">
 							<div class="form-group col-md-5 input-mr">
 								<label for="fun_no">權限編號</label>
-<%-- 								<div class="form-control">${authVO.fun_no}</div> --%>
 									<div class="form-control"><%=request.getParameter("fun_no")%></div>
 							</div>
 							<div class="form-group col-md-5 input-mr">
@@ -138,8 +136,7 @@ td, div {
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a
-							href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp"
+						<a href="<%=request.getContextPath()%>/backend/auth/listAllAuth.jsp"
 							class="btn btn-secondary" data-dismiss="modal">取消</a> 
 							<input type="hidden" name="action" value="update"> 
 							<input type="hidden" name="fun_no" value="<%=request.getParameter("fun_no")%>"> 
@@ -148,12 +145,13 @@ td, div {
 					</div>
 				</form>
 			</div>
-
+</div>
+</div>
 			<%@ include file="/backend/commonJS.file"%>
 			<!-- JS -->
 			<script>
 				// 		header標題
-				$("#pagename").text("MEMORY 後台管理");
+				$("#pagename").text("MEMORY 員工權限管理");
 			</script>
 </body>
 
