@@ -27,16 +27,16 @@ public class TestRmOrder {
 	rm.setStore_no(1);
 	rm.setRm_order_status(1);
 	rm.setRm_charge(20000);
-	rm.setStart_date(Date.valueOf("2022-09-28"));
-	rm.setEnd_date(Date.valueOf("2022-09-30"));
+	rm.setStart_date(Date.valueOf("2022-10-28"));
+	rm.setEnd_date(Date.valueOf("2022-10-30"));
 	
 	List<RmOrderListVO> testList = new ArrayList<RmOrderListVO>(); // 準備置入訂單明細數筆
 	RmOrderListVO rol = new RmOrderListVO();   // 訂單明細POJO1
 	rol.setRm_type_no(14);
 	rol.setRm_amount(1);
 	rol.setRm_price(4000);
-	rol.setArrival_date(Date.valueOf("2022-09-28"));
-	rol.setDeparture_date(Date.valueOf("2022-09-30"));
+	rol.setArrival_date(Date.valueOf("2022-10-28"));
+	rol.setDeparture_date(Date.valueOf("2022-10-30"));
 	rol.setRm_check_in("朱小妹");
 	
 	
@@ -44,8 +44,8 @@ public class TestRmOrder {
 	rol2.setRm_type_no(19);
 	rol2.setRm_amount(1);
 	rol2.setRm_price(6000);
-	rol2.setArrival_date(Date.valueOf("2022-09-28"));
-	rol2.setDeparture_date(Date.valueOf("2022-09-30"));
+	rol2.setArrival_date(Date.valueOf("2022-10-28"));
+	rol2.setDeparture_date(Date.valueOf("2022-10-30"));
 	rol2.setRm_check_in("朱小弟");
 
 	testList.add(rol);

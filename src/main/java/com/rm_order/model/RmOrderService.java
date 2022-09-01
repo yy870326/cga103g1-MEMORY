@@ -54,4 +54,8 @@ public class RmOrderService {
 		dao.updateStatus(rmOrderVO);
 		return rmOrderVO;
 	}
+	
+	public void overdue() {
+		dao.overdue();
+	}
 }
