@@ -176,7 +176,6 @@ public class TktJdbcDAO implements I_TktDAO {
 
 	public static void main(String[] args) {
 		TktJdbcDAO dao = new TktJdbcDAO();
-
 		// insert
 //		TktVO voInsert = new TktVO();
 //		
@@ -198,44 +197,44 @@ public class TktJdbcDAO implements I_TktDAO {
 //		dao.insert(voInsert);
 
 		// update
-		TktVO voUpdate = new TktVO();
-		
-		voUpdate.setTkt_name("麗寶樂園度假區門票");
-		voUpdate.setOriginal_amount(999);
-		voUpdate.setPrice(777);
-		voUpdate.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
-		voUpdate.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
-		voUpdate.setLocate("台中市");
-		voUpdate.setInstruction("麗寶樂園度假區門票");
-		voUpdate.setAddress("台中市后里區福容路8號");
-		voUpdate.setNotice("請在指定日期前使用");
-		voUpdate.setHowuse("抵達麗寶樂園度假區門口出示 QR Code");
-		voUpdate.setCanxpolicy("請洽客服系統");
-		voUpdate.setTkt_status(1);
-		voUpdate.setSold_amount(0);
-		voUpdate.setKind(1);
-		voUpdate.setTkt_no(2);
-		
-		dao.update(voUpdate);
+//		TktVO voUpdate = new TktVO();
+//		
+//		voUpdate.setTkt_name("麗寶樂園度假區門票");
+//		voUpdate.setOriginal_amount(999);
+//		voUpdate.setPrice(777);
+//		voUpdate.setTkt_startdate(java.sql.Date.valueOf("2022-08-01"));
+//		voUpdate.setTkt_enddate(java.sql.Date.valueOf("2022-12-31"));
+//		voUpdate.setLocate("台中市");
+//		voUpdate.setInstruction("麗寶樂園度假區門票");
+//		voUpdate.setAddress("台中市后里區福容路8號");
+//		voUpdate.setNotice("請在指定日期前使用");
+//		voUpdate.setHowuse("抵達麗寶樂園度假區門口出示 QR Code");
+//		voUpdate.setCanxpolicy("請洽客服系統");
+//		voUpdate.setTkt_status(1);
+//		voUpdate.setSold_amount(0);
+//		voUpdate.setKind(1);
+//		voUpdate.setTkt_no(2);
+//		
+//		dao.update(voUpdate);
 
 		// findByPrimaryKey
-//		TktVO voPk = dao.findByPrimaryKey(3);
-//		
-//		System.out.println(voPk.getTkt_no());
-//		System.out.println(voPk.getTkt_name());
-//		System.out.println(voPk.getOriginal_amount());
-//		System.out.println(voPk.getPrice());
-//		System.out.println(voPk.getTkt_startdate());
-//		System.out.println(voPk.getTkt_enddate());
-//		System.out.println(voPk.getLocate());
-//		System.out.println(voPk.getInstruction());
-//		System.out.println(voPk.getAddress());
-//		System.out.println(voPk.getNotice());
-//		System.out.println(voPk.getHowuse());
-//		System.out.println(voPk.getCanxpolicy());
-//		System.out.println(voPk.getTkt_status());
-//		System.out.println(voPk.getSold_amount());
-//		System.out.println(voPk.getKind());
+		TktVO voPk = dao.findByPrimaryKey(2);
+		
+		System.out.println(voPk.getTkt_no());
+		System.out.println(voPk.getTkt_name());
+		System.out.println(voPk.getOriginal_amount());
+		System.out.println(voPk.getPrice());
+		System.out.println(voPk.getTkt_startdate());
+		System.out.println(voPk.getTkt_enddate());
+		System.out.println(voPk.getLocate());
+		System.out.println(voPk.getInstruction());
+		System.out.println(voPk.getAddress());
+		System.out.println(voPk.getNotice());
+		System.out.println(voPk.getHowuse());
+		System.out.println(voPk.getCanxpolicy());
+		System.out.println(voPk.getTkt_status());
+		System.out.println(voPk.getSold_amount());
+		System.out.println(voPk.getKind());
 
 		// getAll
 //		List<TktVO> list = dao.getAll();

@@ -23,13 +23,31 @@
       <!-- 主要內容 Start -->
 
       <div class="col-lg-9">
-        <!-- h5 改 h3 -->
+        <!-- 內容Start -->
+        <div class="col-sm-12 col-md-11">
         <h3 class="mt-5 mb-3">優惠券列表</h3>
-        <!-- 這塊刪掉放內容Start -->
-        <blockquote class="blockquote bg-dark" cite="#">
-          <h3 class="mb-2 ">這塊刪掉放內容</h3>
-        </blockquote>
-        <!-- 這塊刪掉放內容 end -->
+			<ul class="nav nav-tabs nav-justified">
+				<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-3-1"> 全部(20) </a> </li>
+				<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-3-2"> 尚未使用(12) </a> </li>
+				<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-3-3"> 即將到期(3) </a> </li>
+				<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-3-4"> 已使用(7) </a> </li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane show active" id="tab-3-1">
+					全部優惠券
+				</div>
+				<div class="tab-pane" id="tab-3-2">
+					尚未使用
+				</div>
+				<div class="tab-pane" id="tab-3-3">
+					 即將到期
+				</div>
+				<div class="tab-pane" id="tab-3-4">
+					 已使用
+				</div>
+			</div>
+		</div>
+        
       </div>
       
       

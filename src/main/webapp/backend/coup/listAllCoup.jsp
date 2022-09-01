@@ -11,8 +11,8 @@
 CoupService coupSvc = new CoupService();
 List<CoupVO> list = coupSvc.getAll();
 pageContext.setAttribute("list", list);
-CoupVO coupVO = new CoupVO();
-request.setAttribute("coupVO", coupVO);
+/* CoupVO coupVO = new CoupVO();
+request.setAttribute("coupVO", coupVO); */
 
 /* System.out.println("listAll -s"); // 印出來看
 System.out.println(coupVO); // 印出來看
@@ -89,7 +89,7 @@ td, div {
 }
 
 .add-btn {
-	padding: 1rem 2.5rem 0.5rem 2.5rem;
+	padding: 1rem 1rem 0.5rem 2rem;
 }
 
 </style>
@@ -109,7 +109,13 @@ td, div {
 			<div class="col-12 d-flex justify-content-between mb-5">
 				<div class="d-flex">
 					<h1 class="coup-lis list-h1">優惠券列表</h1>
-					<a href="<%=request.getContextPath()%>/backend/coup/addCoup.jsp" class="btn btn-primary add-btn">新增</a>
+					<a href="<%=request.getContextPath()%>/backend/coup/addCoup.jsp" class="btn btn-rounded btn-primary add-btn">
+						<span class="btn-icon-start text-primary">
+							<i class="fa fa-plus color-primary"></i>
+                        </span>
+                        新增
+                     </a>
+					<%-- <a href="<%=request.getContextPath()%>/backend/coup/addCoup.jsp" class="btn btn-primary add-btn">新增</a> --%>
 				</div>
 				<!-- search -->
 				<form method="post" action="<%=request.getContextPath()%>/coup/getByEnddate.do" class="input-group search-area">
@@ -120,11 +126,11 @@ td, div {
 				</form>
 			</div>
 
-			<div class="col-12">
-				<table class="table fold-table">
+			<div class="col-12 table-responsive">
+				<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">優惠券編號</th>
+							<th scope="col">編號</th>
 							<th scope="col">優惠券名稱</th>
 							<th scope="col">優惠券介紹</th>
 							<th scope="col">優惠券金額</th>
@@ -141,19 +147,19 @@ td, div {
 					
 					<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
-								<td>${coupVO.coup_no}</td>
+								<td># ${coupVO.coup_no}</td>
 								<td>${coupVO.coup_name}</td>
 								<td>${coupVO.introduce}</td>
-								<td>${coupVO.discount}</td>
+								<td>NT$ ${coupVO.discount}</td>
 								<td>${coupVO.startdate}</td>
 								<td>${coupVO.enddate}</td>
 								<%-- <td>${coupVO.status}</td> --%>
 								<td>
 									<c:if test="${coupVO.status == 0 }">
-										未上架
+										<span class="badge badge-danger light">未上架</span>
 									</c:if>
 									<c:if test="${coupVO.status == 1 }">
-										已上架
+										<span class="badge badge-primary light">已上架</span>
 									</c:if>
 								</td>
 								<td>
@@ -162,7 +168,9 @@ td, div {
 										 data-toggle="modal" data-target="#updateCoupModal">修改</button> -->
 
 									<form method="post" action="<%=request.getContextPath()%>/coup/updateCoup.do">
-										<input type="submit" class="btn btn-warning" value="修改"> 
+										<button type="submit" class="fa fa-pencil-alt btn" value="">
+											<!-- <i class="fa fa-pencil-alt"></i> -->
+										</button>
 										<input type="hidden" name="coup_no" value="${coupVO.coup_no}">
 										<input type="hidden" name="action" value="getOneUpdate">
 									</form>
