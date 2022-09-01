@@ -41,10 +41,10 @@ public class StoreLoginControl extends HttpServlet {
 			
 			//=========================資料存取===========================
 			
-			
+		
 			StoreService storeSvc = new StoreService();
 			StoreVO storevo = storeSvc.logIn(store_acc, store_pwd);
-			
+
 			if(storevo == null) {
 				
 				errorMsgs.put("storevo", "請輸入帳號密碼");
@@ -55,6 +55,7 @@ public class StoreLoginControl extends HttpServlet {
 			}else {
 				
 				session.setAttribute("store_acc", store_acc);
+				session.setAttribute("storevo", storevo);
 				try {
 					String location = (String)session.getAttribute("location");
 					if(location != null) {
