@@ -1,13 +1,21 @@
 package com.cart.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.cart.model.CartItemService;
+import com.cart.model.CartItemVO;
+
 
 @WebServlet(name = "CartCheckOutServlet", urlPatterns = { "/cart/cartCheckOut.do" })
 public class CartCheckOutServlet extends HttpServlet {
@@ -23,19 +31,38 @@ public class CartCheckOutServlet extends HttpServlet {
 		res.setContentType("text/plain; charset = UTF-8");
 		
 		// -------------- getParameter --------------
-		//	無法獲得前端送來的 tkt_no 陣列	
+		String sessionId = null;
 		
-		Enumeration<String> paramNames = req.getParameterNames();
+		Enumeration<String> en = req.getParameterNames(); // 接收表單送來的所有 checkbox name
 		
-		while(paramNames.hasMoreElements()) {
-			String tkt_no = (String) paramNames.nextElement();
-			String[] tkt_nos = req.getParameterValues(tkt_no);
+		while (en.hasMoreElements()) {
+			String name = (String) en.nextElement();
+			String values[] = req.getParameterValues(name); // 	取出前端表單送來已選取的 tkt_no
+		
 			
-			System.out.println(tkt_nos);
+			// 創一個新的 List 裝已被選取的 checkbox
+			List<CartItemVO> checkedList = new ArrayList<CartItemVO>();
+			
+			Integer tkt_no = 0;
+			
+			if (values != null) { 
+				for (int i = 0; i < values.length; i++) {
+					sessionId = (String) req.getSession().getAttribute("sessionId"); // 取得 session 的 ID
+					CartItemService cartItemSrv = new CartItemService();
+					tkt_no = Integer.valueOf(values[i]);
+					CartItemVO itemChecked = cartItemSrv.getOneChecked(sessionId, tkt_no);
+					
+					checkedList.add(itemChecked);
+				}
+			}
+			
+			
+			req.setAttribute("checkedList", checkedList);
 		}
+		RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/payment.jsp");
+		rd.forward(req, res);
 		
-		
-		// -------------- 永續層 --------------
+
 		
 	}
 

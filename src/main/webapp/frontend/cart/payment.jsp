@@ -20,7 +20,7 @@
 <% 
 /* CartItemVO cartItemVO = new CartItemVO();
 System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
-List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems"); 
+List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedList"); 
 /* System.out.println("cart.jsp cartItems:" + cartItems); */
  /*  CartItemService cartItemSrv = new CartItemService();
   List<CartItemVO> list = cartItemSrv.getCart(sessionId);
@@ -51,7 +51,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 mb-3">
-					<h3 class="text-center mb-4">付款清單</h3>
+					<h3 class="text-center mb-4">結帳清單</h3>
 					<div class="table-responsive-sm">
 						<table class="table table-lg table-noborder table-striped text-center">
 							<thead class="all-text-white bg-grad">
@@ -64,27 +64,16 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								</tr>
 							</thead>
 							<tbody>
-								<%-- <c:if test="${cartItems != null && (cartItemSize > 0)}"> --%>
-								<%-- <c:forEach var="cartItemVO" items="${cartItems}"> --%>
+								 <c:forEach var="cartItemVO" items="${checkedList}">
 								<tr>
 									<!-- <th scope="row">1</th> -->
-									<td scope="row">票券名稱</td>
-									<td>價格</td>
-									<td>3</td> 
-									<td>xxxxx</td>
+									<td scope="row">${cartItemVO.tkt_name}</td>
+									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
+									<td>${cartItemVO.count}</td> 
+									<td>NT$ <span class="itemPrice">${cartItemVO.price * cartItemVO.count}</span></td>
 								</tr>
-								<%-- </c:forEach> --%>
-								<%-- </c:if> --%>
-								<%-- <c:if test="${cartItems == null && (cartItemSize == 0)}">
-								<tr>
-									<th scope="row">0</th>
-									<td>0</td>
-									<td>0</td>
-									<td><input type="number" value="1"></td>
-									<td>0</td>
-								</tr>
-								
-								</c:if> --%>
+								 </c:forEach> 
+
 								
 							</tbody>
 						</table>
@@ -96,7 +85,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 						<div class="d-flex">
 							<a href="<%=request.getContextPath()%>/frontend/cart/cart.jsp" class="btn btn-outline-primary">返回購物車</a>
 						</div>
-						<p>總計： <span 	style="color: red;">xxx</span> 元</p>
+						<div class="d-flex justify-content-end mb-3"> 
+							<p>總計： <span class="totalPrice" style="color: red;"></span> 元</p>
+						</div>
 					</div>
 					
 					<%-- <div class="d-flex justify-content-between">
@@ -248,6 +239,18 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   	<%-- commonJS --%>
 	<%@ include file="/frontend/commonJS.file" %>
   
+<script>
+	const totalPrice = document.querySelector('.totalPrice'); 
+	const itemPrice = document.querySelectorAll('.itemPrice'); 
+	
+	/* totalPrice */
+	let sum = 0;
+	
+	for(let i = 0; i < ${checkedList.size()}; i++) {
+	  sum += parseInt(itemPrice[i].innerText);
+	  totalPrice.innerText = sum;
+	}
+</script>
 
 </body>
 </html>

@@ -61,7 +61,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 </div>
   <!-- main start-->
   
-  <section class="pt80 pb80">
+  <form class="pt80 pb80" method="post" action="<%=request.getContextPath()%>/cart/cartCheckOut.do">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 mb-5">
@@ -84,22 +84,25 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								<c:forEach var="cartItemVO" items="${cartItems}">
 								<tr class="tr">
 									<%-- <th scope="row">${cartItemVO.tkt_no}</th> --%>
-									<td><input type="checkbox" value="${cartItemVO.tkt_no}" name="checkbox" class="checkbox"></td>
+									<td>
+										<%-- <label>${cartItemVO.tkt_no}</label> --%>
+										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox">
+									</td>
 									<td>${cartItemVO.tkt_name}</td>
 									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
 									<td>
-										<button class="btn btn-primary btn-small minus">-</button>
+										<button type="button" class="btn btn-primary btn-small minus">-</button>
 										<span class="itemCount">${cartItemVO.count}</span>
-										<button class="btn btn-primary btn-small plus">+</button>
+										<button type="button" class="btn btn-primary btn-small plus">+</button>
 									</td>
 									<%-- <td><input type="number" value="${cartItemVO.count}"></td>  --%>
 									<td class="itemsPrice">${cartItemVO.price * cartItemVO.count}</td>
 									<td>
 										<%-- <form method="post" action="<%=request.getContextPath()%>/cart/delCartItem.do">
 											<input type="hidden" name="action"  value="delItem"> --%>
-              								<input class="tkt_no" type="hidden" name="tkt_no"  value="${cartItemVO.tkt_no}">
+              								<input class="tkt_no1" type="hidden" name="tkt_no1"  value="${cartItemVO.tkt_no}">
 											<!-- 刪除按鈕 -->
-											<button class="btn btn-danger delItem"><i class="fas fa-trash-alt"></i></button>
+											<button  type="button" class="btn btn-danger delItem"><i class="fas fa-trash-alt"></i></button>
 										<!-- </form> -->
 										
 									</td>
@@ -119,9 +122,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 					
 					<hr>
 					
-					<div class="d-flex justify-content-end mb-3"> 
+					<!-- <div class="d-flex justify-content-end mb-3"> 
 						<p>總計： <span class="totalPrice" style="color: red;"></span> 元</p>
-					</div>
+					</div> -->
 					
 					<div class="d-flex justify-content-between">
 						<!-- <div class="d-flex"> -->
@@ -139,7 +142,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 				</div>
 			</div>
   		</div>
-  </section>
+  </form>
   
   
   
@@ -170,20 +173,20 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   const itemsPrice = document.querySelectorAll('.itemsPrice'); 
   const onePrice = document.querySelectorAll('.onePrice'); 
   const totalPrice = document.querySelector('.totalPrice'); 
-  const tkt_no_s = document.querySelectorAll('.tkt_no'); 
+  const tkt_no_s = document.querySelectorAll('.tkt_no1'); 
   const tr = document.querySelectorAll('.tr'); 
   const delItem = document.querySelectorAll('.delItem'); 
-  const checkOut = document.querySelector('.checkOut');
-  const checkbox = document.querySelectorAll('.checkbox');
+/*   const checkOut = document.querySelector('.checkOut');
+  const checkbox = document.querySelectorAll('.checkbox'); */
  
-  let sum = 0;
+  /* let sum = 0; */
   
-  /* minus btn */
+ 
   for(let i = 0; i < ${cartItems.size()}; i++) {
 	  
 	  /* checkbox */
 	  /* 陣列裝被勾選的票券 */
- 	  let checkboxvalue = [];
+ 	  /* let checkboxvalue = [];
 	  
  	 checkbox[i].addEventListener('change', () => {
 	  for (i in checkbox) {
@@ -191,14 +194,14 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			  checkboxvalue.push(checkbox[i].value);
 			  
 		  }
-	  }
+	  } */
 	  
-		  console.log(checkboxvalue);
+		  /* console.log(checkboxvalue); */
 		  
 		  
 		  /* 送出 checkbox 選購項目 */
 		  /* 無法成功送出 checkbox  */
-		  checkOut.addEventListener('click', () => {
+		  /* checkOut.addEventListener('click', () => {
 			  axios({
 	 		   		"method": "post", 
 	 		   		"url": "cartCheckOut.do",
@@ -207,15 +210,14 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	 		   			"tkt_no": checkboxvalue
 	 		   		}
 	 		    }).then(function (response) {
-	 		        /* console.log(response); */
+	 		        console.log(response);
 	 		    }).catch(function (error) {
 	 		         console.log(error);
 	 		    }); 
-		  });
+		  }); */
 		  
- 	  });
+ 	 /*  }); */
 	  
-	  /*  */
 	  
 	  
 	  /* 取出該項目的 tkt_no 轉型為數字送進 servlet */
@@ -231,14 +233,14 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	    })
 	    
 	    
-	   /* totalPrice */
-	  sum += parseInt(itemsPrice[i].innerText);	
-	  totalPrice.innerText = sum;
+	   /* totalPrice 還沒完工*/
+	  /* sum += parseInt(itemsPrice[i].innerText);	
+	  totalPrice.innerText = sum; */
 	   
 	  /* delItem */
 	  
 	  delItem[i].addEventListener('click', () => {
-		  delItem[i].addEventListener('click', () => {
+		  
 			  swalWithBootstrapButtons.fire({
 			        title: '確定將此票券商品移除購物車嗎?',
 			        text: "刪除後，此票券商品將不在購物車中",
@@ -269,7 +271,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			        }
 
 			    })
-		  });
+		 
 	  });
 	  
 	 
@@ -305,7 +307,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  				}
  			}); */
  			
- 		} else if (parseInt(itemCount[i].innerText) === 1) {
+ 		} else if (parseInt(itemCount[i].innerText) === 1) { // 當購物車商品已經只剩下 1 時，還想要繼續 -1 會詢問會員是否要刪除品項
  			
  		    swalWithBootstrapButtons.fire({
  		        title: '確定將此票券商品移除購物車嗎?',

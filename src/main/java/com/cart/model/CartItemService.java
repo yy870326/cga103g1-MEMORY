@@ -92,4 +92,9 @@ public class CartItemService {
 		}
 	}
 	
+	// getOneChecked
+	public CartItemVO getOneChecked(String sessionId, Integer tkt_no) {
+		return CartItemJedisDAO.getOneChecked(sessionId, tkt_no);
+	}
+	
 }
