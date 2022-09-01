@@ -18,8 +18,8 @@ import com.rm_order_list.model.RmOrderListDAO;
 import com.rm_order_list.model.RmOrderListVO;
 
 public class RmOrderDAO implements I_RmOrderDAO {
-	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge, start_date, end_date)VALUES(?,?,NOW(),?,?,?,?)";
-	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=?, start_date=?, end_date=? WHERE rm_order_no=?";
+	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge)VALUES(?,?,NOW(),?,?)";
+	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=? WHERE rm_order_no=?";
 	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
 	private static final String CHECKIN = "UPDATE rm_order SET rm_order_status=0 WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
@@ -27,7 +27,9 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String GET_ALL_BY_STORE = "SELECT * FROM rm_order WHERE store_no=? ORDER BY store_no DESC";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
 	private static final String GET_STORE_STATUS = "SELECT * FROM rm_order WHERE store_no = ? AND rm_order_status = ?";
-	private static final String OVERDUE = "UPDATE rm_order SET rm_order_status = 2 WHERE end_date <= CURDATE()";
+	private static final String OVERDUE = "UPDATE rm_order INNER JOIN rm_order_list on rm_order.rm_order_no = rm_order_list.rm_order_no "
+			+ "SET rm_order_status = 2 WHERE departure_date <= CURDATE()";
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -51,8 +53,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(3, rmOrderVO.getRm_order_status());
 			ps.setInt(4, rmOrderVO.getRm_charge());		
 			ps.setInt(5, rmOrderVO.getRm_order_no());
-			ps.setDate(6, rmOrderVO.getStart_date());
-			ps.setDate(7, rmOrderVO.getEnd_date());
+			
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
@@ -83,8 +84,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(2, rmOrderVO.getStore_no());
 			ps.setInt(3, rmOrderVO.getRm_order_status());
 			ps.setInt(4, rmOrderVO.getRm_charge());	
-			ps.setDate(5, rmOrderVO.getStart_date());
-			ps.setDate(6, rmOrderVO.getEnd_date());
+			
 			ps.executeUpdate();
 
 			String next_rmorderno = null;
@@ -139,8 +139,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(5, rmOrderVO.getRm_charge());
 			ps.setInt(6, rmOrderVO.getRm_review());
 			ps.setInt(7, rmOrderVO.getRm_order_no());
-			ps.setDate(8, rmOrderVO.getStart_date());
-			ps.setDate(9, rmOrderVO.getEnd_date());
+		
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
@@ -229,8 +228,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				rm.setStart_date(rs.getDate("start_date"));
-				rm.setEnd_date(rs.getDate("end_date"));
+				
 			}
 
 		} catch (SQLException se) {
@@ -268,8 +266,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				rm.setStart_date(rs.getDate("start_date"));
-				rm.setEnd_date(rs.getDate("end_date"));
+				
 
 				rmAll.add(rm);
 			}
@@ -307,8 +304,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				rm.setStart_date(rs.getDate("start_date"));
-				rm.setEnd_date(rs.getDate("end_date"));
+				
 				rmAll.add(rm);
 			}
 			
@@ -345,8 +341,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				rm.setStart_date(rs.getDate("start_date"));
-				rm.setEnd_date(rs.getDate("end_date"));
+				
 				rmAll.add(rm);
 			}
 			
@@ -384,8 +379,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				rm.setStart_date(rs.getDate("start_date"));
-				rm.setEnd_date(rs.getDate("end_date"));
+				
 				rmAll.add(rm);
 			}
 			

@@ -42,6 +42,7 @@ pageContext.setAttribute("orderlist", orderlist);
 					<th>訂單編號</th>
 					<th>會員</th>
 					<th>廠商</th>
+					<th>廠商電話</th>
 					<th>訂單日期</th>
 					<th>訂單總金額</th>
 					<th>訂單狀態</th>
@@ -61,6 +62,7 @@ pageContext.setAttribute("orderlist", orderlist);
 							<h4 class="mb-0 mt-1">
 								<a class="text-black">${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</a>
 							</h4></td>
+						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_tel}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td>${rmOrderVO.rm_charge}</td>
 						<td><c:choose>

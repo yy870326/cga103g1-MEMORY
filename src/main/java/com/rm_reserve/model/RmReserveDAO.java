@@ -87,7 +87,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 	}
 
 	@Override
-	public void reserve(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
+	public void reserve(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -98,8 +98,8 @@ public class RmReserveDAO implements I_RmReserveDAO {
 
 			ps.setInt(1, qty);
 			ps.setInt(2, rm_type_no);
-			ps.setDate(3, start_date);
-			ps.setDate(4, end_date);
+			ps.setDate(3, arrival_date);
+			ps.setDate(4, departure_date);
 			ps.executeUpdate();
 
 			// Handle any SQL errors
@@ -126,7 +126,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 	}
 
 	@Override
-	public void cancel(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
+	public void cancel(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -137,8 +137,8 @@ public class RmReserveDAO implements I_RmReserveDAO {
 
 			ps.setInt(1, qty);
 			ps.setInt(2, rm_type_no);
-			ps.setDate(3, start_date);
-			ps.setDate(4, end_date);
+			ps.setDate(3, arrival_date);
+			ps.setDate(4, departure_date);
 			ps.executeUpdate();
 
 			// Handle any SQL errors

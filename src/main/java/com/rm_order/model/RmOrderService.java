@@ -43,7 +43,7 @@ public class RmOrderService {
 	public void checkIn(Integer rm_order_no) {
 		dao.checkIn(rm_order_no);
 	}
-
+	
 	public RmOrderVO cancel(Integer rm_order_no) {
 
 		RmOrderVO rmOrderVO = new RmOrderVO();

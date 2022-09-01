@@ -268,4 +268,22 @@ public class RmOrderListJdbcDAO implements I_RmOrderListDAO {
 		}
 	}
 
+	@Override
+	public List<RmOrderListVO> getCheckOutByStore(Integer store_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RmOrderListVO> getStayByStore(Integer store_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RmOrderListVO> getCheckInByStore(Integer store_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

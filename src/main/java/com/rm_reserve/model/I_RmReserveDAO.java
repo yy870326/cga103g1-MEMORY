@@ -8,8 +8,8 @@ public interface I_RmReserveDAO {
 	
 	
 	public void insert(); // 新增預約表(排程用)
-    public void reserve(Integer qty, Integer rm_type_no, Date start_date, Date end_date); // 預約訂房
-    public void cancel(Integer qty, Integer rm_type_no, Date start_date, Date end_date);  // 取消訂房
+    public void reserve(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date); // 預約訂房
+    public void cancel(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date);  // 取消訂房
     public void delete();  // 刪除預約表(排程用)
     public RmReserveVO findByPrimaryKey(Integer serial_no);
     public List<RmReserveVO> getAll();

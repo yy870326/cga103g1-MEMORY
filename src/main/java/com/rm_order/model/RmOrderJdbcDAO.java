@@ -42,8 +42,6 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 			ps.setInt(2, rmOrderVO.getStore_no());
 			ps.setInt(3, rmOrderVO.getRm_order_status());
 			ps.setInt(4, rmOrderVO.getRm_charge());
-			ps.setDate(5, rmOrderVO.getStart_date());
-			ps.setDate(6, rmOrderVO.getEnd_date());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -65,8 +63,6 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 			ps.setInt(2, rmOrderVO.getStore_no());
 			ps.setInt(3, rmOrderVO.getRm_order_status());
 			ps.setInt(4, rmOrderVO.getRm_charge());
-			ps.setDate(5, rmOrderVO.getStart_date());
-			ps.setDate(6, rmOrderVO.getEnd_date());
 			ps.executeUpdate();
 
 			String next_rmorderno = null;
@@ -110,8 +106,6 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 			ps.setInt(5, rmOrderVO.getRm_charge());
 			ps.setInt(6, rmOrderVO.getRm_review());
 			ps.setInt(7, rmOrderVO.getRm_order_no());
-			ps.setDate(8, rmOrderVO.getStart_date());
-			ps.setDate(9, rmOrderVO.getEnd_date());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -255,6 +249,12 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void overdue() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
