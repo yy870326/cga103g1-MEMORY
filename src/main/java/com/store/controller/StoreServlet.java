@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.store.model.StoreService;
 import com.store.model.StoreVO;
@@ -332,10 +333,32 @@ public class StoreServlet extends HttpServlet {
 				errorMsgs.put("store_fax", "傳真請輸入數字，需包含區碼");
 			}
 			//登記地址
-			String store_add = req.getParameter("store_add");
-			if(store_add == null || store_add.trim().length()==0) {
+//			String store_add = req.getParameter("store_add");
+//			if(store_add == null || store_add.trim().length()==0) {
+//				errorMsgs.put("store_add", "請輸入登記地址");
+//			}
+			
+			System.out.println(req.getParameter("county"));
+			System.out.println(req.getParameter("district"));
+//			System.out.println(req.getParameter("zipcode"));
+			
+			String store_add_de = req.getParameter("store_add_de");
+			String county = req.getParameter("county");
+			String district = req.getParameter("district");
+//			String zipcode = req.getParameter("zipcode");
+			
+			StringBuffer sb =new StringBuffer();
+			
+			sb.append(county);
+			sb.append(district);
+//			sb.append(zipcode);
+			sb.append(store_add_de);
+			
+			String store_add = sb.toString();
+			if(store_add == null || store_add.length()==0) {
 				errorMsgs.put("store_add", "請輸入登記地址");
 			}
+			
 			
 			//連絡電話
 			String store_con_phone = req.getParameter("store_con_phone");
@@ -400,9 +423,19 @@ public class StoreServlet extends HttpServlet {
 			
 			//===================資料轉交===========================
 			req.setAttribute("storeVO", storeVO);
-			String url = "/frontend/store/storeListOwn.jsp";
+			String url = "/frontend/store/SignUpSucWin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			
+		}
+		
+		if("logOut".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			String url = "/frontend/store/logOutWin.jsp";
+			RequestDispatcher ret = req.getRequestDispatcher(url);
+			ret.forward(req, res);
+			
 			
 		}
 

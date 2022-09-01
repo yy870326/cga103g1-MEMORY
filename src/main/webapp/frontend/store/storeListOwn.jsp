@@ -33,7 +33,7 @@ pageContext.setAttribute("storeVO1",storeVO1);
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
+		
 
 		
 
@@ -156,6 +156,7 @@ pageContext.setAttribute("storeVO1",storeVO1);
 						</form>
 					</td> 
 				</tr>
+				
 			
 			 	
 			 	 <tr class="view">

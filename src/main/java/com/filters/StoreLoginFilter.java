@@ -41,7 +41,7 @@ public class StoreLoginFilter extends HttpFilter implements Filter {
 		String store_acc =(String) session.getAttribute("store_acc");
 		if(store_acc == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath()+"/backend/store/storeLogin.jsp");
+			res.sendRedirect(req.getContextPath()+"/frontend/store/storeLogin.jsp");
 			return;
 		}else {
 		chain.doFilter(request, response);

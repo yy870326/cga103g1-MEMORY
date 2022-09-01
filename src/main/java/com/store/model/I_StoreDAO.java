@@ -17,4 +17,6 @@ public  interface  I_StoreDAO {
 	
 	public StoreVO Login(String store_acc, String store_pwd);
 	
+	public List<StoreVO> Survy();
+	
 }

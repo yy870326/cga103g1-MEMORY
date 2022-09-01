@@ -67,6 +67,9 @@ public class StoreDAO implements I_StoreDAO{
 			+ " store_tkt_rating_score = ?,store_tkt_rating_count = ?,store_tkt_rating = ?,store_rm_rating_score = ?,\r\n"
 			+ " store_rm_rating_count = ?,store_act_rating_score = ?, store_act_rating_count = ?,store_report_count = ?\r\n"
 			+ " WHERE store_no = ?";
+	
+	
+	private static final String SURVY = "SELECT * FROM store WHERE acc_status = 0;";
 	@Override
 	public void insert(StoreVO storeVO) {
 		 Connection con = null;
@@ -496,6 +499,79 @@ public class StoreDAO implements I_StoreDAO{
 		
 	}
 	
+	public List<StoreVO>  Survy() {
+
+		List<StoreVO> list = new ArrayList<StoreVO>();
+		StoreVO storeVO = null;
+		
+		Connection con = null; 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{ 
+				con = ds.getConnection();
+				 ps = con.prepareStatement(SURVY);
+				rs =ps.executeQuery();
+			while(rs.next()) {
+				storeVO = new StoreVO();
+				storeVO.setStore_no(rs.getInt("store_no"));
+				storeVO.setStore_acc(rs.getString("store_acc"));
+				storeVO.setStore_pwd(rs.getString("store_pwd"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_gui(rs.getString("store_gui"));
+				storeVO.setStore_rep(rs.getString("store_rep"));
+				storeVO.setStore_tel(rs.getString("store_tel"));
+				storeVO.setStore_fax(rs.getString("store_fax"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_poc(rs.getString("store_poc"));
+				storeVO.setStore_con_phone(rs.getString("store_con_phone"));
+				storeVO.setStore_con_add(rs.getString("store_con_add"));
+				storeVO.setStore_email(rs.getString("store_email"));
+				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
+				storeVO.setBank_account(rs.getString("bank_account"));
+				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
+				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
+				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
+				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
+				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
+				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
+				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
+				storeVO.setStore_report_count(rs.getInt("store_report_count"));
+				list.add(storeVO);
+				
+			}
+			
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return list;
+	}
 	
 	
 }
