@@ -225,7 +225,7 @@
 <!--               <input type="number" name="count" id="guests" class="form-control"> -->
             </div>
               <!-- 假資料 真的資料會從資料庫撈 tkt_no -->
-               <input type="hidden" name="tkt_no"  value="12" class="tkt_no"> 
+               <input type="hidden" name="tkt_no"  value="1" class="tkt_no"> 
 			   <!-- <input type="hidden" name="tkt_name"  value="201 景觀台門票">
 			   <input type="hidden" name="price"  value="500"> -->
 			   <input type="hidden" name="count"  value="1" class="count">

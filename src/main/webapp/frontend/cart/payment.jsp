@@ -21,7 +21,7 @@
 /* CartItemVO cartItemVO = new CartItemVO();
 System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
 List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems"); 
-System.out.println("cart.jsp cartItems:" + cartItems);
+/* System.out.println("cart.jsp cartItems:" + cartItems); */
  /*  CartItemService cartItemSrv = new CartItemService();
   List<CartItemVO> list = cartItemSrv.getCart(sessionId);
   pageContext.setAttribute("list", list); */
@@ -36,18 +36,11 @@ System.out.println("cart.jsp cartItems:" + cartItems);
   <!-- main start-->
   <!-- =======================
 	Banner innerpage -->
-<div class="innerpage-banner left bg-overlay-dark-7 py-7" style="background:url(images/07.jpg) repeat; background-size:cover;">
+<div class="innerpage-banner left py-7" style="background:url(https://i.imgur.com/wYzrG5n.jpg) repeat center; background-size:cover;">
   <div class="container">
     <div class="row all-text-white">
       <div class="col-md-12 align-self-center">
-        <h1 class="innerpage-title">Cruise Booking</h1>
-        <h6 class="subtitle">Fusce iaculis ex sed nulla commodo imperdiet. Proin sed rhoncus ligula.</h6>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="index.html"><i class="ti-home"></i> Home</a></li>
-            <li class="breadcrumb-item">Cruise Booking</li>
-          </ol>
-        </nav>
+        <h1 class="innerpage-title text-dark">結帳</h1>
       </div>
     </div>
   </div>
@@ -60,27 +53,25 @@ System.out.println("cart.jsp cartItems:" + cartItems);
 				<div class="col-sm-12 mb-3">
 					<h3 class="text-center mb-4">付款清單</h3>
 					<div class="table-responsive-sm">
-						<table class="table table-lg table-noborder table-striped">
+						<table class="table table-lg table-noborder table-striped text-center">
 							<thead class="all-text-white bg-grad">
 								<tr>
-									<th scope="col">#</th>
+									<!-- <th scope="col">#</th> -->
 									<th scope="col">票券名稱</th>
 									<th scope="col">單價</th>
 									<th scope="col">數量</th>
 									<th scope="col">小計</th>
-									<th scope="col"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<%-- <c:if test="${cartItems != null && (cartItemSize > 0)}"> --%>
 								<%-- <c:forEach var="cartItemVO" items="${cartItems}"> --%>
 								<tr>
-									<th scope="row">1</th>
-									<td>票券名稱</td>
+									<!-- <th scope="row">1</th> -->
+									<td scope="row">票券名稱</td>
 									<td>價格</td>
 									<td>3</td> 
-									<td>總價</td>
-									<td><button class="btn btn-danger">刪除</button></td>
+									<td>xxxxx</td>
 								</tr>
 								<%-- </c:forEach> --%>
 								<%-- </c:if> --%>
@@ -125,176 +116,96 @@ System.out.println("cart.jsp cartItems:" + cartItems);
 <section class="pb80 booking-section login-area">
   <div class="container">
     <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="listing-item ">
-          <article class="TravelGo-category-listing fl-wrap">
-            <div class="TravelGo-category-img"> <a href="hotel-detailed.html"><img src="https://i.imgur.com/eZXD0nx.jpg" alt=""></a>
-              <div class="TravelGo-category-opt">
-                <div class="listing-rating card-popup-rainingvis" data-starrating2="5"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                <div class="rate-class-name">
-                  <div class="score"><strong>Very Good</strong>27 Reviews </div>
-                  <span>5.0</span> </div>
-              </div>
-            </div>
-            <div class="TravelGo-category-content fl-wrap title-sin_item">
-              <div class="TravelGo-category-content-title fl-wrap">
-                <div class="TravelGo-category-content-title-item">
-                  <h3 class="title-sin_map"><a href="hotel-detailed.html">Asia & African Cruise</a></h3>
-                  <div class="TravelGo-category-location fl-wrap"><a href="#" class="map-item"><i class="fas fa-map-marker-alt"></i> 27th Brooklyn New York, USA</a> <span>$ 200</span> </div>
-                </div>
-              </div>
-              <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales.</p>
-              <ul class="facilities-list fl-wrap">
-                <li><i class="fas fa-wifi"></i><span>Free WiFi</span></li>
-                <li><i class="fas fa-parking"></i><span>Parking</span></li>
-                <li><i class="fas fa-smoking-ban"></i><span>Non-smoking Rooms</span></li>
-                <li><i class="fas fa-utensils"></i><span> Restaurant</span></li>
-              </ul>
-              <div class="TravelGo-category-footer fl-wrap">
-                <div class="TravelGo-category-price btn-grad"><span>Edit</span></div>
-              </div>
-              <div class="TravelGo-category-content-title-item others-details">
-                <h3 class="title-sin_map"><a href="hotel-detailed.html">Others Details</a></h3>
-              </div>
-              <table class="table table-striped">
-                <tbody>
-                  <tr>
-                    <td class="bookex">ROOM TYPE:</td>
-                    <td>Delux</td>
-                  </tr>
-                  <tr>
-                    <td class="bookex">FOOD & DINING:</td>
-                    <td>$200</td>
-                  </tr>
-                  <tr>
-                    <td class="bookex">CRUISE PRICE:</td>
-                    <td>$300</td>
-                  </tr>
-                  <tr>
-                    <td class="bookex">TAXES:</td>
-                    <td>$300</td>
-                  </tr>
-                  <tr>
-                    <td class="bookex"><strong>Total:</strong></td>
-                    <td><strong>$1200</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
-        </div>
-        <div class="listing-item">
-          <article class="TravelGo-category-listing fl-wrap">
-            <div class="TravelGo-category-content fl-wrap title-sin_item">
-              <div class="TravelGo-category-content-title fl-wrap NeedHelp">
-                <div class="TravelGo-category-content-title-item">
-                  <h3 class="title-sin_map"><a href="hotel-detailed.html">Need Help?</a></h3>
-                  <div class="TravelGo-category-location fl-wrap"></div>
-                </div>
-              </div>
-              <div class="NeedhelpSection">
-                <P>We would be more than happy to help you. Our team advisor are 24/7 at your service to help you.</P>
-                <ul>
-                  <li><span><i class="fas fa-phone-volume"></i></span> +921 215 2154 214</li>
-                  <li><span><i class="far fa-envelope"></i></span> Info@travelGo.com</li>
-                  <li><span><i class="fab fa-skype"></i> </span> TravelG@Skype</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="col-lg-8 col-md-6 col-sm-12">
+      
+      <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="login-box Booking-box">
               <div class="login-top">
-                <h3>Your Personal Information</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <h2>訂購者資訊</h2>
+                <p class="text-danger">＊為必填資訊</p>
               </div>
               <form class="login-form" action="#">
                 <div class="row">
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>First Name</label>
-                    <input type="text" name="text" placeholder="First Name">
+                    <label>會員編號</label>
+                    <p type="text">0001</p>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Last Name</label>
-                    <input type="text" name="text" placeholder="Last Name">
+                    <label><span class="text-danger">*</span>姓名</label>
+                    <input type="text" name="text" placeholder="自動帶入會員名稱">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Email</label>
-                    <input type="text" name="email" placeholder="Enter your email here">
+                    <label><span class="text-danger">*</span>Email</label>
+                    <input type="text" name="email" placeholder="自動帶入會員 email ">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 password">
-                    <label>Phone Number</label>
-                    <input type="text" name="text" placeholder="Enter Phone Number">
+                    <label><span class="text-danger">*</span>聯絡電話</label>
+                    <input type="text" name="text" placeholder="自動帶入會員電話號碼">
                   </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Country</label>
-                    <select class="custom-select select-big mb-3">
-                      <option selected="">All Country</option>
-                      <option value="location1">USA</option>
-                      <option value="location2">Canada</option>
-                      <option value="location3">Singapure</option>
-                      <option value="location5">Russia</option>
-                      <option value="location6">Australia</option>
-                      <option value="location8">China</option>
-                    </select>
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>State</label>
-                    <select class="custom-select select-big mb-3">
-                      <option selected="">All locations</option>
-                      <option value="location1">Chicago, US</option>
-                      <option value="location2">New York, US</option>
-                      <option value="location3">Seattle/Kirkland, US</option>
-                      <option value="location4">Los Angles, US</option>
-                      <option value="location5">Moscow, Russia</option>
-                      <option value="location6">Sydney, Australia</option>
-                      <option value="location7">Birmingham, UK</option>
-                      <option value="location7">Manchester, UK</option>
-                      <option value="location8">Beijing, China</option>
-                    </select>
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Zip Code</label>
-                    <input type="text" name="text" placeholder="Zip Code">
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Home Address</label>
-                    <input type="text" name="text" placeholder="Home Address">
-                  </div>
-                  <div class="col-md-12 d-flex justify-content-between">
+                  
+                  
+                  <div class="col-md-12 d-flex justify-content-between mb-5">
                     <div class="chqbox">
                       <input type="checkbox" name="rememberme" id="rmme">
-                      <label for="rmme"> I want to receive TravelGo promotional offers in the future</label>
+                      <label for="rmme"> 之後想要收到有關 Memory 的優惠消息</label>
                     </div>
                   </div>
-                  <div class="login-top cardInfo">
-                    <h3>Your Card Information</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                  
+                  <div class="divider divider-dotted"></div>
+                  
+                  <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
+                    <h3>信用卡付款資訊</h3>
+                    <p>可前往會員中心修改信用卡資料或新增信用卡資訊</p>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Credit Card Type</label>
+                    <label>選擇已儲存信用卡(後四碼)</label>
                     <select class="custom-select select-big mb-3">
-                      <option selected="">select a card</option>
+                      <option selected>**** **** **** 0208（預設）</option>
+                      <option>**** **** **** 1345</option>
+                      <option>**** **** **** 9763</option>
                     </select>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Card holder name</label>
-                    <input type="text" name="text" placeholder="Card holder name">
+                    <label>信用卡持有者姓名</label>
+                    <input type="text" name="text" placeholder="自動帶入">
+                  </div>
+                  
+                   <div class="divider divider-dotted"></div>
+                   
+                   <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
+                    <h3>使用優惠券</h3>
+                    <p>可選擇已擁有的優惠券</p>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Card number</label>
+                    <label>優惠券選單</label>
+                    <select class="custom-select select-big mb-3">
+                      <option selected>--- 請選擇 ---</option>
+                      <option>歡慶旅遊季優惠券</option>
+                      <option>限時票券優惠</option>
+                      <option>22中秋節優惠</option>
+                    </select>
+                  </div>
+                 
+               
+                  
+                  
+                  <div class="divider divider-dotted"></div>
+                  
+                  <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
+                    <h3>新增新用卡資料</h3>
+                    <p>可前往會員中心修改信用卡資料</p>
+                  </div>
+                  <div class="col-lg-6 col-md-12 col-sm-12 email">
+                    <label>信用卡卡號</label>
                     <input type="text" name="text" placeholder="Card number">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Card identification number</label>
+                    <label>信用卡安全碼</label>
                     <input type="text" name="text" placeholder="Card identification number">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Monthe</label>
+                    <label>到期月份</label>
                     <select class="custom-select select-big mb-3">
                       <option selected="">select a Monthe</option>
                       <option value="location8">January</option>
@@ -304,7 +215,7 @@ System.out.println("cart.jsp cartItems:" + cartItems);
                     </select>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>Year</label>
+                    <label>到期年份</label>
                     <select class="custom-select select-big mb-3">
                       <option selected="">select a Year</option>
                       <option value="location8">2019</option>
@@ -313,14 +224,8 @@ System.out.println("cart.jsp cartItems:" + cartItems);
                       <option value="location8">2022</option>
                     </select>
                   </div>
-                  <div class="col-md-12 d-flex justify-content-between">
-                    <div class="chqbox">
-                      <input type="checkbox" name="rememberme" id="rmme">
-                      <label for="rmme"> By continuing, you agree to the Terms and Conditions.</label>
-                    </div>
-                  </div>
                   <div class="col-md-12">
-                    <button class="Confirm" type="submit" name="button">Confirm Booking</button>
+                    <button class="Confirm" type="submit" name="button">確認付款</button>
                   </div>
                 </div>
               </form>

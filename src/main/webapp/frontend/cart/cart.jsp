@@ -71,6 +71,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 							<thead class="all-text-white bg-grad">
 								<tr>
 									<!-- <th scope="col">#</th> -->
+									<th scope="col"></th>
 									<th scope="col">票券名稱</th>
 									<th scope="col">單價</th>
 									<th scope="col">數量</th>
@@ -83,6 +84,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								<c:forEach var="cartItemVO" items="${cartItems}">
 								<tr class="tr">
 									<%-- <th scope="row">${cartItemVO.tkt_no}</th> --%>
+									<td><input type="checkbox" value="${cartItemVO.tkt_no}" name="checkbox" class="checkbox"></td>
 									<td>${cartItemVO.tkt_name}</td>
 									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
 									<td>
@@ -131,7 +133,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								<button class="btn btn-outline-primary">清空購物車</button>
 							</form>	 --%>			
 						<!-- </div> -->
-						<button type="submit" class="btn btn-primary"><i class="fas fa-arrow-circle-right"></i>前往結賬</button>
+						<button type="submit" class="btn btn-primary checkOut"><i class="fas fa-arrow-circle-right"></i>前往結賬</button>
 					</div>
 					
 				</div>
@@ -171,14 +173,55 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   const tkt_no_s = document.querySelectorAll('.tkt_no'); 
   const tr = document.querySelectorAll('.tr'); 
   const delItem = document.querySelectorAll('.delItem'); 
-  
+  const checkOut = document.querySelector('.checkOut');
+  const checkbox = document.querySelectorAll('.checkbox');
+ 
+  let sum = 0;
   
   /* minus btn */
   for(let i = 0; i < ${cartItems.size()}; i++) {
+	  
+	  /* checkbox */
+	  /* 陣列裝被勾選的票券 */
+ 	  let checkboxvalue = [];
+	  
+ 	 checkbox[i].addEventListener('change', () => {
+	  for (i in checkbox) {
+		  if(checkbox[i].checked) {
+			  checkboxvalue.push(checkbox[i].value);
+			  
+		  }
+	  }
+	  
+		  console.log(checkboxvalue);
+		  
+		  
+		  /* 送出 checkbox 選購項目 */
+		  /* 無法成功送出 checkbox  */
+		  checkOut.addEventListener('click', () => {
+			  axios({
+	 		   		"method": "post", 
+	 		   		"url": "cartCheckOut.do",
+	 		   	 	"Content-Type": "application/json",
+	 		   		"params": {
+	 		   			"tkt_no": checkboxvalue
+	 		   		}
+	 		    }).then(function (response) {
+	 		        /* console.log(response); */
+	 		    }).catch(function (error) {
+	 		         console.log(error);
+	 		    }); 
+		  });
+		  
+ 	  });
+	  
+	  /*  */
+	  
+	  
 	  /* 取出該項目的 tkt_no 轉型為數字送進 servlet */
 	  let tkt_no = parseInt(tkt_no_s[i].value);
 	  
-	  /* sweetalert */
+	  /* sweetalert btn setting*/
 		 const swalWithBootstrapButtons = Swal.mixin({
 	        customClass: {
 	            confirmButton: 'btn btn-success ml-3',
@@ -186,7 +229,12 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	        },
 	        buttonsStyling: false
 	    })
-	  
+	    
+	    
+	   /* totalPrice */
+	  sum += parseInt(itemsPrice[i].innerText);	
+	  totalPrice.innerText = sum;
+	   
 	  /* delItem */
 	  
 	  delItem[i].addEventListener('click', () => {
@@ -214,7 +262,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			   					"tkt_no": tkt_no
 			   				}
 			   		   }).then(function(response) { 
-			   		   		console.log(response);
+			   		   		/* console.log(response); */
 			   		   		tr[i].setAttribute('style', 'display: none');
 			   		   }).catch((error) => console.log(error));
 
@@ -243,7 +291,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		   			"tkt_no": tkt_no
  		   		}
  		    }).then(function (response) {
- 		        console.log(response);
+ 		        /* console.log(response); */
  		    }).catch(function (error) {
  		         console.log(error);
  		    }); 
@@ -286,7 +334,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		   				}
  		   		   }).then(function (response) {
  		   			  tr[i].setAttribute('style', 'display: none');
- 		              console.log(response);
+ 		              /* console.log(response); */
  		          }).catch(function (error) {
  		              console.log(error);
  		          }); 
@@ -321,9 +369,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   		itemsPrice[i].innerText = parseInt(itemCount[i].innerText) * parseInt(onePrice[i].innerText); 
   	
   		
-  		
-  		
-  		
   		/* 更新 redis 數量 */
   		/* $.ajax({
  			url: "changeCount.do",
@@ -342,15 +387,23 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  				"tkt_no": tkt_no
  			}
  		}).then(function (response) {
-            console.log(response);
+            /* console.log(response); */
         }).catch(function (error) {
             console.log(error);
         });
  		
    	});
+	  
+	  
+	  
+ 	 
+ 	 
+	  
  } 
  
-  	
+  
+ 
+ 	
   </script>
 
 </body>
