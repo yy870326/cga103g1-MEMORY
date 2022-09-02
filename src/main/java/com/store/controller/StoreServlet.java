@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.store.model.StoreService;
 import com.store.model.StoreVO;
@@ -270,11 +271,19 @@ public class StoreServlet extends HttpServlet {
 		if("insert".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			StoreService storeSvc = new StoreService();
+			List<StoreVO> allStores = storeSvc.getAllStore();
 			
 			//========================接收請求參數===========================
 			
 			//廠商帳號
 			String store_acc = req.getParameter("store_acc");
+			for(StoreVO allStore : allStores) {
+				if(allStore.getStore_acc().equals(store_acc)) {
+					errorMsgs.put("store_acc", "帳號重複請重新輸入");
+					
+				}
+			}
 			//帳號密碼正規表示
 			String reg = "^[(a-zA-Z0-9)]{7,20}$";
 			if(store_acc == null|| store_acc.trim().length() == 0) {
@@ -324,10 +333,32 @@ public class StoreServlet extends HttpServlet {
 				errorMsgs.put("store_fax", "傳真請輸入數字，需包含區碼");
 			}
 			//登記地址
-			String store_add = req.getParameter("store_add");
-			if(store_add == null || store_add.trim().length()==0) {
+//			String store_add = req.getParameter("store_add");
+//			if(store_add == null || store_add.trim().length()==0) {
+//				errorMsgs.put("store_add", "請輸入登記地址");
+//			}
+			
+			System.out.println(req.getParameter("county"));
+			System.out.println(req.getParameter("district"));
+//			System.out.println(req.getParameter("zipcode"));
+			
+			String store_add_de = req.getParameter("store_add_de");
+			String county = req.getParameter("county");
+			String district = req.getParameter("district");
+//			String zipcode = req.getParameter("zipcode");
+			
+			StringBuffer sb =new StringBuffer();
+			
+			sb.append(county);
+			sb.append(district);
+//			sb.append(zipcode);
+			sb.append(store_add_de);
+			
+			String store_add = sb.toString();
+			if(store_add == null || store_add.length()==0) {
 				errorMsgs.put("store_add", "請輸入登記地址");
 			}
+			
 			
 			//連絡電話
 			String store_con_phone = req.getParameter("store_con_phone");
@@ -386,15 +417,25 @@ public class StoreServlet extends HttpServlet {
 			//===================資料存取===========================
 			
 			
-			StoreService storeSvc = new StoreService();
+			storeSvc = new StoreService();
 			storeVO = storeSvc.addStore(store_acc, store_pwd, store_name, store_gui, store_rep, store_tel, store_fax, store_add, store_pwd, store_con_phone, store_con_add, store_email, bank_account);
 			
 			
 			//===================資料轉交===========================
 			req.setAttribute("storeVO", storeVO);
-			String url = "/frontend/store/storeListOwn.jsp";
+			String url = "/frontend/store/SignUpSucWin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+			
+		}
+		
+		if("logOut".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			String url = "/frontend/store/logOutWin.jsp";
+			RequestDispatcher ret = req.getRequestDispatcher(url);
+			ret.forward(req, res);
+			
 			
 		}
 

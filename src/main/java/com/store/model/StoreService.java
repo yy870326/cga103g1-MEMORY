@@ -123,4 +123,12 @@ public class StoreService {
 	public List<StoreVO> getAllStore(){
 		return dao.getAllStore();
 	}
+	
+	public StoreVO logIn(String store_acc, String store_pwd) {
+		return dao.Login(store_acc, store_pwd);
+	}
+	
+	public List<StoreVO> getAllStoreNotSurvy(){
+		return dao.Survy();
+	};
 }

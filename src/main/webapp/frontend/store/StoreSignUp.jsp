@@ -22,6 +22,29 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/tw-city-selector@2.1.0/dist/tw-city-selector.min.js"></script>
+		
+		<script src="/frontend/tw-city-selector.js"></script>
+		
+		<style>
+			select,.zipcode,.addr{
+				  width: 33%;
+				  display: inline-block;
+				  height: calc(1.5em + .75rem + 2px);
+				  padding: .375rem .75rem;
+				  font-size: 1rem;
+				  font-weight: 400;
+				  line-height: 1.5;
+				  color: #495057;
+				  background-color: #fff;
+				  background-clip: padding-box;
+				  border: 1px solid #ced4da;
+				  border-radius: .25rem;
+				  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+				}
+		
+		</style>
 	</head>
 
 	<body>
@@ -42,55 +65,60 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 				
 				<tr>	
 					<td>帳號</td>
-					<td><input type="text" name="store_acc" value="${storeVO.store_acc}"></td>
+					<td><input class="addr" type="text" name="store_acc" value="${storeVO.store_acc}"></td>
 				</tr>
 				<tr>
 					<td>密碼</td>
-					<td><input type="password" name="store_pwd" value="${storeVO.store_pwd}"></td>
+					<td><input class="addr" type="password" name="store_pwd" value="${storeVO.store_pwd}"></td>
 				</tr>	
 				<tr>	
 					<td>店家名稱</td>
-					<td><input type="text" name="store_name" value="${storeVO.store_name}"></td>
+					<td><input class="addr" type="text" name="store_name" value="${storeVO.store_name}"></td>
 				</tr>	
 				<tr>	
 					<td>統編</td>
-					<td><input type="text" name="store_gui" value="${storeVO.store_gui}"></td>
+					<td><input class="addr" type="text" name="store_gui" value="${storeVO.store_gui}"></td>
 				</tr>	
 				<tr>	
 					<td>負責人</td>
-					<td><input type="text" name="store_rep" value="${storeVO.store_rep}"></td>
+					<td><input class="addr" type="text" name="store_rep" value="${storeVO.store_rep}"></td>
 				</tr>	
 				<tr>	
 					<td>電話</td>
-					<td><input type=tel name="store_tel" value="${storeVO.store_tel}"></td>
+					<td><input class="addr" type=tel name="store_tel" value="${storeVO.store_tel}"></td>
 				</tr>	
 				<tr>	
 					<td>傳真</td>
-					<td><input type="tel" name="store_fax" value="${storeVO.store_fax}"></td>
+					<td><input class="addr" type="tel" name="store_fax" value="${storeVO.store_fax}"></td>
 				</tr>	
 				<tr>
 					<td>登記地址</td>
-					<td><input type="text" name="store_add" value="${storeVO.store_add}"></td>
+					<td>
+					<div role="tw-city-selector"></div>
+					<div>
+					<input class="addr" type="text" name="store_add_de" value="${storeVO.store_add}" style="width:50%;">
+					</div>
+					</td>
 				</tr>	
 				<tr>	
 					<td>聯絡人</td>
-					<td><input type="text" name="store_poc" value="${storeVO.store_poc}"></td>
+					<td><input class="addr" type="text" name="store_poc" value="${storeVO.store_poc}"></td>
 				</tr>	
 				<tr>	
 					<td>連絡電話</td>
-					<td><input type="tel" name="store_con_phone" value="${storeVO.store_con_phone}"></td>
+					<td><input class="addr" type="tel" name="store_con_phone" value="${storeVO.store_con_phone}"></td>
 				</tr>	
 				<tr>	
 					<td>聯絡地址</td>
-					<td><input type="tel" name="store_con_add" value="${storeVO.store_con_add}"></td>
+					<td><input class="addr" type="tel" name="store_con_add" value="${storeVO.store_con_add}"></td>
 				</tr>	
 				<tr>	
 					<td>信箱</td>
-					<td><input type="email" name="store_email" value="${storeVO.store_email}"></td>
+					<td><input class="addr" type="email" name="store_email" value="${storeVO.store_email}"></td>
 				</tr>	
 				<tr>	
 					<td>轉帳帳號</td>
-					<td><input type="text" name="bank_account" value="${storeVO.bank_account}"></td>
+					<td><input class="addr" type="text" name="bank_account" value="${storeVO.bank_account}"></td>
 				</tr>
 				<tr>
 					<td>
@@ -123,6 +151,9 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 		<script>
 // 		header標題
 			$("#pagename").text("MEMORY");
+		</script>
+		<script>
+		  new TwCitySelector();
 		</script>
 	</body>
 </html>

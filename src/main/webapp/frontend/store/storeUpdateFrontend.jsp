@@ -25,7 +25,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
+		
 
 		
 
