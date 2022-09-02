@@ -3,6 +3,8 @@ package com.cart.model;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.tkt.model.TktService;
+import com.tkt.model.TktVO;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -144,5 +146,43 @@ public class CartItemJedisDAO {
 		jedis.close();
 
 	}
+	
+	// -------------- getOneChecked ---------------
+	public static CartItemVO getOneChecked(String sessionId, Integer tkt_no) {
+		Gson gson = new Gson();
+		Jedis jedis = null;
+		jedis = pool.getResource(); // 連線
+		jedis.select(1);
+		
+		// 先把購物車抓出來比較
+		List<String> cartItems = getCart(sessionId);
+		
+		CartItemVO cartItemVO = new CartItemVO();
+		for (int i = 0; i < cartItems.size(); i++) {
+			CartItemVO oldItems = gson.fromJson(cartItems.get(i), CartItemVO.class); // JSON to Object，把購物車原本就有的商品 (oldItems) 一一取出
+			
+			Integer checkedItemId = tkt_no; // 新加入購物車的票券
+			Integer oldItemId = oldItems.getTkt_no(); // 原本就在購物車的票券
+			
+			if (checkedItemId.equals(oldItemId)) {	
+				TktService tktSrv = new TktService();
+				TktVO tktVO = tktSrv.getOneTkt(tkt_no); // 透過編號抓出一筆票券(要透過 tkt model 撈 MySQL 資料)
+				String tkt_name = tktVO.getTkt_name();
+				Integer price = tktVO.getPrice();
+				Integer count = oldItems.getCount(); // redis 呼叫 getCount
+				
+				cartItemVO.setTkt_no(tkt_no);
+				cartItemVO.setTkt_name(tkt_name);
+				cartItemVO.setCount(count);
+				cartItemVO.setPrice(price);
+				
+				jedis.close();
+			}
+		}
+		
+		
+		return cartItemVO;
+	}
+	
 
 }
