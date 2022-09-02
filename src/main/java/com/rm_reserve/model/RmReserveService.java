@@ -15,12 +15,12 @@ public class RmReserveService {
 		dao.insert();
 	}
 	
-	public void reserveRmRsv(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
-		dao.reserve(qty, rm_type_no, start_date, end_date);
+	public void reserveRmRsv(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date) {
+		dao.reserve(qty, rm_type_no, arrival_date, departure_date);
 	}
 	
-	public void cancelRmRsv(Integer qty, Integer rm_type_no, Date start_date, Date end_date) {
-		dao.reserve(qty, rm_type_no, start_date, end_date);
+	public void cancelRmRsv(Integer qty, Integer rm_type_no, Date arrival_date, Date departure_date) {
+		dao.reserve(qty, rm_type_no, arrival_date, departure_date);
 	}
 	
 	public void deleteRmRsv() {

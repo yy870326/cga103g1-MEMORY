@@ -206,8 +206,7 @@ div.main-content {
 					<th>訂單編號</th>
 					<th>會員編號</th>
 					<th>訂單日期</th>
-					<th>入住日期</th>
-					<th>退房日期</th>	
+					<th>總金額</th>
 					<th>訂單狀態</th>
 				</tr>
 			</thead>
@@ -217,8 +216,12 @@ div.main-content {
 						<td>${rmOrderVO.rm_order_no}</td>
 						<td>${rmOrderVO.mem_no}</td>
 						<td>${rmOrderVO.order_date}</td>
-						<td>${rmOrderVO.start_date}</td>
-						<td>${rmOrderVO.end_date}</td>	
+						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
+												pattern="$###,###,###" /> <c:if
+												test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
+												<div>(已扣除取消後退款)</div>
+											</c:if>
+										</td>
 						<td><c:choose>
 								<c:when test="${rmOrderVO.rm_order_status==0}">
 									<i class='bx bxs-circle' style='color: red'></i>入住中</c:when>
@@ -240,16 +243,16 @@ div.main-content {
 									<h4>
 										<i class='bx bxs-user-voice'></i> 訂購人資料
 									</h4>
-									<div>付款人：${memSvc.getOneMem(rmOrderVO.mem_no).mem_name}</div>
-									<div>電話：${memSvc.getOneMem(rmOrderVO.mem_no).mem_mobile}</div>
-									<div>Email:${memSvc.getOneMem(rmOrderVO.mem_no).mem_email}</div>
+									<div>付款人：${memSvc.getOne(rmOrderVO.mem_no).mem_name}</div>
+									<div>電話：${memSvc.getOne(rmOrderVO.mem_no).mem_mobile}</div>
+									<div>Email:${memSvc.getOne(rmOrderVO.mem_no).mem_email}</div>
 								</div>
 								<div class="col-4 order-data">
 									<h4>
 										<i class='bx bx-credit-card'></i> 付款資料
 									</h4>
 									<div>訂單成立日期： ${rmOrderVO.order_date}</div>
-									<div>信用卡號碼：${memSvc.getOneMem(rmOrderVO.mem_no).mem_card}</div>
+									<div>信用卡號碼：${memSvc.getOne(rmOrderVO.mem_no).mem_card}</div>
 								</div>
 							</div>
 							<table class="table table-striped">
@@ -258,8 +261,8 @@ div.main-content {
 										<th>房型</th>
 										<th>單價</th>
 										<th>間數</th>
-										<th>實際住房日期</th>
-										<th>實際退房日期</th>
+										<th>住房日期</th>
+										<th>退房日期</th>
 										<th>入住人姓名</th>
 										<th></th>
 									</tr>
@@ -284,8 +287,7 @@ div.main-content {
 										<td></td>
 										<td></td>
 										<td></td>
-										<td>
-										</td>
+										<td></td>
 										<td>總金額 <fmt:formatNumber value="${rmOrderVO.rm_charge}"
 												pattern="$###,###,###" /> <c:if
 												test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
@@ -297,7 +299,7 @@ div.main-content {
 													ACTION="<%=request.getContextPath()%>/RmOrder">
 													<input
 														type="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0 ? 'hidden' : 'submit' }"
-														class="btn btn-primary" value="取消訂單"> <input
+														class="btn btn-primary" style="background-color: #5bc9e2" value="取消訂單"> <input
 														type="hidden" name="rm_order_no"
 														value="${rmOrderVO.rm_order_no}"> <input
 														type="hidden" name="action" value="cancel">
@@ -327,8 +329,6 @@ div.main-content {
 								$(this).toggleClass("open").next(".fold")
 										.toggleClass("open");
 							});
-					$("li.nav-item:eq(${ord_state+1})").children().addClass(
-							"nav-link active");
 				});
 	</script>
 </body>

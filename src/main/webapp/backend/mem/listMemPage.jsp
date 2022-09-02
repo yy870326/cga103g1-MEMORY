@@ -9,7 +9,7 @@
 <jsp:useBean id="memSvc" class="com.mem.model.MemService" />
 
 <%
-List<MemVO> memList = memSvc.getAll();
+List<MemVO> memList = memSvc.getall();
 pageContext.setAttribute("memList", memList);
 %>
 

@@ -20,11 +20,11 @@ public interface I_RmOrderDAO {
 
 	public void checkIn(Integer rm_order_no);  // CHECKIN
 
-	public List<RmOrderVO> getAllByStore(Integer store_no); // 廠商編號找訂單
+	public List<RmOrderVO> getAllByStore(Integer store_no); // 該廠商所有訂單
 	
 	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status); // 廠商編號找訂單狀態
 
     public void insertWithLists(RmOrderVO rmOrderVO , List<RmOrderListVO> list); // 同時新增訂單與多筆訂單明細
     
-    public void overdue(); // 修改預期訂單狀態為已完成(排程器用)
+    public void overdue(); // 修改逾期訂單狀態為已完成(排程器用)
 }
