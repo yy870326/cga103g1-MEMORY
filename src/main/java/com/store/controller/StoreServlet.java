@@ -79,6 +79,51 @@ public class StoreServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+		if ("getOneStoreByAcc".equals(action)) { 
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			//================== 接收請求參數===========================
+			String str = req.getParameter("store_acc");
+			if(str == null || (str.trim()).length() == 0 ) {
+				errorMsgs.put("store_acc","請輸入帳號");
+			}
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/store/storeSelectPage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			String store_acc = null;
+			try {
+				store_acc = String.valueOf(str);
+			}catch(Exception e) {
+				errorMsgs.put("store_acc","帳號格式不正確");
+			}
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/store/StoreSelectPage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			
+			//======================存取資料============================
+			StoreService storeSvc = new StoreService();
+			StoreVO storevo = storeSvc.getOneStoreByAcc(store_acc);
+			
+			if(storevo == null) {
+				errorMsgs.put("store_acc","查無此帳號");;
+			}
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/store/storeSelectPage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			//======================轉交資料=============================
+			req.setAttribute("storeVO", storevo);
+			String url = "/backend/store/storeListOne.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
 		
 		if ("updateStore".equals(action)) { 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -436,6 +481,21 @@ public class StoreServlet extends HttpServlet {
 			RequestDispatcher ret = req.getRequestDispatcher(url);
 			ret.forward(req, res);
 			
+			
+		}
+		
+		if("listStoreByCompositeQuery".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String[]> map = req.getParameterMap();
+			
+			StoreService StoreSvc = new StoreService();
+			List<StoreVO> list = StoreSvc.StoreCompositeQuery(map);
+			
+			req.setAttribute("listStoreByCompositeQuery", list);
+			RequestDispatcher SuccessView = req.getRequestDispatcher("/backend/store/StoreCompositeQueryList.jsp");
+			SuccessView.forward(req, res);
 			
 		}
 

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -570,6 +571,81 @@ public class StoreDAO implements I_StoreDAO{
 			}
 		}
 		
+		return list;
+	}
+	
+	public List<StoreVO> CompositeQuery(Map<String, String[]> map){
+		List<StoreVO> list = new ArrayList<StoreVO>();
+		StoreVO storeVO= null;
+		Connection con = null;
+		PreparedStatement ps =null;
+		ResultSet rs = null;
+		
+		
+		try {
+		 con = ds.getConnection();
+		 String finalSQL = "SELECT * FROM store "+ 
+				 		   StoreCompositeQuery.get_WhereCondition(map)+
+				 		   " ORDER BY store_no ";
+		 ps = con.prepareStatement(finalSQL);
+		 rs = ps.executeQuery();
+		 
+		 while(rs.next()) {
+			 
+			 storeVO = new StoreVO();
+				storeVO.setStore_no(rs.getInt("store_no"));
+				storeVO.setStore_acc(rs.getString("store_acc"));
+				storeVO.setStore_pwd(rs.getString("store_pwd"));
+				storeVO.setAcc_status(rs.getInt("acc_status"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_gui(rs.getString("store_gui"));
+				storeVO.setStore_rep(rs.getString("store_rep"));
+				storeVO.setStore_tel(rs.getString("store_tel"));
+				storeVO.setStore_fax(rs.getString("store_fax"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_poc(rs.getString("store_poc"));
+				storeVO.setStore_con_phone(rs.getString("store_con_phone"));
+				storeVO.setStore_con_add(rs.getString("store_con_add"));
+				storeVO.setStore_email(rs.getString("store_email"));
+				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
+				storeVO.setBank_account(rs.getString("bank_account"));
+				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
+				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
+				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
+				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
+				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
+				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
+				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
+				storeVO.setStore_report_count(rs.getInt("store_report_count"));
+				list.add(storeVO);	 
+		 }
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 		return list;
 	}
 	

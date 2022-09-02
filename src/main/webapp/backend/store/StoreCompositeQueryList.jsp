@@ -5,16 +5,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="java.time.LocalDate"%>
+<jsp:useBean id="listStoreByCompositeQuery" scope="request" type="java.util.List<EmpVO>" />
 
 
-<%
-// 取得自己的store所有資訊存放至pageContext
- StoreService storeSvc = new StoreService();
-
-List<StoreVO> list = storeSvc.getAllStore();
-
-pageContext.setAttribute("list", list);
-%>
 <!DOCTYPE html>
 <html>
 
@@ -196,7 +189,7 @@ div.main-content {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="storeVO" items="${list}">
+				<c:forEach var="storeVO" items="${listStoreByCompositeQuery}">
 					<tr class="view">
 						<td>${storeVO.store_no}</td>
 						<td>${storeVO.store_acc}</td>

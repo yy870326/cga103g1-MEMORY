@@ -149,11 +149,13 @@ div.main-content {
 
 
 <!-- CSS -->
-	<%@ include file="/frontend/commonCSS.file"%>
+	<%@ include file="/backend/commonCSS.file"%>
 	</head>
 
 <body>
-	<%@ include file="/frontend/header.file"%>
+		<%@ include file="/backend/loading.file" %> <!-- loading -->
+		<%@ include file="/backend/header.file" %> <!-- Header -->
+		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
 
 	<div class="main-content">
 	
@@ -263,8 +265,8 @@ div.main-content {
 		</table>
 	</div>
 
-	<%@ include file="/frontend/footer.file"%>
-	<%@ include file="/frontend/commonJS.file"%>
+
+	
 	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>
 	<script>

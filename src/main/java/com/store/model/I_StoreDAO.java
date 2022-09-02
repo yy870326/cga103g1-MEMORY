@@ -1,6 +1,7 @@
 package com.store.model;
 
 import java.util.List;
+import java.util.Map;
 
 public  interface  I_StoreDAO {
 	public void insert(StoreVO storeVO);
@@ -18,5 +19,7 @@ public  interface  I_StoreDAO {
 	public StoreVO Login(String store_acc, String store_pwd);
 	
 	public List<StoreVO> Survy();
+	
+	public List<StoreVO> CompositeQuery(Map<String, String[]> map);
 	
 }

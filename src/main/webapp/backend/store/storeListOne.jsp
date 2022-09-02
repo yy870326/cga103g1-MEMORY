@@ -27,48 +27,28 @@ pageContext.setAttribute("storeVO", storeVO);
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
 
 		
 
 <!-- 	內容寫在main-content這個div內    -->
 <div class="main-content card card-body table-responsive">
 		<table id="example4" class="display" style="min-width: 845px">
-			<thead> 
+			 
 				<tr>
-					<th>廠商會員編號</th>
-					<th>帳號</th>
-					<th>密碼</th>
-					<th>帳號狀態</th>
-					<th>店家名稱</th>
-					<th>統編</th>
-					<th>負責人</th>
-					<th>電話</th>
-					<th>傳真</th>
-					<th>登記地址</th>
-					<th>聯絡人</th>
-					<th>連絡電話</th>
-					<th>聯絡地址</th>
-					<th>信箱</th>
-					<th>加入時間</th>
-					<th>轉帳帳號</th>
-					<th>票券總分數</th>
-					<th>票券總評價數</th>
-					<th>票券平均評價數</th>
-					<th>訂房總分數</th>
-					<th>訂房總評價數</th>
-					<th>活動總分數</th>
-					<th>活動總評價數</th>
-					<th>被檢舉計點</th>
-					<th>修改資料</th>
-				</tr>
-			 </thead>
-			 <tbody>	
-			 	
-			 	 <tr class="view">
+					<td>廠商會員編號</td>
 					<td>${storeVO.store_no}</td>
+				</tr>
+				<tr>
+					<td>帳號</td>
 					<td>${storeVO.store_acc}</td>
+				</tr>
+				<tr>
+					<td>密碼</td>
 					<td>${storeVO.store_pwd}</td>
+				</tr>
+				<tr>
+					<td>帳號狀態</td>
 					<td><c:choose>
 						<c:when test="${storeVO.acc_status==0}">									
 								    <i class='bx bxs-circle' style='color: red'></i>帳號未啟用</c:when>
@@ -77,35 +57,105 @@ pageContext.setAttribute("storeVO", storeVO);
 						<c:when test="${storeVO.acc_status==2}">
 									<i class='bx bxs-circle' style='color: #aaa'></i>帳號停權</c:when>
 					</c:choose></td>
+				</tr>
+				<tr>
+					<td>店家名稱</td>
 					<td>${storeVO.store_name}</td>
+				</tr>
+				<tr>
+					<td>統編</td>
 					<td>${storeVO.store_gui}</td>
+				</tr>
+				<tr>
+					<td>負責人</td>
 					<td>${storeVO.store_rep}</td>
+				</tr>
+				<tr>
+					<td>電話</td>
 					<td>${storeVO.store_tel}</td>
+				</tr>
+				<tr>
+					<td>傳真</td>
 					<td>${storeVO.store_fax}</td>
+				</tr>
+				<tr>
+					<td>登記地址</td>
 					<td>${storeVO.store_add}</td>
+				</tr>
+				<tr>
+					<td>聯絡人</td>
 					<td>${storeVO.store_poc}</td>
+				</tr>
+				<tr>
+					<td>連絡電話</td>
 					<td>${storeVO.store_con_phone}</td>
+				</tr>
+				<tr>
+					<td>聯絡地址</td>
 					<td>${storeVO.store_con_add}</td>
+				</tr>
+				<tr>
+					<td>信箱</td>
 					<td>${storeVO.store_email}</td>
+				</tr>
+				<tr>
+					<td>加入時間</td>
 					<td>${storeVO.store_reg_date}</td>
+				</tr>
+				<tr>
+					<td>轉帳帳號</td>
 					<td>${storeVO.bank_account}</td>
+				</tr>
+				<tr>
+					<td>票券總分數</td>
 					<td>${storeVO.store_tkt_rating_score}</td>
+				</tr>
+				<tr>
+					<td>票券總評價數</td>
 					<td>${storeVO.store_tkt_rating_count}</td>
+				</tr>
+				<tr>
+					<td>票券平均評價數</td>
 					<td>${storeVO.store_tkt_rating}</td>
+				</tr>
+				<tr>
+					<td>訂房總分數</td>
 					<td>${storeVO.store_rm_rating_score}</td>
+				</tr>
+				<tr>
+					<td>訂房總評價數</td>
 					<td>${storeVO.store_rm_rating_count}</td>
+				</tr>
+				<tr>
+					<td>活動總分數</td>
 					<td>${storeVO.store_act_rating_score}</td>
+				</tr>
+				<tr>
+					<td>活動總評價數</td>
 					<td>${storeVO.store_act_rating_count}</td>
+				</tr>
+				<tr>
+					<td>被檢舉計點</td>
 					<td>${storeVO.store_report_count}</td> 
+				</tr>
+				<tr>
+					<td>修改資料</td>
 					<td>
 						<form method="post" action="<%=request.getContextPath()%>/store.do">
 							<input type="submit" value="修改">
 		  					<input type="hidden" name="store_no" value="${storeVO.store_no}">
 							<input type="hidden" name="action" value="updateStore">
 						</form>
-					</td> 				
+					</td>
+				</tr>
+			 
+			 	
+			 	
+			 	 <tr class="view">
+
+					 				
 				 </tr>
-				</tbody>
+				
 			 </table>
 		</div>
 

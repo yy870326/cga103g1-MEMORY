@@ -2,6 +2,7 @@ package com.store.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class StoreService {
 	private I_StoreDAO dao;
@@ -131,4 +132,8 @@ public class StoreService {
 	public List<StoreVO> getAllStoreNotSurvy(){
 		return dao.Survy();
 	};
+	
+	public List<StoreVO> StoreCompositeQuery(Map<String, String[]> map){
+		return dao.CompositeQuery(map);
+	}
 }
