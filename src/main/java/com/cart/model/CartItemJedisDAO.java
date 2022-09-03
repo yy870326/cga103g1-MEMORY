@@ -20,7 +20,6 @@ public class CartItemJedisDAO {
 	public static List<String> getCart(String sessionId) {
 		Jedis jedis = null;
 		jedis = pool.getResource(); // 連線
-//		Jedis jedis = new Jedis("localhost", 6379);
 		jedis.select(1);
 
 		List<String> cartItems = jedis.lrange(sessionId, 0, -1); // lrange(key, start, stop) 取得對應的 start~stop 範圍的值
@@ -37,7 +36,6 @@ public class CartItemJedisDAO {
 		Gson gson = new Gson();
 		Jedis jedis = null;
 		jedis = pool.getResource(); // 連線
-//		Jedis jedis = new Jedis("localhost", 6379);
 		jedis.select(1);
 
 		List<String> cartItems = getCart(sessionId); // 先取得購物車內容
@@ -80,7 +78,6 @@ public class CartItemJedisDAO {
 		Gson gson = new Gson();
 		Jedis jedis = null;
 		jedis = pool.getResource(); // 連線
-//		Jedis jedis = new Jedis("localhost", 6379);
 		jedis.select(1);
 
 		List<String> cartItems = getCart(sessionId); // 先取得購物車內容
@@ -102,7 +99,6 @@ public class CartItemJedisDAO {
 	public static void delAll(String sessionId) {
 		Jedis jedis = null;
 		jedis = pool.getResource(); // 連線
-//		Jedis jedis = new Jedis("localhost", 6379);
 		jedis.select(1);
 
 		jedis.del(sessionId); // 直接刪掉 sessionId 清空購物車
@@ -183,6 +179,24 @@ public class CartItemJedisDAO {
 		
 		return cartItemVO;
 	}
+	
+	// ------------------- 結帳後更新 tkt 的 sold_amount -------------------
+//	public static void updateTktsoldAmount(String sessionId, Integer tkt_no) {
+//		Gson gson = new Gson();
+//		Jedis jedis = null;
+//		jedis = pool.getResource(); // 連線
+//		jedis.select(1);
+//		
+//		// getCart 取得購物車再取數量
+//		
+//		
+//		// update 庫存時需要拿到結帳刪除前的 count 
+//	}
+	
+	// ------------------- 結帳後更新 tkt 的 original_amount -------------------
+//	public static void updateTktoriAmount() {
+//		
+//	}
 	
 
 }

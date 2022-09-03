@@ -22,6 +22,9 @@ public class TktDAO implements I_TktDAO {
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt ORDER BY tkt_no;";
+	
+	private static final String UPDATE_SOLD_AMOUNT = "UPDATE tkt SET sold_amount = ? WHERE tkt_no = ?;";
+	private static final String UPDATE_ORI_AMOUNT = "UPDATE tkt SET original_amount = (original_amount - sold_amount) WHERE tkt_no = ?;";
 
 	private static DataSource ds = null;
 
@@ -256,6 +259,79 @@ public class TktDAO implements I_TktDAO {
 		}
 
 		return list;
+	}
+	
+	@Override
+	public void updateSoldAmount(TktVO tktVO) {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(UPDATE_SOLD_AMOUNT);
+
+			ps.setInt(1, tktVO.getSold_amount());
+			ps.setInt(2, tktVO.getTkt_no());
+
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
+	public void updateOriAmount(TktVO tktVO) {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			
+			con = ds.getConnection();
+			ps = con.prepareStatement(UPDATE_ORI_AMOUNT);
+
+			ps.setInt(1, tktVO.getTkt_no());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
 	}
 
 	

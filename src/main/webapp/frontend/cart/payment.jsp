@@ -14,6 +14,17 @@
 <title>購物車 - Memory</title>
 <%-- CSS --%>
 	<%@ include file="/frontend/commonCSS.file" %>
+	
+	<style>
+	
+		.mt-60 {
+		  margin-top: 60px;
+		}
+		.mb-20 {
+		  margin-bottom: 20px;
+		}
+	
+	</style>
 </head>
 <body>
 
@@ -47,9 +58,33 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
 </div>
   
   <!-- TABLE -->
-  <section class="pt80">
-		<div class="container">
-			<div class="row">
+  <form class="pt80" method="post" action="<%=request.getContextPath()%>/cart/buyTkt.do">
+		
+  
+  
+  
+  <!-- =======================
+	Banner innerpage -->
+
+<section class="pb80 booking-section login-area">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="login-box Booking-box">
+            
+
+             
+ 
+                <div class="row">
+                
+                
+                <table>
+            
+
+			
 				<div class="col-sm-12 mb-3">
 					<h3 class="text-center mb-4">結帳清單</h3>
 					<div class="table-responsive-sm">
@@ -72,23 +107,18 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
 									<td>${cartItemVO.count}</td> 
 									<td>NT$ <span class="itemPrice">${cartItemVO.price * cartItemVO.count}</span></td>
 								</tr>
+								
+									<input type="hidden" name="tkt_no"  value="${cartItemVO.tkt_no}">
 								 </c:forEach> 
 
 								
 							</tbody>
 						</table>
-					</div>
+					
 					
 					<hr>
 					
-					<div class="d-flex justify-content-between"> 
-						<div class="d-flex">
-							<a href="<%=request.getContextPath()%>/frontend/cart/cart.jsp" class="btn btn-outline-primary">返回購物車</a>
-						</div>
-						<div class="d-flex justify-content-end mb-3"> 
-							<p>總計： <span class="totalPrice" style="color: red;"></span> 元</p>
-						</div>
-					</div>
+					
 					
 					<%-- <div class="d-flex justify-content-between">
 						<a href="<%=request.getContextPath()%>/frontend/cart/testTkt1.jsp" class="btn btn-outline-primary">繼續購物</a>  <!-- 返回票券列表要動態 -->
@@ -96,52 +126,39 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
 					</div> --%>
 					
 				</div>
-			</div>
-  		</div>
-  </section>
-  
-  
-  <!-- =======================
-	Banner innerpage -->
-
-<section class="pb80 booking-section login-area">
-  <div class="container">
-    <div class="row">
-      
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="login-box Booking-box">
-              <div class="login-top">
-                <h2>訂購者資訊</h2>
-                <p class="text-danger">＊為必填資訊</p>
-              </div>
-              <form class="login-form" action="#">
-                <div class="row">
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
+			
+  	         
+            
+            </table>
+                
+                <h2 class="mt-60">訂購者資訊</h2>
+                <p class="text-danger mb-20">＊為必填資訊</p>
+                
+                  <div class="d-flex justify-content-between mb-20">
+                  	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>會員編號</label>
-                    <p type="text">0001</p>
+                    <p>0001</p>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>姓名</label>
-                    <input type="text" name="text" placeholder="自動帶入會員名稱">
+                    <input type="text" name="text" placeholder="自動帶入會員名稱" class="form-control">
                   </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
+                  
+                  </div>
+                  <div class="d-flex justify-content-between mb-20">
+                  
+                  	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>Email</label>
-                    <input type="text" name="email" placeholder="自動帶入會員 email ">
+                    <input type="text" name="email" placeholder="自動帶入會員 email " class="form-control">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 password">
                     <label><span class="text-danger">*</span>聯絡電話</label>
-                    <input type="text" name="text" placeholder="自動帶入會員電話號碼">
+                    <input type="text" name="text" placeholder="自動帶入會員電話號碼" class="form-control">
+                  </div>
                   </div>
                   
                   
-                  <div class="col-md-12 d-flex justify-content-between mb-5">
-                    <div class="chqbox">
-                      <input type="checkbox" name="rememberme" id="rmme">
-                      <label for="rmme"> 之後想要收到有關 Memory 的優惠消息</label>
-                    </div>
-                  </div>
+               
                   
                   <div class="divider divider-dotted"></div>
                   
@@ -149,7 +166,10 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                     <h3>信用卡付款資訊</h3>
                     <p>可前往會員中心修改信用卡資料或新增信用卡資訊</p>
                   </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
+                  
+                  <div class="d-flex justify-content-between mb-20">
+                  
+                  	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>選擇已儲存信用卡(後四碼)</label>
                     <select class="custom-select select-big mb-3">
                       <option selected>**** **** **** 0208（預設）</option>
@@ -159,7 +179,9 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>信用卡持有者姓名</label>
-                    <input type="text" name="text" placeholder="自動帶入">
+                    <input type="text" name="text" placeholder="自動帶入" class="form-control">
+                  </div>
+                  
                   </div>
                   
                    <div class="divider divider-dotted"></div>
@@ -168,6 +190,8 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                     <h3>使用優惠券</h3>
                     <p>可選擇已擁有的優惠券</p>
                   </div>
+                  
+                <div class="d-flex justify-content-between mb-20">
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>優惠券選單</label>
                     <select class="custom-select select-big mb-3">
@@ -177,13 +201,19 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                       <option>22中秋節優惠</option>
                     </select>
                   </div>
+                  
+                  	<div class="d-flex flex-column align-items-end mb-3"> 
+							<p>商品總金額： <span class="totalPrice" style="color: red;"></span> 元</p>
+							<p>折扣金額： - <span class="totalPrice" style="color: red;"></span> 元</p>
+							<p>總付款金額： <span class="totalPrice" style="color: red;"></span> 元</p>
+						</div>
                  
-               
+               </div>
                   
                   
-                  <div class="divider divider-dotted"></div>
+                  <!-- <div class="divider divider-dotted"></div> -->
                   
-                  <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
+                  <!-- <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
                     <h3>新增新用卡資料</h3>
                     <p>可前往會員中心修改信用卡資料</p>
                   </div>
@@ -214,12 +244,19 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                       <option value="location8">2021</option>
                       <option value="location8">2022</option>
                     </select>
-                  </div>
+                  </div> -->
                   <div class="col-md-12">
-                    <button class="Confirm" type="submit" name="button">確認付款</button>
+						
+                    	<input type="hidden" name="mem_no" value="">
+                    	
+						<div class="d-flex justify-content-between">
+							<a href="<%=request.getContextPath()%>/frontend/cart/cart.jsp" class="btn btn-outline-primary">返回購物車</a>
+							<button type="submit" class="btn btn-info ml-3">確認付款</button>
+						</div>
+					
                   </div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>
@@ -227,7 +264,7 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
     </div>
   </div>
 </section>
-  
+  </form>
      </div> <!-- 這兩個 div 會影響 footer 不可刪 -->
   </div> <!-- 這兩個 div  footer 不可刪 -->
 

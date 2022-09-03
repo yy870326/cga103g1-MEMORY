@@ -225,7 +225,7 @@
 <!--               <input type="number" name="count" id="guests" class="form-control"> -->
             </div>
               <!-- 假資料 真的資料會從資料庫撈 tkt_no -->
-               <input type="hidden" name="tkt_no"  value="10" class="tkt_no"> 
+               <input type="hidden" name="tkt_no"  value="3" class="tkt_no"> 
 			   <!-- <input type="hidden" name="tkt_name"  value="201 景觀台門票">
 			   <input type="hidden" name="price"  value="500"> -->
 			   <input type="hidden" name="count"  value="1" class="count">
@@ -417,7 +417,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
  
  <!-- init 加到 footer 或 header 或 JS file-->
-<script src="<%=request.getContextPath()%>/frontend/cart/init.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/frontend/cart/init.js"></script> --%>
  
  
  <script>
@@ -441,6 +441,22 @@
             console.log(error);
         });
  	});
+ 	
+ 	// 載入商品單一頁面或商品列表頁就自動初始化
+ 	
+ 	function init(){ 
+ 		axios({
+ 	 		"method": "post", 
+ 	 		"url": "/CGA103G1/cart/initCart.do"
+ 		}).then(function (response) {
+ 	    	//console.log(response);
+ 		}).catch(function (error) {
+ 	    	console.log(error);
+ 		});
+ 	}
+
+ 	// 當畫面載入時初始化
+ 	window.onload = init();
  
  </script>
   
