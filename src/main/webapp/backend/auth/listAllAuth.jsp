@@ -35,61 +35,6 @@ if (request.getAttribute("list") == null) {
 <%@ include file="/backend/commonCSS.file"%>
 <!-- CSS -->
 
-<style>
-table.fold-table tbody tr.view {
-	cursor: pointer;
-}
-
-table.fold-table tbody tr.view:hover {
-	box-shadow: 0 0.125rem 1rem rgb(0 0 0/ 19%);
-}
-
-table.fold-table tbody tr.view.open {
-	background: #8FC2C2;
-}
-
-table.fold-table tbody tr.view.open td {
-	color: white;
-}
-
-table.fold-table tbody tr.fold {
-	display: none;
-}
-
-table.fold-table tbody tr.fold.open {
-	display: table-row;
-}
-
-table {
-	width: 90%;
-}
-
-table.fold-table>thead>tr>th {
-	align: center;
-	font-size: 1.125rem;
-	text-transform: capitalize;
-	font-weight: 600;
-	padding: 1.25rem 0.9375rem;
-}
-
-thead {
-	background: #F7F6F2;
-}
-
-td, div {
-	font-size: 1rem;
-	letter-spacing: 0.5px;
-}
-
-/*css */
-.list-h1 {
-	margin-right: 2rem;
-}
-
-.add-btn {
-	padding: 1rem 2.5rem 0.5rem 2.5rem;
-}
-</style>
 
 </head>
 
@@ -102,11 +47,9 @@ td, div {
 	<!-- sidebar -->
 
 
-
 	<!-- 	內容寫在main-content這個div內    -->
 
-	<div class="content-body">
-		<table id="example4" class="display" style="min-width: 845px"></table>
+	<div class="main-content card card-body table-responsive">
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
@@ -116,66 +59,42 @@ td, div {
 				</c:forEach>
 			</ul>
 		</c:if>
-		<div class="container-fluid">
-			<div class="col-12 d-flex justify-content-between mb-5">
-				<div class="d-flex">
-					<h1 class="coup-list-h1 list-h1">權限列表</h1>
-					<a href="<%=request.getContextPath()%>/backend/auth/addAuth.jsp"
-						class="btn btn-primary add-btn">新增</a>
-
-
-					<%-- <div class="card-tabs mt-3 mt-sm-0">
-				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/auth/addAuth.do?action=getAll">所有權限列表(${authSvc.getAllAuth().size()})</a>
-					</li>
-				</ul>
-			</div> --%>
-				</div>
-				<div class="input-group search-area">
-					<input type="text" class="form-control" placeholder="Search here">
-					<span class="input-group-text"> <a href="javascript:void(0)">
-							<i class="flaticon-381-search-2"></i>
-					</a>
-					</span>
-				</div>
-			</div>
-			<div class="col-12">
-				<table class="table fold-table">
-					<thead class="thead-dark">
-						<tr>
-							<th>權限編號</th>
-							<th>員工編號</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="authVO" items="${list}">
-							<tr>
-								<td>${authVO.fun_no}-[${authVO.authFunVO.fun_name}]</td>
-								<td>${authVO.emp_no}-[${authVO.empVO.emp_name}]</td>
-								<td>
-									<%-- <form method="post" action="<%=request.getContextPath()%>/room/Room"> --%>
-									<%-- <input type="hidden" name="rm_no"  value="${roomVO.rm_no}"> --%>
-									<!-- <input type="hidden" name="action"	value="getOneForUpdate"> -->
-									<!-- <button type="submit" class="btn btn-secondary btn-sm"><i class='bx bxs-pencil'></i>修改</button> -->
-									<!-- </form> --> <!-- 								<a class="btn btn-secondary btn-sm" -->
-									<%-- 								href="<%=request.getContextPath()%>/auth/updateAuth.do?emp_no=${authVO.emp_no}&action=getOneForUpdate">修改</a> --%>
-									<a class="btn btn-secondary btn-sm"
-									href="<%=request.getContextPath()%>/backend/auth/updateAuth.jsp?emp_no=${authVO.emp_no}&fun_no=${authVO.fun_no}">修改</a>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+		<div class="col-12 d-flex justify-content-between mb-5">
+			<div class="d-flex">
+				<a href="<%=request.getContextPath()%>/backend/auth/addAuth.jsp"
+					class="btn btn-primary add-btn">新增員工</a>
 			</div>
 		</div>
 
+		<table id="example4" class="display" style="min-width: 845px">
+		<thead>
+			<tr>
+				<th>權限編號</th>
+				<th>員工編號</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="authVO" items="${list}">
+				<tr>
+					<td>${authVO.fun_no}-[${authVO.authFunVO.fun_name}]</td>
+					<td>${authVO.emp_no}-[${authVO.empVO.emp_name}]</td>
+					<td><a class="btn btn-secondary btn-sm"
+						href="<%=request.getContextPath()%>/backend/auth/updateAuth.jsp?emp_no=${authVO.emp_no}&fun_no=${authVO.fun_no}">修改</a>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+		</table>
+	</div>
 
-		<%@ include file="/backend/commonJS.file"%>
-		<!-- JS -->
-		<script>
-			// 		header標題
-			$("#pagename").text("MEMORY 後台管理");
-		</script>
+
+
+	<%@ include file="/backend/commonJS.file"%>
+	<!-- JS -->
+	<script>
+		// 		header標題
+		$("#pagename").text("MEMORY 員工權限管理");
+	</script>
 </body>
 </html>

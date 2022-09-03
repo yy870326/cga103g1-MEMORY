@@ -25,6 +25,7 @@ public class GetByEnddate extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/plain; charset = UTF-8");
 		
 		// ------------- getParameter -------------
 		// enddate
@@ -49,13 +50,17 @@ public class GetByEnddate extends HttpServlet {
 			req.setAttribute("coupVO", coupVO);
 			RequestDispatcher failureView = req.getRequestDispatcher("/backend/coup/listAllCoup.jsp");
 			failureView.forward(req, res);
-			return; // 中斷
+			return; // 中斷 
 		}
 					
 		// ------------- forward -------------
-		CoupVO coupVO = new CoupVO();
-		req.setAttribute("coupVO", coupVO);
+		
+//		CoupVO coupVO = new CoupVO();
+//		req.setAttribute("coupVO", coupVO);
 		RequestDispatcher successView = req.getRequestDispatcher("/backend/coup/getByEndDate.jsp");
+		// 回傳 list 到前端
+		res.getWriter().println(list);
+		System.out.println(list); // 可以取到值
 		successView.forward(req, res);
 	}
 

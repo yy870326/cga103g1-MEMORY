@@ -1,8 +1,10 @@
 package com.rm_order.model;
 
 import java.sql.Date;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.rm_order_list.model.RmOrderListVO;
 
 public class TestRmOrder {
 	public static void main(String[] args) {
@@ -10,14 +12,56 @@ public class TestRmOrder {
 		RmOrderVO rm = new RmOrderVO();
 	
 //	insert()
-	rm.setRm_order_no(1);
+//	rm.setRm_order_no(1);
+//	rm.setMem_no(1);
+//	rm.setStore_no(1);
+//	rm.setRm_order_status(1);
+//	rm.setRm_charge(3500);
+//	rm.setRm_review(5);
+//	irm.insert(rm);
+//	System.out.println("新增成功");
+	
+	
+//  insertWithLists()
 	rm.setMem_no(1);
 	rm.setStore_no(1);
 	rm.setRm_order_status(1);
-	rm.setRm_charge(3500);
-	rm.setRm_review(5);
-	irm.insert(rm);
-	System.out.println("新增成功");
+	rm.setRm_charge(20000);
+	
+	List<RmOrderListVO> testList = new ArrayList<RmOrderListVO>(); // 準備置入訂單明細數筆
+	RmOrderListVO rol = new RmOrderListVO();   // 訂單明細POJO1
+	rol.setRm_type_no(14);
+	rol.setRm_amount(1);
+	rol.setRm_price(4000);
+	rol.setRm_check_in("朱小妹");
+	rol.setArrival_date(Date.valueOf("2022-9-29"));
+	rol.setDeparture_date(Date.valueOf("2022-9-30"));
+	
+	RmOrderListVO rol2 = new RmOrderListVO();   // 訂單明細POJO2
+	rol2.setRm_type_no(19);
+	rol2.setRm_amount(1);
+	rol2.setRm_price(6000);
+	rol2.setRm_check_in("朱小弟");
+	rol2.setArrival_date(Date.valueOf("2022-10-30"));
+	rol2.setDeparture_date(Date.valueOf("2022-10-31"));
+
+	testList.add(rol);
+	testList.add(rol2);
+	
+	irm.insertWithLists(rm, testList);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 //	update()

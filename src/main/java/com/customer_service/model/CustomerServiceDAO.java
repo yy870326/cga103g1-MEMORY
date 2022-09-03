@@ -56,6 +56,14 @@ public class CustomerServiceDAO implements I_CustomerServiceDAO {
 				ps.executeUpdate();
 		} catch (SQLException se) {
 			se.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
@@ -99,10 +107,10 @@ public class CustomerServiceDAO implements I_CustomerServiceDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if (rs != null) {
+		}finally {
+			if (con != null) {
 				try {
-					rs.close();
+					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

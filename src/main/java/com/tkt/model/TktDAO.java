@@ -61,7 +61,7 @@ public class TktDAO implements I_TktDAO {
 			ps.setString(10, tktVO.getHowuse());
 			ps.setString(11, tktVO.getCanxpolicy());
 			ps.setInt(12, tktVO.getTkt_status());
-			ps.setInt(13, tktVO.getSold_amount());
+			ps.setInt(13, 0);
 			ps.setInt(14, tktVO.getKind());
 
 			ps.executeUpdate();

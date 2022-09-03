@@ -48,6 +48,14 @@ public class ActRpDAO implements I_ActRpDAO{
 
 		} catch (SQLException se) {
 			se.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -70,6 +78,14 @@ public class ActRpDAO implements I_ActRpDAO{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -103,9 +119,9 @@ public class ActRpDAO implements I_ActRpDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
+			if (con != null) {
 				try {
-					rs.close();
+					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

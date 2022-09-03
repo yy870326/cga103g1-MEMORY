@@ -11,6 +11,12 @@ public  interface  I_StoreDAO {
 	
 	public StoreVO getOneStore(Integer store_no);
 	
+	public StoreVO getOneStoreByAcc(String store_acc);
+	
 	public List<StoreVO> getAllStore();
+	
+	public StoreVO Login(String store_acc, String store_pwd);
+	
+	public List<StoreVO> Survy();
 	
 }

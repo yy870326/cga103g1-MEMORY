@@ -34,7 +34,7 @@ pageContext.setAttribute("storeVO", storeVO);
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
 
 		
 
@@ -44,7 +44,7 @@ pageContext.setAttribute("storeVO", storeVO);
 
 	<ul>
 		<li>
-			<a href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">列出所有廠商</a>
+			<h4><a href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">列出所有廠商</a></h4>
 		</li>
 		
 		<li>

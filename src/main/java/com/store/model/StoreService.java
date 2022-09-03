@@ -13,7 +13,6 @@ public class StoreService {
 	public StoreVO addStore(
 	 String store_acc,
 	 String store_pwd,
-	 Integer acc_status,
 	 String store_name,
 	 String store_gui,
 	 String store_rep,
@@ -24,22 +23,13 @@ public class StoreService {
 	 String store_con_phone,
 	 String store_con_add,
 	 String store_email,
-	 Date store_reg_date,
-	 String bank_account,
-	 Integer store_tkt_rating_scoure,
-	 Integer store_tkt_rating_count,
-	 Integer store_tkt_rating,
-	 Integer store_rm_rating_score,
-	 Integer store_rm_rating_count,
-	 Integer store_act_rating_score,
-	 Integer store_act_rating_count,
-	 Integer store_report_count
-			) {
+//	 Date store_reg_date,
+	 String bank_account
+	 ) {
 		StoreVO storeVO = new StoreVO();
 		
 		storeVO.setStore_acc(store_acc);
 		storeVO.setStore_pwd(store_pwd);
-		storeVO.setAcc_status(acc_status);
 		storeVO.setStore_name(store_name);
 		storeVO.setStore_gui(store_gui);
 		storeVO.setStore_rep(store_rep);
@@ -50,18 +40,9 @@ public class StoreService {
 		storeVO.setStore_con_phone(store_con_phone);
 		storeVO.setStore_con_add(store_con_add);
 		storeVO.setStore_email(store_email);
-		storeVO.setStore_reg_date(store_reg_date);
+//		storeVO.setStore_reg_date(store_reg_date);
 		storeVO.setBank_account(bank_account);
-		storeVO.setStore_tkt_rating(store_tkt_rating);
-		storeVO.setStore_tkt_rating_count(store_tkt_rating_count);
-		storeVO.setStore_tkt_rating_scoure(store_tkt_rating_scoure);
-		storeVO.setStore_rm_rating_count(store_rm_rating_count);
-		storeVO.setStore_rm_rating_score(store_rm_rating_score);
-		storeVO.setStore_act_rating_count(store_act_rating_count);
-		storeVO.setStore_act_rating_score(store_act_rating_score);
-		storeVO.setStore_report_count(store_report_count);
-		
-		
+
 		dao.insert(storeVO);
 		return storeVO;
 	}
@@ -84,7 +65,7 @@ public class StoreService {
 			 String store_email,
 			 Date store_reg_date,
 			 String bank_account,
-			 Integer store_tkt_rating_scoure,
+			 Integer store_tkt_rating_score,
 			 Integer store_tkt_rating_count,
 			 Integer store_tkt_rating,
 			 Integer store_rm_rating_score,
@@ -112,9 +93,9 @@ public class StoreService {
 		storeVO.setStore_email(store_email);
 		storeVO.setStore_reg_date(store_reg_date);
 		storeVO.setBank_account(bank_account);
-		storeVO.setStore_tkt_rating(store_tkt_rating);
+		storeVO.setStore_tkt_rating_score(store_tkt_rating_score);
 		storeVO.setStore_tkt_rating_count(store_tkt_rating_count);
-		storeVO.setStore_tkt_rating_scoure(store_tkt_rating_scoure);
+		storeVO.setStore_tkt_rating(store_tkt_rating);
 		storeVO.setStore_rm_rating_count(store_rm_rating_count);
 		storeVO.setStore_rm_rating_score(store_rm_rating_score);
 		storeVO.setStore_act_rating_count(store_act_rating_count);
@@ -134,7 +115,20 @@ public class StoreService {
 		return dao.getOneStore(store_no);
 	}
 	
+	public StoreVO getOneStoreByAcc(String store_acc) {
+		return dao.getOneStoreByAcc(store_acc);
+	}
+	
+	
 	public List<StoreVO> getAllStore(){
 		return dao.getAllStore();
 	}
+	
+	public StoreVO logIn(String store_acc, String store_pwd) {
+		return dao.Login(store_acc, store_pwd);
+	}
+	
+	public List<StoreVO> getAllStoreNotSurvy(){
+		return dao.Survy();
+	};
 }

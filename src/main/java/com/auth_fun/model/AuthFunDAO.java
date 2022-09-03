@@ -28,7 +28,7 @@ public class AuthFunDAO implements I_AuthFunDAO {
 	}
 
 	private static final String INSERT = "INSERT INTO auth_fun (fun_name) VALUES (?)";
-	private static final String UPDATE = "UPDATE auth_fun SET fun_no=? WHERE fun_name=?";
+	private static final String UPDATE = "UPDATE auth_fun SET fun_name=? WHERE fun_no=?";
 	private static final String DELETE = "DELETE FROM auth_fun WHERE fun_no=?";
 	private static final String GET_ONE = "SELECT * FROM auth_fun WHERE fun_no=?";
 	private static final String GET_ALL = "SELECT * FROM auth_fun";
@@ -77,8 +77,8 @@ public class AuthFunDAO implements I_AuthFunDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
-			ps.setInt(1, authFunVO.getFun_no());
-			ps.setString(2, authFunVO.getFun_name());
+			ps.setString(1, authFunVO.getFun_name());
+			ps.setInt(2, authFunVO.getFun_no());
 			ps.executeUpdate();
 
 			// Handle any driver errors
