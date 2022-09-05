@@ -70,4 +70,5 @@ public class MemService {
 	public List<MemVO>getall(){
 		return dao.getAll();
 	}
+	
 }

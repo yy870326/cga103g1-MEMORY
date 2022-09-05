@@ -41,7 +41,7 @@ public class LoginHandler extends HttpServlet {
     if (!allowUser(mem_email, mem_pwd)) {          //【帳號 , 密碼無效時】
       out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
       out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/login.html>重新登入</A>");
+      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/frontend/mem/login.html>重新登入</A>");
       out.println("</BODY></HTML>");
     }else {                                       //【帳號 , 密碼有效時, 才做以下工作】
       HttpSession session = req.getSession();

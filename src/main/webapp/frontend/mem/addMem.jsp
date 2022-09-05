@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.mem.model.*"%>
@@ -6,129 +7,121 @@
 MemVO memVO = (MemVO) request.getAttribute("MemVO");
 %>
 
-<html>
+<html lang="en">
+
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>員工資料新增 - addEmp.jsp</title>
-
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
-  table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-</style>
-
+  <title>會員註冊</title>
+<%-- CSS --%>
+	<%@ include file="/frontend/commonCSS.file" %>
 </head>
-<body bgcolor='white'>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>員工資料新增 - addMem.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
-	</td></tr>
-</table>
+<body>
+ <%-- header --%>
+  <%@ include file="/frontend/header.file" %>
 
-<h3>資料新增:</h3>
+  <section class="registration">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="registration-box">
+            <div class="reg-top">
+              <h3>註冊</h3>
+              <p></p>
+            </div>
+            <form class="reg-form" action="mem.do" METHOD="post" name="form1" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-12 email">
+                  <label>信箱</label>
+                  <input type="text" name="mem_email"value="<%=(memVO==null)? "Q123434565@" :memVO.getMem_email()%>" placeholder="Enter Email here">
+                </div>
+                <div class="col-md-12 password">
+                  <label>密碼</label>
+                  <input type="text" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" >
+                </div>
+                <div class="col-md-6 name">
+                  <label>密碼狀態</label>
+                  <input type="text" name="acc_status" placeholder="Enter your name here"value="<%=(memVO==null)? "1" :memVO.getAcc_status()%>" >
+                </div>
+                <div class="col-md-6 name">
+                  <label>姓名</label>
+                  <input type="text" name="mem_name" placeholder="Enter your name here"value="<%= (memVO==null)? "Jacky" :memVO.getMem_name()%>">
+                </div>
+                <div class="col-md-6 sex">
+                  <label>姓別</label>
+                  <select class="custom-select select-big mb-3"name="mem_gender">
+                    <option >男</option>
+                    <option >女</option>
+                  </select>
+                </div>
+                <div class="col-md-12b password">
+                    <label>電話</label>
+                    <input type="text" name="mem_mobile" placeholder="Enter your Phone here"value="<%=(memVO==null)? "0988682536" :memVO.getMem_mobile()%>">
+                  </div>
+                </div>
+                 <div class="col-md-6 name">
+                  <label>縣市</label>
+                  <input type="text" name="mem_city" placeholder="Enter your name here"value="<%=(memVO==null)? "彰化縣" :memVO.getMem_city()%>">
+                </div>
+                 <div class="col-md-12 password">
+                    <label>加入時間</label>
+                    <input type="text" name="mem_reg_date" id="f_date1">
+                  </div>
+                  <div class="col-md-6 name">
+                  <label>會員照片</label>
+                  <input type="file" name="mem_pic" />
+                </div>
+                <div class="col-md-6 name">
+                  <label>被檢舉計點</label>
+                  <input type="text" name="mem_report_count" placeholder="Enter your name here"value="<%=(memVO==null)? "2" :memVO.getMem_report_count()%>" >
+                </div>
+                <div class="col-md-6 name">
+                  <label>信用卡</label>
+                  <input type="text" name="mem_card" placeholder="Enter your name here"value="<%=(memVO==null)? "5527921393052964" :memVO.getMem_card()%>" >
+                </div>
+               <input type="hidden" name="action" value="insert">
+                <div class="col-md-12 chqbox chqbox2">
+                  <input type="checkbox" name="terms" id="term">
+                  <label for="term">我已閱讀並同意 <span>條款和條件</span>.</label>
+                </div>
+                <div class="col-md-12">
+                  <button type="submit" name="button">創建帳號</button>
+                </div>
+                <div class="login-btm text-center">
+              <p>已有帳號 ?<a href="login.html">登入</a></p>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+  <!-- =======================
+	footer  -->
+ <%-- footer --%>
+	<%@ include file="/frontend/footer.file" %>
+  	
+  	<%-- commonJS --%>
+	<%@ include file="/frontend/commonJS.file" %>
+    <!-- =======================
+	footer  -->
 
-<FORM METHOD="post" ACTION="mem.do" name="form1" enctype="multipart/form-data">
-<table>
-	<tr>
-		<td>帳號:</td>
-		<td><input type="TEXT" name="mem_acc" size="45" value="<%=(memVO==null)? "Q123434565" :memVO.getMem_acc()%>" /></td>
-	</tr>
-	<tr>
-		<td>密碼:</td>
-		<td><input type="TEXT" name="mem_pwd" size="45" value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" /></td>
-	</tr>
-	<tr>
-		<td>帳號狀態:</td>
-		<td><input type="TEXT" name="acc_status" size="45" value="<%=(memVO==null)? "1" :memVO.getAcc_status()%>" /></td>
-	</tr>
-	<tr>
-		<td>姓名:</td>
-		<td><input type="TEXT" name="mem_name" size="45" value="<%= (memVO==null)? "Jacky" :memVO.getMem_name()%>" /></td>
-	</tr>
-	<tr>
-		<td>性別:</td>
-		<td><input type="TEXT" name="mem_gender" size="45" value="<%=(memVO==null)? "M" :memVO.getMem_gender()%>" /></td>
-	</tr>
-	<tr>
-		<td>信箱:</td>
-		<td><input type="TEXT" name="mem_email" size="45" value="<%=(memVO==null)? "Q123434565@" :memVO.getMem_email()%>" /></td>
-	</tr>
-	<tr>
-		<td>手機:</td>
-		<td><input type="TEXT" name="mem_mobile" size="45" value="<%=(memVO==null)? "0988682536" :memVO.getMem_mobile()%>" /></td>
-	</tr>
-	<tr>
-		<td>縣市:</td>
-		<td><input type="TEXT" name="mem_city" size="45" value="<%=(memVO==null)? "彰化縣" :memVO.getMem_city()%>" /></td>
-	</tr>
-	<tr>
-		<td>區域:</td>
-		<td><input type="TEXT" name="mem_dist" size="45" value="<%=(memVO==null)? "鹿港鎮" :memVO.getMem_dist()%>" /></td>
-	</tr>
-	<tr>
-		<td>地址:</td>
-		<td><input type="TEXT" name="mem_addr" size="45" value="<%=(memVO==null)? "育民街18號" :memVO.getMem_addr()%>" /></td>
-	</tr>
-		<tr>
-		<td>加入時間:</td>
-		<td><input type="TEXT" name="mem_reg_date" id="f_date1"  /></td>
-	</tr>
-	<tr>
-		<td>會員照片:</td>
-		<td><input type="file" name="mem_pic" size="45"  /></td>
-	</tr><tr>
-		<td>被檢舉計點:</td>
-		<td><input type="TEXT" name="mem_report_count" size="45" value="<%=(memVO==null)? "2" :memVO.getMem_report_count()%>" /></td>
-	</tr><tr>
-		<td>信用卡:</td>
-		<td><input type="TEXT" name="mem_card" size="45" value="<%=(memVO==null)? "5527921393052964" :memVO.getMem_card()%>" /></td>
-	</tr>
-</table>
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增"></FORM>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/popper.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/functions.js" type="text/javascript"></script>
+    <script src="js/owl.carousel.min.js" type="text/javascript"></script>
+    <script src="js/slick.js" type="text/javascript"></script>
+    <script src="js/swiper.min.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+    <script src="js/jquery.fancybox.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
 </body>
-
-
-
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 <% 
