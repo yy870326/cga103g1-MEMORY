@@ -111,7 +111,7 @@ td, div {
 		</c:if>
 
 			<div class="col-11">
-				<form action="<%=request.getContextPath()%>/authfun/updateAuthFun.do" name="update" method="post" class="modal-content">
+				<form action="<%=request.getContextPath()%>/authfun/authfun.do" name="update" method="post" class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title" >修改權限名稱</h3>
 					</div>
@@ -134,7 +134,7 @@ td, div {
 						<a href="<%=request.getContextPath()%>/backend/authfun/listAllAuthFun.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
 						<input type="hidden" name="action" value="update">
 						<input type="hidden" name="fun_no" value="<%=authFunVO.getFun_no()%>">
-						<input type="submit" class="btn btn-primary" id="updateSave" value="儲存">
+						<input type="submit" class="btn btn-primary" id="update" value="儲存">
 					</div>
 				</form>
 

@@ -2,6 +2,8 @@ package com.rm_type.model;
 
 import java.io.Serializable;
 
+import com.store.model.StoreVO;
+
 public class RmTypeVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +18,7 @@ public class RmTypeVO implements Serializable {
 	private String rm_intro;
 	private Integer rm_rate_sum;
 	private Integer rm_eval_sum;
-	private Boolean rm_update;
+	private Integer rm_update;
 	
 	public Integer getRm_type_no() {
 		return rm_type_no;
@@ -78,12 +80,18 @@ public class RmTypeVO implements Serializable {
 	public void setRm_eval_sum(Integer rm_eval_sum) {
 		this.rm_eval_sum = rm_eval_sum;
 	}
-	public Boolean getRm_update() {
+	public Integer getRm_update() {
 		return rm_update;
 	}
-	public void setRm_update(Boolean rm_update) {
+	public void setRm_update(Integer rm_update) {
 		this.rm_update = rm_update;
 	}
 	
+	public com.store.model.StoreVO getStoreVO() {
+	    com.store.model.StoreService storeSvc = new com.store.model.StoreService();
+	    com.store.model.StoreVO storeVO = storeSvc.getOneStore(store_no);
+	    return storeVO;
+    }
+
 	
 }
