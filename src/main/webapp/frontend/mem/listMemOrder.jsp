@@ -19,11 +19,11 @@
 
 <%
 if (request.getAttribute("orderlist") == null) {
-	Integer store_no = 1;
-	List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
+	Integer mem_no = 1;
+	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("store_no", 1);
+pageContext.setAttribute("mem_no", 1);
 %>
 
 <!DOCTYPE html>
@@ -164,6 +164,7 @@ div.main-content {
 
 <body>
 	<%@ include file="/frontend/header.file"%>
+
 	<div class="main-content">
 		<div style="margin-left: 1350px;">
 			<%-- 錯誤表列 --%>
@@ -177,29 +178,17 @@ div.main-content {
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&action=getAllRmOrder">所有訂單
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=0&action=getStoreStatus">入住中
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=1&action=getStoreStatus">正常
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已實現
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已取消
+						href="<%=request.getContextPath()%>/RmOrder?mem_no=${mem_no}&action=getAllRmOrder">所有訂單
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
 						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
-							<div class="input-group search-area" style="margin-left: 850px;">
+							<div class="input-group search-area" style="margin-left: 1200px;">
 								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號"/> <input type="submit"
+									placeholder="請輸入訂單編號" /> <input type="submit"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
-								<input type="hidden" name="store_no" value="${store_no}">
-								<input type="hidden" name="action" value="getOneStore">
+								<input type="hidden" name="mem_no" value="${mem_no}"> <input
+									type="hidden" name="action" value="getOneMem">
 							</div>
 						</form>
 					</li>
@@ -211,7 +200,7 @@ div.main-content {
 			<thead>
 				<tr>
 					<th>訂單編號</th>
-					<th>會員編號</th>
+					<th>店家名稱</th>
 					<th>訂單日期</th>
 					<th>總金額</th>
 					<th>訂單狀態</th>
@@ -221,11 +210,11 @@ div.main-content {
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
 						<td>#${rmOrderVO.rm_order_no}</td>
-						<td>#${rmOrderVO.mem_no}</td>
+						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
-								pattern="$###,###,###" /> <c:if
-								test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
+								pattern="$###,###,###" /> 
+								<c:if test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
 								<div>(已扣除取消後退款)</div>
 							</c:if></td>
 						<td><c:choose>
@@ -243,7 +232,6 @@ div.main-content {
 					</tr>
 					<tr class="fold">
 						<td colspan="8">
-
 							<div class="row d-flex justify-content-around my-2">
 								<div class="col-4 order-data">
 									<h4>
