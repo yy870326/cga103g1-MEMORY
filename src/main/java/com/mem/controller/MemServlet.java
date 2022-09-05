@@ -199,7 +199,6 @@ public class MemServlet extends HttpServlet{
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 		 String  mem_acc = req.getParameter("mem_acc");           
 		 String  mem_pwd  = req.getParameter("mem_pwd");         
-		 Integer acc_status  =Integer.valueOf(req.getParameter("acc_status"));
 		 String  mem_name    =req.getParameter("mem_name"); 
 		 String  mem_gender  =req.getParameter("mem_gender"); 
 		 String  mem_email   =req.getParameter("mem_email"); 
@@ -207,13 +206,13 @@ public class MemServlet extends HttpServlet{
 		 String  mem_city    =req.getParameter("mem_city");
 		 String  mem_dist=req.getParameter("mem_dist"); 
 		 String mem_addr =req.getParameter("mem_addr");
-		 java.sql.Date    mem_reg_date=null;
-		 try {
-			 mem_reg_date = java.sql.Date.valueOf(req.getParameter("mem_reg_date").trim());
-			} catch (IllegalArgumentException e) {
-				mem_reg_date=new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-			}
+//		 java.sql.Date    mem_reg_date=null;
+//		 try {
+//			 mem_reg_date = java.sql.Date.valueOf(req.getParameter("mem_reg_date").trim());
+//			} catch (IllegalArgumentException e) {
+//				mem_reg_date=new java.sql.Date(System.currentTimeMillis());
+//				errorMsgs.add("請輸入日期!");
+//			}
 		 
 		 //存入圖片
 //		 Part part = req.getPart("mem_pic");
@@ -228,31 +227,31 @@ public class MemServlet extends HttpServlet{
 //	      //out寫出完成後，把資料轉存為byte[]
 //	      byte[] mem_pic = out.toByteArray();
 byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
-	     Integer mem_report_count = Integer.valueOf(req.getParameter("mem_report_count"));
+//	     Integer mem_report_count = Integer.valueOf(req.getParameter("mem_report_count"));
 	     String mem_card = req.getParameter("mem_card");
 	      
 	      
 		  
 		
 		 
-		 try {
-			 mem_reg_date = java.sql.Date.valueOf(req.getParameter("mem_reg_date").trim());
-			} catch (IllegalArgumentException e) {
-				mem_reg_date=new java.sql.Date(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-			}
+//		 try {
+//			 mem_reg_date = java.sql.Date.valueOf(req.getParameter("mem_reg_date").trim());
+//			} catch (IllegalArgumentException e) {
+//				mem_reg_date=new java.sql.Date(System.currentTimeMillis());
+//				errorMsgs.add("請輸入日期!");
+//			}
 		   
 		  MemVO memVO = new MemVO();
 		 memVO.setMem_acc(mem_acc);
 		 memVO.setMem_pwd(mem_pwd);
-		 memVO.setAcc_status(acc_status);
+		 
 		 memVO.setMem_name(mem_name);
 		 memVO.setMem_gender(mem_gender);
 		 memVO.setMem_email(mem_email);
 		 memVO.setMem_mobile(mem_mobile);
-		 memVO.setMem_reg_date(mem_reg_date);
+//		 memVO.setMem_reg_date(mem_reg_date);
 		 memVO.setMem_pic(mem_pic);
-		 memVO.setMem_report_count(mem_report_count);
+//		 memVO.setMem_report_count(mem_report_count);
 		 memVO.setMem_card(mem_card);
 		 
 			
@@ -269,7 +268,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				
 				/***************************2.開始新增資料***************************************/
 				MemService memSvc = new MemService();
-				memVO = memSvc.addMem(mem_acc, mem_pwd, acc_status, mem_name, mem_gender, mem_email, mem_mobile, mem_city, mem_dist, mem_addr, mem_reg_date, mem_pic, mem_report_count, mem_card);
+				memVO = memSvc.addMem(mem_acc, mem_pwd,  mem_name, mem_gender, mem_email, mem_mobile, mem_city, mem_dist, mem_addr,  mem_pic,  mem_card);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/frontend/mem/listAllMem.jsp";
