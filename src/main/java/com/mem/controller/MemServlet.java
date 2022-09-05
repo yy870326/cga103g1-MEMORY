@@ -39,7 +39,7 @@ public class MemServlet extends HttpServlet{
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/frontend/mem/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -53,7 +53,7 @@ public class MemServlet extends HttpServlet{
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/frontend/mem/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -67,14 +67,14 @@ public class MemServlet extends HttpServlet{
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/frontend/mem/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
-				String url = "/mem/listOneMem.jsp";
+				String url = "/frontend/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 		}
@@ -94,7 +94,7 @@ public class MemServlet extends HttpServlet{
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("memVO", memVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/mem/update_mem_input.jsp";
+				String url = "/frontend/mem/update_mem_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 		}
@@ -173,7 +173,7 @@ public class MemServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/update_mem_input.jsp");
+							.getRequestDispatcher("/frontend/mem/update_mem_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -184,7 +184,7 @@ public class MemServlet extends HttpServlet{
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/mem/listOneMem.jsp";
+				String url = "/frontend/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 		}
@@ -262,7 +262,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/addMem.jsp");
+							.getRequestDispatcher("/frontend/mem/addMem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -272,7 +272,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				memVO = memSvc.addMem(mem_acc, mem_pwd, acc_status, mem_name, mem_gender, mem_email, mem_mobile, mem_city, mem_dist, mem_addr, mem_reg_date, mem_pic, mem_report_count, mem_card);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/mem/listAllMem.jsp";
+				String url = "/frontend/mem/listAllMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 		}
@@ -293,11 +293,11 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				memSvc.deleteMem(mem_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/mem/listAllMem.jsp";
+				String url = "/frontend/mem/listAllMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 		}
-	
+		
 		
 	}
 	

@@ -20,7 +20,7 @@ public class MemDAO implements I_MemDAO{
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO mem (mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO mem (mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card) VALUES (0, ?, null, ?, ?, ?, ?, ?, null, null, ?, ?, null, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card FROM mem order by mem_no";
 		private static final String GET_ONE_STMT = 
@@ -29,6 +29,8 @@ public class MemDAO implements I_MemDAO{
 			"DELETE FROM mem where mem_no = ?";
 		private static final String UPDATE = 
 			"UPDATE mem set mem_acc =?,mem_pwd=?,acc_status=?,mem_name=?,mem_gender=?,mem_email=?,mem_mobile=?,mem_city=?,mem_dist=?,mem_addr=?,mem_reg_date=?,mem_pic=?,mem_report_count=?,mem_card=? where mem_no = ?";
+		private static final String LOGIN = 
+				"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card  FROM mem WHERE  mem_email= ? and mem_pwd= ?"; 
 	@Override
 	public void insert(MemVO memVO) {
 		Connection con = null;
@@ -39,20 +41,15 @@ public class MemDAO implements I_MemDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, memVO.getMem_acc());
-			pstmt.setString(2, memVO.getMem_pwd());
-			pstmt.setInt(3, memVO.getAcc_status());
-			pstmt.setString(4, memVO.getMem_name());
-			pstmt.setString(5,memVO.getMem_gender());
-			pstmt.setString(6, memVO.getMem_email());
-			pstmt.setString(7, memVO.getMem_mobile());
-			pstmt.setString(8, memVO.getMem_city());
-			pstmt.setString(9, memVO.getMem_dist());
-			pstmt.setString(10, memVO.getMem_addr());
-			pstmt.setDate(11, memVO.getMem_reg_date());
-			pstmt.setBytes(12, memVO.getMem_pic());
-			pstmt.setInt(13, memVO.getMem_report_count());
-			pstmt.setString(14, memVO.getMem_card());
+			pstmt.setString(1, memVO.getMem_pwd());
+			pstmt.setString(2, memVO.getMem_name());
+			pstmt.setString(3,memVO.getMem_gender());
+			pstmt.setString(4, memVO.getMem_email());
+			pstmt.setString(5, memVO.getMem_mobile());
+			pstmt.setString(6, memVO.getMem_city());
+			pstmt.setDate(7, memVO.getMem_reg_date());
+			pstmt.setBytes(8, memVO.getMem_pic());
+			pstmt.setString(9, memVO.getMem_card());
 			
 			pstmt.executeUpdate();
 
@@ -306,6 +303,9 @@ public class MemDAO implements I_MemDAO{
 		}
 		return list;
 	}
+	
+	
+	
 	public static void main(String[] args) {
 
 
@@ -393,4 +393,6 @@ public class MemDAO implements I_MemDAO{
 //		}
 				
 	}
+
+	
 }
