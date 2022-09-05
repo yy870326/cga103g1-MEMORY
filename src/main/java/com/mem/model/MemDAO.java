@@ -20,7 +20,7 @@ public class MemDAO implements I_MemDAO{
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO mem (mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card) VALUES (0, ?, null, ?, ?, ?, ?, ?, null, null, ?, ?, null, ?)";
+			"INSERT INTO mem (mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card) VALUES (0, ?, 0, ?, ?, ?, ?, ?, null, null, ?, ?, null, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card FROM mem order by mem_no";
 		private static final String GET_ONE_STMT = 

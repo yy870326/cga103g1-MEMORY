@@ -38,10 +38,7 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                   <label>密碼</label>
                   <input type="text" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" >
                 </div>
-                <div class="col-md-6 name">
-                  <label>密碼狀態</label>
-                  <input type="text" name="acc_status" placeholder="Enter your name here"value="<%=(memVO==null)? "1" :memVO.getAcc_status()%>" >
-                </div>
+               
                 <div class="col-md-6 name">
                   <label>姓名</label>
                   <input type="text" name="mem_name" placeholder="Enter your name here"value="<%= (memVO==null)? "Jacky" :memVO.getMem_name()%>">
@@ -62,17 +59,13 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                   <label>縣市</label>
                   <input type="text" name="mem_city" placeholder="Enter your name here"value="<%=(memVO==null)? "彰化縣" :memVO.getMem_city()%>">
                 </div>
-                 <div class="col-md-12 password">
-                    <label>加入時間</label>
-                    <input type="text" name="mem_reg_date" id="f_date1">
-                  </div>
+<!--                  <div class="col-md-12 password"> -->
+<!--                     <label>加入時間</label> -->
+<!--                     <input type="text" name="mem_reg_date" id="f_date1"> -->
+<!--                   </div> -->
                   <div class="col-md-6 name">
                   <label>會員照片</label>
                   <input type="file" name="mem_pic" />
-                </div>
-                <div class="col-md-6 name">
-                  <label>被檢舉計點</label>
-                  <input type="text" name="mem_report_count" placeholder="Enter your name here"value="<%=(memVO==null)? "2" :memVO.getMem_report_count()%>" >
                 </div>
                 <div class="col-md-6 name">
                   <label>信用卡</label>
