@@ -8,18 +8,18 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class TktImgDAO implements I_TktImgDAO{
 
+public class TktImgDAO implements I_TktImgDAO{
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
-		private static DataSource ds = null;
-		static {
-			try {
-				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/cga103g1");
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/cga103g1");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
+	}
 		private static final String INSERT_STMT = 
 				"INSERT INTO tkt_img (tkt_no,tkt_img) VALUES ( ?, ?)";
 			private static final String GET_ALL_STMT = 
@@ -31,7 +31,7 @@ public class TktImgDAO implements I_TktImgDAO{
 			private static final String UPDATE = 
 				"UPDATE tkt_img set  tkt_no=?, tkt_img=? where tkt_img_no = ?";
 	@Override
-	public void insert(TktImgVO tktimgVO) {
+	public void insert(TktImgVO tktImgVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -40,11 +40,9 @@ public class TktImgDAO implements I_TktImgDAO{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, tktimgVO.gettktNO());
-			pstmt.setBytes(2, tktimgVO.gettktimg());
-
+			pstmt.setInt(1, tktImgVO.gettktNO());
+			pstmt.setBytes(2, tktImgVO.gettktimg());
 			pstmt.executeUpdate();
-
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -257,5 +255,15 @@ public class TktImgDAO implements I_TktImgDAO{
 			}
 		}
 		return list;
+	}
+	public static void main(String[] args) {
+		TktImgDAO dao = new TktImgDAO();
+		
+		//新增
+		TktImgVO tktImgVO1 = new TktImgVO();
+		
+		tktImgVO1.settktNO(4);
+		tktImgVO1.settktimg(null);
+		dao.insert(tktImgVO1);
 	}
 }

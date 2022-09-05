@@ -293,11 +293,11 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 	public static void main(String[] args) {
 		TktImgjdbcDAO dao = new TktImgjdbcDAO();
 		// 新增
-//		TktImgVO tktimg01 = new TktImgVO();
-//
-//		tktimg01.settktNO(5);
-//		tktimg01.settktimg(null);
-//		dao.insert(tktimg01);
+		TktImgVO tktimg01 = new TktImgVO();
+
+		tktimg01.settktNO(5);
+		tktimg01.settktimg(null);
+		dao.insert(tktimg01);
 //		
 		// 修改
 //		TktImgVO tktimg02 = new TktImgVO();
@@ -316,12 +316,12 @@ public class TktImgjdbcDAO implements I_TktImgDAO{
 //		System.out.println(tktimg03.gettktimg()+",");
 //		System.out.println("---------------------");
 //		// 查詢
-		List<TktImgVO> list = dao.getAll();
-		for(TktImgVO aTktImg : list) {
-			System.out.println(aTktImg.gettktImgNO()+",");
-			System.out.println(aTktImg.gettktNO()+",");
-			System.out.println(aTktImg.gettktimg()+",");
-		}
+//		List<TktImgVO> list = dao.getAll();
+//		for(TktImgVO aTktImg : list) {
+//			System.out.println(aTktImg.gettktImgNO()+",");
+//			System.out.println(aTktImg.gettktNO()+",");
+//			System.out.println(aTktImg.gettktimg()+",");
+//		}
 	}
 
 }
