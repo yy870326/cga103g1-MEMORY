@@ -6,7 +6,7 @@ public class RmPicVO implements Serializable{
 	
 	private Integer rm_pic_no;
 	private Integer rm_type_no;
-	private byte[] rm_pic_img;
+	private byte[] rm_pic;
 	
 	public Integer getRm_pic_no() {
 		return rm_pic_no;
@@ -20,11 +20,11 @@ public class RmPicVO implements Serializable{
 	public void setRm_type_no(Integer rm_type_no) {
 		this.rm_type_no = rm_type_no;
 	}
-	public byte[] getRm_pic_img() {
-		return rm_pic_img;
+	public byte[] getRm_pic() {
+		return rm_pic;
 	}
-	public void setRm_pic_img(byte[] rm_pic_img) {
-		this.rm_pic_img = rm_pic_img;
+	public void setRm_pic(byte[] rm_pic) {
+		this.rm_pic = rm_pic;
 	}
 	
 

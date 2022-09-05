@@ -1,6 +1,10 @@
 package com.rm_type.model;
 
+import java.sql.Date;
 import java.util.List;
+
+import com.emp.model.EmpVO;
+
 
 public class RmTypeService {
 	private I_RmTypeDAO dao;
@@ -30,7 +34,7 @@ public class RmTypeService {
 	}
 
 	public RmTypeVO updateRm(String rm_name, Integer rm_total
-			, Integer rm_people, Integer rm_price, Integer rm_area, String rm_intro, Boolean rm_update, Integer rm_type_no) {
+			, Integer rm_people, Integer rm_price, Integer rm_area, String rm_intro, Integer rm_update, Integer rm_type_no) {
 		RmTypeVO rm = new RmTypeVO();
 
 		rm.setRm_name(rm_name);
@@ -39,6 +43,7 @@ public class RmTypeService {
 		rm.setRm_price(rm_price);
 		rm.setRm_area(rm_area);
 		rm.setRm_intro(rm_intro);
+		rm.setRm_eval_sum(rm_type_no);
 		rm.setRm_update(rm_update);
 		rm.setRm_type_no(rm_type_no);
 		
@@ -47,9 +52,13 @@ public class RmTypeService {
 
 	
 	// 房型上下架
-	public void changeState(Integer rm_type_no, Boolean rm_update) {
+	public RmTypeVO changeState(Integer rm_update, Integer rm_type_no) {
+		RmTypeVO rmTypeVO = new RmTypeVO();
+		rmTypeVO.setRm_update(rm_update);
+		rmTypeVO.setRm_type_no(rm_type_no);
 		
 		dao.changeState(rm_type_no, rm_update);
+		return rmTypeVO;
 		
 	}
 
@@ -62,5 +71,12 @@ public class RmTypeService {
 	public List<RmTypeVO> getAllRmRsv() {
 		
 		return dao.getAllRsv();
+	}
+	
+	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
+		return dao.getEnoughType(start_date, end_date, qty, guest);
+	}
+	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
+		return dao.getNotEnoughType(start_date, end_date, qty, guest);
 	}
 }
