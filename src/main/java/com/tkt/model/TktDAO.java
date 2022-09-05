@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,13 +23,16 @@ public class TktDAO implements I_TktDAO {
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt ORDER BY tkt_no;";
-	
+
 	private static final String UPDATE_SOLD_AMOUNT = "UPDATE tkt SET sold_amount = ? WHERE tkt_no = ?;";
 	private static final String UPDATE_ORI_AMOUNT = "UPDATE tkt SET original_amount = (original_amount - sold_amount) WHERE tkt_no = ?;";
 
+	private static final String GET_ALL_BY_STATUS = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_status = 1 ORDER BY tkt_no;";
+	private static final String FIND_TKT_ROWS = "SELECT COUNT(tkt_no) FROM tkt;";
+
 	private static DataSource ds = null;
 
-	
 	static {
 
 		try {
@@ -43,12 +47,12 @@ public class TktDAO implements I_TktDAO {
 
 	@Override
 	public void insert(TktVO tktVO) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 
@@ -92,12 +96,12 @@ public class TktDAO implements I_TktDAO {
 
 	@Override
 	public void update(TktVO tktVO) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 
@@ -145,12 +149,12 @@ public class TktDAO implements I_TktDAO {
 
 		TktVO tktVO = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE);
 
@@ -206,12 +210,12 @@ public class TktDAO implements I_TktDAO {
 		List<TktVO> list = new ArrayList<TktVO>();
 		TktVO tktVO = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL);
 
@@ -260,10 +264,10 @@ public class TktDAO implements I_TktDAO {
 
 		return list;
 	}
-	
+
 	@Override
 	public void updateSoldAmount(TktVO tktVO) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -273,7 +277,6 @@ public class TktDAO implements I_TktDAO {
 
 			ps.setInt(1, tktVO.getSold_amount());
 			ps.setInt(2, tktVO.getTkt_no());
-
 
 			ps.executeUpdate();
 
@@ -297,15 +300,15 @@ public class TktDAO implements I_TktDAO {
 		}
 
 	}
-	
+
 	@Override
 	public void updateOriAmount(TktVO tktVO) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_ORI_AMOUNT);
 
@@ -334,5 +337,165 @@ public class TktDAO implements I_TktDAO {
 
 	}
 
-	
+	// 複合查詢 getAll
+	@Override
+	public List<TktVO> getAll(Map<String, String[]> map) {
+
+		List<TktVO> list = new ArrayList<TktVO>();
+		TktVO tktVO = null;
+		ResultSet rs = null;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			con = ds.getConnection();
+
+			String finalSQL = "select * from tkt " + TktCompositeQuery.get_WhereCondition(map) + "order by tkt_no";
+
+			ps = con.prepareStatement(finalSQL);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				tktVO = new TktVO();
+
+				tktVO.setTkt_no(rs.getInt("tkt_no"));
+				tktVO.setTkt_name(rs.getString("tkt_name"));
+				tktVO.setOriginal_amount(rs.getInt("original_amount"));
+				tktVO.setPrice(rs.getInt("price"));
+				tktVO.setTkt_startdate(rs.getDate("tkt_startdate"));
+				tktVO.setTkt_enddate(rs.getDate("tkt_enddate"));
+				tktVO.setLocate(rs.getString("locate"));
+				tktVO.setInstruction(rs.getString("instruction"));
+				tktVO.setAddress(rs.getString("address"));
+				tktVO.setNotice(rs.getString("notice"));
+				tktVO.setHowuse(rs.getString("howuse"));
+				tktVO.setCanxpolicy(rs.getString("canxpolicy"));
+				tktVO.setTkt_status(rs.getInt("tkt_status"));
+				tktVO.setSold_amount(rs.getInt("sold_amount"));
+				tktVO.setKind(rs.getInt("kind"));
+
+				list.add(tktVO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+	// 顯示所有已上架的票券 tktVO.tkt_status == 1
+	public List<TktVO> getAllByStatus() {
+
+		List<TktVO> list = new ArrayList<TktVO>();
+		TktVO tktVO = null;
+		ResultSet rs = null;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_ALL_BY_STATUS);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				tktVO = new TktVO();
+
+				tktVO.setTkt_no(rs.getInt("tkt_no"));
+				tktVO.setTkt_name(rs.getString("tkt_name"));
+				tktVO.setOriginal_amount(rs.getInt("original_amount"));
+				tktVO.setPrice(rs.getInt("price"));
+				tktVO.setTkt_startdate(rs.getDate("tkt_startdate"));
+				tktVO.setTkt_enddate(rs.getDate("tkt_enddate"));
+				tktVO.setLocate(rs.getString("locate"));
+				tktVO.setInstruction(rs.getString("instruction"));
+				tktVO.setAddress(rs.getString("address"));
+				tktVO.setNotice(rs.getString("notice"));
+				tktVO.setHowuse(rs.getString("howuse"));
+				tktVO.setCanxpolicy(rs.getString("canxpolicy"));
+				tktVO.setTkt_status(rs.getInt("tkt_status"));
+				tktVO.setSold_amount(rs.getInt("sold_amount"));
+				tktVO.setKind(rs.getInt("kind"));
+
+				list.add(tktVO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+	@Override
+	public Integer find_tkt_rows() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(FIND_TKT_ROWS);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt(1); // 取得第一個欄位的值即為筆數
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return 0;
+	}
+
 }
