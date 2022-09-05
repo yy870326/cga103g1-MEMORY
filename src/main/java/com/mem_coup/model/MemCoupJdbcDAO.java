@@ -100,7 +100,7 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
 				memCoupVO.setMem_no(rs.getInt("mem_no"));
 				memCoupVO.setCoup_no(rs.getInt("coup_no"));
-				memCoupVO.setTkt_order_no(rs.getInt("tkt_order_no"));
+				memCoupVO.setTkt_order_no(null);
 				memCoupVO.setCoup_state(rs.getInt("coup_state"));
 				
 				list.add(memCoupVO);
@@ -112,6 +112,9 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 
 		return list;
 	}
+	
+	
+	
 
 	public static void main(String[] args) {
 		MemCoupJdbcDAO dao = new MemCoupJdbcDAO();
@@ -134,13 +137,13 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 //		dao.update(voUpdate);
 
 		// findByPrimaryKey
-		MemCoupVO voPk = dao.findByPrimaryKey(1);
-		
-		System.out.println(voPk.getMem_coup_no());
-		System.out.println(voPk.getMem_no());
-		System.out.println(voPk.getCoup_no());
-		System.out.println(voPk.getTkt_order_no());
-		System.out.println(voPk.getCoup_state());
+//		MemCoupVO voPk = dao.findByPrimaryKey(1);
+//		
+//		System.out.println(voPk.getMem_coup_no());
+//		System.out.println(voPk.getMem_no());
+//		System.out.println(voPk.getCoup_no());
+//		System.out.println(voPk.getTkt_order_no());
+//		System.out.println(voPk.getCoup_state());
 
 		// getAll
 		List<MemCoupVO> list = dao.getAll();
