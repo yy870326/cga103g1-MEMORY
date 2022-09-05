@@ -36,6 +36,10 @@ public class RmOrderService {
 		return dao.getAllByStore(store_no);
 	}
 	
+	public List<RmOrderVO> getAllByMem(Integer mem_no) {
+		return dao.getAllByMem(mem_no);
+	}
+	
 	public RmOrderVO getOne(Integer rm_order_no) {
 		return dao.getOne(rm_order_no);
 	}
@@ -44,6 +48,10 @@ public class RmOrderService {
 		dao.checkIn(rm_order_no);
 	}
 	
+	public void checkOut(Integer rm_order_no) {
+		dao.checkOut(rm_order_no);
+	}
+
 	public RmOrderVO cancel(Integer rm_order_no) {
 
 		RmOrderVO rmOrderVO = new RmOrderVO();
