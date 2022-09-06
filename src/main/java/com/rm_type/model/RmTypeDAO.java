@@ -29,7 +29,7 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			+ "as minqty, rm_type_no as rmtypeno FROM rm_reserve "
 			+ "WHERE rm_schedule_date BETWEEN ? AND SUBDATE(?, interval 1 day) GROUP BY rm_type_no) "
 			+ "as rsv ON rm_type.rm_type_no = rsv.rmtypeno "
-			+ "WHERE minqty >= ? AND rm_people >= ? AND rm_update = 0; AND store_name LIKE '%?%';";
+			+ "WHERE minqty >= ? AND rm_people >= ? AND rm_update = 0 AND store_name LIKE '%' ? '%';";
 	
 	private static DataSource ds = null;
 	static {
