@@ -93,17 +93,18 @@ pageContext.setAttribute("storeVO", storeVO);
         
         <div>   
        <p>輸入廠商帳號:</p>
-       <input type="text" name="store_acc" value="KING"><br>
+       <input type="text" name="store_acc" value=""><br>
        </div>
        
        <div>
        <p>輸入店家名稱:</p>
-       <input type="text" name="store_name" value="PRESIDENT"><br>
+       <input type="text" name="store_name" value=""><br>
     	</div>
     	
     	<div>
        <p>選擇帳號狀態:</p>
-       <select  name="acc_status" size="1">
+       <select  name="acc_status" size="">
+       			<option value="">請選擇</option>
     			<option value="0">帳號未啟用</option>
 				<option value="1">帳號已啟用</option>
 				<option value="2">帳號停權</option>

@@ -8,11 +8,15 @@ public  interface  I_StoreDAO {
 	
 	public void update(StoreVO storeVO);
 	
+	public void updatePassword(StoreVO storeVO);
+	
 	public void delete(Integer store_no);
 	
 	public StoreVO getOneStore(Integer store_no);
 	
 	public StoreVO getOneStoreByAcc(String store_acc);
+	
+	public StoreVO getOneStoreByEmail(String store_email);
 	
 	public List<StoreVO> getAllStore();
 	

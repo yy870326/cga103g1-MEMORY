@@ -47,30 +47,19 @@
                     <div class="col-md-12">
                         <div class="login-box">
                             <div class="login-top">
-                                <h3>歡迎回來</h3>
-                                <p>請輸入帳號及密碼登入</p>
+                                <h3>忘記密碼了嗎?</h3>
+                                <p>請輸入您的電子信箱</p>
                             </div>
-                            <form class="login-form" action="<%=request.getContextPath()%>/StoreLoginControl">
+                            <form class="login-form" action="<%=request.getContextPath()%>/store.do">
                                 <div class="row">
                                     <div class="col-md-12 email">
-                                        <label>帳號:</label>
-                                        <input type="text" name="store_acc" placeholder="輸入您的帳號">
+                                        <label>信箱:</label>
+                                        <input type="email" name="store_email" placeholder="E-MAIL">
                                     </div>
-                                    <div class="col-md-12 password">
-                                        <label>密碼:</label>
-                                        <input type="text" name="store_pwd" placeholder="在這輸入密碼">
-                                    </div>
-                                    <div class="col-md-12 d-flex justify-content-between">
-                                        <div class="chqbox">
-                                            <input type="checkbox" name="rememberme" id="rmme">
-                                            <label for="rmme">記住我的帳號</label>
-                                        </div>
-                                        <div class="forget-btn">
-                                            <a href="<%=request.getContextPath()%>/frontend/store/forgetPassword.jsp">忘記密碼?</a>
-                                        </div>
+                                     <div class="col-md-12 d-flex justify-content-between">
                                     </div>
                                     <div class="col-md-12">
-                                        <button type="submit" name="action">登入</button><font>${errorMsgs.storevo}</font>
+                                        <button type="submit" name="action" value="forgetPassword">送出新的密碼到信箱</button><font>${errorMsgs.storevo}</font>
                                     </div>
                                 </div>
                             </form>

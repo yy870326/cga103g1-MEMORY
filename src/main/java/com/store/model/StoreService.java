@@ -120,6 +120,10 @@ public class StoreService {
 		return dao.getOneStoreByAcc(store_acc);
 	}
 	
+	public StoreVO getOneStoreByEmail(String store_email) {
+		return dao.getOneStoreByEmail(store_email);
+	}
+	
 	
 	public List<StoreVO> getAllStore(){
 		return dao.getAllStore();
@@ -135,5 +139,13 @@ public class StoreService {
 	
 	public List<StoreVO> StoreCompositeQuery(Map<String, String[]> map){
 		return dao.CompositeQuery(map);
+	}
+	
+	public StoreVO updatePassword(String store_pwd, Integer store_no) {
+		StoreVO storeVO = new StoreVO();
+		storeVO.setStore_pwd(store_pwd);
+		storeVO.setStore_no(store_no);
+		 dao.updatePassword(storeVO);
+		 return storeVO;
 	}
 }
