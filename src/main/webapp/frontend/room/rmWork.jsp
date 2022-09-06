@@ -4,11 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.rm_type.model.*"%>
+<%@ page import="com.rm_reserve.model.*"%>
 <%@ page import="com.rm_order.model.*"%>
 <%@ page import="com.rm_order_list.model.*"%>
 <%@ page import="java.time.LocalDate"%>
 
 <jsp:useBean id="rmTypeSvc" class="com.rm_type.model.RmTypeService" />
+<jsp:useBean id="rmReserveSvc" class="com.rm_reserve.model.RmReserveService" />
 <jsp:useBean id="rmOrderSvc" class="com.rm_order.model.RmOrderService" />
 <jsp:useBean id="rmOrderListSvc"
 	class="com.rm_order_list.model.RmOrderListService" />
@@ -52,6 +54,12 @@ h3.card-title {
 	color: #996A4D;
 }
 
+h4 {
+    font-size: 20px;
+	font-weight: 600;
+	color: #30504F;
+}
+
 .to-jump {
 	padding: 15px 30px;
 	background: #D1E6E6;
@@ -67,7 +75,7 @@ h3.card-title {
 }
 
 .to-jump h3 {
-	font-size: 30px;
+	font-size: 25px;
 	font-weight: 600;
 	color: #996A4D;
 	padding-top: 10px;
@@ -166,66 +174,71 @@ td.sorting_1 {
 	<!-- sidebar -->
 
 	<div class="main-content">
-		<div class="row d-flex justify-content-around">
+		<div class="d-flex justify-content-around">
 			<div class="col-xl-2 card to-jump">
 				<a href="#checkInTable">
-					<div class="text-center row">
+					<div class="text-center">
 						<div class="col">
 							<h4>今日待入住訂單</h4>
-							<h3>${rmOrderListSvc.getCheckInByStore(store_no).size()}</h3>
+							<h3>
+							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+							${rmOrderListSvc.getCheckInByStore(store_no).size()}
+							</h3>
 						</div>
-
-						<div
-							class="col-4 bxs d-flex justify-content-center align-items-center">
+						<div class="col-4 bxs d-flex justify-content-center align-items-center">
 							<i class='bx bx-log-in'></i>
 						</div>
-
 					</div>
 				</a>
 			</div>
 
 			<div class="col-xl-2 card to-jump">
 				<a href="#checkOutTable">
-					<div class="text-center row">
-
+					<div class="text-center">
 						<div class="col">
 							<h4>今日待退房</h4>
-							<h3>${rmOrderListSvc.getCheckOutByStore(store_no).size()}</h3>
+							<h3>
+							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+							${rmOrderListSvc.getCheckOutByStore(store_no).size()}
+							</h3>
 						</div>
 
 						<div
 							class="col-4 bxs d-flex justify-content-center align-items-center">
 							<i class='bx bx-log-out'></i>
 						</div>
-
 					</div>
 				</a>
 			</div>
 
 			<div class="col-xl-2 card to-jump">
 				<a href="#stayTable">
-					<div class="text-center row">
+					<div class="text-center">
 						<div class="col">
 							<h4>入住中房間</h4>
-							<h3>${rmOrderListSvc.getStayByStore(store_no).size()}</h3>
+							<h3>
+							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+							${rmOrderListSvc.getStayByStore(store_no).size()}
+							</h3>
 						</div>
-
 						<div
 							class="col-4 bxs d-flex justify-content-center align-items-center">
 							<i class='bx bx-home-smile'></i>
 						</div>
-
 					</div>
 				</a>
 			</div>
 
 			<div class="col-xl-2 card to-jump">
 				<div class="text-center row">
-
 					<div class="col">
-						<h4>房間使用率</h4>
-						<p>預計入住房間 / 可使用房間</p>
-						<h3></h3>
+						<h4>今日入住數量</h4>
+						<c:forEach var="rmVO" items="${rmTypeSvc.getAllByStoreNo(store_no)}">
+						<h3>	
+						<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+						${rmVO.rm_name}-${rmReserveSvc.getOneByRm(rmVO.rm_type_no).reservation_amount}/${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total}
+						</h3>
+						</c:forEach>
 					</div>
 
 				</div>
@@ -238,11 +251,12 @@ td.sorting_1 {
 				<div class="main-content">
 					<div class="align-items-center flex-wrap">
 						<div class="card-tabs mt-3 mt-sm-0">
-							<table class="table fold-table">
+							<table id="checkInTable" class="display table fold-table">
 								<thead>
 									<tr>
 										<th>訂單編號</th>
 										<th>房型名稱</th>
+										<th>房間數量</th>
 										<th>會員資料</th>
 										<th class="hidden">會員帳號</th>
 										<th>會員電話</th>
@@ -259,6 +273,7 @@ td.sorting_1 {
 										<tr>
 											<td>${checkInVO.rm_order_no}</td>
 											<td>${rmTypeSvc.getOneRm(checkInVO.rm_type_no).rm_name}</td>
+											<td>${checkOutVO.rm_amount}</td>
 											<td>${memSvc.getOne(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
 											<td class="hidden">${rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no}</td>
 											<td>${memSvc.getOne(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
@@ -272,24 +287,22 @@ td.sorting_1 {
 														<input type="hidden" name="rm_order_no"
 															value="${checkInVO.rm_order_no}"> <input
 															type="hidden" name="store_no" value="${store_no}">
-														<input type="hidden" name="action" value="getOne">
+														<input type="hidden" name="action" value="getOneStore">
 													</FORM>
 												</div></td>
 											<td><div>
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/RmOrder">
 														<input type="submit" class="btn btn-primary"
-															value="CHECK IN"> <input type="hidden"
+															value="入住"> <input type="hidden"
 															name="rm_order_no" value="${checkInVO.rm_order_no}">
-														<input type="hidden" name="action" value="">
+														<input type="hidden" name="action" value="checkIn">
 													</FORM>
 												</div></td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-
-
 						</div>
 					</div>
 				</div>
@@ -304,6 +317,7 @@ td.sorting_1 {
 											<tr>
 												<th>訂單編號</th>
 												<th>房型名稱</th>
+												<th>房間數量</th>
 												<th>會員資料</th>
 												<th class="hidden">會員帳號</th>
 												<th>會員電話</th>
@@ -320,6 +334,7 @@ td.sorting_1 {
 												<tr>
 													<td>${checkOutVO.rm_order_no}</td>
 													<td>${rmTypeSvc.getOneRm(checkOutVO.rm_type_no).rm_name}</td>
+													<td>${checkOutVO.rm_amount}</td>
 													<td>${memSvc.getOne(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_name}</td>
 													<td class="hidden">${rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no}</td>
 													<td>${memSvc.getOne(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
@@ -333,16 +348,16 @@ td.sorting_1 {
 																	value="訂單資訊"> <input type="hidden"
 																	name="rm_order_no" value="${checkOutVO.rm_order_no}">
 																<input type="hidden" name="store_no" value="${store_no}">
-																<input type="hidden" name="action" value="getOne">
+																<input type="hidden" name="action" value="getOneStore">
 															</FORM>
 														</div></td>
 													<td><div>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/RmOrder">
 																<input type="submit" class="btn btn-primary"
-																	value="CHECK OUT"> <input type="hidden"
-																	name="rm_order_no" value="${checkOutVO.rm_order_no}">
-																<input type="hidden" name="action" value="">
+																	value="退房">
+																	<input type="hidden" name="rm_order_no" value="${checkOutVO.rm_order_no}">
+																<input type="hidden" name="action" value="checkOut">
 															</FORM>
 														</div></td>
 												</tr>
@@ -364,6 +379,7 @@ td.sorting_1 {
 													<tr>
 														<th>訂單編號</th>
 														<th>房型名稱</th>
+														<th>房間數量</th>
 														<th>會員資料</th>
 														<th class="hidden">會員帳號</th>
 														<th>會員電話</th>
@@ -380,6 +396,7 @@ td.sorting_1 {
 														<tr>
 															<td>${stayVO.rm_order_no}</td>
 															<td>${rmTypeSvc.getOneRm(stayVO.rm_type_no).rm_name}</td>
+															<td>${checkOutVO.rm_amount}</td>
 															<td>${memSvc.getOne(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
 															<td class="hidden">${rmOrderSvc.getOne(stayVO.rm_order_no).mem_no}</td>
 															<td>${memSvc.getOne(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
@@ -394,16 +411,17 @@ td.sorting_1 {
 																			name="rm_order_no" value="${stayVO.rm_order_no}">
 																		<input type="hidden" name="store_no"
 																			value="${store_no}"> <input type="hidden"
-																			name="action" value="getOne">
+																			name="action" value="getOneStore">
 																	</FORM>
 																</div></td>
 															<td><div>
 																	<FORM METHOD="post"
 																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-primary"
-																			value="CHECK OUT"> <input type="hidden"
-																			name="rm_order_no" value="${stayVO.rm_order_no}">
-																		<input type="hidden" name="action" value="">
+																		<input type="submit" class="btn btn-primary" value="提早退房">
+																	<input type="hidden" name="rm_order_no" value="${stayVO.rm_order_no}">
+																	<input type="hidden" name="rm_type_no" value="${stayVO.rm_type_no}">
+																	<input type="hidden" name="departure_date" value="${stayVO.departure_date}">
+																<input type="hidden" name="action" value="checkOutEarly">
 																	</FORM>
 																</div></td>
 														</tr>
@@ -418,25 +436,5 @@ td.sorting_1 {
 								<%@ include file="/frontend/footer.file"%>
 								<%@ include file="/backend/commonJS.file"%>
 								<!-- 放置基本JS檔案 -->
-								<script>
-									$(document)
-											.ready(
-													function() {
-
-														$(".fold-table tr.view")
-																.on(
-																		"click",
-																		function() {
-																			$(
-																					this)
-																					.toggleClass(
-																							"open")
-																					.next(
-																							".fold")
-																					.toggleClass(
-																							"open");
-																		});
-													});
-								</script>
 </body>
 </html>

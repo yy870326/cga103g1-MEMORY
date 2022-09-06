@@ -1,4 +1,4 @@
-package com.tkt_item.com;
+package com.tkt_item.model;
 
 import java.util.List;
 

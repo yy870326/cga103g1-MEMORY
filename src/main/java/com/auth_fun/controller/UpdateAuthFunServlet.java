@@ -40,7 +40,7 @@ public class UpdateAuthFunServlet extends HttpServlet {
 
 			req.setAttribute("authFunVO", authFunVO);
 
-			String url = "/backend/authFun/updateAuthFun.jsp";
+			String url = "/backend/authfun/updateAuthFun.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			return;
@@ -59,8 +59,8 @@ public class UpdateAuthFunServlet extends HttpServlet {
 			}
 
 			AuthFunVO authFunVO = new AuthFunVO();
-			authFunVO.setFun_no(fun_no);
 			authFunVO.setFun_name(fun_name);
+			authFunVO.setFun_no(fun_no);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("authFunVO", authFunVO);

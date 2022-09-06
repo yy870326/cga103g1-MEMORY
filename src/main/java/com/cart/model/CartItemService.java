@@ -1,6 +1,7 @@
 package com.cart.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -97,4 +98,48 @@ public class CartItemService {
 		return CartItemJedisDAO.getOneChecked(sessionId, tkt_no);
 	}
 	
+	// updateTktsoldAmount
+	public void updateTktsoldAmount(String sessionId, Integer tkt_no) {
+		List<String> cartItems = CartItemJedisDAO.getCart(sessionId);
+		
+		Integer redisCount;
+		Integer sold_amount;
+		TktVO tktVO = new TktVO();
+		
+		for (int i = 0; i < cartItems.size(); i++) {
+			CartItemVO oldItems = gson.fromJson(cartItems.get(i), CartItemVO.class);
+			
+			Integer checkedItemId = tkt_no;
+			Integer oldItemId = oldItems.getTkt_no(); // 原本就在購物車的票券
+//			System.out.println("--------oldItemId" + oldItemId);
+			
+			if (tkt_no.equals(oldItemId)) {
+				redisCount = oldItems.getCount();
+				sold_amount = redisCount;
+				tktVO.setSold_amount(sold_amount);
+				tktVO.setTkt_no(tkt_no);
+//				System.out.println("----------redisCount"+redisCount);
+			}
+		}
+		dao.updateSoldAmount(tktVO);
+		dao.updateOriAmount(tktVO);
+	}
+	
+	// updateTktoriAmount
+//	public void updateTktoriAmount(String sessionId, Integer tkt_no) {
+//		List<String> cartItems = CartItemJedisDAO.getCart(sessionId);
+//		TktVO tktVO = new TktVO();
+//		Integer redisCount;
+//		for (int i = 0; i < cartItems.size(); i++) {
+//			CartItemVO oldItems = gson.fromJson(cartItems.get(i), CartItemVO.class);
+//			
+//			Integer checkedItemId = tkt_no;
+//			Integer oldItemId = oldItems.getTkt_no(); // 原本就在購物車的票券
+//			
+//			if (tkt_no.equals(oldItemId)) {
+//				tktVO.setTkt_no(tkt_no);
+//				dao.updateOriAmount(tktVO);
+//			}
+//		}
+//	}
 }

@@ -2,6 +2,11 @@ package com.mem_coup.model;
 
 import java.io.Serializable;
 
+import com.coup.model.CoupService;
+import com.coup.model.CoupVO;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
+
 public class MemCoupVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -70,6 +75,18 @@ public class MemCoupVO implements Serializable{
 	}
 
 
+	// join MemVO
+	public MemVO getMemVO() {
+		MemService memSrv = new MemService();
+		MemVO memVO = memSrv.getOneMem(mem_no);
+		return memVO;
+	}
 	
+	// join CoupVO
+	public CoupVO getCoupVO() {
+		CoupService coupSrv = new CoupService();
+		CoupVO coupVO = coupSrv.getOneCoup(coup_no);
+		return coupVO;
+	}
 	
 }

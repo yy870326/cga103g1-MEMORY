@@ -20,6 +20,8 @@ public class TktJdbcDAO implements I_TktDAO {
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_no = ?;";
 	private static final String GET_ALL = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt ORDER BY tkt_no;";
+	private static final String UPDATE_SOLD_AMOUNT = "UPDATE tkt SET sold_amount = ? WHERE tkt_no = ?;";
+	private static final String UPDATE_ORI_AMOUNT = "UPDATE tkt SET original_amount = (original_amount - sold_amount) WHERE tkt_no = ?;";
 	
 //	private static final String GET_LOCATE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 //			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE locate = ? ORDER BY tkt_no;";
@@ -172,6 +174,36 @@ public class TktJdbcDAO implements I_TktDAO {
 		return list;
 	}
 
+	@Override
+	public void updateSoldAmount(TktVO tktVO) {
+
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(UPDATE_SOLD_AMOUNT)) {
+			ps.setInt(1, tktVO.getSold_amount());
+			ps.setInt(2, tktVO.getTkt_no());
+
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Override
+	public void updateOriAmount(TktVO tktVO) {
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(UPDATE_ORI_AMOUNT)) {
+
+			ps.setInt(1, tktVO.getTkt_no());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 	public static void main(String[] args) {
@@ -218,23 +250,23 @@ public class TktJdbcDAO implements I_TktDAO {
 //		dao.update(voUpdate);
 
 		// findByPrimaryKey
-		TktVO voPk = dao.findByPrimaryKey(2);
-		
-		System.out.println(voPk.getTkt_no());
-		System.out.println(voPk.getTkt_name());
-		System.out.println(voPk.getOriginal_amount());
-		System.out.println(voPk.getPrice());
-		System.out.println(voPk.getTkt_startdate());
-		System.out.println(voPk.getTkt_enddate());
-		System.out.println(voPk.getLocate());
-		System.out.println(voPk.getInstruction());
-		System.out.println(voPk.getAddress());
-		System.out.println(voPk.getNotice());
-		System.out.println(voPk.getHowuse());
-		System.out.println(voPk.getCanxpolicy());
-		System.out.println(voPk.getTkt_status());
-		System.out.println(voPk.getSold_amount());
-		System.out.println(voPk.getKind());
+//		TktVO voPk = dao.findByPrimaryKey(2);
+//		
+//		System.out.println(voPk.getTkt_no());
+//		System.out.println(voPk.getTkt_name());
+//		System.out.println(voPk.getOriginal_amount());
+//		System.out.println(voPk.getPrice());
+//		System.out.println(voPk.getTkt_startdate());
+//		System.out.println(voPk.getTkt_enddate());
+//		System.out.println(voPk.getLocate());
+//		System.out.println(voPk.getInstruction());
+//		System.out.println(voPk.getAddress());
+//		System.out.println(voPk.getNotice());
+//		System.out.println(voPk.getHowuse());
+//		System.out.println(voPk.getCanxpolicy());
+//		System.out.println(voPk.getTkt_status());
+//		System.out.println(voPk.getSold_amount());
+//		System.out.println(voPk.getKind());
 
 		// getAll
 //		List<TktVO> list = dao.getAll();
@@ -256,8 +288,20 @@ public class TktJdbcDAO implements I_TktDAO {
 //			System.out.println(voAll.getSold_amount());
 //			System.out.println(voAll.getKind());
 //		}
-
-
+		
+		
+		// updateSoldAmount
+		TktVO voUpdateSold = new TktVO();
+		voUpdateSold.setSold_amount(3);
+		voUpdateSold.setTkt_no(13);
+		
+		dao.updateSoldAmount(voUpdateSold);
+		
+		// updateOriAmount
+//		TktVO updateOri = new TktVO();
+//		updateOri.setTkt_no(8);
+//		
+//		dao.updateOriAmount(updateOri);
 	}
 
 }

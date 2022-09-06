@@ -86,7 +86,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 									<%-- <th scope="row">${cartItemVO.tkt_no}</th> --%>
 									<td>
 										<%-- <label>${cartItemVO.tkt_no}</label> --%>
-										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox">
+										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox" checked>
 									</td>
 									<td>${cartItemVO.tkt_name}</td>
 									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
@@ -128,7 +128,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 					
 					<div class="d-flex justify-content-between">
 						<!-- <div class="d-flex"> -->
-							<a href="<%=request.getContextPath()%>/frontend/cart/testTkt1.jsp" class="btn btn-outline-primary">繼續購物</a>  <!-- 返回票券列表要動態 -->
+							<a href="<%=request.getContextPath()%>/frontend/tkt/tktShopList.jsp" class="btn btn-outline-primary">繼續購物</a>  <!-- 返回票券列表要動態 -->
 							<!-- 再看看要不要做清空購物車按鈕 -->
 							<%-- <form method="post" action="<%=request.getContextPath()%>/cart/delCartItem.do">
 								<input type="hidden" name="action"  value="delItem">

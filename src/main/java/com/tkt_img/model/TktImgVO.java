@@ -1,9 +1,9 @@
 package com.tkt_img.model;
 
 public class TktImgVO implements java.io.Serializable{
-	private Integer tktImgNO;
-	private Integer tktNO;
-	private byte[] tktimg;
+	private Integer tkt_Img_NO;
+	private Integer tkt_NO;
+	private byte[] tkt_img;
 	
 	public TktImgVO() {
 		super();
@@ -11,33 +11,33 @@ public class TktImgVO implements java.io.Serializable{
 
 	public TktImgVO(Integer tktImgNO, Integer tktNO, byte[] tktImg) {
 		super();
-		this.tktImgNO = tktImgNO;
-		this.tktNO = tktNO;
-		this.tktimg = tktImg;
+		this.tkt_Img_NO = tktImgNO;
+		this.tkt_Img_NO = tktNO;
+		this.tkt_img = tktImg;
 	}
 
 	public Integer gettktImgNO() {
-		return tktImgNO;
+		return tkt_Img_NO;
 	}
 
 	public void settktImgNO(Integer tktImgNO) {
-		this.tktImgNO = tktImgNO;
+		this.tkt_Img_NO = tktImgNO;
 	}
 
 	public Integer gettktNO() {
-		return tktNO;
+		return tkt_Img_NO;
 	}
 
 	public void settktNO(Integer tktNO) {
-		this.tktNO = tktNO;
+		this.tkt_Img_NO = tktNO;
 	}
 
 	public byte[] gettktimg() {
-		return tktimg;
+		return tkt_img;
 	}
 
 	public void settktimg(byte[] tktImg) {
-		this.tktimg = tktImg;
+		this.tkt_img = tktImg;
 	}
 	
 	

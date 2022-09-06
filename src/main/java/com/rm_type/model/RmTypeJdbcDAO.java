@@ -70,11 +70,11 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 	}
 
 	@Override
-	public void changeState(Integer rm_type_no, Boolean rm_update) {
+	public void changeState(Integer rm_type_no, Integer rm_update) {
 		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
 				PreparedStatement ps = con.prepareStatement(CHANGE_STATE)) {
 
-			ps.setBoolean(1, rm_update);
+			ps.setInt(1, rm_update);
 			ps.setInt(2, rm_type_no);
 			ps.executeUpdate();
 

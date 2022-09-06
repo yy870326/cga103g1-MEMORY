@@ -20,11 +20,13 @@ import com.rm_order_list.model.RmOrderListVO;
 public class RmOrderDAO implements I_RmOrderDAO {
 	private static final String INSERT = "INSERT INTO rm_order(mem_no, store_no, order_date, rm_order_status, rm_charge)VALUES(?,?,NOW(),?,?)";
 	private static final String UPDATE = "UPDATE rm_order SET mem_no=?, store_no=?, order_date=?, rm_order_status=?, rm_charge=?, rm_review=? WHERE rm_order_no=?";
-	private static final String UPDATESTATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
-	private static final String CHECKIN = "UPDATE rm_order SET rm_order_status=0 WHERE rm_order_no=?";
+	private static final String UPDATE_STATUS = "UPDATE rm_order SET rm_order_status=?, rm_charge=? WHERE rm_order_no=?";
+	private static final String CHECK_IN = "UPDATE rm_order SET rm_order_status=0 WHERE rm_order_no=?";
+	private static final String CHECK_OUT = "UPDATE rm_order SET rm_order_status=2 WHERE rm_order_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_order WHERE rm_order_no=?";
 	private static final String GET_ALL = "SELECT * FROM rm_order ORDER BY rm_order_no DESC";
-	private static final String GET_ALL_BY_STORE = "SELECT * FROM rm_order WHERE store_no=? ORDER BY store_no DESC";
+	private static final String GET_ALL_BY_STORE = "SELECT * FROM rm_order WHERE store_no=? ORDER BY rm_order_no DESC";
+	private static final String GET_ALL_BY_MEM = "SELECT * FROM rm_order WHERE mem_no=? ORDER BY rm_order_no DESC";
 	private static final String GET_ALL_STATUS = "SELECT * FROM rm_order WHERE rm_order_status = ? ORDER BY rm_order_no DESC";
 	private static final String GET_STORE_STATUS = "SELECT * FROM rm_order WHERE store_no = ? AND rm_order_status = ?";
 	private static final String OVERDUE = "UPDATE rm_order INNER JOIN rm_order_list on rm_order.rm_order_no = rm_order_list.rm_order_no "
@@ -161,7 +163,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		PreparedStatement ps = null;
 		try {
 			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATESTATUS);
+			ps = con.prepareStatement(UPDATE_STATUS);
 
 			ps.setInt(1, rmOrderVO.getRm_order_status());
 			ps.setInt(2, rmOrderVO.getRm_charge());
@@ -188,7 +190,32 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		PreparedStatement ps = null;
 		try {
 			con = ds.getConnection();
-			ps = con.prepareStatement(CHECKIN);
+			ps = con.prepareStatement(CHECK_IN);
+			
+			ps.setInt(1, rm_order_no);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void checkOut(Integer rm_order_no) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHECK_OUT);
 			
 			ps.setInt(1, rm_order_no);
 			
@@ -284,6 +311,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
+	
 	public List<RmOrderVO> getAllByStore(Integer store_no) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -321,6 +349,45 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
+	
+	public List<RmOrderVO> getAllByMem(Integer mem_no) {
+		List<RmOrderVO> rmAll = new ArrayList<>();
+		ResultSet rs = null;
+		RmOrderVO rm = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_ALL_BY_MEM);
+			ps.setInt(1, mem_no);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				rm = new RmOrderVO();
+				rm.setRm_order_no(rs.getInt("rm_order_no"));
+				rm.setMem_no(rs.getInt("mem_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setOrder_date(rs.getDate("order_date"));
+				rm.setRm_order_status(rs.getInt("rm_order_status"));
+				rm.setRm_charge(rs.getInt("rm_charge"));
+				rm.setRm_review(rs.getInt("rm_review"));
+				
+				rmAll.add(rm);
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return rmAll;
+	}
+	
 	public List<RmOrderVO> getAllStatus(Integer rm_order_status) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -358,6 +425,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
+	
 	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;

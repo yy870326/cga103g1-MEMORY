@@ -7,7 +7,7 @@
 function init(){ 
 	axios({
  		"method": "post", 
- 		"url": "CGA103G1/cart/initCart.do"
+ 		"url": "/CGA103G1/cart/initCart.do"
 	}).then(function (response) {
     	//console.log(response);
 	}).catch(function (error) {

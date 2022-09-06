@@ -51,7 +51,7 @@ pageContext.setAttribute("list", list);
 				<tr>
 					<th>權限編號</th>
 					<th>權限名稱</th>
-<!-- 					<th>名稱修改</th> -->
+					<th>名稱修改</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -60,10 +60,10 @@ pageContext.setAttribute("list", list);
 						<td>${authFunVO.fun_no}</td>
 						<td>${authFunVO.fun_name}</td>
 						<td>
-<%-- 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/authfun/authfun.do" style="margin-bottom: 0px;"> --%>
-<!-- 						<input type="submit" class="btn btn-outline-secondary" value="修改">  -->
-<%-- 						<input type="hidden" name="fun_no" value="${authFunVO.fun_no}">  --%>
-<!-- 						<input type="hidden" name="action" value="getOneUpdate"></FORM> -->
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/authfun/authfun.do" style="margin-bottom: 0px;">
+						<input type="submit" class="btn btn-secondary btn-sm" value="修改權限名稱"> 
+						<input type="hidden" name="fun_no" value="${authFunVO.fun_no}"> 
+						<input type="hidden" name="action" value="getOneUpdate"></FORM>
 						</td>
 					</tr>
 				</c:forEach>

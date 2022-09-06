@@ -164,8 +164,15 @@ div.main-content {
 
 <body>
 	<%@ include file="/frontend/header.file"%>
-
 	<div class="main-content">
+		<div style="margin-left: 1350px;">
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</c:if>
+		</div>
 		<div class="d-flex mb-4 align-items-center flex-wrap">
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
@@ -189,10 +196,10 @@ div.main-content {
 						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
 							<div class="input-group search-area" style="margin-left: 850px;">
 								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號" /> <input type="submit"
+									placeholder="請輸入訂單編號"/> <input type="submit"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
 								<input type="hidden" name="store_no" value="${store_no}">
-								<input type="hidden" name="action" value="getOne">
+								<input type="hidden" name="action" value="getOneStore">
 							</div>
 						</form>
 					</li>
@@ -213,15 +220,14 @@ div.main-content {
 			<tbody>
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
-						<td>${rmOrderVO.rm_order_no}</td>
-						<td>${rmOrderVO.mem_no}</td>
+						<td>#${rmOrderVO.rm_order_no}</td>
+						<td>#${rmOrderVO.mem_no}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
-												pattern="$###,###,###" /> <c:if
-												test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
-												<div>(已扣除取消後退款)</div>
-											</c:if>
-										</td>
+								pattern="$###,###,###" /> <c:if
+								test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
+								<div>(已扣除取消後退款)</div>
+							</c:if></td>
 						<td><c:choose>
 								<c:when test="${rmOrderVO.rm_order_status==0}">
 									<i class='bx bxs-circle' style='color: red'></i>入住中</c:when>
@@ -298,11 +304,11 @@ div.main-content {
 												<FORM METHOD="post"
 													ACTION="<%=request.getContextPath()%>/RmOrder">
 													<input
-														type="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0 ? 'hidden' : 'submit' }"
-														class="btn btn-primary" style="background-color: #5bc9e2" value="取消訂單"> <input
-														type="hidden" name="rm_order_no"
-														value="${rmOrderVO.rm_order_no}"> <input
-														type="hidden" name="action" value="cancel">
+														type="${rmOrderVO.rm_order_status==1 ? 'submit' : 'hidden' }"
+														class="btn btn-primary" style="background-color: #5bc9e2"
+														value="取消訂單"> <input type="hidden"
+														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
+													<input type="hidden" name="action" value="cancel">
 												</FORM>
 											</div></td>
 									</tr>
@@ -320,16 +326,12 @@ div.main-content {
 	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
-		$(document).ready(
-				function() {
-					$("#pagename").text("訂單管理");
-					$(".fold-table tr.view").on(
-							"click",
-							function() {
-								$(this).toggleClass("open").next(".fold")
-										.toggleClass("open");
-							});
-				});
+		$(document).ready(function() {
+			$("#pagename").text("訂單管理");
+			$(".fold-table tr.view").on("click", function() {
+				$(this).toggleClass("open").next(".fold").toggleClass("open");
+			});
+		});
 	</script>
 </body>
 </html>

@@ -132,7 +132,7 @@ public class MemCoupDAO implements I_MemCoupDAO{
 				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
 				memCoupVO.setMem_no(rs.getInt("mem_no"));
 				memCoupVO.setCoup_no(rs.getInt("coup_no"));
-				memCoupVO.setTkt_order_no(rs.getInt("tkt_order_no"));
+				memCoupVO.setTkt_order_no(null);
 				memCoupVO.setCoup_state(rs.getInt("coup_state"));
 			}
 
@@ -181,7 +181,7 @@ public class MemCoupDAO implements I_MemCoupDAO{
 				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
 				memCoupVO.setMem_no(rs.getInt("mem_no"));
 				memCoupVO.setCoup_no(rs.getInt("coup_no"));
-				memCoupVO.setTkt_order_no(rs.getInt("tkt_order_no"));
+				memCoupVO.setTkt_order_no(null);
 				memCoupVO.setCoup_state(rs.getInt("coup_state"));
 				
 				list.add(memCoupVO);

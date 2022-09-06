@@ -34,13 +34,12 @@ public class AddCartServlet extends HttpServlet {
 		
 		// ------------ getParameter ------------
 		Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
+//		System.out.println("addCartServlet---------" + tkt_no);
 		Integer count = Integer.valueOf(req.getParameter("count"));		
+//		System.out.println("addCartServlet---------" + count);
 		String sessionId = (String) req.getSession().getAttribute("sessionId"); // 取得 sessionId
-		
 //		System.out.println("addCartServlet sessionId:" + sessionId);
-//		System.out.println("addCartServlet tkt_no:" + tkt_no);
-//		System.out.println("addCartServlet count:" + count);
-		
+
 		// ------------ 永續層 -------------
 		CartItemService cartItemSrv = new CartItemService();
 		cartItemSrv.addItemToCart(sessionId, tkt_no, count);
