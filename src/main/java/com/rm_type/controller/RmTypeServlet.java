@@ -210,12 +210,12 @@ public class RmTypeServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 		Integer rm_type_no = Integer.valueOf(req.getParameter("rm_type_no"));
-		System.out.print("==============" + rm_type_no);
-		HttpSession session = req.getSession();
-		Integer qty = (Integer) session.getAttribute("qty");
-		if (qty == null) {
-	     qty = 1;
-		}
+//		System.out.print("==============" + rm_type_no);
+//		HttpSession session = req.getSession();
+//		Integer rm_total = (Integer) session.getAttribute("rm_total");
+//		if (rm_total == null) {
+//			rm_total = 1;
+//		}
 			
 /*************************** 2.開始查詢資料 ****************************************/	
 		// 房型資料
@@ -223,7 +223,7 @@ public class RmTypeServlet extends HttpServlet {
 		RmTypeVO rmTypeVO = rmTypeSvc.getOneRm(rm_type_no);
 		// 如果該房型已被下架，就回到房型列表
 		if (rmTypeVO.getRm_update() == 1) {
-			req.getRequestDispatcher("/frontend/room/roomList.jsp").forward(req, res);
+			req.getRequestDispatcher("/frontend/room/rmList.jsp").forward(req, res);
 			return;
 		}
 		// 房型圖片list
@@ -232,13 +232,14 @@ public class RmTypeServlet extends HttpServlet {
 /*************************** 3.查詢完成,準備轉交 ************/
 		req.setAttribute("rmTypeVO", rmTypeVO);
 		req.setAttribute("Pic", pic);
-		req.setAttribute("qty", qty);
-		String url = "/frontend/room/roomDetail.jsp";
+//		req.setAttribute("rm_total", rm_total);
+		String url = "/frontend/room/rmDetail.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交前台的roomDetail.jsp
 		successView.forward(req, res);
 	} catch (Exception e) {
+		e.printStackTrace();
 		// 若錯誤 導回房型列表
-		req.getRequestDispatcher("/frontend/room/listAllRmType_S.jsp").forward(req, res);
+		req.getRequestDispatcher("/frontend/room/rmList.jsp").forward(req, res);
 	}
 }
 		
