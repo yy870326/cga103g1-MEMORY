@@ -1,6 +1,7 @@
 package com.tkt.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface I_TktDAO {
 	
@@ -13,5 +14,8 @@ public interface I_TktDAO {
     public void updateSoldAmount(TktVO tktVO);
     public void updateOriAmount(TktVO tktVO);
 //    public List<TktVO> getLocate(String locate);
-    
+  //萬用複合查詢(傳入參數型態Map)(回傳 List)
+    public List<TktVO> getAll(Map<String, String[]> map); 
+    public List<TktVO> getAllByStatus();
+    public Integer find_tkt_rows();
 }

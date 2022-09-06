@@ -19,6 +19,8 @@ import javax.servlet.http.Part;
 import com.tkt.model.TktService;
 import com.tkt.model.TktVO;
 import com.tkt_img.model.TktImgVO;
+import com.tkt_img2.model.TktImg2VO;
+import com.tkt_img2.model.Tktimg2Service;
 import com.tkt_img.model.TktImgService;
 
 @WebServlet(name = "AddTktServlet", urlPatterns = { "/tkt/addTkt.do" })
@@ -35,19 +37,20 @@ public class AddTktServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		// 傳送 JSON 格式
 //		res.setContentType("application/json; charset=utf-8");
-
+//		TktService tktSrv = new TktService();
+//		Integer tkt_rows = tktSrv.find_tkt_rows() + 1; // 找下一筆當下一筆 tkt_no
+//		System.out.println(tkt_rows);
 		// ------------------------- getParameter ----------------
 
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-		
+
 		// 算 tkt_no 要用 list 長度
 //		TktService tktService = new TktService();
 //		List<TktVO> tktList =  tktService.getAll();
-		
 
 		// tkt_no
-//		Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
+		// Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
 
 		// tkt_name
 		String tkt_name = req.getParameter("tkt_name");
@@ -140,6 +143,7 @@ public class AddTktServlet extends HttpServlet {
 			errorMsgs.add("請選擇票券種類");
 		}
 		
+		// 接收票券圖片
 		// tkt_img
 //		Part imgPart = req.getPart("tkt_img");
 //		InputStream fileContent = imgPart.getInputStream();
@@ -148,6 +152,7 @@ public class AddTktServlet extends HttpServlet {
 //			errorMsgs.add("請上傳票券圖片");
 //		}
 		
+
 		TktVO tktVO = new TktVO();
 		tktVO.setTkt_name(tkt_name);
 		tktVO.setOriginal_amount(original_amount);
@@ -163,9 +168,14 @@ public class AddTktServlet extends HttpServlet {
 		tktVO.setTkt_status(tkt_status);
 		tktVO.setKind(kind);
 		
+//		TktImg2VO tktImg2VO = new TktImg2VO();
+//		
+//		tktImg2VO.setTkt_no(tkt_rows);
+//		tktImg2VO.setTkt_img(tkt_img);
 		
-		
-		
+//		TktImgVO tktImgVO = new TktImgVO();
+//		tktImgVO.settktNO(tkt_rows);
+//		tktImgVO.settktimg(tkt_img);
 
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("tktVO", tktVO);
@@ -173,12 +183,17 @@ public class AddTktServlet extends HttpServlet {
 			failureView.forward(req, res);
 			return; // 中斷
 		}
-		
+
 		// ------------------------- 永續層 ----------------
 		TktService tktSrv = new TktService();
-		tktVO = tktSrv.addTkt(tkt_name, original_amount, price, tkt_startdate,
-				tkt_enddate, locate, instruction, address, notice, howuse,
-				canxpolicy, tkt_status, kind);
+		tktVO = tktSrv.addTkt(tkt_name, original_amount, price, tkt_startdate, tkt_enddate, locate, instruction,
+				address, notice, howuse, canxpolicy, tkt_status, kind);
+		
+//		Tktimg2Service tktImgSrv = new Tktimg2Service();
+//		tktImg2VO = tktImgSrv.addTktImg(tkt_rows, tkt_img);
+
+//		TktImgService tktImgSrv = new TktImgService();
+//		tktImgSrv.addTktImg(tkt_no, tkt_img);
 		
 //		TktImgService tktImgSrv = new TktImgService();
 //		tktImgSrv.addTktImg(tktList.size()+1 ,tkt_img);
@@ -188,15 +203,18 @@ public class AddTktServlet extends HttpServlet {
 //			tktImgVO.settktimg(tkt_img);
 //			tktImgSrv.addTktImg(tktList.size()+1 ,tkt_img);
 //		}
-		
+
 		// ------------------------- forward -------------------------
 		req.setAttribute("tktVO", tktVO);
 //		req.setAttribute("tktImgVO", tktImgVO);
 		RequestDispatcher successView = req.getRequestDispatcher("/backend/tkt/listAllTkt.jsp");
 		successView.forward(req, res);
+//		RequestDispatcher successView = req.getRequestDispatcher("/backend/tkt_img/uploadTktImg.jsp");
+//		successView.forward(req, res);
 
-		//////////////////////////////////////////////////// to JSON ////////////////////////////////////////////////////
-		
+		//////////////////////////////////////////////////// to JSON
+		//////////////////////////////////////////////////// ////////////////////////////////////////////////////
+
 		// ------------ getParameter ------------
 
 		// tkt_name

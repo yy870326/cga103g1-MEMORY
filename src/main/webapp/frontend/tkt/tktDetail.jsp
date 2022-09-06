@@ -13,6 +13,29 @@
 <title>票券詳情 - Memory</title>
 <%-- CSS --%>
 	<%@ include file="/frontend/commonCSS.file" %>
+	
+	<style>
+	
+		.cartBtn {
+			position: fixed;
+  			border-radius: 100%;
+  			background-color: #5bc9e2;
+  			width: 60px;
+  			height: 60px;
+  			right: 10%;
+  			bottom: 10%;
+  			cursor: pointer;
+  			z-index: 10;
+		}
+		
+		.cartIcon {
+			padding-top: 12px;
+			font-size: 20px;
+			color: white;
+		}
+	
+	</style>
+	
 </head>
 <body>
 
@@ -47,9 +70,7 @@
               <p class="mb-2">結束日期：${tktVO.tkt_enddate}</p>
               <p class="mb-2">地區：${tktVO.locate}</p>
               <p class="mb-2">體驗地址：${tktVO.address}</p>
-              <p class="mb-2">購買須知：${tktVO.notice}</p>
-              <p class="mb-2">如何使用：${tktVO.howuse}</p>
-              <p class="mb-2">取消政策：${tktVO.canxpolicy}</p>
+              
               
               <c:if test="${tktVO.kind == 0 }" var="true">
 					<span class="badge badge-pill badge-primary text-white"># 景點門票</span>
@@ -75,7 +96,10 @@
               <!-- Gallery-->
               <h5 class="mb-4"></h5>
               <div class="row gallery ml-n1 mr-n1">
-                <div class="col-lg-12 col-6 px-1 mb-2"><a href="#"><img src="https://i.imgur.com/eZXD0nx.jpg" alt="..." class="img-fluid"></a></div>
+                <div class="col-lg-12 col-6 px-1 mb-2">
+                <!-- <img src="https://i.imgur.com/eZXD0nx.jpg" alt="..." class="img-fluid"> -->
+                <img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=showFirstImages" class="img-fluid">
+                </div>
               </div>
             </div>
             <div class="text-block">
@@ -84,7 +108,9 @@
               <div class="media d-block d-sm-flex review">
                 <!-- <div class="text-md-center mr-4 mr-xl-5"><img src="images/img-11.jpg" alt="Jabba Hut" class="avatar avatar-xl p-2 mb-2"></div> -->
                 <div class="media-body">
-                  
+                  <p class="mb-2">購買須知：${tktVO.notice}</p>
+              	<p class="mb-2">如何使用：${tktVO.howuse}</p>
+              	<p class="mb-2">取消政策：${tktVO.canxpolicy}</p>
                   
                 </div>
               </div>
@@ -104,9 +130,9 @@
           <hr class="my-4">
             <div class="form-group">
             <div class="form-group mb-4">
-              <label for="guests" class="form-label">票券張數</label>
+              <!-- <label for="guests" class="form-label">票券張數</label> -->
               <!-- 假數量 之後會接到真的票券資料用 el 綁定數量 -->
-              <input type="number" value="1" id="guests" class="form-control">
+              <!-- <input type="number" value="1" id="guests" class="form-control"> -->
 <!--               <input type="number" name="count" id="guests" class="form-control"> -->
             </div>
               <!-- 假資料 真的資料會從資料庫撈 tkt_no -->
@@ -122,26 +148,42 @@
          <!--  </form> -->
           
           
-         <%--  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/initCart.do">
+         <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/initCart.do">
 			<input type="submit" class="btn btn-primary btn-block" value="測試 cookie">
           	<input type="hidden" name="action" value="init">
 			<!-- <input type="hidden" name="action"	value="init"> -->
  		 </FORM> --%>
  		 
- 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/getCart.do">
+ 		<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/getCart.do">
 			<input type="submit" class="btn btn-primary btn-block" value="前往購物車列表">
  			<input type="hidden" name="action"	value="getCart">
 			<!-- <input type="hidden" name="action"	value="getCart"> -->
- 		</FORM>
+ 		</FORM> --%>
           <!-- <hr class="my-4">
           <div class="text-center">
             <p> <a href="#" class="text-secondary text-sm"> <i class="fa fa-heart"></i> Bookmark This Hotels</a></p>
           </div> -->
         </div>
       </div>
+      
+      <!-- 可能要加在全站下面 -->
+      <a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn cartBtn">	
+		<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
+      </a>
+      
+      <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/getCart.do">
+			<!-- 購物車 -->
+      	<button type="submit" class="btn cartBtn">	
+			<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
+      	</button>
+ 		<input type="hidden" name="action"	value="getCart">
+ 	 </FORM> --%>
+      
     </div>
   </div>
+  
 </section>
+
 
   
   
@@ -156,7 +198,8 @@
   	<%-- commonJS --%>
 	<%@ include file="/frontend/commonJS.file" %>
 	
-	
+	<!-- sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 	<!-- axios test -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
@@ -172,6 +215,15 @@
  	const count = document.querySelector('.count');
 
  	
+ 	/* sweetalert btn setting*/
+	const swalWithBootstrapButtons = Swal.mixin({
+       customClass: {
+           confirmButton: 'btn btn-success ml-3',
+           cancelButton: 'btn btn-danger mr-3'
+       },
+       buttonsStyling: false
+    })
+ 	
  	addItem.addEventListener('click', () => {
  		axios({
  			"method": "post", 
@@ -182,6 +234,15 @@
  			}
  		}).then(function (response) {
             console.log(response);
+         // 在這加入 sweetAlert
+	        swalWithBootstrapButtons.fire({
+				position: 'center',
+				icon: 'success',
+				title: '您已成功將票券加入購物車',
+				showConfirmButton: false,
+				timer: 1500
+			})
+            
         }).catch(function (error) {
             console.log(error);
         });
