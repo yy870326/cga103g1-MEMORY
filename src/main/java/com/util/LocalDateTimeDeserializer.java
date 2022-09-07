@@ -17,7 +17,7 @@ public class LocalDateTimeDeserializer implements JsonDeserializer <LocalDateTim
     throws JsonParseException {
 		
         return LocalDateTime.parse(json.getAsString(),
-            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss").withLocale(Locale.ENGLISH));
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm").withLocale(Locale.TAIWAN));
     }
 
 }

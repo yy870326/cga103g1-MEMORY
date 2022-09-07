@@ -60,14 +60,14 @@ public class ActPicJDBCDAO implements I_ActPicDAO {
 	}
 	
 	@Override
-	public List<ActPicVO> findActPic(Integer actPicNo, Integer actNo) {
+	public List<ActPicVO> findActPic(Integer actNo) {
 		List<ActPicVO> list = new ArrayList<>();
 		try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement ps = conn.prepareStatement(GET_ONE_OF_ACT_PIC);
 				FileOutputStream fos = new FileOutputStream("src/main/webapp/backend/act/LoadAndSaveImg.jpg");
 				BufferedOutputStream bos = new BufferedOutputStream(fos)) {
-			ps.setInt(1, actPicNo);
-			ps.setInt(2, actNo);
+//			ps.setInt(1, actPicNo);
+			ps.setInt(1, actNo);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Integer actPic_No = rs.getInt(1);
@@ -125,8 +125,8 @@ public class ActPicJDBCDAO implements I_ActPicDAO {
 //		actPicJDBCDAO.update(actPicVO);
 		
 		// getOne
-		List<ActPicVO> actPicList = actPicJDBCDAO.findActPic(3, 3);
-		actPicList.forEach(System.out::println);
+//		List<ActPicVO> actPicList = actPicJDBCDAO.findActPic(3);
+//		actPicList.forEach(System.out::println);
 
 		// getAll
 //		List<ActPicVO> actPicList = actPicJDBCDAO.getAll();
