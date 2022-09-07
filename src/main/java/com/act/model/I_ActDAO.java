@@ -6,7 +6,7 @@ import java.util.List;
 public interface I_ActDAO {
 	
 	// 建立揪團活動
-	void insert(ActVO actVO);
+	Integer insert(ActVO actVO);
 	
 	// 更新、修改 揪團條件 (不包含 活動狀態)
 	void update(ActVO actVO);
@@ -23,6 +23,10 @@ public interface I_ActDAO {
 	void updateEvalSum(ActVO actVO);
 
 	void updateRateEval(ActVO actVO);
+	
+	void updateActPeopleAmount(ActVO actVO);
+	
+	ActVO getActMaxAmount(Integer actNo);
 	
 	// 取得 所有揪團活動
 	List<ActVO> getAll();
@@ -63,5 +67,6 @@ public interface I_ActDAO {
 	// 篩選 活動 人數最少至最多區間 
 	List<ActVO> findPeriodCount(Integer minCount, Integer maxCount);
 	
-	
+	List<ActVO> innerJoinAcrParti(Integer memNo);
+
 }

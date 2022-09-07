@@ -12,6 +12,15 @@ public class ActPicVO implements Serializable{
 	
 	public ActPicVO() {
 	}
+	
+	
+	
+	public ActPicVO(byte[] act_pic) {
+		super();
+		this.act_pic = act_pic;
+	}
+
+
 
 	public ActPicVO(Integer act_pic_no, Integer act_no, byte[] act_pic) {
 		super();
