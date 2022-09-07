@@ -261,7 +261,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/mem/addMem.jsp");
+							.getRequestDispatcher("/frontend/signin/addMem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
