@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-
+<head><script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script></head>
     <header class="header-static navbar-sticky navbar-light shadow">
       <div class="navbar-top d-none d-lg-block">
         <div class="container">
@@ -168,7 +168,7 @@
             <div class="nav-item search border-0 pl-3 pr-0 px-lg-2" id="search">
              
             </div>
-            <div
+            <div id="message"
               class="nav-item border-0 d-none d-lg-inline-block align-self-center"
             >
               <a href="#" class="btn btn-sm btn-grad text-white mb-0"
@@ -179,3 +179,11 @@
         </div>
       </nav>
     </header>
+    
+    <script>
+    $("#message").click(function(){
+    	"${storeSvc.getOneStoreByAcc(storeVO.store_acc).store_name}" === null?location="<%=request.getContextPath()%>/frontend/customer_service/storeChat.jsp":location="<%=request.getContextPath()%>/frontend/customer_service/frontChat.jsp";
+    });
+    
+    
+    </script>

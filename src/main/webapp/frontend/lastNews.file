@@ -12,7 +12,16 @@ pageContext.setAttribute("lastNews", lastNews);
 %>
 
 
-<marquee>
+<head>
+<style>
+
+.mar:hover {
+  transform: scale(1.5);
+}
+</style>
+</head>
+
+<marquee class="mar">
 	${lastNews.news}
-	 <img src="<%=request.getContextPath()%>/lastNews?news_no=${lastNews.news_no}&action=getOnePic" width="50" height="50">
+	 <img class="news_img" src="<%=request.getContextPath()%>/lastNews?news_no=${lastNews.news_no}&action=getOnePic" width="100" height="100">
 	</marquee>
