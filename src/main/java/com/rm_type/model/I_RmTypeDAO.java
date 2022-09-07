@@ -19,7 +19,7 @@ public interface I_RmTypeDAO {
 
 	public List<RmTypeVO> getAllByStoreNo(Integer store_no);  // 廠商所有房型
 	
-	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest);
+	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest, String add);
 	
 	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest);
 	

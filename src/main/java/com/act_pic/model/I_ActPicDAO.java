@@ -13,7 +13,7 @@ public interface I_ActPicDAO {
 	void update(ActPicVO actPicVO);
 	
 	// 取得 活動 照片
-	List<ActPicVO> findActPic(Integer act_pic_no, Integer actNo);
+	List<ActPicVO> findActPic(Integer actNo);
 	
 	List<ActPicVO> getAll();
 	
