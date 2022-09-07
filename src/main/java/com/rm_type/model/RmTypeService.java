@@ -66,9 +66,6 @@ public class RmTypeService {
 		
 		return dao.getAll();
 	}
-	public List<RmTypeVO> getAllRoomFront() {
-		return dao.getAllFront();
-	}
 	
 	// 所有已上架房型
 	public List<RmTypeVO> getAllRmRsv() {
@@ -76,16 +73,12 @@ public class RmTypeService {
 		return dao.getAllRsv();
 	}
 	
-	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
-		return dao.getEnoughType(start_date, end_date, qty, guest);
+	// 所有篩選後房型(日期 廠商 人數 等等...)
+	public List<RmTypeVO> getEnoughType(Date arrival_date, Date departure_date, Integer qty, Integer guest, String add) {
+		return dao.getEnoughType(arrival_date, departure_date, qty, guest, add);
 	}
+	
 	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
 		return dao.getNotEnoughType(start_date, end_date, qty, guest);
 	}
-	public RmTypeVO getOneRoomType(Integer rm_type_no) {
-		return dao.getOne(rm_type_no);
-	}
-	public List<RmTypeVO> paymentCheck(Date start_date, Date end_date, Integer roomtotal, Integer rm_type_no) {
-		return dao.paymentCheck(start_date, end_date, roomtotal, rm_type_no);
-}
 }
