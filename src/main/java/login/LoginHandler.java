@@ -10,7 +10,7 @@ import com.mem.model.*;
 
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/frontend/mem/loginhandler")
+@WebServlet("/frontend/signin/loginhandler")
 public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class LoginHandler extends HttpServlet {
     if (!allowUser(mem_email, mem_pwd)) {          //【帳號 , 密碼無效時】
       out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
       out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/frontend/mem/login.html>重新登入</A>");
+      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/frontend/signin/login.html>重新登入</A>");
       out.println("</BODY></HTML>");
     }else {                                       //【帳號 , 密碼有效時, 才做以下工作】
       HttpSession session = req.getSession();
@@ -56,7 +56,7 @@ public class LoginHandler extends HttpServlet {
          }
        }catch (Exception ignored) { }
 
-      res.sendRedirect(req.getContextPath()+"/frontend/mem/login_success.jsp");  //*工作3: (-->如無來源網頁:則重導至login_success.jsp)
+      res.sendRedirect(req.getContextPath()+"/frontend/signin/login_success.jsp");  //*工作3: (-->如無來源網頁:則重導至login_success.jsp)
     }
   }
 }

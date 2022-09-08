@@ -183,21 +183,21 @@
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
                       <div class="form-group">
-                        <span class="fas fa-map-marker-alt"></span>
+                        <span class="fa-solid fa-person-arrow-down-to-line"></span>
                         <input
                           class="form-control"
                           type="text"
-                          placeholder="Pick-up Location"
+                          placeholder="活動人數最小限制"
                         />
                       </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
                       <div class="form-group">
-                        <span class="fas fa-map-marker-alt"></span>
+                        <span class="fa-solid fa-person-arrow-up-from-line"></span>
                         <input
                           class="form-control"
                           type="text"
-                          placeholder="Drop-off Location"
+                          placeholder="活動人數最大限制"
                         />
                       </div>
                     </div>
@@ -209,7 +209,7 @@
                           type="text"
                           id="datepicker-3"
                           autocomplete="off"
-                          placeholder="Pick-up Date"
+                          placeholder="活動報名起始日"
                         />
                       </div>
                     </div>
@@ -221,7 +221,7 @@
                           type="text"
                           id="datepicker-4"
                           autocomplete="off"
-                          placeholder="Drop-ff Date"
+                          placeholder="活動報名截止日"
                         />
                       </div>
                     </div>
@@ -282,7 +282,9 @@
   	<!--  footer  -->
 	<%@ include file="/frontend/footer.file" %>
   	<!--  footer  -->
-
+	
+	<script src="homePage.js"></script>
+	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<%@ include file="/frontend/commonJS.file" %>

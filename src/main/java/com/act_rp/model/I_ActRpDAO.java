@@ -12,4 +12,7 @@ public interface I_ActRpDAO {
 		public void update(ActRpVO actRpVO);
 		//顯示
 		public List<ActRpVO> getall();
+		
+		public ActRpVO getone(Integer act_rp_no);
+		
 }

@@ -112,6 +112,8 @@
 	    padding: 10px 30px;
 	    -webkit-overflow-scrolling: touch;
        }
+       
+       
   
 </style>
 	

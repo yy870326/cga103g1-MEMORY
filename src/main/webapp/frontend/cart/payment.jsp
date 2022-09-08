@@ -250,7 +250,7 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                     	<input type="hidden" name="mem_no" value="">
                     	
 						<div class="d-flex justify-content-between">
-							<a href="<%=request.getContextPath()%>/frontend/cart/cart.jsp" class="btn btn-outline-primary">返回購物車</a>
+							<a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn btn-outline-primary">返回購物車</a>
 							<button type="submit" class="btn btn-info ml-3">確認付款</button>
 						</div>
 					

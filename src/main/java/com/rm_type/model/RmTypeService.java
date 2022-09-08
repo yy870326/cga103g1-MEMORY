@@ -73,9 +73,11 @@ public class RmTypeService {
 		return dao.getAllRsv();
 	}
 	
-	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
-		return dao.getEnoughType(start_date, end_date, qty, guest);
+	// 所有篩選後房型(日期 廠商 人數 等等...)
+	public List<RmTypeVO> getEnoughType(Date arrival_date, Date departure_date, Integer qty, Integer guest, String add) {
+		return dao.getEnoughType(arrival_date, departure_date, qty, guest, add);
 	}
+	
 	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
 		return dao.getNotEnoughType(start_date, end_date, qty, guest);
 	}

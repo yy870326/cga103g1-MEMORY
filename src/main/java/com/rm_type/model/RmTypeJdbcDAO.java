@@ -1,6 +1,7 @@
 package com.rm_type.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +60,7 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 			ps.setString(6, rmtypeVO.getRm_intro());
 			ps.setInt(7, rmtypeVO.getRm_rate_sum());
 			ps.setInt(8, rmtypeVO.getRm_eval_sum());
-			ps.setBoolean(9, rmtypeVO.getRm_update());
+			ps.setInt(9, rmtypeVO.getRm_update());
 			ps.setInt(10, rmtypeVO.getRm_type_no());
 			ps.executeUpdate();
 
@@ -103,7 +104,7 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 				rm.setRm_intro(rs.getString("rm_intro"));
 				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
 				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
-				rm.setRm_update(rs.getBoolean("rm_update"));
+				rm.setRm_update(rs.getInt("rm_update"));
 			}
 
 		} catch (SQLException e) {
@@ -141,7 +142,7 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 				rm.setRm_intro(rs.getString("rm_intro"));
 				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
 				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
-				rm.setRm_update(rs.getBoolean("rm_update"));
+				rm.setRm_update(rs.getInt("rm_update"));
 
 				rmAll.add(rm);
 			}
@@ -181,7 +182,7 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 				rm.setRm_intro(rs.getString("rm_intro"));
 				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
 				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
-				rm.setRm_update(rs.getBoolean("rm_update"));
+				rm.setRm_update(rs.getInt("rm_update"));
 
 				rmAllRsv.add(rm);
 			}
@@ -202,6 +203,24 @@ public class RmTypeJdbcDAO implements I_RmTypeDAO {
 
 	@Override
 	public List<RmTypeVO> getAllByStoreNo(Integer store_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RmTypeVO> getEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RmTypeVO> getAllFront() {
 		// TODO Auto-generated method stub
 		return null;
 	}
