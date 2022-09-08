@@ -70,5 +70,8 @@ public class MemService {
 	public List<MemVO>getall(){
 		return dao.getAll();
 	}
-
+public MemVO getOneBymail(String mem_email) {
+		
+		return dao.getOneBymail(mem_email);
+	}
 }
