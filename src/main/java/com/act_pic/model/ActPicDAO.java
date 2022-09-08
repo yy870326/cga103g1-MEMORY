@@ -1,10 +1,5 @@
 package com.act_pic.model;
 
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,9 +25,9 @@ public class ActPicDAO implements I_ActPicDAO {
 
 	private static final String INSERT = "INSERT INTO act_pic(act_no, act_pic_file) VALUES (?, ?)";
 	
-	private static final String UPDATE = "update act_pic set act_pic_file = ? where act_pic_no = ? and act_no = ?";
+	private static final String UPDATE = "update act_pic set act_pic_file = ? where act_no = ?";
 	
-	private static final String GET_ONE_OF_ACT_PIC = "select act_pic_no, act_no, act_pic_file from act_pic where act_pic_no = ? and act_no = ?";
+	private static final String GET_ONE_OF_ACT_PIC = "select act_pic_file from act_pic where act_no = ?";
 	
 	private static final String GET_ALL = "select act_pic_no, act_no, act_pic_file from act_pic";
 	
@@ -53,8 +48,7 @@ public class ActPicDAO implements I_ActPicDAO {
 		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(UPDATE);) {
 			ps.setBytes(1, actPicVO.getAct_pic());
-			ps.setInt(2, actPicVO.getAct_pic_no());
-			ps.setInt(3, actPicVO.getAct_no());
+			ps.setInt(2, actPicVO.getAct_no());
 			ps.executeUpdate();			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,20 +56,16 @@ public class ActPicDAO implements I_ActPicDAO {
 	}
 	
 	@Override
-	public List<ActPicVO> findActPic(Integer actPicNo, Integer actNo) {
+	public List<ActPicVO> findActPic(Integer actNo) {
 		List<ActPicVO> list = new ArrayList<>();
 		try(Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_ONE_OF_ACT_PIC);) {
-			ps.setInt(1, actPicNo);
-			ps.setInt(2, actNo);
+			ps.setInt(1, actNo);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Integer actPic_No = rs.getInt(1);
-				Integer act_No = rs.getInt(2);
-				byte[] actPicFile = rs.getBytes(3);
+				byte[] actPicFile = rs.getBytes(1);
 				ActPicVO actPicVO = 
-						new ActPicVO(actPic_No,
-								act_No, actPicFile);
+						new ActPicVO(actPicFile);
 				list.add(actPicVO);
 			}
 		} catch (Exception e) {

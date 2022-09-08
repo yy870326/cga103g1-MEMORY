@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TktJdbcDAO implements I_TktDAO {
 
@@ -22,6 +23,8 @@ public class TktJdbcDAO implements I_TktDAO {
 			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt ORDER BY tkt_no;";
 	private static final String UPDATE_SOLD_AMOUNT = "UPDATE tkt SET sold_amount = ? WHERE tkt_no = ?;";
 	private static final String UPDATE_ORI_AMOUNT = "UPDATE tkt SET original_amount = (original_amount - sold_amount) WHERE tkt_no = ?;";
+	private static final String GET_ALL_BY_STATUS = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
+			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE tkt_status = 1 ORDER BY tkt_no;";
 	
 //	private static final String GET_LOCATE = "SELECT tkt_no ,tkt_name, original_amount, price, tkt_startdate, tkt_enddate, `locate`, "
 //			+ " instruction, address, notice, howuse, canxpolicy, tkt_status, sold_amount, kind FROM tkt WHERE locate = ? ORDER BY tkt_no;";
@@ -205,6 +208,47 @@ public class TktJdbcDAO implements I_TktDAO {
 		}
 	}
 	
+	
+	public List<TktVO> getAllByStatus() {
+
+		List<TktVO> list = new ArrayList<TktVO>();
+		TktVO tktVO = null;
+		ResultSet rs = null;
+
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(GET_ALL_BY_STATUS)) {
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				tktVO = new TktVO();
+
+				tktVO.setTkt_no(rs.getInt("tkt_no"));
+				tktVO.setTkt_name(rs.getString("tkt_name"));
+				tktVO.setOriginal_amount(rs.getInt("original_amount"));
+				tktVO.setPrice(rs.getInt("price"));
+				tktVO.setTkt_startdate(rs.getDate("tkt_startdate"));
+				tktVO.setTkt_enddate(rs.getDate("tkt_enddate"));
+				tktVO.setLocate(rs.getString("locate"));
+				tktVO.setInstruction(rs.getString("instruction"));
+				tktVO.setAddress(rs.getString("address"));
+				tktVO.setNotice(rs.getString("notice"));
+				tktVO.setHowuse(rs.getString("howuse"));
+				tktVO.setCanxpolicy(rs.getString("canxpolicy"));
+				tktVO.setTkt_status(rs.getInt("tkt_status"));
+				tktVO.setSold_amount(rs.getInt("sold_amount"));
+				tktVO.setKind(rs.getInt("kind"));
+
+				list.add(tktVO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
 
 	public static void main(String[] args) {
 		TktJdbcDAO dao = new TktJdbcDAO();
@@ -291,17 +335,29 @@ public class TktJdbcDAO implements I_TktDAO {
 		
 		
 		// updateSoldAmount
-		TktVO voUpdateSold = new TktVO();
-		voUpdateSold.setSold_amount(3);
-		voUpdateSold.setTkt_no(13);
-		
-		dao.updateSoldAmount(voUpdateSold);
+//		TktVO voUpdateSold = new TktVO();
+//		voUpdateSold.setSold_amount(3);
+//		voUpdateSold.setTkt_no(13);
+//		
+//		dao.updateSoldAmount(voUpdateSold);
 		
 		// updateOriAmount
 //		TktVO updateOri = new TktVO();
 //		updateOri.setTkt_no(8);
 //		
 //		dao.updateOriAmount(updateOri);
+	}
+
+	@Override
+	public List<TktVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer find_tkt_rows() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

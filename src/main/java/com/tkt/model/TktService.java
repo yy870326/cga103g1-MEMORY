@@ -2,6 +2,7 @@ package com.tkt.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class TktService {
 	
@@ -73,5 +74,17 @@ public class TktService {
 		return dao.getAll();
 	}
 	
+	public List<TktVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
+	
+	public List<TktVO> getAllByStatus() {
+		return dao.getAllByStatus();
+	}
+	
+
+	public Integer find_tkt_rows() {
+		return dao.find_tkt_rows();
+	}
 }
 	

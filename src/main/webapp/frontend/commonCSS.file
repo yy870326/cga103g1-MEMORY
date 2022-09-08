@@ -10,4 +10,5 @@
     <!-- Bootstrap CSS -->
     <link href="<%=request.getContextPath()%>/frontend/assets/css/style.css" type="text/css" rel="stylesheet" />
     <link href="<%=request.getContextPath()%>/frontend/assets/css/bootstrap-datepicker.css" rel="stylesheet"/>
+    <link href="<%=request.getContextPath()%>/frontend/assets/fontawesome-free-6.1.2-web/css/all.css" rel="stylesheet">
 

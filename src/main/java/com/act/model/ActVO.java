@@ -8,7 +8,7 @@ public class ActVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Integer act_no;
-	private Integer men_no;
+	private Integer mem_no;
 	private Integer act_type_no;
 	private String act_title;
 	private String act_content;
@@ -28,13 +28,23 @@ public class ActVO implements Serializable{
 	
 	public ActVO() {
 	}
+	
+	
+
+	public ActVO(String act_title, String act_content) {
+		super();
+		this.act_title = act_title;
+		this.act_content = act_content;
+	}
+
+
 
 	public ActVO(Integer act_no, Integer men_no, Integer act_type_no, String act_title, String act_content,
 			Integer act_current_count, Integer act_max_count, Integer act_min_count, LocalDateTime act_enroll_begin,
 			LocalDateTime act_enroll_end, LocalDateTime act_start, LocalDateTime act_end, Integer act_loc, String act_pl
 			,Integer star_avg , Integer act_status) {
 		this.act_no = act_no;
-		this.men_no = men_no;
+		this.mem_no = men_no;
 		this.act_type_no = act_type_no;
 		this.act_title = act_title;
 		this.act_content = act_content;
@@ -57,7 +67,7 @@ public class ActVO implements Serializable{
 			LocalDateTime act_enroll_end, LocalDateTime act_start, LocalDateTime act_end, Integer act_loc, String act_pl,
 			Integer act_rate_sum, Integer eval_sum, Integer act_status) {
 		this.act_no = act_no;
-		this.men_no = men_no;
+		this.mem_no = men_no;
 		this.act_type_no = act_type_no;
 		this.act_title = act_title;
 		this.act_content = act_content;
@@ -85,11 +95,11 @@ public class ActVO implements Serializable{
 	}
 
 	public Integer getMen_no() {
-		return men_no;
+		return mem_no;
 	}
 
 	public void setMen_no(Integer men_no) {
-		this.men_no = men_no;
+		this.mem_no = men_no;
 	}
 
 	public Integer getAct_type_no() {
@@ -222,7 +232,7 @@ public class ActVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ActVO [活動編號=" + act_no + ", 舉辦者(會員)編號=" + men_no + ", 活動種類=" + act_type_no + ", 活動標題="
+		return "ActVO [活動編號=" + act_no + ", 舉辦者(會員)編號=" + mem_no + ", 活動種類=" + act_type_no + ", 活動標題="
 				+ act_title + ", 活動內容=" + act_content + ", 目前報名人數=" + act_current_count
 				+ ", 活動人數最大限制=" + act_max_count + ", 活動人數最小限制=" + act_min_count + ", 報名起始日="
 				+ act_enroll_begin + ", 報名截止日=" + act_enroll_end + ", 活動起始日=" + act_start + ", 活動結束日="

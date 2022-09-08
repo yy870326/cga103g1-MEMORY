@@ -1,9 +1,15 @@
 package com.act.model;
 
+import static com.util.JdbcUtil.PASSWORD;
+import static com.util.JdbcUtil.URL;
+import static com.util.JdbcUtil.USERNAME;
+
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +18,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.act_participant.model.ActParticipantService;
+import com.act_participant.model.ActParticipantVO;
 
 public class ActDAO implements I_ActDAO{
 	
@@ -35,7 +44,7 @@ public class ActDAO implements I_ActDAO{
 			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private static final String UPDATE = "update act set act_type_no = ?, act_title = ? "
-			+ ", act_content = ?, act_current_count = ?, act_min_count = ? "
+			+ ", act_content = ?, act_min_count = ? "
 			+ ", act_max_count = ?, act_enroll_begin = ?, act_enroll_end= ? "
 			+ ", act_start = ?, act_end = ?, act_loc = ? "
 			+ ", act_pl = ? where act_no = ? and mem_no = ?";
@@ -132,13 +141,22 @@ public class ActDAO implements I_ActDAO{
 	
 	private static final String UPDATE_EVAL_SUM = "update act set act_eval_sum = ? where act_no = ?";
 	
+	private static final String GET_OWN_JOIN_ACT 
+	= "select * from act inner join act_participant as ap on  act.act_no=ap.act_no where ap.mem_no = ?";
+	
+	private static final String UPDATE_ACT_PEOPLE_AMOUNT 
+	= "update act set act_current_count = ? where act_no = ?";
+	
+	private static final String GET_ACT_NO_CURRENT_COUNT =
+			"select act_current_count from act where act_no = ?";
 	// ========================================================================================== //
 	
 	
 	@Override
-	public void insert(ActVO actVO) {
+	public Integer insert(ActVO actVO) {
+		Integer actNo = 0;
 		try(Connection conn = ds.getConnection();
-				PreparedStatement ps = conn.prepareStatement(INSERT)) {
+				PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setInt(1, actVO.getMen_no());
 			ps.setInt(2, actVO.getAct_type_no());
 			ps.setString(3, actVO.getAct_title());
@@ -152,9 +170,15 @@ public class ActDAO implements I_ActDAO{
 			ps.setObject(11, actVO.getAct_end());
 			ps.setInt(12, actVO.getAct_loc());			
 			ps.setString(13, actVO.getAct_pl());
-			ps.executeUpdate();			
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			while (rs.next()) {		
+				actNo = rs.getInt(1);
+			}
+			return actNo;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 	
@@ -166,17 +190,16 @@ public class ActDAO implements I_ActDAO{
 			ps.setInt(1, actVO.getAct_type_no());
 			ps.setString(2, actVO.getAct_title());
 			ps.setString(3, actVO.getAct_content());
-			ps.setInt(4, actVO.getAct_current_count());
-			ps.setInt(5, actVO.getAct_min_count());
-			ps.setInt(6, actVO.getAct_max_count());
-			ps.setObject(7, actVO.getAct_enroll_begin());
-			ps.setObject(8, actVO.getAct_enroll_end());
-			ps.setObject(9, actVO.getAct_start());			
-			ps.setObject(10, actVO.getAct_end());
-			ps.setInt(11, actVO.getAct_loc());			
-			ps.setString(12, actVO.getAct_pl());
-			ps.setInt(13, actVO.getAct_no());
-			ps.setInt(14, actVO.getMen_no());
+			ps.setInt(4, actVO.getAct_min_count());
+			ps.setInt(5, actVO.getAct_max_count());
+			ps.setObject(6, actVO.getAct_enroll_begin());
+			ps.setObject(7, actVO.getAct_enroll_end());
+			ps.setObject(8, actVO.getAct_start());			
+			ps.setObject(9, actVO.getAct_end());
+			ps.setInt(10, actVO.getAct_loc());			
+			ps.setString(11, actVO.getAct_pl());
+			ps.setInt(12, actVO.getAct_no());
+			ps.setInt(13, actVO.getMen_no());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -196,7 +219,6 @@ public class ActDAO implements I_ActDAO{
 		}		
 	}
 	
-	
 	@Override
 	public void updateRateEval(ActVO actVO) {
 		try(Connection conn = ds.getConnection();
@@ -210,7 +232,17 @@ public class ActDAO implements I_ActDAO{
 		}		
 	}
 	
-	
+	public void updateActPeopleAmount(ActVO actVO) {
+		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(UPDATE_ACT_PEOPLE_AMOUNT)) {
+			ps.setInt(1, actVO.getAct_current_count());
+			ps.setInt(2, actVO.getAct_no());			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+
 
 	@Override
 	public List<ActVO> getAll() {
@@ -800,4 +832,69 @@ public class ActDAO implements I_ActDAO{
 			e.printStackTrace();
 		}		
 	}
+
+	@Override
+	public List<ActVO> innerJoinAcrParti(Integer memNo) {
+		List<ActVO> acts = new ArrayList<ActVO>();
+		try(Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_OWN_JOIN_ACT);) {	
+			ps.setInt(1, memNo);
+			ResultSet rs1 = ps.executeQuery();
+			while (rs1.next()) {
+				Integer actNo = rs1.getInt(1);
+				Integer actMemNo = rs1.getInt(2);
+				Integer actTypeNo = rs1.getInt(3);
+				String actTitle = rs1.getString(4);
+				String actContent = rs1.getString(5);
+				Integer actCurrentCount = rs1.getInt(6);
+				Integer actMinCount = rs1.getInt(7);
+				Integer actMaxCount = rs1.getInt(8);
+				LocalDateTime actEnrollBegin = (LocalDateTime) rs1.getObject(9);
+				LocalDateTime actEnrollEnd = (LocalDateTime) rs1.getObject(10);
+				LocalDateTime actStart = (LocalDateTime) rs1.getObject(11);
+				LocalDateTime actEnd = (LocalDateTime) rs1.getObject(12);
+				Integer actLoc = rs1.getInt(13);
+				String actPl = rs1.getString(14);
+				Integer actRateSum = rs1.getInt(15);
+				Integer actEvalSum = rs1.getInt(16);
+				Integer actStatus = rs1.getInt(17);
+				ActVO act = 
+						new ActVO(actNo,
+								actMemNo, actTypeNo, actTitle,
+								actContent, actCurrentCount,
+								actMinCount, actMaxCount,
+								actEnrollBegin,
+								actEnrollEnd, actStart,
+								actEnd, actLoc,
+								actPl,actRateSum,
+								actEvalSum,actStatus
+								);
+				acts.add(act);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return acts;
+	}
+
+
+	
+	@Override
+	public ActVO getActMaxAmount(Integer actNo) {
+		try(Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_ACT_NO_CURRENT_COUNT)) {
+			ActVO actVo = new ActVO();
+			ps.setInt(1, actVo.getAct_no());			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				actVo.setAct_current_count(rs.getInt(1));
+			}
+			return actVo;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;		
+		}
+	}
+		
 }

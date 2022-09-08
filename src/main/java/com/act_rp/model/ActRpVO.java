@@ -7,7 +7,7 @@ public class ActRpVO implements Serializable{
 	private Integer act_rp_no;
 	private Integer mem_no;
 	private Integer act_no;
-	private Integer act_rp_reason;
+	private String act_rp_reason;
 	private String act_rp_content;
 	private Date act_rp_time;
 	private Integer emp_no;
@@ -33,10 +33,10 @@ public class ActRpVO implements Serializable{
 	public void setAct_no(Integer act_no) {
 		this.act_no = act_no;
 	}
-	public Integer getAct_rp_reason() {
+	public String getAct_rp_reason() {
 		return act_rp_reason;
 	}
-	public void setAct_rp_reason(Integer act_rp_reason) {
+	public void setAct_rp_reason(String act_rp_reason) {
 		this.act_rp_reason = act_rp_reason;
 	}
 	public String getAct_rp_content() {

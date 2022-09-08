@@ -306,7 +306,7 @@ body {
 					<div class="outer_circle_step flex_center shapeborder_selected_out">
 						<div class="flex_center inner_circle_step shapeborder_selected_in">1</div>
 					</div>
-					<a href="<%=request.getContextPath()%>/frontend/homePage.jsp" class="step_item_label">搜尋</a>
+					<a href="<%=request.getContextPath()%>/frontend/room/listAllRmType.jsp" class="step_item_label">搜尋民宿</a>
 				</div>
 
 				<div class="step-item flex_center">
@@ -410,7 +410,7 @@ body {
 							</div>
 						</div>
 
-						<div class="col-sm-4 col-lg-2 p-0 room-price">
+						<div class="col-sm-4 col-lg-4 p-0 room-price">
 							<div>
 								<span class="price"><fmt:formatNumber value="${rmTypeVO.rm_price}" pattern="NT$ ###,###" /></span><span>/ 一晚</span>
 							</div>

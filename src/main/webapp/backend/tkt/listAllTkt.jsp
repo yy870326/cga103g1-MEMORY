@@ -6,8 +6,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.tkt.model.*"%>
-<%@ page import="com.tkt_img.model.*"%>
+<%@ page import="com.tkt_img2.model.*"%>
 <%@ page import="java.time.LocalDate"%>
+
+<jsp:useBean id="tktImg2Srv" scope="page" class="com.tkt_img2.model.Tktimg2Service" />
 
 <%
 TktService tktSvc = new TktService();
@@ -81,7 +83,12 @@ td, div {
 .add-btn {
 	padding: 1rem 1rem 0.5rem 2rem;
 }
-
+.mr-10 {
+	margin-right: 10px;
+}
+.tktImgWidth {
+	width: 100px;
+}
 
 
 </style>
@@ -124,11 +131,11 @@ td, div {
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">編號</th>
-							<!-- <th scope="col"></th> -->
+							<th scope="col"></th>
 							<th scope="col">票券名稱</th>
 							<th scope="col">票券價格</th>
 							<th scope="col">地點</th>
-							<th scope="col">已賣出數量</th>
+							<th scope="col">售出量</th>
 							<th scope="col">剩餘數量</th>
 							<th scope="col">票券種類</th>
 							<th scope="col">票券狀態</th>
@@ -138,9 +145,19 @@ td, div {
 					<tbody>
 					<%@ include file="/backend/tkt/pageIndex.file"%>
 						<c:forEach var="tktVO" items="${list}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						
 							<tr>
 								<td># ${tktVO.tkt_no}</td>
-								<%-- <td><img src="${tktImgVO.tkt_img}"></td> --%>
+								<td>
+									<c:choose>
+									<c:when test="${tktImg2Srv.getAllByTktNo(tktVO.tkt_no).size() > 0}">
+										<img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=showFirstImages" class="tktImgWidth">
+									</c:when>
+									<c:otherwise>
+										<img src="<%=request.getContextPath()%>/frontend/assets/images/hotels/noimages.png" class="no-img">
+									</c:otherwise>
+								</c:choose>
+								</td>
 								<td>${tktVO.tkt_name}</td>
 								<td>NT$ ${tktVO.price}</td>
 								<td>${tktVO.locate}</td>
@@ -164,18 +181,40 @@ td, div {
 									</c:if>
 								</td>
 
-								<td>
+								<td class="d-flex">
 									<!-- 之後看能不能用 boostrap modal 跳彈跳視窗出來修改資料 --> <!-- <button type="button" class="btn btn-warning"
 										 data-toggle="modal" data-target="#updateCoupModal">修改</button> -->
 
-									<form method="post"
-										action="<%=request.getContextPath()%>/tkt/updateTkt.do">
+									<!-- 修改 -->
+									<form method="post" action="<%=request.getContextPath()%>/tkt/updateTkt.do" class="mr-10">
 										<button type="submit" class="fa fa-pencil-alt btn" value="">
 											<!-- <i class="fa fa-pencil-alt"></i> -->
 										</button>
 										<input type="hidden" name="tkt_no" value="${tktVO.tkt_no}">
 										<input type="hidden" name="action" value="getOneUpdate">
 									</form>
+
+									
+									
+									<!-- 上傳圖片 -->
+<%-- 			                    <a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneToUpload" class="btn">
+										<i class="fa fa-image"></i>
+									</a> --%>
+									<a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneForShowImages" class="btn goToAddImg">
+										<i class="fa fa-image"></i>
+									</a>
+									<%-- <form method="post" action="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do" class="mr-10">
+										<button type="submit" class="fa fa-image btn uploadImg" value="">
+											<!-- <i class="fa fa-pencil-alt"></i> -->
+										</button>
+										<input type="hidden" name="tkt_no" value="${tktVO.tkt_no}">
+										<input type="hidden" name="action" value="getOneToUpload">
+									</form> --%>
+									
+									<%-- <input type="hidden" name="tkt_no_s" value="${tktVO.tkt_no}" class="tkt_no_s">
+									<a href="<%=request.getContextPath()%>/backend/tkt_img/uploadTktImg.jsp" class="fa fa-image btn uploadImg">
+										<!-- <button type="submit" class="fa fa-image btn" value=""> </button> -->
+									</a> --%>
 
 								</td>
 
@@ -321,10 +360,62 @@ td, div {
 	
 
 	<%@ include file="/backend/commonJS.file"%>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script> -->
+	
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
 	
 	<!-- axios Test -->
 	<script>
+	
+	/* const goToAddImg = document.querySelectorAll(".goToAddImg");
+	
+	for(let i = 0; i < ${list.size()}; i++) {
+		
+		/* let tkt_no = parseInt(tkt_no_s[i].value); */
+	/* 	goToAddImg[i].addEventListener('click', function() {
+			axios({
+ 		   		"method": "post", 
+ 		   		"url": "uploadTktImg.do",
+ 		   		"params": {
+ 		   			"tkt_no": this.tkt_no
+ 		   		}
+ 		    }).then(function (response) {
+ 		    	console.log("123");
+ 		        console.log(response);
+ 		    }).catch(function (error) {
+ 		         console.log(error);
+ 		    }); 
+		});
+		
+	} */
+	
+	/* const uploadImg = document.querySelectorAll(".uploadImg");
+	const tkt_no_s = document.querySelectorAll(".tkt_no_s");
+	
+
+	for(let i = 0; i < ${list.size()}; i++) {
+		
+		let tkt_no = parseInt(tkt_no_s[i].value);
+		
+		uploadImg[i].addEventListener('click', () => {
+	 		
+			axios({
+ 		   		"method": "post", 
+ 		   		"url": "uploadTktImg.do",
+ 		   		"params": {
+ 		   			"tkt_no": tkt_no
+ 		   		}
+ 		    }).then(function (response) {
+ 		        console.log(response);
+ 		    }).catch(function (error) {
+ 		         console.log(error);
+ 		    }); 
+	 		
+	   	});
+	} */
+	
+	
+	
 		/* const tktAdd = document.querySelector("#tktAdd"); */
 		
 		<%-- const data = {
@@ -378,7 +469,7 @@ td, div {
 			  .catch(function (error) {
 			    console.log(error);
 			  }); --%>
-		});
+		/* }); */
 	
 	</script>
 
