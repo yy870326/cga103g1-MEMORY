@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class StoreVO implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Integer store_no;
 	private String store_acc;
@@ -24,13 +22,13 @@ public class StoreVO implements Serializable{
 	private String store_email;
 	private Date store_reg_date;
 	private String bank_account;
-	private Integer store_tkt_rating_score;
-	private Integer store_tkt_rating_count;
-	private Integer store_tkt_rating;
+//	private Integer store_tkt_rating_score;
+//	private Integer store_tkt_rating_count;
+//	private Integer store_tkt_rating;
 	private Integer store_rm_rating_score;
 	private Integer store_rm_rating_count;
-	private Integer store_act_rating_score;
-	private Integer store_act_rating_count;
+//	private Integer store_act_rating_score;
+//	private Integer store_act_rating_count;
 	private Integer store_report_count;
 	
 	public Integer getStore_no() {
@@ -129,24 +127,24 @@ public class StoreVO implements Serializable{
 	public void setBank_account(String bank_account) {
 		this.bank_account = bank_account;
 	}
-	public Integer getStore_tkt_rating_score() {
-		return store_tkt_rating_score;
-	}
-	public void setStore_tkt_rating_score(Integer store_tkt_rating_score) {
-		this.store_tkt_rating_score = store_tkt_rating_score;
-	}
-	public Integer getStore_tkt_rating_count() {
-		return store_tkt_rating_count;
-	}
-	public void setStore_tkt_rating_count(Integer store_tkt_rating_count) {
-		this.store_tkt_rating_count = store_tkt_rating_count;
-	}
-	public Integer getStore_tkt_rating() {
-		return store_tkt_rating;
-	}
-	public void setStore_tkt_rating(Integer store_tkt_rating) {
-		this.store_tkt_rating = store_tkt_rating;
-	}
+//	public Integer getStore_tkt_rating_score() {
+//		return store_tkt_rating_score;
+//	}
+//	public void setStore_tkt_rating_score(Integer store_tkt_rating_score) {
+//		this.store_tkt_rating_score = store_tkt_rating_score;
+//	}
+//	public Integer getStore_tkt_rating_count() {
+//		return store_tkt_rating_count;
+//	}
+//	public void setStore_tkt_rating_count(Integer store_tkt_rating_count) {
+//		this.store_tkt_rating_count = store_tkt_rating_count;
+//	}
+//	public Integer getStore_tkt_rating() {
+//		return store_tkt_rating;
+//	}
+//	public void setStore_tkt_rating(Integer store_tkt_rating) {
+//		this.store_tkt_rating = store_tkt_rating;
+//	}
 	public Integer getStore_rm_rating_score() {
 		return store_rm_rating_score;
 	}
@@ -159,18 +157,18 @@ public class StoreVO implements Serializable{
 	public void setStore_rm_rating_count(Integer store_rm_rating_count) {
 		this.store_rm_rating_count = store_rm_rating_count;
 	}
-	public Integer getStore_act_rating_score() {
-		return store_act_rating_score;
-	}
-	public void setStore_act_rating_score(Integer store_act_rating_score) {
-		this.store_act_rating_score = store_act_rating_score;
-	}
-	public Integer getStore_act_rating_count() {
-		return store_act_rating_count;
-	}
-	public void setStore_act_rating_count(Integer store_act_rating_count) {
-		this.store_act_rating_count = store_act_rating_count;
-	}
+//	public Integer getStore_act_rating_score() {
+//		return store_act_rating_score;
+//	}
+//	public void setStore_act_rating_score(Integer store_act_rating_score) {
+//		this.store_act_rating_score = store_act_rating_score;
+//	}
+//	public Integer getStore_act_rating_count() {
+//		return store_act_rating_count;
+//	}
+//	public void setStore_act_rating_count(Integer store_act_rating_count) {
+//		this.store_act_rating_count = store_act_rating_count;
+//	}
 	public Integer getStore_report_count() {
 		return store_report_count;
 	}

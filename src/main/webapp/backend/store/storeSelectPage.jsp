@@ -65,13 +65,6 @@ pageContext.setAttribute("storeVO", storeVO);
 		</div>
 		
 	</div>
-	
--->	
-		<jsp:useBean id="StoreSvc" scope="page" class="com.store.model.StoreService"/>
-		
-		<% List<StoreVO> storeVO = StoreSvc.getAllStore();
-			pageContext.setAttribute("storeVO", storeVO);
-		%>
 		<div>
 			<form method="post" action="<%=request.getContextPath()%>/store.do">
 				<select size="1" name="store_no">
@@ -84,6 +77,13 @@ pageContext.setAttribute("storeVO", storeVO);
 				
 			</form>	
 		</div>	
+	
+-->	
+		<jsp:useBean id="StoreSvc" scope="page" class="com.store.model.StoreService"/>
+		
+		<% List<StoreVO> storeVO = StoreSvc.getAllStore();
+			pageContext.setAttribute("storeVO", storeVO);
+		%>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store.do" name="form1">
         <h2><font >查詢:</font></h2> <br>
         <div>

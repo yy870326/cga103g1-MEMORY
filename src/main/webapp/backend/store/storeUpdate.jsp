@@ -25,7 +25,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
 
 		
 
@@ -40,7 +40,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 			 	 	</tr>
 					<tr>
 					<td>帳號:</td>
-					<td><input type="text" name="store_acc" value="${storeVO.store_acc}"></td>
+					<td><input type="text" name="store_acc" value="${storeVO.store_acc}" disabled></td>
 					</tr>
 					<tr>
 					<td>密碼:</td>
@@ -98,43 +98,26 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					</tr>
 					<tr>
 					<td>加入時間:</td>
-					<td><input type="date" name="store_reg_date" value="${storeVO.store_reg_date}"></td>
+					<td><input type="date" name="store_reg_date" value="${storeVO.store_reg_date}" disabled></td>
 					</tr>
 					<tr>
 					<td>轉帳帳號:</td>
 					<td><input type="text" name="bank_account" value="${storeVO.bank_account}"></td>
 					</tr>
-					<tr>
-					<td>票券總分數:</td>
-					<td><input type="text" name="store_tkt_rating_score" value="${storeVO.store_tkt_rating_score}"></td>
-					</tr>
-					<tr>
-					<td>票券總評價數:</td>
-					<td><input type="text" name="store_tkt_rating_count" value="${storeVO.store_tkt_rating_count}"></td>
-					</tr>
-					<tr>
-					<td>票券平均評價數:</td>
-					<td><input type="text" name="store_tkt_rating" value="${storeVO.store_tkt_rating}"></td>
-					</tr>
+
 					<tr>
 					<td>訂房總分數:</td>
-					<td><input type="text" name="store_rm_rating_score" value="${storeVO.store_rm_rating_score}"></td>
+					<td><input type="text" name="store_rm_rating_score" value="${storeVO.store_rm_rating_score}" disabled></td>
 					</tr>
 					<tr>
 					<td>訂房總評價數:</td>
-					<td><input type="text" name="store_rm_rating_count" value="${storeVO.store_rm_rating_count}"></td>
+					<td><input type="text" name="store_rm_rating_count" value="${storeVO.store_rm_rating_count}" disabled></td>
 					</tr>
-					<tr>
-					<td>活動總分數:</td>
-					<td><input type="text" name="store_act_rating_score" value="${storeVO.store_act_rating_score}"></td>
-					</tr>
-					<tr>
-					<td>活動總評價數:</td>
-					<td><input type="text" name="store_act_rating_count" value="${storeVO.store_act_rating_count}"></td>
-					</tr>
+
+
 					<tr>
 					<td>被檢舉計點:</td>
-					<td><input type="text" name="store_report_count" value="${storeVO.store_report_count}"></td> 
+					<td><input type="text" name="store_report_count" value="${storeVO.store_report_count}" disabled></td> 
 					</tr>
 					<tr>
 					<td>修改資料</td>

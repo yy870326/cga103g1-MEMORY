@@ -33,7 +33,7 @@ public class StoreCompositeQuery{
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
 		for (String key : keys) {
-			String value = map.get(key)[0];
+			String value = map.get(key)[0]; 
 			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_myDB(key, value.trim());
@@ -41,7 +41,7 @@ public class StoreCompositeQuery{
 				if (count == 1)
 					whereCondition.append(" where " + aCondition);
 				else
-					whereCondition.append(" and " + aCondition);
+					whereCondition.append(" or " + aCondition);
 
 				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}

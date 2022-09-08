@@ -7,22 +7,12 @@
 <%@ page import="java.time.LocalDate"%>
 
 
-<%
 
-%>
-<!--
-String store_acc =(String) session.getAttribute("store_acc");
-StoreService storeSvc = new StoreService();
-StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
-String sacc = storeVO.getStore_acc();
-StoreVO storeVO1 = storeSvc.getOneStoreByAcc(sacc);
-
-pageContext.setAttribute("storeVO1",storeVO1);
--->
 <!DOCTYPE html>
 <html>
 <jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService"/>
 	<head>
+	<%@ include file="/frontend/commonCSS.file" %>
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css"
@@ -31,8 +21,9 @@ pageContext.setAttribute("storeVO1",storeVO1);
 	</head>
 
 	<body>
+		<%@ include file="/frontend/store/header.file" %><!-- header -->
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/backend/header.file" %> <!-- Header -->
+		<%@ include file="/frontend/store/sidebar.file" %> <!-- sidebar -->
 		
 
 		
@@ -115,32 +106,12 @@ pageContext.setAttribute("storeVO1",storeVO1);
 					<td>${storeSvc.getOneStoreByAcc(store_acc).bank_account}</td>
 				</tr>
 				<tr>	
-					<td>票券總分數</td>
-					<td>${storeSvc.getOneStoreByAcc(store_acc).store_tkt_rating_score}</td>
-				</tr>
-				<tr>	
-					<td>票券總評價數</td>
-					<td>${storeSvc.getOneStoreByAcc(store_acc).store_tkt_rating_count}</td>
-				</tr>
-				<tr>	
-					<td>票券平均評價數</td>
-					<td>${storeSvc.getOneStoreByAcc(store_acc).store_tkt_rating}</td>
-				</tr>
-				<tr>	
 					<td>訂房總分數</td>
 					<td>${storeSvc.getOneStoreByAcc(store_acc).store_rm_rating_score}</td>
 				</tr>
 				<tr>	
 					<td>訂房總評價數</td>
 					<td>${storeSvc.getOneStoreByAcc(store_acc).store_rm_rating_count}</td>
-				</tr>
-				<tr>	
-					<td>活動總分數</td>
-					<td>${storeSvc.getOneStoreByAcc(store_acc).store_act_rating_score}</td>
-				</tr>
-				<tr>	
-					<td>活動總評價數</td>
-					<td>${storeSvc.getOneStoreByAcc(store_acc).store_act_rating_count}</td>
 				</tr>
 				<tr>	
 					<td>被檢舉計點</td>
@@ -152,7 +123,7 @@ pageContext.setAttribute("storeVO1",storeVO1);
 						<form method="post" action="<%=request.getContextPath()%>/store.do">
 							<input type="submit" value="修改">
 		  					<input type="hidden" name="store_no" value="${storeSvc.getOneStoreByAcc(store_acc).store_no}">
-							<input type="hidden" name="action" value="updateStore">
+							<input type="hidden" name="action" value=listUpdateStore>
 						</form>
 					</td> 
 				</tr>
@@ -165,6 +136,7 @@ pageContext.setAttribute("storeVO1",storeVO1);
 			 </table>
 		</div>
 
+		<%@ include file="/frontend/commonJS.file" %>
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
 		<script>
 // 		header標題

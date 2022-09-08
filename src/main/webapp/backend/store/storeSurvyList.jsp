@@ -221,21 +221,16 @@ div.main-content {
 									<div>登記地址:${storeVO.store_add}</div>
 									<div>聯絡人:${storeVO.store_poc}</div>
 									<div>連絡電話:${storeVO.store_con_phone}</div>
-									<div>聯絡地址:${storeVO.store_con_add}</div>
-									<div>信箱:${storeVO.store_email}</div>
-									<div>加入時間:${storeVO.store_reg_date}</div>
+									
 									
 								</div>
 								<div class="col-4 order-data">
-									
+									<div>聯絡地址:${storeVO.store_con_add}</div>
+									<div>信箱:${storeVO.store_email}</div>
+									<div>加入時間:${storeVO.store_reg_date}</div>
 									<div>轉帳帳號:${storeVO.bank_account}</div>
-									<div>票券總分數:${storeVO.store_tkt_rating_score}</div>
-									<div>票券總評價數:${storeVO.store_tkt_rating_count}</div>
-									<div>票券平均評價數:${storeVO.store_tkt_rating}</div>
 									<div>訂房總分數:${storeVO.store_rm_rating_score}</div>
 									<div>訂房總評價數:${storeVO.store_rm_rating_count}</div>
-									<div>活動總分數:${storeVO.store_act_rating_score}</div>
-									<div>活動總評價數:${storeVO.store_act_rating_count}</div>
 									<div>被檢舉計點:${storeVO.store_report_count}</div>
 								</div>
 							</div>

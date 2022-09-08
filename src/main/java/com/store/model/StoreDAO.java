@@ -43,21 +43,21 @@ public class StoreDAO implements I_StoreDAO{
 			+ "(?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?);";
 	private static final String GETALL = 
 			" SELECT store_no,store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
-			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
-			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store ORDER BY store_no";
+			+ " store_con_add,store_email,store_reg_date,bank_account,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_report_count FROM store ORDER BY store_no";
 	private static final String GETONE = 
 			" SELECT store_no,store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
-			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
-			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_no = ?";
+			+ " store_con_add,store_email,store_reg_date,bank_account,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_report_count FROM store WHERE store_no = ?";
 	
 	private static final String GETONEBYACC = 
 			" SELECT store_no,store_acc, store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
-			+ " store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
-			+ " store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_acc = ?";
+			+ " store_con_add,store_email,store_reg_date,bank_account,\r\n"
+			+ " store_rm_rating_score,store_rm_rating_count,store_report_count FROM store WHERE store_acc = ?";
 	
 	private static final String LOGIN = " SELECT store_no,store_acc,store_pwd,acc_status,store_name,store_gui,store_rep,store_tel,store_fax,store_add,store_poc,store_con_phone,\r\n"
-			+ "			+ store_con_add,store_email,store_reg_date,bank_account,store_tkt_rating_score,store_tkt_rating_count,store_tkt_rating,\r\n"
-			+ "			+ store_rm_rating_score,store_rm_rating_count,store_act_rating_score, store_act_rating_count,store_report_count FROM store WHERE store_acc = ? AND store_pwd =?;";
+			+ "			+ store_con_add,store_email,store_reg_date,bank_account,\r\n"
+			+ "			+ store_rm_rating_score,store_rm_rating_count,store_report_count FROM store WHERE store_acc = ? AND store_pwd =?;";
 	
 	private static final String DELETE = 
 			"DELETE FROM store WHERE store_no= ?";
@@ -65,8 +65,8 @@ public class StoreDAO implements I_StoreDAO{
 			" UPDATE store SET \r\n"
 			+ " store_acc = ?, store_pwd = ?,acc_status = ?,store_name = ?,store_gui = ?,store_rep = ?,store_tel = ?,store_fax = ?,\r\n"
 			+ " store_add = ?,store_poc = ?,store_con_phone = ?,store_con_add = ?,store_email = ?,store_reg_date = ?,bank_account = ?,\r\n"
-			+ " store_tkt_rating_score = ?,store_tkt_rating_count = ?,store_tkt_rating = ?,store_rm_rating_score = ?,\r\n"
-			+ " store_rm_rating_count = ?,store_act_rating_score = ?, store_act_rating_count = ?,store_report_count = ?\r\n"
+			+ " store_rm_rating_score = ?,\r\n"
+			+ " store_rm_rating_count = ?,store_report_count = ?\r\n"
 			+ " WHERE store_no = ?";
 	
 	private static final String UPDATEPASSWORD = "UPDATE store SET store_pwd = ? WHERE store_no = ?;";
@@ -144,15 +144,10 @@ public class StoreDAO implements I_StoreDAO{
 					ps.setString(13,storeVO.getStore_email());
 					ps.setDate(14,storeVO.getStore_reg_date());
 					ps.setString(15,storeVO.getBank_account());
-					ps.setInt(16,storeVO.getStore_tkt_rating_score());
-					ps.setInt(17,storeVO.getStore_tkt_rating_count());
-					ps.setInt(18,storeVO.getStore_tkt_rating());
-					ps.setInt(19,storeVO.getStore_rm_rating_score());
-					ps.setInt(20,storeVO.getStore_rm_rating_count());
-					ps.setInt(21,storeVO.getStore_act_rating_score());
-					ps.setInt(22,storeVO.getStore_act_rating_count());
-					ps.setInt(23,storeVO.getStore_report_count());
-					ps.setInt(24, storeVO.getStore_no());
+					ps.setInt(16,storeVO.getStore_rm_rating_score());
+					ps.setInt(17,storeVO.getStore_rm_rating_count());
+					ps.setInt(18,storeVO.getStore_report_count());
+					ps.setInt(19, storeVO.getStore_no());
 					
 					ps.executeUpdate();
 		}catch(SQLException e){
@@ -277,13 +272,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 			}
 		} catch (SQLException se) {
@@ -349,13 +339,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 			}
 		} catch (SQLException se) {
@@ -423,13 +408,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 			}
 		} catch (SQLException se) {
@@ -495,13 +475,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 				list.add(storeVO);
 				
@@ -569,13 +544,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 			}
 		}catch (SQLException se) {
@@ -640,13 +610,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 				list.add(storeVO);
 				
@@ -718,13 +683,8 @@ public class StoreDAO implements I_StoreDAO{
 				storeVO.setStore_email(rs.getString("store_email"));
 				storeVO.setStore_reg_date(rs.getDate("store_reg_date"));
 				storeVO.setBank_account(rs.getString("bank_account"));
-				storeVO.setStore_tkt_rating_score(rs.getInt("store_tkt_rating_score"));
-				storeVO.setStore_tkt_rating_count(rs.getInt("store_tkt_rating_count"));
-				storeVO.setStore_tkt_rating(rs.getInt("store_tkt_rating"));
 				storeVO.setStore_rm_rating_score(rs.getInt("store_rm_rating_score"));
 				storeVO.setStore_rm_rating_count(rs.getInt("store_rm_rating_count"));
-				storeVO.setStore_act_rating_score(rs.getInt("store_act_rating_score"));
-				storeVO.setStore_act_rating_count(rs.getInt("store_act_rating_count"));
 				storeVO.setStore_report_count(rs.getInt("store_report_count"));
 				list.add(storeVO);	 
 		 }
