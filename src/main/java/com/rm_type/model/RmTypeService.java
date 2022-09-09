@@ -83,6 +83,10 @@ public class RmTypeService {
 		return dao.getEnoughType(arrival_date, departure_date, qty, guest, add);
 	}
 	
+	public List<RmTypeVO> getEnoughTypeByStore(Date arrival_date, Date departure_date, Integer store_no) {
+		return dao.getEnoughTypeByStore(arrival_date, departure_date, store_no);
+	}
+	
 	public List<RmTypeVO> getNotEnoughType(Date arrival_date, Date departure_date, Integer qty, Integer guest) {
 		return dao.getNotEnoughType(arrival_date, departure_date, qty, guest);
 	}

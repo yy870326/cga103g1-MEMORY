@@ -10,7 +10,8 @@
 <%@ page import="java.time.LocalDate"%>
 
 <jsp:useBean id="rmTypeSvc" class="com.rm_type.model.RmTypeService" />
-<jsp:useBean id="rmReserveSvc" class="com.rm_reserve.model.RmReserveService" />
+<jsp:useBean id="rmReserveSvc"
+	class="com.rm_reserve.model.RmReserveService" />
 <jsp:useBean id="rmOrderSvc" class="com.rm_order.model.RmOrderService" />
 <jsp:useBean id="rmOrderListSvc"
 	class="com.rm_order_list.model.RmOrderListService" />
@@ -23,6 +24,7 @@ if (request.getAttribute("orderlist") == null) {
 	pageContext.setAttribute("orderlist", orderlist);
 }
 pageContext.setAttribute("store_no", 1);
+
 %>
 
 
@@ -33,11 +35,13 @@ pageContext.setAttribute("store_no", 1);
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-
-
-
 <%@ include file="/frontend/commonCSS.file"%>
+
 <!-- 基本JS檔案 -->
+<!-- flatpickr datepicker CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 <script
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
@@ -55,8 +59,14 @@ h3.card-title {
 }
 
 h4 {
-    font-size: 20px;
+	font-size: 20px;
 	font-weight: 600;
+	color: #30504F;
+}
+
+h5 {
+	font-size: 17px;
+	font-weight: 500;
 	color: #30504F;
 }
 
@@ -165,6 +175,11 @@ td.sorting_1 {
 .card {
 	margin-bottom: 0;
 }
+
+.date {
+	display: flex;
+	justify-content: center;
+}
 </style>
 
 
@@ -174,6 +189,7 @@ td.sorting_1 {
 	<!-- sidebar -->
 
 	<div class="main-content">
+
 		<div class="d-flex justify-content-around">
 			<div class="col-xl-2 card to-jump">
 				<a href="#checkInTable">
@@ -181,11 +197,21 @@ td.sorting_1 {
 						<div class="col">
 							<h4>今日待入住訂單</h4>
 							<h3>
-							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
-							${rmOrderListSvc.getCheckInByStore(store_no).size()}
+								<svg style="width: 30px; height: 30px;" class="ionicon"
+									viewBox="0 0 512 512">
+									<path
+										d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" />
+									<path
+										d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" /></svg>
+								${rmOrderListSvc.getCheckInByStore(store_no).size()}
 							</h3>
 						</div>
-						<div class="col-4 bxs d-flex justify-content-center align-items-center">
+						<div
+							class="col-4 bxs d-flex justify-content-center align-items-center">
 							<i class='bx bx-log-in'></i>
 						</div>
 					</div>
@@ -198,8 +224,17 @@ td.sorting_1 {
 						<div class="col">
 							<h4>今日待退房</h4>
 							<h3>
-							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
-							${rmOrderListSvc.getCheckOutByStore(store_no).size()}
+								<svg style="width: 30px; height: 30px;" class="ionicon"
+									viewBox="0 0 512 512">
+									<path
+										d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" />
+									<path
+										d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" /></svg>
+								${rmOrderListSvc.getCheckOutByStore(store_no).size()}
 							</h3>
 						</div>
 
@@ -217,8 +252,17 @@ td.sorting_1 {
 						<div class="col">
 							<h4>入住中房間</h4>
 							<h3>
-							<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
-							${rmOrderListSvc.getStayByStore(store_no).size()}
+								<svg style="width: 30px; height: 30px;" class="ionicon"
+									viewBox="0 0 512 512">
+									<path
+										d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" />
+									<path
+										d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+										fill="none" stroke="currentColor" stroke-linecap="round"
+										stroke-linejoin="round" stroke-width="32" /></svg>
+								${rmOrderListSvc.getStayByStore(store_no).size()}
 							</h3>
 						</div>
 						<div
@@ -229,16 +273,43 @@ td.sorting_1 {
 				</a>
 			</div>
 
-			<div class="col-xl-2 card to-jump">
-				<div class="text-center row">
+			<div>
+				<div>
 					<div class="col">
-						<h4>今日入住數量</h4>
-						<c:forEach var="rmVO" items="${rmTypeSvc.getAllByStoreNo(store_no)}">
-						<h3>	
-						<svg style="width: 30px; height: 30px;" class="ionicon" viewBox="0 0 512 512"><path d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
-						${rmVO.rm_name}-${rmReserveSvc.getOneByRm(rmVO.rm_type_no).reservation_amount}/${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total}
-						</h3>
-						</c:forEach>
+						<h4>查詢空房數量</h4>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/RmRsv/RmRsv.do"
+							id="getEnoughTypeByStore">
+							<div class="date">
+								<div>
+									<input type="text" id="rangeDate" name="rangedate"
+										placeholder="請選擇查詢期間" class="form-control"
+										style="width: 200px;" data-input> <input type="hidden"
+										name="store_no" value="${store_no}">
+								</div>
+								<div>
+									<input type="hidden" name="action" value="getEnoughTypeByStore">
+									<input type="submit" class="btn btn-primary" value="查詢">
+								</div>
+							</div>
+							<c:forEach var="rmVO" items="${ableList}">
+								<h5>
+									<svg style="width: 20px; height: 20px;" class="ionicon"
+										viewBox="0 0 512 512">
+									<path
+											d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+											fill="none" stroke="currentColor" stroke-linecap="round"
+											stroke-linejoin="round" stroke-width="32" />
+									<path
+											d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+											fill="none" stroke="currentColor" stroke-linecap="round"
+											stroke-linejoin="round" stroke-width="32" /></svg>
+									<a href="">${rmVO.rm_name}
+										${rmReserveSvc.getOneByRm(rmVO.rm_type_no).reservation_amount}/${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total}
+									
+								</h5>
+							</c:forEach>
+						</Form>
 					</div>
 
 				</div>
@@ -293,10 +364,10 @@ td.sorting_1 {
 											<td><div>
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/RmOrder">
-														<input type="submit" class="btn btn-primary"
-															value="入住"> <input type="hidden"
-															name="rm_order_no" value="${checkInVO.rm_order_no}">
-														<input type="hidden" name="action" value="checkIn">
+														<input type="submit" class="btn btn-primary" value="入住">
+														<input type="hidden" name="rm_order_no"
+															value="${checkInVO.rm_order_no}"> <input
+															type="hidden" name="action" value="checkIn">
 													</FORM>
 												</div></td>
 										</tr>
@@ -354,10 +425,10 @@ td.sorting_1 {
 													<td><div>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/RmOrder">
-																<input type="submit" class="btn btn-primary"
-																	value="退房">
-																	<input type="hidden" name="rm_order_no" value="${checkOutVO.rm_order_no}">
-																<input type="hidden" name="action" value="checkOut">
+																<input type="submit" class="btn btn-primary" value="退房">
+																<input type="hidden" name="rm_order_no"
+																	value="${checkOutVO.rm_order_no}"> <input
+																	type="hidden" name="action" value="checkOut">
 															</FORM>
 														</div></td>
 												</tr>
@@ -417,24 +488,40 @@ td.sorting_1 {
 															<td><div>
 																	<FORM METHOD="post"
 																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-primary" value="提早退房">
-																	<input type="hidden" name="rm_order_no" value="${stayVO.rm_order_no}">
-																	<input type="hidden" name="rm_type_no" value="${stayVO.rm_type_no}">
-																	<input type="hidden" name="departure_date" value="${stayVO.departure_date}">
-																<input type="hidden" name="action" value="checkOutEarly">
+																		<input type="submit" class="btn btn-primary"
+																			value="提早退房"> <input type="hidden"
+																			name="rm_order_no" value="${stayVO.rm_order_no}">
+																		<input type="hidden" name="rm_type_no"
+																			value="${stayVO.rm_type_no}"> <input
+																			type="hidden" name="departure_date"
+																			value="${stayVO.departure_date}"> <input
+																			type="hidden" name="action" value="checkOutEarly">
 																	</FORM>
 																</div></td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
-
 										</div>
 									</div>
 								</div>
-
 								<%@ include file="/frontend/footer.file"%>
 								<%@ include file="/backend/commonJS.file"%>
+								<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 								<!-- 放置基本JS檔案 -->
+								<script>
+									$("#rangeDate").flatpickr(
+											{
+												mode : "range",
+												dateFormat : "Y-m-d",
+												defaultDate : [
+														"${arrival_date}",
+														"${departure_date}" ],
+												minDate : "today",
+												maxDate : new Date()
+														.fp_incr(90),
+												disable : [],
+											});
+								</script>
 </body>
 </html>
