@@ -67,6 +67,11 @@ public class RmTypeService {
 		return dao.getAll();
 	}
 	
+	public List<RmTypeVO> getAllByStoreNo(Integer store_no) {
+		
+		return dao.getAllByStoreNo(store_no);
+	}
+	
 	// 所有已上架房型
 	public List<RmTypeVO> getAllRmRsv() {
 		
@@ -78,7 +83,11 @@ public class RmTypeService {
 		return dao.getEnoughType(arrival_date, departure_date, qty, guest, add);
 	}
 	
-	public List<RmTypeVO> getNotEnoughType(Date start_date, Date end_date, Integer qty, Integer guest) {
-		return dao.getNotEnoughType(start_date, end_date, qty, guest);
+	public List<RmTypeVO> getEnoughTypeByStore(Date arrival_date, Date departure_date, Integer store_no) {
+		return dao.getEnoughTypeByStore(arrival_date, departure_date, store_no);
+	}
+	
+	public List<RmTypeVO> getNotEnoughType(Date arrival_date, Date departure_date, Integer qty, Integer guest) {
+		return dao.getNotEnoughType(arrival_date, departure_date, qty, guest);
 	}
 }

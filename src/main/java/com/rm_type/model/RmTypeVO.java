@@ -92,6 +92,4 @@ public class RmTypeVO implements Serializable {
 	    com.store.model.StoreVO storeVO = storeSvc.getOneStore(store_no);
 	    return storeVO;
     }
-
-	
 }
