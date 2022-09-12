@@ -313,14 +313,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 		}
-		 if("log_out".equals(action)) {
-	        	HttpSession session = req.getSession();
-	        	session.invalidate();
-	        	//導回登入頁面-------------
-	        	String url = "/frontend/homePage.jsp";
-	        	RequestDispatcher successView = req.getRequestDispatcher(url);
-	        	successView.forward(req, res);
-	        }
+		
 		
 	}
 	
