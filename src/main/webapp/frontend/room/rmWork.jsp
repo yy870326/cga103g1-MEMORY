@@ -173,8 +173,8 @@ td.sorting_1 {
 }
 
 .date {
-  display: flex;
-  justify-content: center;    
+	display: flex;
+	justify-content: center;
 }
 </style>
 
@@ -274,17 +274,19 @@ td.sorting_1 {
 					<div class="col">
 						<h4>&emsp;&emsp;&emsp;&emsp;可預訂空房</h4>
 						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/RmRsv/RmRsv.do" id="getEnoughTypeByStore">
+							ACTION="<%=request.getContextPath()%>/RmRsv/RmRsv.do"
+							id="getEnoughTypeByStore">
 							<div class="date">
-							<div>
-							<input type="text" id="rangeDate" name="rangedate"
-								placeholder="請選擇查詢期間" class="form-control" style="width: 210px;" data-input> 
-								<input type="hidden" name="store_no" value="${store_no}">
+								<div>
+									<input type="text" id="rangeDate" name="rangedate"
+										placeholder="請選擇查詢期間" class="form-control"
+										style="width: 210px;" data-input> <input type="hidden"
+										name="store_no" value="${store_no}">
 								</div>
 								<div>
-								<input type="hidden" name="action" value="getEnoughTypeByStore">
-							<input type="submit" class="btn btn-primary" value="查詢">
-							</div>
+									<input type="hidden" name="action" value="getEnoughTypeByStore">
+									<input type="submit" class="btn btn-primary" value="查詢">
+								</div>
 							</div>
 							<c:forEach var="rmVO" items="${ableList}">
 								<h5>
@@ -298,7 +300,8 @@ td.sorting_1 {
 											d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
 											fill="none" stroke="currentColor" stroke-linecap="round"
 											stroke-linejoin="round" stroke-width="32" /></svg>
-									<a href="">&emsp;${rmVO.rm_name}&emsp;剩餘${rmVO.minqty}間 / ${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total} total
+									<a href="">&emsp;${rmVO.rm_name}&emsp;剩餘${rmVO.minqty}間 /
+										${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total} total 
 								</h5>
 							</c:forEach>
 						</Form>
@@ -499,7 +502,9 @@ td.sorting_1 {
 								</div>
 								<%@ include file="/frontend/footer.file"%>
 								<%@ include file="/backend/commonJS.file"%>
-
+								<!-- flatpickr CSS -->
+								<link rel="stylesheet"
+									href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 								<!-- 放置基本JS檔案 -->
 								<script>
 									$("#rangeDate").flatpickr(
@@ -514,7 +519,6 @@ td.sorting_1 {
 														.fp_incr(90),
 												disable : [],
 											});
-									
 								</script>
 </body>
 </html>
