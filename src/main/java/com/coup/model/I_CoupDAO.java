@@ -7,7 +7,7 @@ public interface I_CoupDAO {
 	
 	public void insert(CoupVO coupVO);
     public void update(CoupVO coupVO);
-    public void updateStatus(CoupVO coupVO);
+    public void updateStatus(Integer coup_no);
     public CoupVO findByPrimaryKey(Integer coup_no);
     public List<CoupVO> getAll();
     public List<CoupVO> getByEndDate(Date enddate);

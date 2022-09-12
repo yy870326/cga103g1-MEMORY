@@ -157,4 +157,22 @@ public class MemCoupJdbcDAO implements I_MemCoupDAO {
 		}
 		
 	}
+
+	@Override
+	public List<MemCoupVO> getOneMember(Integer mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(MemCoupVO memCoupVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeState(Connection conn,Integer mem_coup_no, Integer coup_state) {
+		// TODO Auto-generated method stub
+		
+	}
 }

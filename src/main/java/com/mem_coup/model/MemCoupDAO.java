@@ -12,25 +12,26 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class MemCoupDAO implements I_MemCoupDAO{
-	
-	private static final String INSERT = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, ?);";
-//	private static final String UPDATE = "UPDATE mem_coup SET coup_no = ? WHERE mem_no = ?;";
+public class MemCoupDAO implements I_MemCoupDAO {
+
+	private static final String INSERT = "INSERT INTO mem_coup (mem_no, coup_no, coup_state) VALUES (?, ?, 0);";
+	private static final String CHANGE_STATE = "UPDATE mem_coup SET coup_state = ? WHERE mem_coup_no = ?;";
 	private static final String GET_ONE = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_coup_no = ?;";
 	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no;";
+	private static final String GET_MEMCOUP_BY_MEMNO = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_no =?";
 
 	private static DataSource ds = null;
-	
+
 	static {
-		
+
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-			
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -38,15 +39,14 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		
+
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 
 			ps.setInt(1, memCoupVO.getMem_no());
 			ps.setInt(2, memCoupVO.getCoup_no());
-			ps.setInt(3, memCoupVO.getCoup_state());
 
 			ps.executeUpdate();
 
@@ -71,54 +71,54 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 	}
 
-//	@Override
-//	public void update(MemCoupVO memCoupVO) {
-//
-//		Connection con = null;
-//		PreparedStatement ps = null;
-//		
-//		try {
-//			
-//			con = ds.getConnection();
-//			ps = con.prepareStatement(UPDATE);
-//
-//			ps.setInt(1, memCoupVO.getCoup_no());
-//			ps.setInt(2, memCoupVO.getMem_no());
-//
-//			ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (ps != null) {
-//				try {
-//					ps.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//
-//	}
+	@Override
+	public void update(MemCoupVO memCoupVO) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHANGE_STATE);
+
+			ps.setInt(1, memCoupVO.getCoup_state());
+			ps.setInt(2, memCoupVO.getMem_coup_no());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 
 	@Override
 	public MemCoupVO findByPrimaryKey(Integer mem_coup_no) {
 
 		MemCoupVO memCoupVO = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE);
 
@@ -132,7 +132,7 @@ public class MemCoupDAO implements I_MemCoupDAO{
 				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
 				memCoupVO.setMem_no(rs.getInt("mem_no"));
 				memCoupVO.setCoup_no(rs.getInt("coup_no"));
-				memCoupVO.setTkt_order_no(null);
+//				memCoupVO.setTkt_order_no(null);
 				memCoupVO.setCoup_state(rs.getInt("coup_state"));
 			}
 
@@ -164,12 +164,12 @@ public class MemCoupDAO implements I_MemCoupDAO{
 		List<MemCoupVO> list = new ArrayList<MemCoupVO>();
 		MemCoupVO memCoupVO = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL);
 
@@ -181,9 +181,9 @@ public class MemCoupDAO implements I_MemCoupDAO{
 				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
 				memCoupVO.setMem_no(rs.getInt("mem_no"));
 				memCoupVO.setCoup_no(rs.getInt("coup_no"));
-				memCoupVO.setTkt_order_no(null);
+//				memCoupVO.setTkt_order_no(null);
 				memCoupVO.setCoup_state(rs.getInt("coup_state"));
-				
+
 				list.add(memCoupVO);
 			}
 
@@ -208,6 +208,94 @@ public class MemCoupDAO implements I_MemCoupDAO{
 
 		return list;
 	}
-	
-}
 
+	// 讓會員查看自己擁有哪些優惠券
+	@Override
+	public List<MemCoupVO> getOneMember(Integer mem_no) {
+		List<MemCoupVO> list = new ArrayList<MemCoupVO>();
+		MemCoupVO memCoupVO = null;
+		ResultSet rs = null;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_MEMCOUP_BY_MEMNO);
+
+			ps.setInt(1, mem_no);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				memCoupVO = new MemCoupVO();
+
+				memCoupVO.setMem_coup_no(rs.getInt("mem_coup_no"));
+				memCoupVO.setMem_no(rs.getInt("mem_no"));
+				memCoupVO.setCoup_no(rs.getInt("coup_no"));
+//				memCoupVO.setTkt_order_no(null);
+				memCoupVO.setCoup_state(rs.getInt("coup_state"));
+
+				list.add(memCoupVO);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+	@Override
+	public void changeState(Connection conn, Integer mem_coup_no, Integer coup_state) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		MemCoupVO memCoupVO = null;
+		
+		try {
+			memCoupVO = new MemCoupVO();
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHANGE_STATE);
+
+			ps.setInt(1, memCoupVO.getCoup_state());
+			ps.setInt(2, memCoupVO.getMem_coup_no());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+}

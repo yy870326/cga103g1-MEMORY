@@ -3,8 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.time.*"%>
 <%@ page import="com.coup.model.*"%>
 <%@ page import="com.mem.model.*"%>
+<%@ page import="com.mem_coup.model.*"%>
+
+<% 
+MemCoupService memCoupSrv = new MemCoupService();
+List<MemCoupVO> list = memCoupSrv.listOneMemCoupon(1); // 寫死 mem_no = 1
+pageContext.setAttribute("list", list);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +35,7 @@
         <!-- 內容Start -->
         <div class="col-sm-12 col-md-11">
         <h3 class="mt-5 mb-3">優惠券列表</h3>
-			<ul class="nav nav-tabs nav-justified">
+			<!-- <ul class="nav nav-tabs nav-justified">
 				<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-3-1"> 全部(20) </a> </li>
 				<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-3-2"> 尚未使用(12) </a> </li>
 				<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-3-3"> 即將到期(3) </a> </li>
@@ -34,8 +43,12 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane show active" id="tab-3-1">
+	
 					全部優惠券
 				</div>
+				
+				
+				
 				<div class="tab-pane" id="tab-3-2">
 					尚未使用
 				</div>
@@ -45,7 +58,45 @@
 				<div class="tab-pane" id="tab-3-4">
 					 已使用
 				</div>
-			</div>
+			</div> -->
+			
+			
+			<table class="table table-hover table-responsive-sm fold-table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">優惠券名稱</th>
+							<th scope="col">折抵金額</th>
+							<th scope="col">到期日</th>
+							<th scope="col">狀態</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+					
+					
+					<c:forEach var="memCoupVO" items="${list}">
+						<c:if test="${memCoupVO.coupVO.status == 1}">
+							<tr>
+								<td>${memCoupVO.coupVO.coup_name}</td>
+								<td>${memCoupVO.coupVO.discount}</td>
+								<td>${memCoupVO.coupVO.enddate}</td>
+								<td>
+									<c:if test="${memCoupVO.coup_state == 0 }">
+										<span class="badge badge-danger light">未使用</span>
+									</c:if>
+									<c:if test="${memCoupVO.coup_state == 1 }">
+										<span class="badge badge-primary light">已使用</span>
+									</c:if>
+									<c:if test="${memCoupVO.coup_state == 2 }">
+										<span class="badge badge-info light">已過期</span>
+									</c:if>
+								</td>
+							</tr>
+							</c:if>
+						</c:forEach>
+
+					</tbody>
+				</table>
 		</div>
         
       </div>
