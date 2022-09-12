@@ -249,16 +249,16 @@ div.main-content {
 									<h4>
 										<i class='bx bxs-user-voice'></i> 訂購人資料
 									</h4>
-									<div>付款人：${memSvc.getOne(rmOrderVO.mem_no).mem_name}</div>
-									<div>電話：${memSvc.getOne(rmOrderVO.mem_no).mem_mobile}</div>
-									<div>Email:${memSvc.getOne(rmOrderVO.mem_no).mem_email}</div>
+									<div>付款人：${memSvc.getOneMem(rmOrderVO.mem_no).mem_name}</div>
+									<div>電話：${memSvc.getOneMem(rmOrderVO.mem_no).mem_mobile}</div>
+									<div>Email:${memSvc.getOneMem(rmOrderVO.mem_no).mem_email}</div>
 								</div>
 								<div class="col-4 order-data">
 									<h4>
 										<i class='bx bx-credit-card'></i> 付款資料
 									</h4>
 									<div>訂單成立日期： ${rmOrderVO.order_date}</div>
-									<div>信用卡號碼：${memSvc.getOne(rmOrderVO.mem_no).mem_card}</div>
+									<div>信用卡號碼：${memSvc.getOneMem(rmOrderVO.mem_no).mem_card}</div>
 								</div>
 							</div>
 							<table class="table table-striped">

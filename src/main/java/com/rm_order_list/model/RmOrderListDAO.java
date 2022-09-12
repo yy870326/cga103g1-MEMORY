@@ -313,24 +313,26 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 		
 		PreparedStatement ps = null;
 		try {
-			con = ds.getConnection();
+		
 			ps = con.prepareStatement(INSERT);
 			ps.setInt(1, rmOrderListVO.getRm_type_no());
 			ps.setInt(2, rmOrderListVO.getRm_order_no());
 			ps.setInt(3, rmOrderListVO.getRm_amount());
 			ps.setInt(4, rmOrderListVO.getRm_price());
-			ps.setString(5, rmOrderListVO.getRm_check_in());
+			ps.setDate(5, rmOrderListVO.getArrival_date());
+			ps.setDate(6, rmOrderListVO.getDeparture_date());
+			ps.setString(7, rmOrderListVO.getRm_check_in());
 			
-			Statement stmt=	con.createStatement();
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate("set auto_increment_increment=1;");   //自增主鍵-遞增
-			
 			ps.executeUpdate();
+			
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
 					// 3●設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-emp");
+					System.err.println("rolled back-由-order");
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. "
@@ -340,13 +342,7 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
+			
 		}
 	}
 
@@ -471,6 +467,12 @@ public class RmOrderListDAO implements I_RmOrderListDAO {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Integer addRmOrderList(RmOrderListVO rmOrderListVO, List<RmOrderListVO> list) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

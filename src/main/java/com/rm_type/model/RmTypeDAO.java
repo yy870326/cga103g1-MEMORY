@@ -380,6 +380,7 @@ public class RmTypeDAO implements I_RmTypeDAO {
 				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
 				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
 				rm.setRm_update(rs.getInt("rm_update"));
+				rm.setMinqty(rs.getInt("minqty"));
 				rmAll.add(rm);
 			}
 			

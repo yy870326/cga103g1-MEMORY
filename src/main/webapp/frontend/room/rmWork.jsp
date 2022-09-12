@@ -31,17 +31,15 @@ pageContext.setAttribute("store_no", 1);
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 <%@ include file="/frontend/commonCSS.file"%>
-
+    <!-- flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <!-- 基本JS檔案 -->
-<!-- flatpickr datepicker CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 <script
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
@@ -177,8 +175,8 @@ td.sorting_1 {
 }
 
 .date {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;    
 }
 </style>
 
@@ -278,19 +276,17 @@ td.sorting_1 {
 					<div class="col">
 						<h4>查詢空房數量</h4>
 						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/RmRsv/RmRsv.do"
-							id="getEnoughTypeByStore">
+							ACTION="<%=request.getContextPath()%>/RmRsv/RmRsv.do" id="getEnoughTypeByStore">
 							<div class="date">
-								<div>
-									<input type="text" id="rangeDate" name="rangedate"
-										placeholder="請選擇查詢期間" class="form-control"
-										style="width: 200px;" data-input> <input type="hidden"
-										name="store_no" value="${store_no}">
+							<div>
+							<input type="text" id="rangeDate" name="rangedate"
+								placeholder="請選擇查詢期間" class="form-control" style="width: 200px;" data-input> 
+								<input type="hidden" name="store_no" value="${store_no}">
 								</div>
 								<div>
-									<input type="hidden" name="action" value="getEnoughTypeByStore">
-									<input type="submit" class="btn btn-primary" value="查詢">
-								</div>
+								<input type="hidden" name="action" value="getEnoughTypeByStore">
+							<input type="submit" class="btn btn-primary" value="查詢">
+							</div>
 							</div>
 							<c:forEach var="rmVO" items="${ableList}">
 								<h5>
@@ -304,9 +300,7 @@ td.sorting_1 {
 											d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
 											fill="none" stroke="currentColor" stroke-linecap="round"
 											stroke-linejoin="round" stroke-width="32" /></svg>
-									<a href="">${rmVO.rm_name}
-										${rmReserveSvc.getOneByRm(rmVO.rm_type_no).reservation_amount}/${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total}
-									
+									<a href="">${rmVO.rm_name} ${rmReserveSvc.getOneByRm(rmVO.rm_type_no).reservation_amount}/${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total}
 								</h5>
 							</c:forEach>
 						</Form>
@@ -345,9 +339,9 @@ td.sorting_1 {
 											<td>${checkInVO.rm_order_no}</td>
 											<td>${rmTypeSvc.getOneRm(checkInVO.rm_type_no).rm_name}</td>
 											<td>${checkOutVO.rm_amount}</td>
-											<td>${memSvc.getOne(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
+											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
 											<td class="hidden">${rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no}</td>
-											<td>${memSvc.getOne(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
+											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
 											<td>${checkInVO.arrival_date}</td>
 											<td>${checkInVO.departure_date}</td>
 											<td>${checkInVO.rm_check_in}</td>
@@ -406,9 +400,9 @@ td.sorting_1 {
 													<td>${checkOutVO.rm_order_no}</td>
 													<td>${rmTypeSvc.getOneRm(checkOutVO.rm_type_no).rm_name}</td>
 													<td>${checkOutVO.rm_amount}</td>
-													<td>${memSvc.getOne(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_name}</td>
+													<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_name}</td>
 													<td class="hidden">${rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no}</td>
-													<td>${memSvc.getOne(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
+													<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
 													<td>${checkOutVO.arrival_date}</td>
 													<td>${checkOutVO.departure_date}</td>
 													<td>${checkOutVO.rm_check_in}</td>
@@ -468,9 +462,9 @@ td.sorting_1 {
 															<td>${stayVO.rm_order_no}</td>
 															<td>${rmTypeSvc.getOneRm(stayVO.rm_type_no).rm_name}</td>
 															<td>${checkOutVO.rm_amount}</td>
-															<td>${memSvc.getOne(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
+															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
 															<td class="hidden">${rmOrderSvc.getOne(stayVO.rm_order_no).mem_no}</td>
-															<td>${memSvc.getOne(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
+															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
 															<td>${stayVO.arrival_date}</td>
 															<td>${stayVO.departure_date}</td>
 															<td>${stayVO.rm_check_in}</td>
@@ -507,7 +501,7 @@ td.sorting_1 {
 								</div>
 								<%@ include file="/frontend/footer.file"%>
 								<%@ include file="/backend/commonJS.file"%>
-								<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 								<!-- 放置基本JS檔案 -->
 								<script>
 									$("#rangeDate").flatpickr(
@@ -522,6 +516,7 @@ td.sorting_1 {
 														.fp_incr(90),
 												disable : [],
 											});
+									
 								</script>
 </body>
 </html>
