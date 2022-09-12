@@ -21,6 +21,17 @@ public class MemCoupService {
 		return dao.getAll();
 	}
 	
+	public MemCoupVO changeState(Integer mem_coup_no, Integer coup_state) {
+		MemCoupVO memCoupVO = new MemCoupVO();
+		
+		memCoupVO.setMem_coup_no(mem_coup_no);
+		memCoupVO.setCoup_state(coup_state);
+		
+		dao.update(memCoupVO);
+		
+		return memCoupVO;
+	}
+	
 	public MemVO sendCoupToMem(Integer mem_no, Integer coup_no, Integer coup_state) {
 		
 		MemService memSrv = new MemService();
@@ -38,6 +49,11 @@ public class MemCoupService {
 		dao.insert(memCoupVO);
 		
 		return memVO;
+	}
+	
+	// 讓會員查看自己擁有哪些優惠券
+	public List<MemCoupVO> listOneMemCoupon(Integer mem_no) {
+		return dao.getOneMember(mem_no);
 	}
 	
 }

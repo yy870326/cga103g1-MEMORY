@@ -7,6 +7,28 @@
 <%@ page import="com.cart.model.*"%>
 <%@ page import="com.tkt.model.*"%>
 <%@ page import="com.mem.model.*"%>
+<%@ page import="com.mem_coup.model.*"%>
+
+
+
+
+<% 
+
+MemCoupService memCoupSrv = new MemCoupService();
+List<MemCoupVO> memCoupList = memCoupSrv.listOneMemCoupon(1); // 寫死 mem_no = 1
+pageContext.setAttribute("memCoupList", memCoupList);
+/* CartItemVO cartItemVO = new CartItemVO();
+System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
+List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedList"); 
+
+session.setAttribute("checkedList", checkedList);
+/* System.out.println("cart.jsp cartItems:" + cartItems); */
+ /*  CartItemService cartItemSrv = new CartItemService();
+  List<CartItemVO> list = cartItemSrv.getCart(sessionId);
+  pageContext.setAttribute("list", list); */
+  /* Integer cartItemSize = cartItems.size(); */
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,16 +50,6 @@
 </head>
 <body>
 
-<% 
-/* CartItemVO cartItemVO = new CartItemVO();
-System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
-List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedList"); 
-/* System.out.println("cart.jsp cartItems:" + cartItems); */
- /*  CartItemService cartItemSrv = new CartItemService();
-  List<CartItemVO> list = cartItemSrv.getCart(sessionId);
-  pageContext.setAttribute("list", list); */
-  /* Integer cartItemSize = cartItems.size(); */
-%>
 
   <%-- header --%>
   <%@ include file="/frontend/header.file" %>
@@ -58,7 +70,7 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
 </div>
   
   <!-- TABLE -->
-  <form class="pt80" method="post" action="<%=request.getContextPath()%>/cart/buyTkt.do">
+  <form class="pt80" method="post" action="<%=request.getContextPath()%>/tktOrder/addTktOrd.do">
 		
   
   
@@ -131,17 +143,18 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
             
             </table>
                 
-                <h2 class="mt-60">訂購者資訊</h2>
+               <h2 class="mt-60">訂購者資訊</h2>
                 <p class="text-danger mb-20">＊為必填資訊</p>
                 
-                  <div class="d-flex justify-content-between mb-20">
+                 <!--  <div class="d-flex justify-content-between mb-20">
                   	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>會員編號</label>
                     <p>0001</p>
+                    <input type="hidden" name="mem_no"  value="1">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>姓名</label>
-                    <input type="text" name="text" placeholder="自動帶入會員名稱" class="form-control">
+                    <input type="text" name="tkt_order_mem_name" class="form-control">
                   </div>
                   
                   </div>
@@ -149,11 +162,23 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                   
                   	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>Email</label>
-                    <input type="text" name="email" placeholder="自動帶入會員 email " class="form-control">
+                    <input type="text" name="tkt_order_mem_email" class="form-control">
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 password">
                     <label><span class="text-danger">*</span>聯絡電話</label>
                     <input type="text" name="text" placeholder="自動帶入會員電話號碼" class="form-control">
+                  </div> -->
+                  
+                  
+                  
+                  <div class="d-flex justify-content-between mb-20">
+                  <div class="col-lg-6 col-md-12 col-sm-12 email">
+                    <label><span class="text-danger">*</span>姓名</label>
+                    <input type="text" name="tkt_order_mem_name" class="form-control">
+                  </div>
+                  	<div class="col-lg-6 col-md-12 col-sm-12 email">
+                    <label><span class="text-danger">*</span>Email</label>
+                    <input type="text" name="tkt_order_mem_email" class="form-control">
                   </div>
                   </div>
                   
@@ -194,19 +219,26 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                 <div class="d-flex justify-content-between mb-20">
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label>優惠券選單</label>
-                    <select class="custom-select select-big mb-3">
-                      <option selected>--- 請選擇 ---</option>
-                      <option>歡慶旅遊季優惠券</option>
-                      <option>限時票券優惠</option>
-                      <option>22中秋節優惠</option>
+                    <select class="custom-select select-big mb-3 mem_coup_selected" name="mem_coup_no">
+                      <option value="0" selected>--- 請選擇 ---</option>
+                      <c:forEach var="memCoupVO" items="${memCoupList}">
+						<c:if test="${memCoupVO.coupVO.status == 1}">
+							<%-- <option value="${memCoupVO.mem_coup_no}">${memCoupVO.coupVO.discount}</option> --%>
+							<option value="${memCoupVO.mem_coup_no}">${memCoupVO.coupVO.coup_name}, -NT$ ${memCoupVO.coupVO.discount}</option>
+							</c:if>
+						</c:forEach>
                     </select>
                   </div>
                   
                   	<div class="d-flex flex-column align-items-end mb-3"> 
 							<p>商品總金額： <span class="totalPrice" style="color: red;"></span> 元</p>
-							<p>折扣金額： - <span class="totalPrice" style="color: red;"></span> 元</p>
-							<p>總付款金額： <span class="totalPrice" style="color: red;"></span> 元</p>
-						</div>
+							<p>折扣金額： - <span class="coup_discount" style="color: red;"></span> 元</p>
+							<p>總付款金額： <span class="payPrice" style="color: red;"></span> 元</p>
+							
+							<!-- js setAttrubute--> 
+							<input type="hidden" name="original_price" id="original_price" value="">
+							<input type="hidden" name="ttl_price" id="ttl_price" value="">
+					</div>
                  
                </div>
                   
@@ -247,11 +279,11 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
                   </div> -->
                   <div class="col-md-12">
 						
-                    	<input type="hidden" name="mem_no" value="">
+                    	<input type="hidden" name="mem_no" value="1">
                     	
 						<div class="d-flex justify-content-between">
 							<a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn btn-outline-primary">返回購物車</a>
-							<button type="submit" class="btn btn-info ml-3">確認付款</button>
+							<button type="submit" class="btn btn-info ml-3" id="addTktOrder">確認付款</button>
 						</div>
 					
                   </div>
@@ -275,18 +307,89 @@ List<CartItemVO> checkedList = (List<CartItemVO>)request.getAttribute("checkedLi
   	
   	<%-- commonJS --%>
 	<%@ include file="/frontend/commonJS.file" %>
+    <!-- sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <!-- axios test -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
   
 <script>
 	const totalPrice = document.querySelector('.totalPrice'); 
 	const itemPrice = document.querySelectorAll('.itemPrice'); 
+	const mem_coup_selected = document.querySelector('.mem_coup_selected');
+	const coup_discount = document.querySelector('.coup_discount');
+	const discount_selected = document.querySelectorAll('.discount_selected');
+	const payPrice = document.querySelector('.payPrice');
+	const addTktOrder = document.querySelector('#addTktOrder');
+	 /* input hidden  original_price */
+	const original_price = document.querySelector('#original_price');
+	 /* input hidden  ttl_price */
+	const ttl_price = document.querySelector('#ttl_price');
 	
-	/* totalPrice */
+	 /* sweetalert btn setting*/
+/* 	 const swalWithBootstrapButtons = Swal.mixin({
+       customClass: {
+           confirmButton: 'btn btn-success ml-3',
+           cancelButton: 'btn btn-danger mr-3'
+       },
+       buttonsStyling: false
+   }) */
+	
+	/* ----------- totalPrice -----------*/
+	/* 未使用優惠券的總價 */
 	let sum = 0;
 	
 	for(let i = 0; i < ${checkedList.size()}; i++) {
 	  sum += parseInt(itemPrice[i].innerText);
 	  totalPrice.innerText = sum;
 	}
+	
+	/* original_price setAttribute */
+	original_price.setAttribute("value", sum);
+	
+	
+	/* ----------- coup discount -----------*/
+	/* 優惠券折扣價 */
+	let result = 0;
+	/* 總價 - 折扣 */
+	let pay = 0
+	
+	const options = mem_coup_selected.options;
+	
+
+	mem_coup_selected.addEventListener('change', () => { 
+		let coupDiscount = options[mem_coup_selected.selectedIndex].innerText.split(', -NT$ ', 2)[1];
+		coup_discount.innerText = coupDiscount;
+		pay = sum - coupDiscount;
+		payPrice.innerText = pay;
+		/* ttl_price setAttribute */
+		ttl_price.setAttribute("value", pay);
+	});
+	
+		
+	
+	
+/* 	addTktOrder.addEventListener('click', () => {
+		axios({
+				"method": "post", 
+				"url": "addTktOrd.do",
+				"params": {
+					"original_price": String(sum),
+					"ttl_price": String(1799)
+				}
+		   }).then(function(response) { 
+		   		console.log(response);
+		   		console.log("訂單參數成功發送");
+		   		swalWithBootstrapButtons.fire({
+					position: 'center',
+					icon: 'success',
+					title: '票券購買成功',
+					showConfirmButton: false,
+					timer: 1500
+				})
+		   }).catch((error) => console.log(error));
+	}); */
+	
+	
 </script>
 
 </body>

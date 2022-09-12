@@ -1,8 +1,7 @@
 package com.coup.model;
 
-import static com.util.JdbcUtil.PASSWORD;
-import static com.util.JdbcUtil.URL;
-import static com.util.JdbcUtil.USERNAME;
+
+
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,7 +21,7 @@ public class CoupDAO implements I_CoupDAO {
 
 	private static final String INSERT = "INSERT INTO coup (coup_name, introduce, discount, startdate, enddate, `status`) VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String UPDATE = "UPDATE coup SET coup_name = ?, introduce = ?, discount = ?, startdate = ?, enddate = ?, `status` = ? WHERE coup_no = ?;";
-	private static final String UPDATE_STATUS = "UPDATE coup SET status = ? WHERE enddate = ?;";
+	private static final String UPDATE_STATUS = "UPDATE coup SET status = 0 WHERE coup_no = ?;";
 	private static final String GET_ONE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE coup_no = ?;";
 	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no;";
 	private static final String GET_ONE_BY_ENDDATE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE enddate = ? ORDER BY coup_no;";
@@ -124,7 +123,7 @@ public class CoupDAO implements I_CoupDAO {
 	}
 	
 	@Override
-	public void updateStatus(CoupVO coupVO) {
+	public void updateStatus(Integer coup_no) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -133,8 +132,7 @@ public class CoupDAO implements I_CoupDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_STATUS);
 
-			ps.setInt(1, coupVO.getStatus());
-			ps.setDate(2, coupVO.getEnddate());
+			ps.setInt(1, coup_no);
 
 			ps.executeUpdate();
 
