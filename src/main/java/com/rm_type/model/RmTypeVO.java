@@ -19,7 +19,14 @@ public class RmTypeVO implements Serializable {
 	private Integer rm_rate_sum;
 	private Integer rm_eval_sum;
 	private Integer rm_update;
+	private Integer minqty;
 	
+	public Integer getMinqty() {
+		return minqty;
+	}
+	public void setMinqty(Integer minqty) {
+		this.minqty = minqty;
+	}
 	public Integer getRm_type_no() {
 		return rm_type_no;
 	}
@@ -92,6 +99,4 @@ public class RmTypeVO implements Serializable {
 	    com.store.model.StoreVO storeVO = storeSvc.getOneStore(store_no);
 	    return storeVO;
     }
-
-	
 }

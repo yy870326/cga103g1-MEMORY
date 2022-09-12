@@ -67,7 +67,6 @@ public class RmReserveDAO implements I_RmReserveDAO {
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
 			ps.executeUpdate();
-
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -98,7 +97,7 @@ public class RmReserveDAO implements I_RmReserveDAO {
 
 		try {
 			con = ds.getConnection();
-			ps = con.prepareStatement(UPDATE);
+			ps = con.prepareStatement(RESERVE);
 
 			ps.setInt(1, qty);
 			ps.setInt(2, rm_type_no);

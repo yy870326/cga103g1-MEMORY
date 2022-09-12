@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<head><script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script></head>
+<%@ page import="com.system_notification_message.model.*"%>
+<%@ page import="java.util.*"%>
+<%
+SystemNotificationMessageService snmSvc = new SystemNotificationMessageService();
+List<SystemNotificationMessageVO> snm = snmSvc.getthree();
+pageContext.setAttribute("snm", snm);
+%>
+
+<head>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script></head>
     <header class="header-static navbar-sticky navbar-light shadow">
       <div class="navbar-top d-none d-lg-block">
         <div class="container">
@@ -40,6 +49,8 @@
               </ul>
             </div>
 
+			
+                  
             <div class="d-flex align-items-center">
               <div class="dropdown">
                 <a
@@ -50,18 +61,57 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  ><i class="far fa-user mr-2"></i>帳戶</a
+                  >
+                  <!--已登入顯現帳號 -->
+                  <c:if test="${mem_email!=null}">
+               <%= request.getSession().getAttribute("mem_email") %>
+               </c:if>
+                  <c:if test="${mem_email==null}">帳戶
+                  </c:if>
+                  </a
                 >
+                <div
+                  class="dropdown-menu mt-2 shadow"
+                  aria-labelledby="dropdownAccount">
+                   <!--已登入不會出現會員登入按鈕 -->
+                  <c:if test="${mem_email==null}">
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/signin/login.jsp">會員登入</a>
+                   </c:if>
+                  <a class="dropdown-item" href="#">廠商登入</a>
+                  <a class="dropdown-item" href="signin/addMem.jsp">註冊</a>
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/act/memPage.html">會員中心</a>
+                  <c:if test="${mem_email!=null}">
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/mem/mem.do?action=log_out">登出</a>
+                   </c:if>
+                </div>
+              </div>
+            
+            <div class="d-flex align-items-center">
+              <div class="dropdown">
+                <a
+                  class="dropdown-toggle"
+                  href="#"
+                  role="button"
+                  id="dropdownAccount"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >系統訊息</a
+                >
+                <div class="snmblur">
                 <div
                   class="dropdown-menu mt-2 shadow"
                   aria-labelledby="dropdownAccount"
                 >
-                  <a class="dropdown-item" href="#">會員登入</a>
-                  <a class="dropdown-item" href="#">廠商登入</a>
-                  <a class="dropdown-item" href="#">註冊</a>
-                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/act/memPage.html">會員中心</a>
-                </div>
+              <c:forEach var="snm" items="${snm}">
+               <div>${snm.msg}</div>
+	<img
+		src="<%=request.getContextPath()%>/snm?msg_no=${snm.msg_no}&action=getpic">
+                   </c:forEach>
+                   </div>
               </div>
+              </div>
+            
             
               <ul class="social-icons">
                 <li class="social-icons-item social-facebook m-0">
@@ -175,6 +225,7 @@
                 >即時客服</a
               >
             </div>
+            
           </div>
         </div>
       </nav>
@@ -185,5 +236,8 @@
     	"${storeSvc.getOneStoreByAcc(storeVO.store_acc).store_name}" === null?location="<%=request.getContextPath()%>/frontend/customer_service/storeChat.jsp":location="<%=request.getContextPath()%>/frontend/customer_service/frontChat.jsp";
     });
     
+    $(".snmblur").focus(function(){
+    	$(".snmblur").css("background-color", "gray");
+    });
     
     </script>

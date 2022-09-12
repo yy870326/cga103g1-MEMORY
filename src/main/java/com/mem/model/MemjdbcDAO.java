@@ -29,7 +29,8 @@ public class MemjdbcDAO implements I_MemDAO {
 			"UPDATE mem set mem_acc =?,mem_pwd=?,acc_status=?,mem_name=?,mem_gender=?,mem_email=?,mem_mobile=?,mem_city=?,mem_dist=?,mem_addr=?,mem_reg_date=?,mem_pic=?,mem_report_count=?,mem_card=? where mem_no = ?";
 		private static final String LOGIN = 
 			"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card  FROM mem WHERE  mem_email= ? and mem_pwd= ?"; 
-		
+		private static final String GET_ONE_BY_MAIL = 
+				"SELECT * FROM MEM WHERE mem_email=?";
 		@Override
 		public void insert(MemVO memVO) {
 			Connection con = null;
@@ -324,7 +325,67 @@ public class MemjdbcDAO implements I_MemDAO {
 			}
 			return list;
 		}
-		
+		@Override
+		public MemVO getOneBymail(String mem_email) {
+			ResultSet rs = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			MemVO memvo = null;
+			try{
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(GET_ONE_BY_MAIL);
+				
+				pstmt.setString(1,mem_email);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					memvo = new MemVO();
+					memvo.setMem_no(rs.getInt("mem_no"));
+					memvo.setMem_acc(rs.getString("mem_acc"));
+					memvo.setMem_pwd(rs.getString("mem_pwd"));
+					memvo.setAcc_status(rs.getInt("acc_status"));
+					memvo.setMem_name(rs.getString("mem_name"));
+					memvo.setMem_gender(rs.getString("mem_gender"));
+					memvo.setMem_email(rs.getString("mem_email"));
+					memvo.setMem_mobile(rs.getString("mem_mobile"));
+					memvo.setMem_city(rs.getString("mem_city"));
+					memvo.setMem_dist(rs.getString("mem_dist"));
+					memvo.setMem_addr(rs.getString("mem_addr"));
+					memvo.setMem_reg_date(rs.getDate("mem_reg_date"));
+					memvo.setMem_pic(rs.getBytes("mem_pic"));
+					memvo.setMem_report_count(rs.getInt("mem_report_count"));
+					memvo.setMem_card(rs.getString("mem_card"));
+					
+				}
+				
+			}catch (SQLException | ClassNotFoundException se) {
+				se.printStackTrace();
+				}finally {
+					if (rs != null) {
+						try {
+						rs.close();
+						}catch (SQLException SQ) {
+							SQ.printStackTrace();
+						}
+					 }
+					if (pstmt != null) {
+						try {
+						pstmt.close();
+						}catch (SQLException SQ) {
+							SQ.printStackTrace();
+						}
+					 }
+					if (con != null) {
+						try {
+						con.close();
+						}catch (SQLException SQ) {
+							SQ.printStackTrace();
+						}
+					 }
+			}
+			
+			return memvo;
+		}
 		
 		public static void main(String[] args) {
 
@@ -334,17 +395,17 @@ public class MemjdbcDAO implements I_MemDAO {
 			
 			
 //			// insert
-				MemVO memVO01 = new MemVO();
-			memVO01.setMem_pwd("qwwwwww");
-			memVO01.setMem_name("�p");
-			memVO01.setMem_gender("F");
-			memVO01.setMem_email("@wwwww");
-			memVO01.setMem_mobile("09888");
-			memVO01.setMem_city("�x�_");
-			memVO01.setMem_reg_date(java.sql.Date.valueOf("2002-01-01"));
-			memVO01.setMem_pic(null);
-			memVO01.setMem_card("3333333");
-			dao.insert(memVO01);
+//				MemVO memVO01 = new MemVO();
+//			memVO01.setMem_pwd("c");
+//			memVO01.setMem_name("�p");
+//			memVO01.setMem_gender("F");
+//			memVO01.setMem_email("3");
+//			memVO01.setMem_mobile("09888");
+//			memVO01.setMem_city("�x�_");
+//			memVO01.setMem_reg_date(java.sql.Date.valueOf("2002-01-01"));
+//			memVO01.setMem_pic(null);
+//			memVO01.setMem_card("3333333");
+//			dao.insert(memVO01);
 			
 			
 //			// update
@@ -390,22 +451,22 @@ public class MemjdbcDAO implements I_MemDAO {
 			
 			//
 			//login
-//			MemVO memVO05 = dao.login("jacky", "vwxyz");
-//			System.out.println(memVO05.getMem_no()+",");
-//			System.out.println(memVO05.getMem_acc()+",");
-//			System.out.println(memVO05.getMem_pwd()+",");
-//			System.out.println(memVO05.getAcc_status()+",");
-//			System.out.println(memVO05.getMem_name()+",");
-//			System.out.println(memVO05.getMem_gender()+",");
-//			System.out.println(memVO05.getMem_email()+",");
-//			System.out.println(memVO05.getMem_mobile()+",");
-//			System.out.println(memVO05.getMem_city()+",");
-//			System.out.println(memVO05.getMem_dist()+",");
-//			System.out.println(memVO05.getMem_addr()+",");
-//			System.out.println(memVO05.getMem_reg_date()+",");
-//			System.out.println(memVO05.getMem_pic()+",");
-//			System.out.println(memVO05.getMem_report_count()+",");
-//			System.out.println(memVO05.getMem_card()+",");
+//			MemVO memVO04 = dao.login("jacky", "vwxyz");
+//			System.out.println(memVO04.getMem_no()+",");
+//			System.out.println(memVO04.getMem_acc()+",");
+//			System.out.println(memVO04.getMem_pwd()+",");
+//			System.out.println(memVO04.getAcc_status()+",");
+//			System.out.println(memVO04.getMem_name()+",");
+//			System.out.println(memVO04.getMem_gender()+",");
+//			System.out.println(memVO04.getMem_email()+",");
+//			System.out.println(memVO04.getMem_mobile()+",");
+//			System.out.println(memVO04.getMem_city()+",");
+//			System.out.println(memVO04.getMem_dist()+",");
+//			System.out.println(memVO04.getMem_addr()+",");
+//			System.out.println(memVO04.getMem_reg_date()+",");
+//			System.out.println(memVO04.getMem_pic()+",");
+//			System.out.println(memVO04.getMem_report_count()+",");
+//			System.out.println(memVO04.getMem_card()+",");
 			
 			
 //			// getAll
@@ -428,7 +489,25 @@ public class MemjdbcDAO implements I_MemDAO {
 //				System.out.println(aMem.getMem_card()+",");
 //				
 //			}
+//			 findByemail
+			MemVO memVO05 = dao.getOneBymail("2");
+			System.out.println(memVO05.getMem_no()+",");
+			System.out.println(memVO05.getMem_acc()+",");
+			System.out.println(memVO05.getMem_pwd()+",");
+			System.out.println(memVO05.getAcc_status()+",");
+			System.out.println(memVO05.getMem_name()+",");
+			System.out.println(memVO05.getMem_gender()+",");
+			System.out.println(memVO05.getMem_email()+",");
+			System.out.println(memVO05.getMem_mobile()+",");
+			System.out.println(memVO05.getMem_city()+",");
+			System.out.println(memVO05.getMem_dist()+",");
+			System.out.println(memVO05.getMem_addr()+",");
+			System.out.println(memVO05.getMem_reg_date()+",");
+			System.out.println(memVO05.getMem_pic()+",");
+			System.out.println(memVO05.getMem_report_count()+",");
+			System.out.println(memVO05.getMem_card()+",");
 					
 		}
+	
 		
 }
