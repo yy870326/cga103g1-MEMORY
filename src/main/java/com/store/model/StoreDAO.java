@@ -75,6 +75,9 @@ public class StoreDAO implements I_StoreDAO{
 	
 	
 	private static final String SURVY = "SELECT * FROM store WHERE acc_status = 0;";
+	
+	private static final String BACKENDUPDATE = "UPDATE store SET store_pwd = ?,acc_status = ?,store_name = ?,store_gui = ?,store_rep = ?,store_tel = ?,store_fax = ?,\r\n"
+			+ "store_add = ?,store_poc = ?,store_con_phone = ?,store_con_add = ?,store_email = ?,bank_account = ? WHERE store_no = ?;";
 	@Override
 	public void insert(StoreVO storeVO) {
 		 Connection con = null;
@@ -172,6 +175,52 @@ public class StoreDAO implements I_StoreDAO{
 
 		
 	}
+	
+	@Override
+	public void backendUpdate(StoreVO storeVO) {
+		Connection con = null;
+			PreparedStatement ps = null;
+		try { con = ds.getConnection();
+				ps = con.prepareStatement(BACKENDUPDATE);
+					ps.setString(1, storeVO.getStore_pwd());
+					ps.setInt(2,storeVO.getAcc_status());
+					ps.setString(3,storeVO.getStore_name());
+					ps.setString(4,storeVO.getStore_gui());
+					ps.setString(5,storeVO.getStore_rep());
+					ps.setString(6,storeVO.getStore_tel());
+					ps.setString(7,storeVO.getStore_fax());
+					ps.setString(8,storeVO.getStore_add());
+					ps.setString(9,storeVO.getStore_poc());
+					ps.setString(10,storeVO.getStore_con_phone());
+					ps.setString(11,storeVO.getStore_con_add());
+					ps.setString(12,storeVO.getStore_email());
+					ps.setString(13,storeVO.getBank_account());
+					ps.setInt(14, storeVO.getStore_no());
+					
+					ps.executeUpdate();
+		}catch(SQLException e){
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
+		}finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+	}
+	
 	
 	public void updatePassword(StoreVO storeVO) {
 		Connection con = null;

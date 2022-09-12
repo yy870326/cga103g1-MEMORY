@@ -26,4 +26,6 @@ public  interface  I_StoreDAO {
 	
 	public List<StoreVO> CompositeQuery(Map<String, String[]> map);
 	
+	public void backendUpdate(StoreVO storeVO);
+	
 }

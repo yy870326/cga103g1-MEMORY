@@ -8,9 +8,9 @@
 
 
 <%
+StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 %>
 <!--
-StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 pageContext.setAttribute("storeVO", storeVO);
 -->
 <!DOCTYPE html>

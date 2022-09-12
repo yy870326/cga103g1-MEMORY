@@ -40,7 +40,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 			 	 	</tr>
 					<tr>
 					<td>帳號:</td>
-					<td><input type="text" name="store_acc" value="${storeVO.store_acc}" disabled></td>
+					<td><input type="hidden" name="store_acc" value="${storeVO.store_acc}">${storeVO.store_acc}</td>
 					</tr>
 					<tr>
 					<td>密碼:</td>
@@ -48,12 +48,16 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					</tr>
 					<tr>
 					<td>帳號狀態:</td>
-					<td>	
-						<select  name="acc_status" size="1" disabled>
-    							<option value="0">帳號未啟用</option>
-							    <option value="1">帳號已啟用</option>
-							    <option value="2">帳號停權</option>
-  						 </select>
+					<td>
+						<c:choose>
+							<c:when test="${storeVO.acc_status==0}">									
+									    <i class='bx bxs-circle' style='color: red'></i>帳號未啟用</c:when>
+							<c:when test="${storeVO.acc_status==1}">
+										<i class='bx bxs-circle' style='color: green'></i>帳號已啟用</c:when>
+							<c:when test="${storeVO.acc_status==2}">
+										<i class='bx bxs-circle' style='color: #aaa'></i>帳號停權</c:when>
+						</c:choose>
+						<input type="hidden" name="acc_status" value="${storeVO.acc_status}">
 					</td>
 					</tr>
 					<tr>
@@ -98,7 +102,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					</tr>
 					<tr>
 					<td>加入時間:</td>
-					<td><input type="date" name="store_reg_date" value="${storeVO.store_reg_date}" disabled></td>
+					<td><input type="hidden" name="store_reg_date" value="${storeVO.store_reg_date}">${storeVO.store_reg_date}</td>
 					</tr>
 					<tr>
 					<td>轉帳帳號:</td>
@@ -106,15 +110,15 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 					</tr>
 					<tr>
 					<td>訂房總分數:</td>
-					<td><input type="text" name="store_rm_rating_score" value="${storeVO.store_rm_rating_score}" disabled></td>
+					<td><input type="hidden" name="store_rm_rating_score" value="${storeVO.store_rm_rating_score}">${storeVO.store_rm_rating_score}</td>
 					</tr>
 					<tr>
 					<td>訂房總評價數:</td>
-					<td><input type="text" name="store_rm_rating_count" value="${storeVO.store_rm_rating_count}" disabled></td>
+					<td><input type="hidden" name="store_rm_rating_count" value="${storeVO.store_rm_rating_count}">${storeVO.store_rm_rating_count}</td>
 					</tr>
 					<tr>
 					<td>被檢舉計點:</td>
-					<td><input type="text" name="store_report_count" value="${storeVO.store_report_count}" disabled></td> 
+					<td><input type="hidden" name="store_report_count" value="${storeVO.store_report_count}">${storeVO.store_report_count}</td> 
 					</tr>
 					<tr>
 					<td>修改資料</td>
