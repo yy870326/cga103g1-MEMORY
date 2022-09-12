@@ -8,4 +8,5 @@ public interface I_MemDAO {
     public void delete(Integer memno);
     public MemVO findByPrimaryKey(Integer memno);
     public List<MemVO> getAll();
+    MemVO getOneBymail(String mem_email);
 }

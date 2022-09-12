@@ -14,6 +14,8 @@ import com.mem.model.*;
 import com.mem.model.MemDAO;
 import com.mem.model.MemVO;
 
+import mail.MailService;
+
 @MultipartConfig
 public class MemServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -261,7 +263,7 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/signin/addMem.jsp");
+							.getRequestDispatcher("/frontend/mem/addMem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -271,9 +273,24 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 				memVO = memSvc.addMem(mem_acc, mem_pwd,  mem_name, mem_gender, mem_email, mem_mobile, mem_city, mem_dist, mem_addr,  mem_pic,  mem_card);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/frontend/mem/listAllMem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
+				HttpSession session  = req.getSession();
+				
+				Integer checkMem = memSvc.getOneBymail(mem_email).getMem_no();
+				MailService mail = new MailService();
+				String authCode = mail.getRandom();
+				String subject = "會員驗證碼";
+				String message = "感謝您註冊本網站會員，請輸入以下驗證碼完成註冊:" + authCode;
+				
+				
+				try {
+					mail.sendMail(mem_email, subject, message);
+					session.setAttribute("checkMem", checkMem);
+		            session.setAttribute("authCode", authCode);
+		            res.sendRedirect(req.getContextPath() + "/frontend/signin/checkMember.jsp");
+				}catch(Exception e) {
+					e.printStackTrace();
+				}	
+
 		}
 		
 		

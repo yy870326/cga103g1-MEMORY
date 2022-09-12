@@ -30,6 +30,11 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			+ "WHERE rm_schedule_date BETWEEN ? AND SUBDATE(?, interval 1 day) GROUP BY rm_type_no) "
 			+ "as rsv ON rm_type.rm_type_no = rsv.rmtypeno "
 			+ "WHERE minqty >= ? AND rm_people >= ? AND rm_update = 0 AND store_add LIKE '%' ? '%';";
+	private static final String GET_ENOUGH_TYPE_BY_STORE = "SELECT * FROM rm_type JOIN (SELECT MIN(rm_total-reservation_amount) "
+			+ "as minqty, rm_type_no as rmtypeno FROM rm_reserve "
+			+ "WHERE rm_schedule_date BETWEEN ? AND SUBDATE(?, interval 1 day) GROUP BY rm_type_no) "
+			+ "as rsv ON rm_type.rm_type_no = rsv.rmtypeno "
+			+ "WHERE rm_update = 0 AND store_no = ?;";
 	
 	private static DataSource ds = null;
 	static {
@@ -332,6 +337,52 @@ public class RmTypeDAO implements I_RmTypeDAO {
 				rmAll.add(rm);
 			}
 
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return rmAll;
+	}
+	
+	@Override
+	public List<RmTypeVO> getEnoughTypeByStore(Date arrival_date, Date departure_date, Integer store_no) {
+		List<RmTypeVO> rmAll = new ArrayList<>();
+		ResultSet rs = null;
+		RmTypeVO rm = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_ENOUGH_TYPE_BY_STORE);
+			
+			ps.setDate(1, arrival_date);
+			ps.setDate(2, departure_date);
+			ps.setInt(3, store_no);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				rm = new RmTypeVO();
+				rm.setRm_type_no(rs.getInt("rm_type_no"));
+				rm.setStore_no(rs.getInt("store_no"));
+				rm.setRm_name(rs.getString("rm_name"));
+				rm.setRm_total(rs.getInt("rm_total"));
+				rm.setRm_people(rs.getInt("rm_people"));
+				rm.setRm_price(rs.getInt("rm_price"));
+				rm.setRm_area(rs.getInt("rm_area"));
+				rm.setRm_intro(rs.getString("rm_intro"));
+				rm.setRm_rate_sum(rs.getInt("rm_rate_sum"));
+				rm.setRm_eval_sum(rs.getInt("rm_eval_sum"));
+				rm.setRm_update(rs.getInt("rm_update"));
+				rmAll.add(rm);
+			}
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
