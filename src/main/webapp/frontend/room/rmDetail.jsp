@@ -13,10 +13,21 @@
 <!doctype html>
 <html>
     <head>
-       <%@ include file="/frontend/commonCSS.file"%> <!-- 基本CSS檔案 -->
+    <meta charset="UTF-8">
+	<title>瀏覽房間詳情</title>
+       <%@ include file="/frontend/commonCSS.file"%> 
+       <!-- owl.carousel -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"></link>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<!-- owl.carousel -->
+<link rel="stylesheet" href="js/owl.carousel/owl.carousel.css">
+<script src="js/owl.carousel/owl.carousel.js"></script>
+<script src="js/owl.carousel/theme.js"></script>
+<!-- 基本CSS檔案 -->
         <style>
             .services-item {
-                padding: 0;
+                padding: 0;/*  */
                 background: transparent;
             }
             .room-text-area {
@@ -34,14 +45,6 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-            }
-            @media screen and (max-width:768px) {
-            	.room-icon {
-            		flex-wrap: wrap;
-            	}
-                .room-icon>div {
-                width: 50%;
-                }
             }
             .room-icon>div i {
                 width: 100%;
@@ -61,7 +64,7 @@
                 color: #996A4D;
                 text-align: center;
             }
-            img {
+            pic {
             	width: 100%;
             }
             .room-facility-content, .room-info-content {
@@ -239,12 +242,23 @@
 			    top: 0;
 	    		left: 0;
 			}
+			.btn-primary1 {
+    background-color: #5bc9e2;
+    padding: 0 20px;
+    margin: 10px 231px;
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 12px;
+    border: none;
+    display: inline-block;
+    line-height: 42px;
+    color :#FFF;
+    }
         </style>
 	</head>
     <body>
 	<%@ include file="/frontend/header.file"%>
 	<%@ include file="/frontend/roomSidebar.file"%>
-	<%@ include file="/frontend/loading.file"%> 
         
 		<div class="mt-5 mb-5 pt-20 container">
 			<div class="inner-title">
@@ -261,7 +275,7 @@
 	                        <div class="flex_center inner_circle_step shapeborder_selected_in">
 	                            1</div>
 	                    </div>
-	                    <a href="<%=request.getContextPath()%>/front_end/room/roomList.jsp" class="step_item_label">搜尋民宿</a>
+	                    <a href="<%=request.getContextPath()%>/frontend/room/rmList.jsp" class="step_item_label">搜尋民宿</a>
 	                </div>
                 
 	                <div class="step-item flex_center">
@@ -292,22 +306,22 @@
 		<div class="row room-area">
 			<div class="col-lg-8">
 				<div class="room-details-article">
-					<div class="room-details-slider owl-carousel owl-theme">
+					<div class="room-details-slider">
 <!-- 					大圖 -->
-						<c:forEach var="img" items="${images}">
+						<c:forEach var="img" items="${Pic}">
 						<div class="room-details-item" data-hash="${img.rm_pic_no}">
 							<img src="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_pic_no=${img.rm_pic_no}&action=showImages">
 						</div>
 						</c:forEach>
 					</div>
-					<div id="services-slider" class="owl-carousel owl-theme">
-<!-- 					小圖 -->
-						<c:forEach var="img" items="${images}">
-						<div class="services-item">
-							<a href="#${img.img_no}"><img src="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_pic_no=${img.rm_pic_no}&action=showImages"></a>
-						</div>
-						</c:forEach>
-					</div>
+<!-- 					<div id="services-slider" class="owl-carousel owl-theme"> -->
+<!-- <!-- 					小圖 --> 
+<%-- 						<c:forEach var="img" items="${Pic}"> --%>
+<!-- 						<div class="services-item"> -->
+<%-- 							<a href="#${img.rm_pic_no}"><img src="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_pic_no=${img.rm_pic_no}&action=showImages"></a> --%>
+<!-- 						</div> -->
+<%-- 						</c:forEach> --%>
+<!-- 					</div> -->
 
 					<div class="type-title-area">
 						<h2>${rmTypeVO.rm_name}</h2>
@@ -321,7 +335,7 @@
 								<div>
 									<i class='bx bx-user'></i>
 								</div>
-								<h5>最多 ${rmTypeVO.type_people} 人入住</h5>
+								<h5>最多 ${rmTypeVO.rm_people} 人入住</h5>
 							</div>
 							<div>
 								<div>
@@ -368,29 +382,44 @@
 				<div class="room-details-side">
 					<div class="side-bar-form">
 						<div class="type-title-area">
-							<h2>${rmTypeVO.rm_name} x ${roomtotal}間</h2>
+							<h2>${rmTypeVO.rm_name} x ${qty}間</h2>
 							<div>
 								<span class="price"><fmt:formatNumber value="${rmTypeVO.rm_price}" pattern="$###,###" /></span><span> / 一晚</span>
 							</div>
 						<form method="post" action="<%=request.getContextPath()%>/RmRsv/RmRsv.do" id="immediateCheckoutForm">
-							<div class="row align-items-center">
-								<div class="col-lg-12">
-	                                <div class="form-group">
-	                                    <label><i class='bx bx-calendar'></i> 入住期間</label>
-	                                    <div class="input-group">
-	                                    	<input type="text" id="rangeDate" name="rangedate" placeholder="請選擇入住期間" class="form-control" data-input>
-                                        	<span class="input-group-addon"></span>
-	                                    </div>
-	                                    <i class=""></i>	
-	                                </div>
-								</div>
+							<!-- <div class="row align-items-center">
+									<div class="col-lg-12">
+										<label for="check_in" class="form-label">入住時間</label> <input
+											class="form-control" type="text" id="datepicker"
+											name="arrival_date" autocomplete="off" placeholder="Check-in" />
+									</div>
+									<div class="col-lg-12">
+										<label for="check_out" class="form-label">退房時間</label> <input
+											class="form-control" type="text" id="datepicker-out"
+											name="departure_date" autocomplete="off"
+											placeholder="Check-out" />
+									</div> -->
+
+									<!-- 	                                <div class="form-group"> -->
+<!-- 	                                    <label><i class='bx bx-calendar'></i> 入住期間</label> -->
+<!-- 	                                    <div class="input-group"> -->
+<!-- 	                                    	<input type="text" id="rangeDate" name="rangedate" placeholder="請選擇入住期間" class="form-control" data-input> -->
+<!--                                         	<span class="input-group-addon"></span> -->
+<!-- 	                                    </div> -->
+<!-- 	                                    <i class=""></i>	 -->
+<!-- 	                                </div> -->
+								
 								<div class="col-lg-12 col-md-12">
-									<input type="hidden" name="type_no" value="${rmTypeVO.rm_type_no}">
-									<input type="hidden" name="roomtotal" value="${roomtotal}">
+									<input type="hidden" name="rm_type_no" value="${rmTypeVO.rm_type_no}">
+									<input type="hidden" name="arrival_date" value="${arrival_date}">
+									<input type="hidden" name="mem_email" value="${mem_email}">
+									<input type="hidden" name="departure_date" value="${departure_date}">
+									<input type="hidden" name="qty" value="${qty}">
+									<input type="hidden" name="guest" value="${guest}">
 									<input type="hidden" name="action" value="payment">
-									<button type="button" class="btn btn-primary line-btn" onclick="check();"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button>
+									<button type="submit" class="btn btn-primary1 line-btn" onclick="check();"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button>
 								</div>
-							</div>
+							
 						</form>
 					</div>
 				</div>
@@ -400,87 +429,9 @@
 	</div>
 		<%@ include file="/frontend/footer.file" %>
 	<%@ include file="/frontend/commonJS.file" %>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	rel='stylesheet'>
-	<script>
-        <script>
-        	// header房型介紹加border-bottom
-	        $(`.nav-item:nth-child(1)>a`).attr('class', 'active');
-	        // 大圖跟小圖的carousel
-	        $('#services-slider').owlCarousel({
-                items: 5,
-                loop: false,
-                margin: 10,
-                nav: true,
-                dots: false,
-                autoplayHoverPause: true,
-            })
-            $('.owl-carousel').owlCarousel({
-                URLhashListener:true,
-            });
-	        // 房型設施 電視icon
-	        $(".room-facility-content li:nth-child(8)>i").removeClass().addClass("bx bx-tv");
-	        // calendar
-	        $("#rangeDate").flatpickr({
-	            mode: 'range',
-	            dateFormat: "Y-m-d",
-	            defaultDate: ["${start_date}", "${end_date}"],
-	            minDate: "today",
-	            maxDate: new Date().fp_incr(90),
-	            disable: [${result}],
-	        });
-	        
-	      	// 預訂時有無登入會員，有登入就驗證(roomtotal是null就是session消失了，住宿期間錯誤可能是 重選選錯||session消失)
-	    	function check(){
-	    		let duringStay = document.getElementById('rangeDate');
-	      		
-	    		if('${mem_mail}' === ''){
-	    			notLogin();
-	    			return false;
-	    		} else if ("${roomtotal}" === ''){
-	    			roomtotalIsNull();
-	    			return false;
-	    		} else if (duringStay.value.length != 24){
-	    			duringStay.focus();
-	    			rangeDateIsNull();
-	    			return false;
-	    		} else {
-	    			document.getElementById('immediateCheckoutForm').submit();
-	    		}
-	    	}
-	      	// alert樣式
-	        function notLogin() {
-	    		swal.fire({
-	    			icon : 'error',
-	    			title : '請先登入',
-	    			showConfirmButton : false,
-	    			timer : 1000
-	    		}).then(function () {
-	     	        window.location.href = "<%=request.getContextPath()%>/front_end/signin/signin.jsp";
-	     	    })
-	    	}
-	        function roomtotalIsNull() {
-	    		swal.fire({
-	    			icon : 'error',
-	    			title : '請選擇房間數量',
-	    			showConfirmButton : false,
-	    			timer : 1000
-	    		}).then(function () {
-	     	        window.location.href = "<%=request.getContextPath()%>/front_end/index/index.jsp";
-	     	    })		
-	    	}
-	        function rangeDateIsNull() {
-	    		swal.fire({
-	    			icon : 'error',
-	    			title : '請選擇 入住日 和 退房日',
-	    			showConfirmButton : false,
-	    			timer : 1000
-	    		})		
-	    	}
-        </script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+      
 	</body>
 </html> 
