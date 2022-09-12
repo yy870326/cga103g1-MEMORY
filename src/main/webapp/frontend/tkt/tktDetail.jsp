@@ -250,19 +250,20 @@
  	
  	// 載入商品單一頁面或商品列表頁就自動初始化
  	
- 	/* function init(){ 
+ 	function init(){ 
  		axios({
  	 		"method": "post", 
  	 		"url": "/CGA103G1/cart/initCart.do"
  		}).then(function (response) {
- 	    	//console.log(response);
+ 	    	console.log(response);
+ 	    	console.log("初始化成功");
  		}).catch(function (error) {
  	    	console.log(error);
  		});
- 	} */
+ 	}
 
  	// 當畫面載入時初始化
- 	/* window.onload = init(); */
+ 	window.onload = init();
  
  </script>
   

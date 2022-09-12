@@ -61,10 +61,11 @@ public class CoupJdbcDAO implements I_CoupDAO {
 	}
 
 	@Override
-	public void updateStatus(CoupVO coupVO) {
+	public void updateStatus(Integer coup_no) {
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement ps = conn.prepareStatement(UPDATE_STATUS)) {
-
+		
+			CoupVO coupVO = new CoupVO();
 			ps.setInt(1, coupVO.getStatus());
 			ps.setDate(2, coupVO.getEnddate());
 

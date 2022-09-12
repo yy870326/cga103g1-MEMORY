@@ -1,10 +1,11 @@
 package com.coup.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CoupService {
-	
+
 	private I_CoupDAO dao;
 
 	public CoupService() {
@@ -40,19 +41,19 @@ public class CoupService {
 		coupVO.setStartdate(startdate);
 		coupVO.setEnddate(enddate);
 		coupVO.setStatus(status);
-		
+
 		dao.update(coupVO);
 
 		return coupVO;
 	}
 
-	public CoupVO updateCoupStatus(Integer status) {
+	public CoupVO updateCoupStatus(Integer coup_no) {
 
 		CoupVO coupVO = new CoupVO();
 
-		coupVO.setStatus(status);
-		
-		dao.updateStatus(coupVO);
+		coupVO.setCoup_no(coup_no);
+
+		dao.updateStatus(coup_no);
 
 		return coupVO;
 	}
@@ -68,5 +69,5 @@ public class CoupService {
 	public List<CoupVO> getByEndDate(Date enddate) {
 		return dao.getByEndDate(enddate);
 	}
-	
+
 }

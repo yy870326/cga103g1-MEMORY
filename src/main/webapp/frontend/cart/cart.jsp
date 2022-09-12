@@ -71,7 +71,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 							<thead class="all-text-white bg-grad">
 								<tr>
 									<!-- <th scope="col">#</th> -->
-									<th scope="col"></th>
+									<th scope="col">
+										<input type="checkbox" id="checkboxAll">
+									</th>
 									<th scope="col">票券名稱</th>
 									<th scope="col">單價</th>
 									<th scope="col">數量</th>
@@ -86,7 +88,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 									<%-- <th scope="row">${cartItemVO.tkt_no}</th> --%>
 									<td>
 										<%-- <label>${cartItemVO.tkt_no}</label> --%>
-										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox" checked>
+										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox">
 									</td>
 									<td>${cartItemVO.tkt_name}</td>
 									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
@@ -176,8 +178,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   const tkt_no_s = document.querySelectorAll('.tkt_no1'); 
   const tr = document.querySelectorAll('.tr'); 
   const delItem = document.querySelectorAll('.delItem'); 
-/*   const checkOut = document.querySelector('.checkOut');
-  const checkbox = document.querySelectorAll('.checkbox'); */
+/*   const checkOut = document.querySelector('.checkOut'); */
+  const checkbox = document.querySelectorAll('.checkbox'); 
+  const checkboxAll = document.querySelector('#checkboxAll'); 
  
   /* let sum = 0; */
   
@@ -186,15 +189,24 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	  
 	  /* checkbox */
 	  /* 陣列裝被勾選的票券 */
- 	  /* let checkboxvalue = [];
+ 	 /* let checkboxvalue = []; */
+ 	 
+ 	/*  checkboxAll.addEventListener('change', () => {
+ 		checkbox.checked = true;
+ 	 }); */
 	  
+ 	 // 被選的 checkbox
  	 checkbox[i].addEventListener('change', () => {
-	  for (i in checkbox) {
+ 		 console.log(checkbox[i]);
+ 		checkbox[i].checked = true;
+ 		/* checkbox[i].checked = false; */
+ 		/* checkbox[i].removeAttribute('checked'); */
+	  /* for (i in checkbox) {
 		  if(checkbox[i].checked) {
 			  checkboxvalue.push(checkbox[i].value);
 			  
-		  }
-	  } */
+		  } */
+	  });
 	  
 		  /* console.log(checkboxvalue); */
 		  
@@ -246,8 +258,8 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			        text: "刪除後，此票券商品將不在購物車中",
 			        icon: 'warning',
 			        showCancelButton: true,
-			        confirmButtonText: '是的',
-			        cancelButtonText: '取消',
+			        confirmButtonText: '是的，我要刪掉',
+			        cancelButtonText: '我還是想買票券',
 			        reverseButtons: true
 			    }).then((result) => {
 			        if (result.isConfirmed) {
@@ -314,8 +326,8 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		        text: "刪除後，此票券商品將不在購物車中",
  		        icon: 'warning',
  		        showCancelButton: true,
- 		        confirmButtonText: '是的',
- 		        cancelButtonText: '取消',
+ 		        confirmButtonText: '是的，我要刪掉',
+ 		        cancelButtonText: '我還是想買票券',
  		        reverseButtons: true
  		    }).then((result) => {
  		        if (result.isConfirmed) {
