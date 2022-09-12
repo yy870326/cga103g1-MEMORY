@@ -5,11 +5,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.system_notification_message.model.*"%>
 
-<%
-SystemNotificationMessageService snmSvc = new SystemNotificationMessageService();
-SystemNotificationMessageVO snm = snmSvc.getLastONE();
-pageContext.setAttribute("snm", snm);
-%>
 
 	<dialog open id="infoModal" >
 	<h2>系統訊息<button id="close" >X</button></h2>
