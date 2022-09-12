@@ -31,12 +31,14 @@ pageContext.setAttribute("store_no", 1);
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 <%@ include file="/frontend/commonCSS.file"%>
-
+    <!-- flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <!-- 基本JS檔案 -->
 <script
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

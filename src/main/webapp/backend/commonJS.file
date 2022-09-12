@@ -10,3 +10,7 @@
 	<script src="<%=request.getContextPath()%>/backend/assets/js/deznav-init.js"></script>
 	<script src="<%=request.getContextPath()%>/backend/assets/js/demo.js"></script>
 	<script src="<%=request.getContextPath()%>/backend/assets/js/styleSwitcher.js"></script>
+	<script src="<%=request.getContextPath()%>/backend/assets/js/jquery.twzipcode.min.js"></script>
+	<!-- flatpickr datepicker CSS -->
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	
