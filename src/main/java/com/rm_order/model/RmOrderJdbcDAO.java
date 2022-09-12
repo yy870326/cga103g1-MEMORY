@@ -51,8 +51,9 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 	}
 
 	@Override
-	public void insertWithLists(RmOrderVO rmOrderVO, List<RmOrderListVO> list) {
+	public Integer insertWithLists(RmOrderVO rmOrderVO, List<RmOrderListVO> list) {
 		
+		Integer next_rmorderno = null;
 		String cols[] = {"rm_order_no"};
 		try (Connection con = DriverManager.getConnection(JdbcUtil.URL, JdbcUtil.USERNAME, JdbcUtil.PASSWORD);
 				PreparedStatement ps = con.prepareStatement(INSERT, cols)) {
@@ -65,10 +66,9 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 			ps.setInt(4, rmOrderVO.getRm_charge());
 			ps.executeUpdate();
 
-			String next_rmorderno = null;
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs.next()) {
-				next_rmorderno = rs.getString(1);
+				next_rmorderno = rs.getInt(1);
 				System.out.println("自增主鍵值= " + next_rmorderno +"(剛新增成功的訂單編號)");
 			} else {
 				System.out.println("未取得自增主鍵值");
@@ -92,6 +92,7 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		}
+		return next_rmorderno;
 	}
 	
 	@Override
@@ -106,6 +107,7 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 			ps.setInt(5, rmOrderVO.getRm_charge());
 			ps.setInt(6, rmOrderVO.getRm_review());
 			ps.setInt(7, rmOrderVO.getRm_order_no());
+		
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -252,9 +254,22 @@ public class RmOrderJdbcDAO implements I_RmOrderDAO {
 	}
 
 	@Override
+	public void checkOut(Integer rm_order_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
 	public void overdue() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<RmOrderVO> getAllByMem(Integer mem_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

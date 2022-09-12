@@ -3,6 +3,8 @@ package com.rm_order.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.rm_order_list.model.RmOrderListVO;
+
 public class RmOrderService {
 	private I_RmOrderDAO dao;
 
@@ -10,14 +12,23 @@ public class RmOrderService {
 		dao = new RmOrderDAO();
 	}
 	
-	public RmOrderVO insert(Integer mem_no, Integer store_no, Integer rm_order_status, Integer rm_charge, Integer rm_review, Date start_date, Date end_date) {
+	public RmOrderVO insert(Integer mem_no, Integer store_no, Integer rm_order_status, Integer rm_charge) {
 		RmOrderVO rm = new RmOrderVO();
 		rm.setMem_no(mem_no);
 		rm.setStore_no(store_no);
 		rm.setRm_order_status(rm_order_status);
 		rm.setRm_charge(rm_charge);
-		rm.setRm_review(rm_review);
 		return dao.insert(rm);
+	}
+	
+	public Integer insertWithLists(Integer mem_no, Integer store_no, Integer rm_order_status, Integer rm_charge, List<RmOrderListVO> list) {
+		RmOrderVO rm = new RmOrderVO();
+		rm.setMem_no(mem_no);
+		rm.setStore_no(store_no);
+		rm.setRm_order_status(rm_order_status);
+		rm.setRm_charge(rm_charge);
+		
+		return dao.insertWithLists(rm, list);
 	}
 	
 	public List<RmOrderVO> getAllRmOrder() {

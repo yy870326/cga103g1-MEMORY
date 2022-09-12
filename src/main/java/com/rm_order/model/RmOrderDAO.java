@@ -53,9 +53,8 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(1, rmOrderVO.getMem_no());
 			ps.setInt(2, rmOrderVO.getStore_no());
 			ps.setInt(3, rmOrderVO.getRm_order_status());
-			ps.setInt(4, rmOrderVO.getRm_charge());		
-			ps.setInt(5, rmOrderVO.getRm_order_no());
-			
+			ps.setInt(4, rmOrderVO.getRm_charge());
+
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
@@ -73,47 +72,57 @@ public class RmOrderDAO implements I_RmOrderDAO {
 	}
 
 	@Override
-	public void insertWithLists(RmOrderVO rmOrderVO, List<RmOrderListVO> list) {
+	public Integer insertWithLists(RmOrderVO rmOrderVO, List<RmOrderListVO> list) {
 		Connection con = null;
 		PreparedStatement ps = null;
+		Integer next_rmorderno = null;
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 
-			String cols[] = {"rm_order_no"};
+			String cols[] = { "rm_order_no" };
 			ps = con.prepareStatement(INSERT, cols);
 			ps.setInt(1, rmOrderVO.getMem_no());
 			ps.setInt(2, rmOrderVO.getStore_no());
 			ps.setInt(3, rmOrderVO.getRm_order_status());
-			ps.setInt(4, rmOrderVO.getRm_charge());	
-			
+			ps.setInt(4, rmOrderVO.getRm_charge());
+
 			ps.executeUpdate();
 
-			String next_rmorderno = null;
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs.next()) {
-				next_rmorderno = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_rmorderno +"(剛新增成功的訂單編號)");
+				next_rmorderno = rs.getInt(1);
+				System.out.println("自增主鍵值= " + next_rmorderno + "(剛新增成功的訂單編號)");
 			} else {
 				System.out.println("未取得自增主鍵值");
 			}
 			rs.close();
 			// 再同時新增訂單明細
-						RmOrderListDAO dao = new RmOrderListDAO();
-						System.out.println("list.size()-A="+list.size());
-						for (RmOrderListVO aRm : list) {
-							aRm.setRm_order_no(new Integer(next_rmorderno)) ;
-							dao.insert2(aRm,con);
-						}
+			RmOrderListDAO dao = new RmOrderListDAO();
+			System.out.println("list.size()-A=" + list.size());
+			for (RmOrderListVO aRm : list) {
+				aRm.setRm_order_no(new Integer(next_rmorderno));
+				dao.insert2(aRm, con);
+			}
 
-						// 2●設定於 pstm.executeUpdate()之後
-						con.commit();
-						con.setAutoCommit(true);
-						System.out.println("list.size()-B="+list.size());
-						System.out.println("新增訂單編號" + next_rmorderno + "時,共有訂單明細" + list.size()
-								+ "項同時被新增");
-			
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("list.size()-B=" + list.size());
+			System.out.println("新增訂單編號" + next_rmorderno + "時,共有訂單明細" + list.size() + "項同時被新增");
+
 		} catch (SQLException se) {
+			next_rmorderno = null;
+			if (con != null) {
+				try {
+					// 設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-rmOrder");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (con != null) {
@@ -124,8 +133,9 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				}
 			}
 		}
+		return next_rmorderno;
 	}
-	
+
 	@Override
 	public void update(RmOrderVO rmOrderVO) {
 		Connection con = null;
@@ -141,7 +151,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			ps.setInt(5, rmOrderVO.getRm_charge());
 			ps.setInt(6, rmOrderVO.getRm_review());
 			ps.setInt(7, rmOrderVO.getRm_order_no());
-		
+
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
@@ -183,7 +193,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			}
 		}
 	}
-	
+
 	@Override
 	public void checkIn(Integer rm_order_no) {
 		Connection con = null;
@@ -191,11 +201,11 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(CHECK_IN);
-			
+
 			ps.setInt(1, rm_order_no);
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -208,7 +218,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			}
 		}
 	}
-	
+
 	@Override
 	public void checkOut(Integer rm_order_no) {
 		Connection con = null;
@@ -216,11 +226,11 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(CHECK_OUT);
-			
+
 			ps.setInt(1, rm_order_no);
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -255,7 +265,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
+
 			}
 
 		} catch (SQLException se) {
@@ -293,7 +303,6 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
 
 				rmAll.add(rm);
 			}
@@ -311,7 +320,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
-	
+
 	public List<RmOrderVO> getAllByStore(Integer store_no) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -332,10 +341,10 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
+
 				rmAll.add(rm);
 			}
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -349,7 +358,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
-	
+
 	public List<RmOrderVO> getAllByMem(Integer mem_no) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -370,10 +379,10 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
+
 				rmAll.add(rm);
 			}
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -387,7 +396,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
-	
+
 	public List<RmOrderVO> getAllStatus(Integer rm_order_status) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -408,10 +417,10 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
+
 				rmAll.add(rm);
 			}
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -425,7 +434,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
-	
+
 	public List<RmOrderVO> getStoreStatus(Integer store_no, Integer rm_order_status) {
 		List<RmOrderVO> rmAll = new ArrayList<>();
 		ResultSet rs = null;
@@ -447,10 +456,10 @@ public class RmOrderDAO implements I_RmOrderDAO {
 				rm.setRm_order_status(rs.getInt("rm_order_status"));
 				rm.setRm_charge(rs.getInt("rm_charge"));
 				rm.setRm_review(rs.getInt("rm_review"));
-				
+
 				rmAll.add(rm);
 			}
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -464,7 +473,7 @@ public class RmOrderDAO implements I_RmOrderDAO {
 		}
 		return rmAll;
 	}
-	
+
 	@Override
 	public void overdue() {
 		Connection con = null;
@@ -487,5 +496,5 @@ public class RmOrderDAO implements I_RmOrderDAO {
 			}
 		}
 	}
-	
+
 }
