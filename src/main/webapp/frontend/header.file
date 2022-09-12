@@ -61,17 +61,28 @@ pageContext.setAttribute("snm", snm);
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  ><i class="far fa-user mr-2"></i>帳戶</a
+                  >
+                  <!--已登入顯現帳號 -->
+                  <c:if test="${mem_email!=null}">
+               <%= request.getSession().getAttribute("mem_email") %>
+               </c:if>
+                  <c:if test="${mem_email==null}">帳戶
+                  </c:if>
+                  </a
                 >
                 <div
                   class="dropdown-menu mt-2 shadow"
-                  aria-labelledby="dropdownAccount"
-                >
-                  <a class="dropdown-item" href="#">會員登入</a>
+                  aria-labelledby="dropdownAccount">
+                   <!--已登入不會出現會員登入按鈕 -->
+                  <c:if test="${mem_email==null}">
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/signin/login.jsp">會員登入</a>
+                   </c:if>
                   <a class="dropdown-item" href="#">廠商登入</a>
-                  <a class="dropdown-item" href="#">註冊</a>
+                  <a class="dropdown-item" href="signin/addMem.jsp">註冊</a>
                   <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/act/memPage.html">會員中心</a>
-                 
+                  <c:if test="${mem_email!=null}">
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/mem/mem.do?action=log_out">登出</a>
+                   </c:if>
                 </div>
               </div>
             

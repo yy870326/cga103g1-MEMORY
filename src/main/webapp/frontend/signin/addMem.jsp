@@ -12,6 +12,33 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
 <head>
   <title>會員註冊</title>
 <%-- CSS --%>
+
+<style>
+#img0 {
+ min-width: 100px;
+ border: 1px solid lightgray;
+ display: inline-block;
+ min-height: 80px;
+ max-width: 150px;
+ position: relative;
+ z-index: 1;
+}
+
+#preview {
+ display: inline-block;
+ position: relative;
+}
+
+#preview span.text {
+ position: absolute;
+ display: inline-block;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%);
+ color: lightgray;
+}
+</style>
+
 	<%@ include file="/frontend/commonCSS.file" %>
 </head>
 
@@ -63,10 +90,26 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
 <!--                     <label>加入時間</label> -->
 <!--                     <input type="text" name="mem_reg_date" id="f_date1"> -->
 <!--                   </div> -->
+
+
+
+
+
+
+
+
                   <div class="col-md-6 name">
                   <label>會員照片</label>
-                  <input type="file" name="mem_pic" />
+                  <input type="file" name="mem_pic" accept="image/*"
+           id="file0"/>
                 </div>
+
+           <div class="col-md-6 name" id="preview">
+                  <label>圖片預覽</label>
+                  <div id="preview"><img class="img" id="img0"><span class="text">預覽圖</span>
+                </div>
+                </div>
+
                 <div class="col-md-6 name">
                   <label>信用卡</label>
                   <input type="text" name="mem_card" placeholder="Enter your name here"value="<%=(memVO==null)? "5527921393052964" :memVO.getMem_card()%>" >
@@ -139,6 +182,16 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
 </style>
 
 <script>
+
+function addimage() {
+	  let img = $("#img0");
+	  img.attr('src', URL.createObjectURL(this.files[0]));
+	  console.log(img);
+	};
+	$("#file0").change(addimage);
+	
+	
+	
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
