@@ -28,6 +28,8 @@ public class SystemNotificationMessageDAO implements I_SystemNotificationMessage
 	
 	// 顯示訊息
 		private final String GETLAST = "select * from system_notfication_message order by msg_no desc limit 0,1";
+		
+		private final String GETTHREE = "select * from system_notfication_message order by msg_no desc limit 0,3";
 	
 	
 	private static DataSource ds = null;
@@ -113,6 +115,40 @@ public class SystemNotificationMessageDAO implements I_SystemNotificationMessage
 				snmALL.add(snm);
 			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return snmALL;
+	}
+	@Override
+	public List<SystemNotificationMessageVO> getthree() {
+		List<SystemNotificationMessageVO> snmALL = new ArrayList<>();
+		SystemNotificationMessageVO snm = null;
+		ResultSet rs = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GETTHREE);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				snm = new SystemNotificationMessageVO();
+				snm.setMsg_no(rs.getInt("msg_no"));
+				snm.setMsg(rs.getString("msg"));
+				snm.setMsg_img(rs.getBytes("msg_img"));
+				
+				snmALL.add(snm);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
