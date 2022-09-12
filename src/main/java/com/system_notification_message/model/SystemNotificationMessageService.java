@@ -29,6 +29,9 @@ public class SystemNotificationMessageService {
 	public List<SystemNotificationMessageVO> getall() {
 		return dao.getall();
 	}
+	public List<SystemNotificationMessageVO> getthree() {
+		return dao.getthree();
+	}
 
 	public SystemNotificationMessageVO getpic(Integer msg_no) {
 		return dao.getpic(msg_no);
