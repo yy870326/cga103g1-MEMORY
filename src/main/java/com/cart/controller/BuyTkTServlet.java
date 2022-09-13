@@ -47,6 +47,16 @@ public class BuyTkTServlet extends HttpServlet {
 					CartItemService cartItemSrv = new CartItemService();
 					tkt_no = Integer.valueOf(values[i]);
 //					System.out.println("-----------" +tkt_no);
+					
+					// 購物車結帳要做的事
+					// 更新庫存、銷售量
+					// 更改會員優惠券使用狀態
+					// 把資料新增到訂單、訂單明細 table
+					// 把 QR Code 圖片存進訂單明細(或透過信件寄出)
+					// 做交易處理包起來，一但有一項失敗就 rollback
+					// 最後才可以把已購買的 tkt_no 從購物車清除(因為 Redis 是暫存，如果先清除購物車就會無法 rollback)
+					// 都成功後寄出信件通知
+					
 					cartItemSrv.updateTktsoldAmount(sessionId, tkt_no);
 //					cartItemSrv.updateTktoriAmount(sessionId, tkt_no);
 					cartItemSrv.delItem(sessionId, tkt_no); // 透過已購買的 tkt_no 清除購物車 tkt_no
@@ -54,6 +64,7 @@ public class BuyTkTServlet extends HttpServlet {
 			}
 		}
 		
+		// 結帳成功轉交至會員訂單管理頁面
 		RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testOrderList.jsp");
 		rd.forward(req, res);
 

@@ -152,6 +152,9 @@ td, div {
 									<c:if test="${memCoupVO.coup_state == 1 }">
 										<span class="badge badge-primary light">已使用</span>
 									</c:if>
+									<c:if test="${memCoupVO.coup_state == 2 }">
+										<span class="badge badge-info light">已過期</span>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

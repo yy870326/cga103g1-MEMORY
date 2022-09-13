@@ -10,24 +10,12 @@
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 
 <%
-	// 沒有搜尋過進來就顯示全部allList，有沒有搜尋過用rangedate判斷
-	if (session.getAttribute("rangedate") == null) {
+	// 沒有搜尋過進來就顯示全部allList，有沒有搜尋過用ableList判斷
+	if (session.getAttribute("ableList") == null) {
 		List<RmTypeVO> allList = rmTypeSvc.getAllRm();
 		pageContext.setAttribute("allList", allList);
 	}
-		
-	// rangedate字串分割成start_date、end_date，也可以放controller裡
-	if (session.getAttribute("rangedate") != null) {
-		String rangedate = (String) session.getAttribute("rangedate");
-		List<String> dateList = new LinkedList<String>();
-		dateList = Arrays.asList(rangedate.split(" to "));
-		String start_date = dateList.get(0);
-		String end_date = dateList.get(1);
-		pageContext.setAttribute("start_date", start_date);
-		pageContext.setAttribute("end_date", end_date);
-	}
-	
-	
+
 %>
 
 <!doctype html>
@@ -285,6 +273,19 @@ body {
 .btn-secondary {
 	padding: 12px 32px;
 }
+.btn-primary1 {
+    background-color: #5bc9e2;
+    padding: 0 20px;
+    border-radius: 12px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 12px;
+    border: none;
+    display: inline-block;
+    line-height: 42px;
+    color:#FFF;
+
+
+
 </style>
 </head>
 <body>
@@ -332,17 +333,17 @@ body {
 			</div>
 			<div class="guest_duration d-flex">
 				<c:choose>
-					<c:when test="${rangedate != null}">
+					<c:when test="${ableList != null}">
 						<div class="booking_information d-flex">
 							<div class="booking_information_date">
-								<span id="guest_checkinDate" class="mr-10">${start_date}</span> <i class='bx bx-right-arrow-alt'></i> <span id="guest_checkoutDate">${end_date}</span>
+								<span id="guest_checkinDate" class="mr-10">${arrival_date}</span> <i class='bx bx-right-arrow-alt'></i> <span id="guest_checkoutDate">${departure_date}</span>
 							</div>
 							<div class="booking_information_people">
-								<span id="guest_los" class="booking_information_people_adults">${people}</span>間 <span id="guest_adults">${guest}</span>人
+								<span id="guest_los" class="booking_information_people_adults">${qty}</span>間 <span id="guest_adults">${guest}</span>人
 							</div>
 						</div>
-						<a href="<%=request.getContextPath()%>/frontend/homePage.jsp">
-						<p>修改<i class='bx bxs-edit'></i></p></a>
+						<a href="<%=request.getContextPath()%>/frontend/room/listAllRmType.jsp">
+						<p>修改條件<i class='bx bxs-edit'></i></p></a>
 					</c:when>
 					<c:otherwise>
 						<div class="booking_information d-flex">
@@ -350,14 +351,14 @@ body {
 								<span id="guest_checkinDate" class="mr-10">尚未選擇搜尋條件</span>
 							</div>
 						</div>
-						<a href="<%=request.getContextPath()%>/frontend/homePage.jsp"><p>選擇<i class='bx bxs-edit'></i></p></a>
+						<a href="<%=request.getContextPath()%>/frontend/room/listAllRmType.jsp"><p>選擇<i class='bx bxs-edit'></i></p></a>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 		<div class="col-lg-12 room-card-area">
 			<c:choose>
-				<c:when test="${rangedate == null}">
+				<c:when test="${ableList == null}">
 					<h5>所有房型 共 ${allList.size()} 種</h5>
 				</c:when>
 				<c:when test="${ableList.size() == 0}">
@@ -425,7 +426,8 @@ body {
 					<div class="row align-items-center">
 						<div class="col-sm-12 col-lg-4 p-0 room-img">
 							<div class="room-card-img">
-								<a href="<%=request.getContextPath()%>/rmtype/rmtype.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShow"> <c:choose>
+								<a href="<%=request.getContextPath()%>/rmtype/rmtype.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShow"> 
+								<c:choose>
 										<c:when test="${rmPicSvc.getAllByType(rmTypeVO.rm_type_no).size() > 0}">
 											<img src="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_type_no=${rmTypeVO.rm_type_no}&action=showFirstImages">
 										</c:when>
@@ -452,7 +454,7 @@ body {
 							</div>
 						</div>
 
-						<div class="col-sm-4 col-lg-2 p-0 room-price">
+						<div class="col-sm-4 col-lg-4 p-0 room-price">
 							<div>
 								<span class="price"><fmt:formatNumber value="${rmTypeVO.rm_price}" pattern="NT$ ###,###" /></span><span>/ 一晚</span>
 							</div>
@@ -461,7 +463,7 @@ body {
 								<input type="hidden" name="type_no" value="${rmTypeVO.rm_type_no}">
 								<input type="hidden" name="people" value="${people}">
 								<input type="hidden" name="action" value="payment">
-								<button type="button" class="btn btn-primary line-btn" onclick="checkout();"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button>
+<!-- 								<button type="button" class="btn btn-primary1 line-btn" onclick="checkout();"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button> -->
 							</form>
 						</div>
 					</div>
@@ -524,17 +526,10 @@ body {
 	<script>
 	        $(`.nav-item:nth-child(1)>a`).attr('class', 'active');
 	     	// calendar
-	        $("#rangeDate").flatpickr({
-	            mode: 'range',
-	            dateFormat: "Y-m-d",
-	            defaultDate: ["${start_date}", "${end_date}"],
-	            minDate: "today",
-	            maxDate: new Date().fp_incr(90),
-	        });
 	        function checkout(){
-	    		if('${mem_mail}' === ''){
+	    		if('${mem_email}' === ''){
 	    			notLogin();
-	    			window.setTimeout(() => location.href="<%=request.getContextPath()%>/front_end/signin/signin.jsp",800);
+	    			window.setTimeout(() => location.href="<%=request.getContextPath()%>/frontend/signin/login.jsp",800);
 	    			return false;
 	    		} else {
 	    			// event: click event, event.target: click point; closet: 向上找元素
