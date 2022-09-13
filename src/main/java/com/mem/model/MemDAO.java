@@ -33,6 +33,7 @@ public class MemDAO implements I_MemDAO{
 				"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card  FROM mem WHERE  mem_email= ? and mem_pwd= ?"; 
 		private static final String GET_ONE_BY_MAIL = 
 				"SELECT * FROM MEM WHERE mem_email=?";
+		private static final String UPDATE_PASSWORD = "UPDATE MEM SET mem_pwd =? WHERE mem_no=?";
 	@Override
 	public void insert(MemVO memVO) {
 		Connection con = null;
@@ -364,5 +365,38 @@ public class MemDAO implements I_MemDAO{
 		}
 		
 		return memvo;
+	}
+
+	@Override
+	public void upatePassword(MemVO memVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_PASSWORD);
+				 
+			pstmt.setString(1,memVO.getMem_pwd());
+			pstmt.setInt(2, memVO.getMem_no());
+			
+			pstmt.executeUpdate();
+			
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+		if (pstmt != null) {
+			try {
+			pstmt.close();
+			}catch (SQLException SQ) {
+				SQ.printStackTrace();
+			}
+		 }
+		if (con != null) {
+			try {
+			con.close();
+			}catch (SQLException SQ) {
+				SQ.printStackTrace();
+			}
+		 }
+		
 	}
 }
