@@ -13,8 +13,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.util.JdbcUtil;
-
 public class AuthFunDAO implements I_AuthFunDAO {
 
 	private static DataSource ds = null;

@@ -1,7 +1,5 @@
 package com.store.model;
-import static com.util.JdbcUtil.URL;
-import static com.util.JdbcUtil.USERNAME;
-import static com.util.JdbcUtil.PASSWORD;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
