@@ -3,6 +3,9 @@
 # :warning:	**請勿「更動 或 上傳 util類 & 配置檔 & 他人程式」** :warning:
 # :warning: Pull Request 請留言作了什麼更動 :warning:
 9/7 專案目錄(Folder) 持續更新
+
+雲端 GCP 靜態IP : 34.80.95.143
+
 ```bash
 .
 |-- pom.xml
