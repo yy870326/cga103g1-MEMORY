@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.tkt.model.I_TktDAO;
 import com.tkt.model.TktDAO;
-import com.tkt.model.TktJdbcDAO;
 import com.tkt.model.TktVO;
 
 

@@ -14,8 +14,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.util.JdbcUtil;
-
 public class RmReserveDAO implements I_RmReserveDAO {
 
 	private static DataSource ds = null;

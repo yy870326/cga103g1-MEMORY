@@ -1,9 +1,5 @@
 package com.act.model;
 
-import static com.util.JdbcUtil.PASSWORD;
-import static com.util.JdbcUtil.URL;
-import static com.util.JdbcUtil.USERNAME;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -233,14 +229,7 @@ public class ActDAO implements I_ActDAO{
 	}
 	
 	public void updateActPeopleAmount(ActVO actVO) {
-		try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(UPDATE_ACT_PEOPLE_AMOUNT)) {
-			ps.setInt(1, actVO.getAct_current_count());
-			ps.setInt(2, actVO.getAct_no());			
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
+		
 	}
 
 
