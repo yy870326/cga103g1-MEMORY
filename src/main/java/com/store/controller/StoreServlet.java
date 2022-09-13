@@ -418,12 +418,12 @@ public class StoreServlet extends HttpServlet {
 				errorMsgs.put("store_reg_date","請輸入日期");
 			}
 			//===========廠商轉帳帳號===========
-			String bankreg = "^[(0-9)]{15,20}$";
+			String bankreg = "^[(0-9)]{8,14}$";
 			
 			String bank_account = req.getParameter("bank_account");
 			if(bank_account == null || bank_account.trim().length() == 0) {
 				errorMsgs.put("bank_account","銀行帳號請勿空白");
-				}else if(bank_account.trim().matches(bankreg)) {
+				}else if(!bank_account.trim().matches(bankreg)) {
 					errorMsgs.put("bank_account","請輸入正確轉帳帳號");
 				}
 			

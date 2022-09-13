@@ -38,7 +38,7 @@
 
 <body>
 	<!-- header -->
-	<%@ include file="/frontend/header.file" %>
+	<%@ include file="/frontend/store/header.file" %>
 	
 <div class="loginSection">	
 	<section class="login-area">

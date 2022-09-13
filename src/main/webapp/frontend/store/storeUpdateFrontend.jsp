@@ -20,11 +20,17 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
+		 <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
 	</head>
 
 	<body>
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/frontend/header.file" %> <!-- Header -->
+		
+		
 	
 
 		
