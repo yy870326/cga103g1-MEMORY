@@ -5,16 +5,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="java.time.LocalDate"%>
+<jsp:useBean id="listStoreByCompositeQuery" scope="request" type="java.util.List<EmpVO>" />
 
 
-<%
-// 取得自己的store所有資訊存放至pageContext
- StoreService storeSvc = new StoreService();
-
-List<StoreVO> list = storeSvc.getAllStoreNotSurvy();
-
-pageContext.setAttribute("list", list);
-%>
 <!DOCTYPE html>
 <html>
 
@@ -150,9 +143,11 @@ div.main-content {
 
 <!-- CSS -->
 	<%@ include file="/backend/commonCSS.file"%>
+	
 	</head>
 
 <body>
+	
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
 		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
@@ -164,7 +159,7 @@ div.main-content {
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/backend/store/storeListAll2.jsp">所有廠商
+						href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">所有廠商
 							</a></li>
 					<li class="nav-item">
 						<!-- Search -->
@@ -194,7 +189,7 @@ div.main-content {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="storeVO" items="${list}">
+				<c:forEach var="storeVO" items="${listStoreByCompositeQuery}">
 					<tr class="view">
 						<td>${storeVO.store_no}</td>
 						<td>${storeVO.store_acc}</td>
@@ -260,7 +255,7 @@ div.main-content {
 		</table>
 	</div>
 
-
+	
 	
 	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>

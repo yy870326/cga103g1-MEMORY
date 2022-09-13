@@ -1,8 +1,9 @@
 package com.rm_msg.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Rm_msgVO {
+public class Rm_msgVO implements Serializable{
 	private Integer rm_msg_no;
 	private Integer emp_no;
 	private Integer mem_no;

@@ -3,6 +3,8 @@ package com.rm_msg.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.mem.model.MemVO;
+
 public class Rm_msgService {
 	private	I_Rm_msgDAO dao; 
 	
@@ -10,25 +12,20 @@ public class Rm_msgService {
 		dao = new Rm_msgDAO();
 	}
 	
-	public Rm_msgVO addRm_msg(
-		Integer emp_no,
+	public void addRm_msg(
+		
 		Integer mem_no,
 		Integer store_no,
-		String rm_msg_reason,
-		Date rm_msg_date,
-		Integer rm_msg_status,
-		Date rm_msg_donetime
+		String rm_msg_reason
+		
 			) {
 		Rm_msgVO rm_msgVO = new Rm_msgVO();
-		rm_msgVO.setEmp_no(emp_no);
+		
 		rm_msgVO.setMem_no(mem_no);
 		rm_msgVO.setStore_no(store_no);
 		rm_msgVO.setRm_msg_reason(rm_msg_reason);
-		rm_msgVO.setRm_msg_date(rm_msg_date);
-		rm_msgVO.setRm_msg_status(rm_msg_status);
-		rm_msgVO.setRm_msg_donetime(rm_msg_donetime);
 		dao.insert(rm_msgVO);
-		return rm_msgVO;
+
 	}
 	
 	public Rm_msgVO updateRm_msg(
@@ -62,12 +59,27 @@ public class Rm_msgService {
 		dao.delete(rm_msg_no);
 	}
 	
-	public Rm_msgVO getOnerm_msg(Integer rm_msg_no) {
+	public Rm_msgVO getOneByMemNumber(Integer mem_no) {
 		
-		return dao.findByPrimaryKey(rm_msg_no);
+		return	dao.findByMemNumber( mem_no);
 	}
+	
+	public Rm_msgVO getOnByStoreNumber(Integer store_no) {
+		return dao .findByStoreNumber(store_no);
+	}
+	
 	
 	public List<Rm_msgVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public MemVO getOneByMemAcc(String mem_acc) {
+		return dao.getOneMemByMemAcc(mem_acc);
+	}
+	
+	public List<Rm_msgVO> getAllMsgByStoreNumber(Integer store_no) {
+		return dao.getAllMsgByNumber(store_no);
+	}
+	
+	
 }

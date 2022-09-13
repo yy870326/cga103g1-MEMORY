@@ -41,28 +41,31 @@ pageContext.setAttribute("storeVO", storeVO);
 <!-- 	內容寫在main-content這個div內    -->
 
 <div class="main-content card card-body table-responsive">
-
-	<ul>
-		<li>
+<!--  
+	<div>
+		<div class="nav-item">
 			<h4><a href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">列出所有廠商</a></h4>
-		</li>
+		</div>
 		
-		<li>
-		
+		<div>
+			<p>請輸入廠商編號:</p>
 			<form method="post" action="<%=request.getContextPath()%>/store.do">
-				<p>請輸入廠商編號:</p>
 				<input type="text" name="store_no">
 				<input type="hidden" name="action" value="getOneStore">
 				<input type="submit" value="送出"><font>${errorMsgs.store_no}</font>
 			</form>	
-		</li>
+		</div>
+		<div>
+			<p>請輸入廠商帳號:</p>
+			<form method="post" action="<%=request.getContextPath()%>/store.do">
+				<input type="text" name="store_acc">
+				<input type="hidden" name="action" value="getOneStoreByAcc">
+				<input type="submit" value="送出"><font>${errorMsgs.store_acc}</font>
+			</form>	
+		</div>
 		
-		<jsp:useBean id="StoreSvc" scope="page" class="com.store.model.StoreService"/>
-		
-		<% List<StoreVO> storeVO = StoreSvc.getAllStore();
-			pageContext.setAttribute("storeVO", storeVO);
-		%>
-		<li>
+	</div>
+		<div>
 			<form method="post" action="<%=request.getContextPath()%>/store.do">
 				<select size="1" name="store_no">
 					<c:forEach var="StoreVO" items="${storeVO}">
@@ -73,8 +76,48 @@ pageContext.setAttribute("storeVO", storeVO);
 				<input type="submit" value="送出">
 				
 			</form>	
-		</li>	
-	</ul>			
+		</div>	
+	
+-->	
+		<jsp:useBean id="StoreSvc" scope="page" class="com.store.model.StoreService"/>
+		
+		<% List<StoreVO> storeVO = StoreSvc.getAllStore();
+			pageContext.setAttribute("storeVO", storeVO);
+		%>
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store.do" name="form1">
+        <h2><font >查詢:</font></h2> <br>
+        <div>
+        <p>輸入廠商會員編號:</p>
+        <input type="text" name="store_no" value=""><br>
+        </div>
+        
+        <div>   
+       <p>輸入廠商帳號:</p>
+       <input type="text" name="store_acc" value=""><br>
+       </div>
+       
+       <div>
+       <p>輸入店家名稱:</p>
+       <input type="text" name="store_name" value=""><br>
+    	</div>
+    	
+    	<div>
+       <p>選擇帳號狀態:</p>
+       <select  name="acc_status" size="">
+       			<option value="">請選擇</option>
+    			<option value="0">帳號未啟用</option>
+				<option value="1">帳號已啟用</option>
+				<option value="2">帳號停權</option>
+  		</select><br>
+        </div>
+        
+        <div>   
+       <p>加入時間:</p>
+	   <input name="store_reg_date" id="f_date1" type="date">
+		</div>        
+        <input type="submit" value="查詢">
+        <input type="hidden" name="action" value="listStoreByCompositeQuery">
+     </FORM>			
 </div>
 
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->

@@ -153,4 +153,21 @@ id="WebApp_ID" version="4.0">
 <!-- 		<dispatcher>ASYNC</dispatcher> -->
 <!-- 	</filter-mapping> -->
 
+<!-- 以下是廠商會員登入 -->
+<filter>
+	<filter-name>StoreLoginFilter</filter-name>
+	<filter-class>com.filters.StoreLoginFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>StoreLoginFilter</filter-name>
+	<url-pattern>/frontend/store/storeUpdateFrontend.jsp</url-pattern>
+	<url-pattern>/frontend/store/storeListOwn.jsp</url-pattern>
+	<url-pattern>/frontend/store/storeFrontendPage.jsp</url-pattern>
+	<url-pattern>/frontend/store/rmMsgList.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+</filter-mapping>
 </web-app>

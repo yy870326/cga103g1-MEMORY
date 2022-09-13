@@ -65,7 +65,7 @@ public class StoreLoginControl extends HttpServlet {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				res.sendRedirect(req.getContextPath()+"/frontend/store/storeListOwn.jsp");
+				res.sendRedirect(req.getContextPath()+"/frontend/store/storeFrontendPage.jsp");
 			}
 		}
 		
