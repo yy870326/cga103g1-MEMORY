@@ -63,7 +63,7 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                 </div>
                 <div class="col-md-12 password">
                   <label>密碼</label>
-                  <input type="text" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" >
+                  <input type="password" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" >
                 </div>
                
                 <div class="col-md-6 name">
@@ -77,7 +77,7 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                     <option >女</option>
                   </select>
                 </div>
-                <div class="col-md-12b password">
+                <div class="col-md-12 password">
                     <label>電話</label>
                     <input type="text" name="mem_mobile" placeholder="Enter your Phone here"value="<%=(memVO==null)? "0988682536" :memVO.getMem_mobile()%>">
                   </div>
@@ -115,15 +115,11 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                   <input type="text" name="mem_card" placeholder="Enter your name here"value="<%=(memVO==null)? "5527921393052964" :memVO.getMem_card()%>" >
                 </div>
                <input type="hidden" name="action" value="insert">
-                <div class="col-md-12 chqbox chqbox2">
-                  <input type="checkbox" name="terms" id="term">
-                  <label for="term">我已閱讀並同意 <span>條款和條件</span>.</label>
-                </div>
                 <div class="col-md-12">
                   <button type="submit" name="button">創建帳號</button>
                 </div>
                 <div class="login-btm text-center">
-              <p>已有帳號 ?<a href="login.html">登入</a></p>
+              <p>已有帳號 ?<a href="<%=request.getContextPath()%>/frontend/signin/login.jsp">登入</a></p>
                 </div>
               </div>
             </form>
