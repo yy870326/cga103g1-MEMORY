@@ -15,11 +15,12 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 <html>
 
 	<head>
+		<%@ include file="/frontend/commonCSS.file"%>
+		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 		 <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -28,15 +29,18 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	</head>
 
 	<body>
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		
+	<%@ include file="/frontend/header.file"%>
+	<!-- Header -->
+	<%@ include file="/frontend/store/storeSidebar.file"%>
+	<!-- sidebar -->
 		
 	
 
 		
 
 <!-- 	內容寫在main-content這個div內    -->
-<div class="main-content card card-body table-responsive" >
+<div class="col-lg-9" >
 	<form method="post" name="form1" action="<%=request.getContextPath()%>/store.do" >
 		<table id="example4" class="display" style="min-width: 845px">
 		
@@ -155,7 +159,9 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 			</form> 
 		</div>
 
-		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
+	<%@ include file="/frontend/footer.file"%>
+	<%@ include file="/frontend/commonJS.file"%>
+	<%@ include file="/backend/commonJS.file"%>
 		<script>
 // 		header標題
 			$("#pagename").text("MEMORY 後台管理");

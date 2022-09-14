@@ -169,22 +169,23 @@ div.main-content {
 
 <!-- CSS -->
     <%@ include file="/frontend/commonCSS.file" %>
+	<%@ include file="/backend/commonCSS.file"%>
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-	<%@ include file="/backend/commonCSS.file"%>
 	
 	</head>
 
 <body>
 
 	
-		<%@ include file="/frontend/store/header.file" %><!-- header -->
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/frontend/store/sidebar.file" %> <!-- sidebar -->
+	<%@ include file="/frontend/header.file"%>
+	<!-- Header -->
+	<%@ include file="/frontend/store/storeSidebar.file"%>
+	<!-- sidebar -->
 
-	<div class="main-content">
+	<div class="col-lg-9">
 	
 	
 		<table class="table fold-table">
@@ -225,7 +226,8 @@ div.main-content {
 
 	
 	
-	<!-- 放置基本JS檔案 -->
+	<%@ include file="/frontend/footer.file"%>
+	<%@ include file="/frontend/commonJS.file"%>
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
 		$(document).ready(
