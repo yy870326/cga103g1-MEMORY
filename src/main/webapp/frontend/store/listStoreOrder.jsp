@@ -19,11 +19,11 @@
 
 <%
 if (request.getAttribute("orderlist") == null) {
-	Integer mem_no = 1;
-	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
+	Integer store_no = 1;
+	List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("mem_no", 1);
+pageContext.setAttribute("store_no", 1);
 %>
 
 <!DOCTYPE html>
@@ -31,6 +31,7 @@ pageContext.setAttribute("mem_no", 1);
 <head>
 <!-- 基本CSS檔案 -->
 <%@ include file="/backend/commonCSS.file"%>
+
 <style>
 table.fold-table tbody tr.view {
 	cursor: pointer;
@@ -165,7 +166,7 @@ div.main-content {
 	<%@ include file="/frontend/header.file"%>
 	<%@ include file="/frontend/memSidebar.file"%>
 	<div class="col-lg-9">
-	<h3 class="mt-5 mb-3">會員訂房訂單管理</h3>
+	<h3 class="mt-5 mb-3">廠商訂單管理</h3>
 		<div style="margin-left: 850px;">
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -178,17 +179,29 @@ div.main-content {
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?mem_no=${mem_no}&action=getAllMemRmOrder">所有訂單
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&action=getAllRmOrder">所有訂單
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=0&action=getStoreStatus">入住中
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=1&action=getStoreStatus">正常
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已實現
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已取消
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
 						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
-							<div class="input-group search-area" style="margin-left: 700px;">
+							<div class="input-group search-area" style="margin-left: 400px;">
 								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號" /> <input type="submit"
+									placeholder="請輸入訂單編號"/> <input type="submit"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
-								<input type="hidden" name="mem_no" value="${mem_no}"> <input
-									type="hidden" name="action" value="getOneMem">
+								<input type="hidden" name="store_no" value="${store_no}">
+								<input type="hidden" name="action" value="getOneStore">
 							</div>
 						</form>
 					</li>
@@ -200,7 +213,7 @@ div.main-content {
 			<thead>
 				<tr>
 					<th>訂單編號</th>
-					<th>店家名稱</th>
+					<th>會員編號</th>
 					<th>訂單日期</th>
 					<th>總金額</th>
 					<th>訂單狀態</th>
@@ -210,7 +223,7 @@ div.main-content {
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
 						<td>#${rmOrderVO.rm_order_no}</td>
-						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</td>
+						<td>#${rmOrderVO.mem_no}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
 								pattern="$###,###,###" /> <c:if
@@ -232,6 +245,7 @@ div.main-content {
 					</tr>
 					<tr class="fold">
 						<td colspan="8">
+
 							<div class="row d-flex justify-content-around my-2">
 								<div class="col-4 order-data">
 									<h4>
@@ -296,7 +310,7 @@ div.main-content {
 														class="btn btn-primary" style="background-color: #5bc9e2"
 														value="取消訂單"> <input type="hidden"
 														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
-													<input type="hidden" name="action" value="memCancel">
+													<input type="hidden" name="action" value="storeCancel">
 												</FORM>
 											</div></td>
 									</tr>
@@ -314,12 +328,7 @@ div.main-content {
 	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
-		$(document).ready(function() {
-			$("#pagename").text("訂單管理");
-			$(".fold-table tr.view").on("click", function() {
-				$(this).toggleClass("open").next(".fold").toggleClass("open");
-			});
-		});
+		
 	</script>
 </body>
 </html>
