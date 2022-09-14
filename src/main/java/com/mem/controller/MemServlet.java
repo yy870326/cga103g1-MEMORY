@@ -8,8 +8,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
-import org.apache.naming.java.javaURLContextFactory;
-
 import com.mem.model.*;
 import com.mem.model.MemDAO;
 import com.mem.model.MemVO;
@@ -320,6 +318,45 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 	        	String url = "/frontend/homePage.jsp";
 	        	RequestDispatcher successView = req.getRequestDispatcher(url);
 	        	successView.forward(req, res);
+	        }
+		  if("forgetPassword".equals(action)) {
+	        	
+	        	List<String> errorMsgs = new LinkedList<String>();
+	        	req.setAttribute("errorMsgs", errorMsgs);
+	        	try {
+	        		//請求
+	        		String mem_email = req.getParameter("mem_email");
+					MemService memSvc = new MemService();
+					
+					List<MemVO> listall = memSvc.getall();
+					for (MemVO memVOList : listall) {
+						if (memVOList.getMem_email() != mem_email) {
+							errorMsgs.add("信箱無註冊資料，請重新輸入");
+						}break;
+					}
+					MemVO memVO = memSvc.getOneBymail(mem_email);
+					MailService mail = new MailService();
+					String authCode = mail.getRandom();
+					
+					memSvc.updatePassword(authCode, memVO.getMem_no());
+					
+					String subject = "臨時密碼";
+					String message = "臨時密碼:" + authCode + "請登入後修改密碼";
+				
+
+					try {
+						mail.sendMail(mem_email, subject, message);
+			            res.sendRedirect(req.getContextPath() + "/frontend/signin/login.jsp");
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+	        	}catch(Exception e) {
+	        		errorMsgs.add(e.getMessage());
+	        		RequestDispatcher failureView = req.getRequestDispatcher("/frontend/signin/forgetPassword.jsp");
+	        		failureView.forward(req, res);
+	        	}
+	        	
+	        	
 	        }
 		
 	}

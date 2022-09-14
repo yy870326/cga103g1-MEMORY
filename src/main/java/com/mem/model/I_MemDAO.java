@@ -9,4 +9,6 @@ public interface I_MemDAO {
     public MemVO findByPrimaryKey(Integer memno);
     public List<MemVO> getAll();
     MemVO getOneBymail(String mem_email);
+    public void upatePassword(MemVO memVO);
+    
 }

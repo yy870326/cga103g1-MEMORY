@@ -19,7 +19,6 @@ public class MemService {
 
 		memVO.setMem_acc(mem_acc);
 		memVO.setMem_pwd(mem_pwd);
-		
 		memVO.setMem_name(mem_name);
 		memVO.setMem_gender(mem_gender);
 		memVO.setMem_email(mem_email);
@@ -74,4 +73,13 @@ public MemVO getOneBymail(String mem_email) {
 		
 		return dao.getOneBymail(mem_email);
 	}
+public MemVO updatePassword(String mem_password,Integer mem_no) {
+	
+	MemVO memVO = new MemVO();
+	memVO.setMem_pwd(mem_password);
+	memVO.setMem_no(mem_no);
+	
+	dao.upatePassword(memVO);
+	return memVO;
+}
 }

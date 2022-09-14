@@ -43,7 +43,7 @@
                 </div>
 
                   <div class="forget-btn">
-                    <a href="">忘記密碼?</a>
+                    <a href="forgetPassword.jsp">忘記密碼?</a>
                   </div>
                   <div class="forget-btn">
                     <a href="addMem.jsp">註冊帳號</a>
