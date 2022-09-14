@@ -1,9 +1,11 @@
 package com.rm_order.controller;
 
 import java.io.IOException;
-
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -238,7 +240,23 @@ public class RmOrderServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer rm_order_no = new Integer(req.getParameter("rm_order_no"));
-				
+				// 判斷入住日期是否大於七日
+				RmOrderListService rmSvc = new RmOrderListService();
+				RmOrderListVO rm = rmSvc.getAllByRmOrderNo(rm_order_no).get(0);
+				java.util.Date rmDate = rm.getArrival_date();
+		        Calendar calendar = Calendar.getInstance();
+		        java.util.Date dateObj = calendar.getTime();
+		        
+		        long day = (rmDate.getTime()-dateObj.getTime())/(24*60*60*1000);
+		        
+				if(day < 6) {
+					errorMsgs.add("入住日小於七日,請來電洽詢");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/listMemOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 				/*************************** 2.開始修改資料 ****************************************/
 				RmOrderListService rmOrderListSvc = new RmOrderListService();
 				List<RmOrderListVO> list = rmOrderListSvc.getAllByRmOrderNo(rm_order_no);
