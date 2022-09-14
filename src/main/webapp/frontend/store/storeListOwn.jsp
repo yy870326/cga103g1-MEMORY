@@ -13,23 +13,22 @@
 <jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService"/>
 	<head>
 	<%@ include file="/frontend/commonCSS.file" %>
+	<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	</head>
 
 	<body>
 		<%@ include file="/frontend/store/header.file" %><!-- header -->
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/frontend/store/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/frontend/store/storeSidebar.file" %> <!-- sidebar -->
 		
 
 		
 
 <!-- 	內容寫在main-content這個div內    -->
-<div class="main-content card card-body table-responsive">
+<div class="col-lg-9">
 <div>
 <h4>${storeSvc.getOneStoreByAcc(store_acc).store_name}</h4>您好
 </div>
@@ -135,7 +134,7 @@
 				 </tr>
 			 </table>
 		</div>
-
+		<%@ include file="/frontend/footer.file" %>>
 		<%@ include file="/frontend/commonJS.file" %>
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
 		<script>

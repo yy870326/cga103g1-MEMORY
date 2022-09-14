@@ -13,17 +13,18 @@
 <jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService"/>
 	<head>
 	<%@ include file="/frontend/commonCSS.file" %>
+	<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
-		<%@ include file="/backend/commonCSS.file" %> <!-- CSS -->
 	</head>
 
 	<body>
-		<%@ include file="/frontend/store/header.file" %>
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/frontend/store/sidebar.file" %> <!-- sidebar -->
+	<%@ include file="/frontend/header.file"%>
+	<!-- Header -->
+	<%@ include file="/frontend/store/storeSidebar.file"%>
+	<!-- sidebar -->
 		
 
 		
@@ -136,8 +137,9 @@
 			 </table>
 		</div>
 
-		<%@ include file="/frontend/commonJS.file" %>
-		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
+	<%@ include file="/frontend/footer.file"%>
+	<%@ include file="/frontend/commonJS.file"%>
+	<%@ include file="/backend/commonJS.file"%>
 		<script>
 // 		header標題
 			$("#pagename").text("MEMORY");
