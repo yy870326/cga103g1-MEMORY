@@ -1,7 +1,6 @@
 package com.tkt_item2.model;
 
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
+
 import com.tkt.model.TktService;
 import com.tkt.model.TktVO;
 
@@ -11,9 +10,10 @@ public class TktItem2VO {
 	private Integer amount;
 	private byte[] qrcode;
 	private Integer tkt_ori_price;
-	
-	public TktItem2VO() {}
-	
+
+	public TktItem2VO() {
+	}
+
 	public TktItem2VO(Integer tkt_no, Integer tkt_order_no, Integer amount, byte[] qrcode, Integer tkt_ori_price) {
 		super();
 		this.tkt_no = tkt_no;
@@ -62,12 +62,11 @@ public class TktItem2VO {
 	public void setTkt_ori_price(Integer tkt_ori_price) {
 		this.tkt_ori_price = tkt_ori_price;
 	}
-	
-	
+
 	// join TktVO
-		public TktVO getTktVO() {
-			TktService tktSrv = new TktService();
-			TktVO tktVO = tktSrv.getOneTkt(tkt_no);
-			return tktVO;
-		}
+	public TktVO getTktVO() {
+		TktService tktSrv = new TktService();
+		TktVO tktVO = tktSrv.getOneTkt(tkt_no);
+		return tktVO;
+	}
 }

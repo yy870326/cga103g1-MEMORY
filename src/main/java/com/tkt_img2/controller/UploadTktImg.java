@@ -123,7 +123,7 @@ public class UploadTktImg extends HttpServlet {
 
 			// ------------------------- getParameter ----------------
 			Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
-			System.out.println("-------" + tkt_no);
+//			System.out.println("-------" + tkt_no);
 
 			Tktimg2Service tktImgSrv = new Tktimg2Service();
 			Collection<Part> parts = req.getParts();

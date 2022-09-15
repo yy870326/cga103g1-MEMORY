@@ -188,23 +188,16 @@ session.setAttribute("checkedList", checkedList);
                   <div class="divider divider-dotted"></div>
                   
                   <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
-                    <h3>信用卡付款資訊</h3>
-                    <p>可前往會員中心修改信用卡資料或新增信用卡資訊</p>
+                    <h3>信用卡付款</h3>
                   </div>
                   
                   <div class="d-flex justify-content-between mb-20">
                   
                   	<div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>選擇已儲存信用卡(後四碼)</label>
+                    <label>選擇付款方式</label>
                     <select class="custom-select select-big mb-3">
-                      <option selected>**** **** **** 0208（預設）</option>
-                      <option>**** **** **** 1345</option>
-                      <option>**** **** **** 9763</option>
+                      <option selected>信用卡付款</option>
                     </select>
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>信用卡持有者姓名</label>
-                    <input type="text" name="text" placeholder="自動帶入" class="form-control">
                   </div>
                   
                   </div>
@@ -222,8 +215,7 @@ session.setAttribute("checkedList", checkedList);
                     <select class="custom-select select-big mb-3 mem_coup_selected" name="mem_coup_no">
                       <option value="0" selected>--- 請選擇 ---</option>
                       <c:forEach var="memCoupVO" items="${memCoupList}">
-						<c:if test="${memCoupVO.coupVO.status == 1}">
-							<%-- <option value="${memCoupVO.mem_coup_no}">${memCoupVO.coupVO.discount}</option> --%>
+						<c:if test="${memCoupVO.coupVO.status == 1 && memCoupVO.coup_state == 0}">
 							<option value="${memCoupVO.mem_coup_no}">${memCoupVO.coupVO.coup_name}, -NT$ ${memCoupVO.coupVO.discount}</option>
 							</c:if>
 						</c:forEach>
@@ -243,40 +235,6 @@ session.setAttribute("checkedList", checkedList);
                </div>
                   
                   
-                  <!-- <div class="divider divider-dotted"></div> -->
-                  
-                  <!-- <div class="login-top cardInfo col-lg-12 col-md-12 col-sm-12">
-                    <h3>新增新用卡資料</h3>
-                    <p>可前往會員中心修改信用卡資料</p>
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>信用卡卡號</label>
-                    <input type="text" name="text" placeholder="Card number">
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>信用卡安全碼</label>
-                    <input type="text" name="text" placeholder="Card identification number">
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>到期月份</label>
-                    <select class="custom-select select-big mb-3">
-                      <option selected="">select a Monthe</option>
-                      <option value="location8">January</option>
-                      <option value="location8">Febuary</option>
-                      <option value="location8">March</option>
-                      <option value="location8">April</option>
-                    </select>
-                  </div>
-                  <div class="col-lg-6 col-md-12 col-sm-12 email">
-                    <label>到期年份</label>
-                    <select class="custom-select select-big mb-3">
-                      <option selected="">select a Year</option>
-                      <option value="location8">2019</option>
-                      <option value="location8">2020</option>
-                      <option value="location8">2021</option>
-                      <option value="location8">2022</option>
-                    </select>
-                  </div> -->
                   <div class="col-md-12">
 						
                     	<input type="hidden" name="mem_no" value="1">
@@ -325,14 +283,6 @@ session.setAttribute("checkedList", checkedList);
 	 /* input hidden  ttl_price */
 	const ttl_price = document.querySelector('#ttl_price');
 	
-	 /* sweetalert btn setting*/
-/* 	 const swalWithBootstrapButtons = Swal.mixin({
-       customClass: {
-           confirmButton: 'btn btn-success ml-3',
-           cancelButton: 'btn btn-danger mr-3'
-       },
-       buttonsStyling: false
-   }) */
 	
 	/* ----------- totalPrice -----------*/
 	/* 未使用優惠券的總價 */
@@ -368,26 +318,6 @@ session.setAttribute("checkedList", checkedList);
 		
 	
 	
-/* 	addTktOrder.addEventListener('click', () => {
-		axios({
-				"method": "post", 
-				"url": "addTktOrd.do",
-				"params": {
-					"original_price": String(sum),
-					"ttl_price": String(1799)
-				}
-		   }).then(function(response) { 
-		   		console.log(response);
-		   		console.log("訂單參數成功發送");
-		   		swalWithBootstrapButtons.fire({
-					position: 'center',
-					icon: 'success',
-					title: '票券購買成功',
-					showConfirmButton: false,
-					timer: 1500
-				})
-		   }).catch((error) => console.log(error));
-	}); */
 	
 	
 </script>

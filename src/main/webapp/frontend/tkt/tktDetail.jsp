@@ -51,14 +51,6 @@
       
       <!-- Tab line -->
       <div class="col-lg-8 col-md-12 col-sm-12 ">
-        <!-- <ul class="nav nav-tabs tab-line"> -->
-          <!-- <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-de-1"> 票券內容說明 </a> </li> -->
-          <!-- <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-de-2"> Availability </a> </li> -->
-         <!--  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-de-3"> Amenities </a> </li>
-          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-de-4"> Calendar </a> </li> -->
-        <!--   <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-de-5"> 照片 </a> </li>
-          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-de-6"> 評價 </a> </li> -->
-        <!-- </ul> -->
         
         <a href="<%=request.getContextPath()%>/frontend/tkt/tktShopList.jsp" class="btn btn-info mb-3">返回票券商城</a> 
         <div class="tab-content">
@@ -83,21 +75,10 @@
 			  </c:if>
               
             </div>
-            <!-- <div class="text-block"> 
-              Listing Location
-              <h5 class="mb-4">Location</h5>
-              <div class="map-wrapper-300 mb-3">
-                <div class="map-container fw-map">
-                  <div id="map-main"> </div>
-                </div>
-              </div>
-            </div> -->
             <div class="text-block"> 
-              <!-- Gallery-->
               <h5 class="mb-4"></h5>
               <div class="row gallery ml-n1 mr-n1">
                 <div class="col-lg-12 col-6 px-1 mb-2">
-                <!-- <img src="https://i.imgur.com/eZXD0nx.jpg" alt="..." class="img-fluid"> -->
                 <img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=showFirstImages" class="img-fluid">
                 </div>
               </div>
@@ -106,7 +87,6 @@
               
               
               <div class="media d-block d-sm-flex review">
-                <!-- <div class="text-md-center mr-4 mr-xl-5"><img src="images/img-11.jpg" alt="Jabba Hut" class="avatar avatar-xl p-2 mb-2"></div> -->
                 <div class="media-body">
                   <p class="mb-2">購買須知：${tktVO.notice}</p>
               	<p class="mb-2">如何使用：${tktVO.howuse}</p>
@@ -124,45 +104,19 @@
       <div class="col-lg-4 col-md-12 col-sm-12 right_Details">
         <div class="p-4 shadow ml-lg-4 rounded sticky-top" style="top: 100px;">
         
-      <%--  <form id="booking-form" METHOD="post" ACTION="<%=request.getContextPath()%>/cart/addCart.do" class="form"> --%>
         <h5 class="mb-4">${tktVO.tkt_name}</h5>
           <p class="text-muted"><span class="text-primary h2">${tktVO.price}</span> / 人</p>
           <hr class="my-4">
             <div class="form-group">
             <div class="form-group mb-4">
-              <!-- <label for="guests" class="form-label">票券張數</label> -->
-              <!-- 假數量 之後會接到真的票券資料用 el 綁定數量 -->
-              <!-- <input type="number" value="1" id="guests" class="form-control"> -->
-<!--               <input type="number" name="count" id="guests" class="form-control"> -->
             </div>
-              <!-- 假資料 真的資料會從資料庫撈 tkt_no -->
                <input type="hidden" name="tkt_no"  value="${tktVO.tkt_no}" class="tkt_no"> 
-			   <!-- <input type="hidden" name="tkt_name"  value="201 景觀台門票">
-			   <input type="hidden" name="price"  value="500"> -->
 			   <input type="hidden" name="count"  value="1" class="count">
               <button type="submit" class="btn btn-primary btn-block addItem">加入購物車<i class="fas fa-cart-arrow-down"></i></button>
 			   <input type="hidden" name="action"	value="addItem">
-			   <!-- <input type="hidden" name="count"  value="2"> -->
-			   <!-- <input type="hidden" name="action"	value="addItem"> -->
             </div>
-         <!--  </form> -->
           
           
-         <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/initCart.do">
-			<input type="submit" class="btn btn-primary btn-block" value="測試 cookie">
-          	<input type="hidden" name="action" value="init">
-			<!-- <input type="hidden" name="action"	value="init"> -->
- 		 </FORM> --%>
- 		 
- 		<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/getCart.do">
-			<input type="submit" class="btn btn-primary btn-block" value="前往購物車列表">
- 			<input type="hidden" name="action"	value="getCart">
-			<!-- <input type="hidden" name="action"	value="getCart"> -->
- 		</FORM> --%>
-          <!-- <hr class="my-4">
-          <div class="text-center">
-            <p> <a href="#" class="text-secondary text-sm"> <i class="fa fa-heart"></i> Bookmark This Hotels</a></p>
-          </div> -->
         </div>
       </div>
       
@@ -170,14 +124,6 @@
       <a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn cartBtn">	
 		<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
       </a>
-      
-      <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/getCart.do">
-			<!-- 購物車 -->
-      	<button type="submit" class="btn cartBtn">	
-			<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
-      	</button>
- 		<input type="hidden" name="action"	value="getCart">
- 	 </FORM> --%>
       
     </div>
   </div>

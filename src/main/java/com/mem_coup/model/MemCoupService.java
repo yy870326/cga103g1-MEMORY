@@ -21,15 +21,26 @@ public class MemCoupService {
 		return dao.getAll();
 	}
 	
-	public MemCoupVO changeState(Integer mem_coup_no, Integer coup_state) {
-		MemCoupVO memCoupVO = new MemCoupVO();
+	public void changeState(Integer mem_coup_no, Integer coup_state) {
+//		MemCoupVO memCoupVO = new MemCoupVO();
+//		
+//		memCoupVO.setMem_coup_no(mem_coup_no);
+//		memCoupVO.setCoup_state(coup_state);
+//		
+//		dao.update(memCoupVO);
 		
-		memCoupVO.setMem_coup_no(mem_coup_no);
-		memCoupVO.setCoup_state(coup_state);
+		MemCoupVO memCoupVO = dao.findByPrimaryKey(mem_coup_no);
+		Integer status = memCoupVO.getCoup_state();
+		// 排成器偵測到會員的優惠券在截止日時尚未使用(狀態 0)才會改變狀態為“過期
+		if (status == 0) {
+			dao.changeState(mem_coup_no, coup_state);
+		}
 		
-		dao.update(memCoupVO);
-		
-		return memCoupVO;
+	}
+	
+	
+	public void memCoupUsedState(Integer mem_coup_no, Integer coup_state) {
+		dao.changeState(mem_coup_no, 1);
 	}
 	
 	public MemVO sendCoupToMem(Integer mem_no, Integer coup_no, Integer coup_state) {

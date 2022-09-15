@@ -129,13 +129,12 @@ public class CheckOutService {
 			
 			// 更改會員優惠券使用狀態
 //			if (!mem_coup_no.equals(0)) {
-//				daoMemCoup.changeState(con, mem_coup_no, 1);
+//				daoMemCoup.changeState(mem_coup_no, 1);
 //			}
-//			
+//			System.out.println(mem_coup_no);
+//			daoMemCoup.memCoupUsedState(mem_coup_no, 1);
 			
 
-
-			
 			//所有流程都成功後送出交易，將 autoCommit 恢復預設，避免死結問題
 			con.commit();
 			con.setAutoCommit(true);

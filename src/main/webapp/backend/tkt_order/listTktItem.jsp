@@ -9,15 +9,11 @@
 <%@ page import="com.tkt_img2.model.*"%>
 <%@ page import="com.tkt_order2.model.*"%>
 <%@ page import="com.tkt_item2.model.*"%>
+<%@ page import="com.mem.model.*"%>
 <%@ page import="java.time.LocalDate"%>
 
 <jsp:useBean id="tktImg2Srv" scope="page" class="com.tkt_img2.model.Tktimg2Service" />
 
-<%
-TktOrder2Service tktOrd2Srv = new TktOrder2Service();
-List<TktOrder2VO> list = tktOrd2Srv.getAll();
-pageContext.setAttribute("list", list);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -110,53 +106,37 @@ td, div {
 		<div class="container-fluid">
 			<div class="col-12 d-flex justify-content-between mb-5">
 				<div class="d-flex">
-					<h1 class="coup-list-h1 list-h1">票券訂單列表</h1>
+					<h1 class="coup-list-h1 list-h1">訂單明細</h1>
 				</div>
-				<!-- <div class="input-group search-area">
-					<input type="text" class="form-control" placeholder="Search here">
-					<span class="input-group-text"> <i
-						class="flaticon-381-search-2"></i>
-
-					</span>
-				</div> -->
+				<div>
+					<a href="<%=request.getContextPath()%>/backend/tkt_order/listAllTktOrder.jsp" class="btn btn-primary">返回訂單管理</a>
+				</div>
 			</div>
 
 			<div class="col-12 table-responsive">
 				<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">訂單編號</th>
-							<th scope="col">會員帳號</th>
-							<th scope="col">原始金額</th>
-							<th scope="col">付款總金額</th>
-							<th scope="col">訂單成立日期</th>
-							<th scope="col">查看訂單明細</th>
+							<th scope="col">票券名稱</th>
+							<th scope="col">付款金額</th>
+							<th scope="col">票券數量</th>
 							
 						</tr>
 					</thead>
 					<tbody>
-					<%@ include file="/backend/tkt_order/pageIndex.file"%>
-						<c:forEach var="tktOrder2VO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-						
+					
+						<c:forEach var="tktItem2VO" items="${tktItemList}">
 							<tr>
-								<td># ${tktOrder2VO.tkt_order_no}</td>
-								<td>${tktOrder2VO.memVO.mem_acc}</td>
-								<td>NT$ ${tktOrder2VO.original_price}</td>
-								<td>NT$ ${tktOrder2VO.ttl_price}</td>
-								<td>${tktOrder2VO.orderdate}</td>
-								<td>
-									<a href="/CGA103G1/tkt_order/tktItemBack.do?tkt_order_no=${tktOrder2VO.tkt_order_no}" class="btn btn-primary">明細</a>
-								</td>
+								<td>${tktItem2VO.tktVO.tkt_name}</td>
+								<td>${tktItem2VO.tkt_ori_price}</td>
+								<td>${tktItem2VO.amount}</td>
 							</tr>
 						</c:forEach>
 
 					</tbody>
 				</table>
 				
-				<%@ include file="/backend/tkt_order/pagination.file"%>
 			
-
-
 
 	<%@ include file="/backend/commonJS.file"%>
 	

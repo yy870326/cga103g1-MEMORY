@@ -69,10 +69,6 @@ public class InitCartServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
 			rd.forward(req, res);
 
-//			PrintWriter out = res.getWriter(); 
-//			out.write(session.getId()); // 把 sessionID 送到前端
-//			out.flush();
-//			out.close();
 
 		}
 

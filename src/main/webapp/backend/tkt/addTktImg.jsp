@@ -21,14 +21,6 @@ Integer tkt_no = (Integer)request.getAttribute("tkt_no");
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 
-<!-- jquery-ui -->
-<!-- <link rel="stylesheet" type="text/css"
-	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" /> -->
-
-
-<!-- bootstrap cdn 用了會跑版先註解 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
 <%@ include file="/backend/commonCSS.file"%>
 
@@ -118,12 +110,6 @@ td, div {
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
-				<%-- <font style="color:red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color:red" class="error-list-mb">${message}</li>
-					</c:forEach>
-				</ul> --%>
 
 				<div class="alert alert-danger alert-dismissible fade show">
 					<svg viewBox="0 0 24 24" width="24" height="24"

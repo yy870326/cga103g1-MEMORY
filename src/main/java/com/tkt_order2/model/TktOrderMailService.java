@@ -1,6 +1,7 @@
 package com.tkt_order2.model;
 
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -36,7 +37,7 @@ public class TktOrderMailService {
 			// ●5-2) 下拉式選單【選取裝置】--> 選取【Windows 電腦】
 			// ●5-3) 最後按【產生】密碼
 			final String myGmail = "kay830123@gmail.com";
-			final String myGmail_password = "";
+			final String myGmail_password = "cfvyzcrdncntfovx";
 //		     final String myGmail_password = "ddjomltcnypgcstn";
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -54,10 +55,11 @@ public class TktOrderMailService {
 			message.setText(messageText);
 
 			Transport.send(message);
-			System.out.println("傳送成功!");
+//			System.out.println("傳送成功!");
 		} catch (MessagingException e) {
-			System.out.println("傳送失敗!");
+//			System.out.println("傳送失敗!");
 			e.printStackTrace();
 		}
 	}
+
 }
