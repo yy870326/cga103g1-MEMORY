@@ -59,16 +59,16 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
               <div class="row">
                 <div class="col-md-12 email">
                   <label>信箱</label>
-                  <input type="text" name="mem_email"value="<%=(memVO==null)? "Q123434565@" :memVO.getMem_email()%>" placeholder="Enter Email here">
+                  <input type="text" name="mem_email"value="<%=(memVO==null)? "jackypao103098@gmail.com" :memVO.getMem_email()%>" placeholder="Enter Email here">
                 </div>
                 <div class="col-md-12 password">
                   <label>密碼</label>
-                  <input type="password" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "Q123434565" :memVO.getMem_pwd()%>" >
+                  <input type="password" name="mem_pwd" placeholder="Enter your password here"value="<%=(memVO==null)? "vwxyz" :memVO.getMem_pwd()%>" >
                 </div>
                
                 <div class="col-md-6 name">
                   <label>姓名</label>
-                  <input type="text" name="mem_name" placeholder="Enter your name here"value="<%= (memVO==null)? "Jacky" :memVO.getMem_name()%>">
+                  <input type="text" name="mem_name" placeholder="Enter your name here"value="<%= (memVO==null)? "豹仕豪" :memVO.getMem_name()%>">
                 </div>
                 <div class="col-md-6 sex">
                   <label>姓別</label>
@@ -84,7 +84,7 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
                 </div>
                  <div class="col-md-6 name">
                   <label>縣市</label>
-                  <input type="text" name="mem_city" placeholder="Enter your name here"value="<%=(memVO==null)? "彰化縣" :memVO.getMem_city()%>">
+                  <input type="text" name="mem_city" placeholder="Enter your name here"value="<%=(memVO==null)? "新北市" :memVO.getMem_city()%>">
                 </div>
 <!--                  <div class="col-md-12 password"> -->
 <!--                     <label>加入時間</label> -->
