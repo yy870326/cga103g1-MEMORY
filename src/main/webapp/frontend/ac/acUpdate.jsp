@@ -28,6 +28,8 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 
 <section class="pt80 pb80">
 <div class="container-fluid">
+	<h3>文章編號：
+	<input class="form-control" placeholder="文章編號" name="no" value="${param.no}"/></h3>
 	<h3>文章標題</h3>
 	<div class="row">
 		<div class="col-md-8">
@@ -142,7 +144,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 
 </form>
 
-
+	<script src="/CGA103G1/frontend/homePage.js"></script>
 
 
 	<%-- footer --%>

@@ -1,5 +1,6 @@
 const queryActBtn = document.getElementById("queryActBtn");
 const tableBody = document.getElementById("tableBody");
+const tableMain = document.getElementById("tableMain");
 
 function createActTable(actVO){
     let table = `
@@ -30,12 +31,20 @@ queryActBtn.addEventListener('click',function(){
     .then(res => res.json())
     .then(actVOArray =>{
         console.log(actVOArray);
-        actVOArray.forEach(actVO => {
-            locationChange(actVO);
-            outputHtml += createActTable(actVO);
-        });
+        if(actVOArray === "目前您無參與任何活動"){
+            let msg = `
+                <h1 class="text-center" style="color: red;">${actVOArray}</h1>
+            `;
+            outputHtml = msg;
+            tableMain.insertAdjacentHTML('afterend',outputHtml);
+        }else{
+            actVOArray.forEach(actVO => {
+                locationChange(actVO);
+                outputHtml += createActTable(actVO);
+            });
+            tableBody.insertAdjacentHTML('beforeend',outputHtml);
+        }
         console.log(outputHtml);
-        tableBody.insertAdjacentHTML('beforeend',outputHtml);
     })
 });
 

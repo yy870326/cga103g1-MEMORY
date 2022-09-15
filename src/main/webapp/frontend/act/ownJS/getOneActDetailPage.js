@@ -1,11 +1,3 @@
-// document.getElementById('joinBtn').addEventListener('click', joinAct);
-
-// function joinAct(e){
-//     e.prevenetDefault();
-    
-// }
-
-
 
 fetch("/CGA103G1/getOneAct",
     {

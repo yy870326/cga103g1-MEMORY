@@ -42,7 +42,6 @@ public class AcPicDAO implements I_AcPicDAO {
 		try {
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT);
-
 			ps.setInt(1, acPicVO.getAc_no());
 			ps.setBytes(2, acPicVO.getAc_pic_img());
 			ps.executeUpdate();

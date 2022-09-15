@@ -24,9 +24,9 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	<%@ include file="/frontend/header.file" %>
 	
 
+<%-- ${pageContext.request.contextPath}/createAc multipart/form-data --%>
 
-
-<form method="POST" action="${pageContext.request.contextPath}/createAc" enctype="multipart/form-data">
+<%-- <form method="POST" action="" enctype=""> --%>
 
 <section class="pt80 pb80">
 <div class="container-fluid">
@@ -34,7 +34,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	<div class="row">
 		<div class="col-md-8">
 			<div class="form-group">
-				<input class="form-control" placeholder="標題" name="title" value="<%= (ac==null)? "" : ac.getAc_title()%>"/>
+				<input class="form-control" id="title" placeholder="標題" name="title" value="<%= (ac==null)? "" : ac.getAc_title()%>"/>
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -47,7 +47,21 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	
 	<h3>文章種類</h3>
 	<h6 style="color:red">${errorMsgs.customRadio}</h6>
-	<div class="custom-control custom-radio" >
+	<div class="">
+		<select id="customRadio" class="custom-select select-big mb-3 col-5 d-inline-block">
+			<option value="0">請選擇</option>
+			<option value="1">競技</option>
+			<option value="2">運動</option>
+			<option value="3">遊記</option>
+			<option value="4">交通</option>
+			<option value="5">住宿</option>
+			<option value="6">景點</option>
+			<option value="7">購物</option>
+			<option value="8">演場會</option>
+			<option value="9">飲食</option>
+		</select>
+	</div>
+	<%-- <div class="custom-control custom-radio" >
 		<input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="1" >
 		<label class="custom-control-label" for="customRadio1">競技</label>
 	</div>
@@ -82,7 +96,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	<div class="custom-control custom-radio">
 		<input type="radio" id="customRadio9" name="customRadio" class="custom-control-input" value="9">
 		<label class="custom-control-label" for="customRadio9">飲食</label>
-	</div>
+	</div> --%>
 
 	<div class="row">
 		<div class="col-md-12">
@@ -90,7 +104,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 				<h6 style="color:red">${errorMsgs.content}</h6>
 				<h3>文章內容</h3>
 				<div class="form-group">
-					<textarea class="form-control" rows="8" placeholder="Example textarea" name="content" ></textarea>			
+					<textarea class="form-control" rows="8" placeholder="Example textarea" name="content" id="content"></textarea>			
 				</div>	
 			</div>
 		</div>
@@ -117,18 +131,21 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	
 	<div class="bg-light py-6 mb-6">
 		<h6 style="color:red">${errorMsgs.upload}</h6>
-	    <input type="file" name="upload" value="上傳圖片" />
+	    <input type="file" name="upload" value="上傳圖片" id="inputFile" />
 	</div>
-    
+
    	<div class="bg-light py-6 mb-6">
-		<input class="btn btn-danger" type="submit" name="action" value="發表">
+		<input class="btn btn-danger" type="submit" name="action" value="發表" id="submitBtn">
+		<h4 style="color: red;" id="msg"></h4>
 	</div>
 </div>
 </section>
 
-</form>
+<%-- </form> --%>
 
+	<script src="/CGA103G1/frontend/homePage.js"></script>
 
+	<script src="/CGA103G1/frontend/ac/ownJS/createAc.js"></script>
 
 
 	<%-- footer --%>

@@ -11,7 +11,6 @@
     List<AcVO> aclist = acServiceImpl.getAll();
     pageContext.setAttribute("aclist",aclist);
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,9 +31,11 @@
 <!-- </form> -->
 <section class="Blog-list pt80 pb80">
   <div class="container">
-    <div class="row">     
+    <div class="row">
+    	<c:if test="${empty aclist}">
+    		<h1 class="text-center" style="color: red;">目前沒有文章</h1>
+    	</c:if>     
     	<c:forEach var="acVO" items="${aclist}">
-
 	      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4">
 	        <div class="card shadow border-0 h-100">
 	        <a href="<%=request.getContextPath()%>/getOneAc?action=acInner&acNo=${acVO.ac_no}">
@@ -55,7 +56,7 @@
   
 </section>
 
-
+	<script src="/CGA103G1/frontend/homePage.js"></script>
 
 	<%-- footer --%>
 	<%@ include file="/frontend/footer.file" %>

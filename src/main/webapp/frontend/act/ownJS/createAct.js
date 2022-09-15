@@ -14,9 +14,6 @@ let minCount = document.getElementById("minCount");
 let maxCount = document.getElementById("maxCount");
 let inputFile = document.getElementById("inputFile");
 // let timeTest = document.getElementById("timeTest");
-
-let typeOptionV = typeOption.value;
-let locOptionV = locOption.value;
 let minCountV = Number(minCount.value);
 let maxCountV = Number(maxCount.value);
 
@@ -58,11 +55,11 @@ function validate(){
         image.textContent = "請上傳一張照片"
         flag = false;
     }
-    if(typeOptionV === null || typeOptionV > 7 || typeOptionV < 1){
+    if(typeOption.value === null || typeOption.value > 7 || typeOption.value< 1){
         type.textContent = "活動種類請勿空白"
         flag = false;
     }
-    if(locOptionV === null || locOptionV > 20 || locOptionV < 1){
+    if(locOption.value === null || locOption.value > 20 || locOption.value < 1){
         actlocation.textContent = "活動舉辦縣市有誤，不得空白"
         flag = false;
     }
@@ -142,8 +139,6 @@ submitBtn.addEventListener('click', function(e){
         })
         .catch(
             error => console.log(error)
-        );
-
-       
+        );      
     }  
 });
