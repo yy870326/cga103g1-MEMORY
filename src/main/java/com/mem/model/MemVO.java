@@ -19,6 +19,10 @@ private byte[]  mem_pic            ;
 private Integer mem_report_count   ; 
 private String  mem_card           ;
 
+public MemVO() {
+	super();
+}
+
 public Integer getMem_no() {
 	return mem_no;
 }
