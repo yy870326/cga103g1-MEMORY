@@ -30,7 +30,7 @@ public class AcVO implements Serializable {
 	private String ac_content;
 	@Column(name = "ac_time")
 	private LocalDateTime ac_time;
-	@Column(name = "ac_update", updatable = false)
+	@Column(name = "ac_update")
 	private Integer ac_update;
 	
 	public AcVO() {

@@ -223,40 +223,55 @@ queryActBtn.addEventListener('click',function(){
     .then(res => res.json())
     .then(actVOArray =>{
         console.log(actVOArray);
-        actVOArray.forEach(actVO => {
-            outputHtml1 += createActTable1(actVO);
-        });
-        mainContent.innerHTML = outputHtml1;
+        if(actVOArray === "您目前無任何主辦活動"){
+            let msg = `
+            <h1 class="text-center" style="color: red;">${actVOArray}</h1>
+        `;
+            mainContent.insertAdjacentHTML("beforeend", msg);
+        }else{
+            actVOArray.forEach(actVO => {
+                outputHtml1 += createActTable1(actVO);
+            });
+            mainContent.innerHTML = outputHtml1;
+        }
     })
 });
 
-search.addEventListener('click', function(){
-    
+search.addEventListener('click', function(){ 
     if(validateSearch()){
-        searchMsg.textContent = "";
+       searchMsg.textContent = "";
+       fetch('/CGA103G1/getMemOneAct',{
+           method:"POST",
+           headers:{
+               'Accept': 'application/json, text/plain, */*',
+               'Content-Type': 'application/json, application/x-www-form-urlencoded, multipart/form-data',
+           },
+           body:
+           JSON.stringify({
+               act_no: actNoSearch.value,
+           })
+       })
+       .then(res => res.json())
+       .then(actVo => {
+           let output = "";
+           console.log(actVo);
+           if(actVo === "查無此揪團活動編號"){
+               let msg = `
+               <h1 class="text-center" style="color: red;">${actVo}</h1>
+               `;
+               mainContent.innerHTML = msg; 
+            }else{
+               actTypeConvert(actVo);
+               locationConvert(actVo);
+            //    actNoTest.textContent = actVo.act_no;
+               output = createMainContent(actVo);
+               mainContent.innerHTML = output;
+           }
+       });
+    }else{
+        return;
     }
 
-    fetch('/CGA103G1/getMemOneAct',{
-        method:"POST",
-        headers:{
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json, application/x-www-form-urlencoded, multipart/form-data',
-        },
-        body:
-        JSON.stringify({
-            act_no: actNoSearch.value,
-        })
-    })
-    .then(res => res.json())
-    .then(actVo =>{
-        let output = "";
-        console.log(actVo);
-        actTypeConvert(actVo);
-        locationConvert(actVo);
-        actNoTest.textContent = actVo.act_no;
-        output = createMainContent(actVo);
-        mainContent.innerHTML = output;
-    });
     const actNo = document.getElementById('actNo');
     const msg = document.getElementById('msg');
     const actTitle = document.getElementById("actTitle");

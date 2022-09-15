@@ -18,10 +18,12 @@ public class GetOneAcImageServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
  
+	@SuppressWarnings("removal")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
 		resp.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+		System.out.println("acCarPage Request -> GetOneAcImageServlet");
 		 if("acImgList".equals(action)) {
 				AcPicService acPicService = new AcPicService();
 				Integer ac_no = new Integer(req.getParameter("acNo").trim());

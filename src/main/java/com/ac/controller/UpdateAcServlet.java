@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -16,12 +17,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.ac.model.AcServiceImpl;
 import com.ac.model.AcVO;
 import com.ac_pic.model.AcPicService;
 import com.ac_pic.model.AcPicVO;
+import com.mem.model.MemService;
 
 @WebServlet("/updateAc")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -30,44 +33,55 @@ public class UpdateAcServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-        
+		res.setContentType("text/html; charset=UTF-8");			
         System.out.println("request 過來了，updateAcServlet doGet");
+        String action = req.getParameter("action");
         
-		String action = req.getParameter("action");
-
-		
-        if ("alterAc".equals(action)) {
-            res.setContentType("text/html; charset=UTF-8");
-
-        	Integer acNo = Integer.valueOf(req.getParameter("acNo"));
-			System.out.println(acNo);
-
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			
-				/***************************1.接收請求參數****************************************/
-				
-				/***************************2.開始查詢資料****************************************/
-				AcVO acVO = new AcVO();
-				AcPicVO acPicVO = new AcPicVO();
-				AcServiceImpl acServiceImpl = new AcServiceImpl();
-				
-				acVO = acServiceImpl.getOneAcById(acNo);
-				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+		HttpSession session = req.getSession();
+        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+        
+		AcServiceImpl acServiceImpl = new AcServiceImpl();
+		AcPicService acPicService = new AcPicService();
+		List<AcPicVO> acPicList = new LinkedList<AcPicVO>();
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		Integer acNo = Integer.valueOf(req.getParameter("acNo"));
+		System.out.println("傳來的文章編號：" + acNo);				
+		AcVO acVO = new AcVO();
+		AcPicVO acPicVO = new AcPicVO();				
+		acVO = acServiceImpl.getOneAcById(acNo);
+		Integer findAcMenNo =  acServiceImpl
+				.getAll()
+				.stream()
+				.filter(ac -> ac.getAc_no() == acNo).findFirst().get().getMem_no();
+		System.out.println("發表此篇文章的會員編號：" + findAcMenNo);
+		if (findAcMenNo == memNo1) {
+			if ("alterAc".equals(action)) {				
+				/***************************查詢完成,準備轉交(Send the Success view)************/
 				String param = "?title="  + acVO.getAc_title() +
-						       "&content="  + acVO.getAc_content() +
-						       "&type=" + acVO.getAc_type_no() +
-						       "&image="  + acPicVO.getAc_pic_img();
-						    
+						"&no="  + acVO.getAc_no() +
+						"&content="  + acVO.getAc_content() +
+						"&type=" + acVO.getAc_type_no() +
+						"&image="  + acPicVO.getAc_pic_img();
+				
 				String url = "/frontend/ac/acUpdate.jsp" + param;
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
+			}
+		} else {
+			acVO = acServiceImpl.getOneAcById(acNo);
+			acPicList = acPicService.getOneByAcNo(acNo);
+			byte[] acImage = acPicList.stream().findFirst().get().getAc_pic_img();
+			req.setAttribute("acVO", acVO);
+			req.setAttribute("acImage", acImage);
+			errorMsgs.put("Msgs","無權修改此文章");
+			RequestDispatcher failureView = req.getRequestDispatcher("/frontend/ac/acDetailPage.jsp");
+			failureView.forward(req, res);
 		}
-        
 		
 	}
 
@@ -76,16 +90,17 @@ public class UpdateAcServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-
 		System.out.println("request 過來了，updateAcServlet doPost");
-
 		String action = req.getParameter("action");
-
-		if ("確定修改".equals(action)) { 
-			
+		Integer acNo = Integer.parseInt(req.getParameter("no"));
+		
+		HttpSession session = req.getSession();
+        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+        
+		if ("確定修改".equals(action)) { 			
 //			Integer acNo = Integer.valueOf(req.getParameter("acNo"));
 //			System.out.println(acNo);
-
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			Part filePart = req.getPart("upload");
 			InputStream fileContent = filePart.getInputStream();
@@ -140,11 +155,11 @@ public class UpdateAcServlet extends HttpServlet {
 			acVo.setAc_type_no(value);
 			acVo.setAc_content(content);
 			acVo.setAc_time(time);
-			acVo.setAc_no(3);
-			acVo.setMem_no(3);
+			acVo.setAc_no(acNo);
+			acVo.setMem_no(memNo1);
 			AcPicVO acPicVO = new AcPicVO();
 			acPicVO.setAc_pic_img(image);
-			acPicVO.setAc_no(3);
+			acPicVO.setAc_no(acNo);
 	
 
 			/*************************** 2.開始新增資料 ***************************************/

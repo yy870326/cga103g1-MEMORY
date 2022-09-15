@@ -2,6 +2,12 @@ package com.ac.model;
 
 import java.util.List;
 
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.util.CoreService;
+
 public class AcServiceImpl implements AcService {
 	
 	private AcDAO dao;

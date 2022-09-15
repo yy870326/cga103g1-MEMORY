@@ -2,25 +2,28 @@ package com.util;
 
 import static com.util.HibernateUtil.*;
 
-import org.hibernate.Transaction;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public interface CoreService {
 
-	default Session getSession() {
-		return getSessionFactory().getCurrentSession();
-	}
-	
 	default Transaction beginTransacion() {
-		return HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+//		return getSessionFactory().getCurrentSession().beginTransaction();
+		return getSession().beginTransaction();
 	}
 	
 	default void commit() {
-		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
+		getSession().getTransaction().commit();
+//		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 	}
 	
 	default void rollback() {
-		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
+		getSession().getTransaction().rollback();
+//		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
+	}
+	
+	default Session getSession() {
+		return getSessionFactory().getCurrentSession();
 	}
 	
 	
