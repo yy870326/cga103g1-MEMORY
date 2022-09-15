@@ -27,7 +27,7 @@
    <div><a href="<%=request.getContextPath()%>/homePage.jsp">回首頁</a></div>
     <div><a href="">回會員中心</a></div>
     <h2>請輸入註冊信箱</h2>
-    <form method="post" action="<%=request.getContextPath()%>/mem/mem.do" role="form">
+    <form method="post" action="<%=request.getContextPath()%>/mem.do" role="form">
       <div class="col-md-9 col-sm-12">
         <div class="form-group form-group-lg">
           <input type="text" class="form-control col-md-6 col-sm-6 col-sm-offset-2" name="mem_email" required>

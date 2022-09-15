@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.mem.model.*;
@@ -14,7 +15,9 @@ import com.mem.model.MemVO;
 
 import mail.MailService;
 
+
 @MultipartConfig
+@WebServlet("/mem.do")
 public class MemServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
