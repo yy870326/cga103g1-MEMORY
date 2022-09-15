@@ -55,7 +55,7 @@ MemVO memVO = (MemVO) request.getAttribute("MemVO");
               <h3>µù¥U</h3>
               <p></p>
             </div>
-            <form class="reg-form" action="<%=request.getContextPath()%>/mem/mem.do" METHOD="post" name="form1" enctype="multipart/form-data">
+            <form class="reg-form" action="<%=request.getContextPath()%>/mem.do" METHOD="post" name="form1" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-12 email">
                   <label>«H½c</label>
