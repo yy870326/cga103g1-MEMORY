@@ -7,21 +7,18 @@
 
 <%
 LastNewsService lnSvc = new LastNewsService();
-LastNewsVO lastNews = lnSvc.getLastNewsONE();
+List<LastNewsVO> lastNews = lnSvc.getthree();
 pageContext.setAttribute("lastNews", lastNews);
 %>
 
 
 <head>
-<style>
-
-.mar:hover {
-  transform: scale(1.5);
-}
-</style>
 </head>
 
 <marquee class="mar">
-	${lastNews.news}
+	 <c:forEach var="lastNews" items="${lastNews}">
 	 <img class="news_img" src="<%=request.getContextPath()%>/lastNews?news_no=${lastNews.news_no}&action=getOnePic" width="100" height="100">
+	<span>${lastNews.news}</span>
+	<span>&emsp; &emsp;</span>
+	</c:forEach>
 	</marquee>

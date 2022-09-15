@@ -37,6 +37,9 @@ public class LastNewsService {
 		public List<LastNewsVO> getLastNewsAll() {
 			return dao.getall();
 		}
+		public List<LastNewsVO> getthree() {
+			return dao.getthree();
+		}
 		
 		public LastNewsVO getLastNewsOne(Integer news_no) {
 			return dao.getone(news_no);
