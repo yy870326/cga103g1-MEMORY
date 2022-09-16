@@ -19,11 +19,11 @@
 
 <%
 if (request.getAttribute("orderlist") == null) {
-	Integer mem_no = 1;
+	Integer mem_no = 2;
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("mem_no", 1);
+pageContext.setAttribute("mem_no", 2);
 %>
 
 <!DOCTYPE html>
@@ -165,7 +165,7 @@ div.main-content {
 	<%@ include file="/frontend/header.file"%>
 	<%@ include file="/frontend/memSidebar.file"%>
 	<div class="col-lg-9">
-	<h3 class="mt-5 mb-3">會員訂房訂單管理</h3>
+		<h3 class="mt-5 mb-3">會員訂房訂單管理</h3>
 		<div style="margin-left: 850px;">
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -288,7 +288,8 @@ div.main-content {
 												<div>(已扣掉取消後退款金額)</div>
 											</c:if>
 										</td>
-										<td><div>
+										<td>
+											<div>
 												<FORM METHOD="post"
 													ACTION="<%=request.getContextPath()%>/RmOrder">
 													<input
@@ -298,7 +299,8 @@ div.main-content {
 														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
 													<input type="hidden" name="action" value="memCancel">
 												</FORM>
-											</div></td>
+											</div>
+										</td>
 									</tr>
 								</tfoot>
 							</table>

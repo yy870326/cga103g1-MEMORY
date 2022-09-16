@@ -60,7 +60,6 @@ pageContext.setAttribute("memList", memList);
 				<tr>
 					<th>會員</th>
 					<th>性別</th>
-					<th>帳號</th>
 					<th>電話</th>
 					<th>信箱</th>
 					<th>地址</th>
@@ -98,9 +97,6 @@ pageContext.setAttribute("memList", memList);
 							<div>${memVO.mem_gender}</div>
 						</td>
 						<td>
-							<div>${memVO.mem_acc}</div>
-						</td>
-						<td>
 							<div>${memVO.mem_mobile}</div>
 						</td>
 						<td>
@@ -120,8 +116,10 @@ pageContext.setAttribute("memList", memList);
 							request.setCharacterEncoding("UTF-8");
 							%> <jsp:include page="/backend/mem/updateModal.jsp">
 								<jsp:param name="memNo" value="${memVO.mem_no}" />
-								<jsp:param name="memAcc" value="${memVO.mem_acc}" />
 								<jsp:param name="memName" value="${memVO.mem_name}" />
+								<jsp:param name="memCity" value="${memVO.mem_city}" />
+								<jsp:param name="memDist" value="${memVO.mem_dist}" />
+								<jsp:param name="memAddr" value="${memVO.mem_addr}" />
 								<jsp:param name="memGender" value="${memVO.mem_gender}" />
 								<jsp:param name="memEmail" value="${memVO.mem_email}" />
 								<jsp:param name="memMobile" value="${memVO.mem_mobile}" />
@@ -170,22 +168,20 @@ pageContext.setAttribute("memList", memList);
 
 		function sendRequest(object) {
 			let memName = object.elements['memName'].value;
-			let memAcc = object.elements['memAcc'].value;
 			let memEmail = object.elements['memEmail'].value;
 			let memMobile = object.elements['memMobile'].value;
 			const namexp = new RegExp('^[\u4E00-\u9FA5]');
-			const accxp = new RegExp('^[A-Za-z0-9]{6,12}');
 			const emailxp = new RegExp('/\S+@\S+\.\S+/');
 			const mobilexp = new RegExp('^09\d{8}$');
 
-			if (memName === '' || memAcc === '' || memEmail === '' || memMobile === '') {
+			if (memName === '' || memEmail === '' || memMobile === '') {
 				alert('欄位不能為空');
 				return false;
 			}else if (!namexp.test(memName)) {
 				alert('格式錯誤,請輸入中文姓名');
 				return false;
-			}else if (!accxp.test(memAcc)) {
-				alert('帳號格式為6~12個字母或數字,請重新確認');
+			}else if (!accxp.test(memEmail)) {
+				alert('Email格式錯誤,請重新確認');
 				return false;
 			}else
 			object.submit();

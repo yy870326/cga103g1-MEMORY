@@ -29,14 +29,21 @@
 					<label id="memNameLabel" for="memName">姓名</label> <input
 						class="form-control form-control-lg" type="text"
 						id="updateMemName" name="memName" value="${param.memName}"
-						autofocus> <label id="memAccLabel" for="memAcc">帳號</label>
-					<input class="form-control form-control-lg" type="text"
-						id="updateMemAcc" name="memAcc" value="${param.memAcc}" autofocus>
+						autofocus>
 					<label id="memGenderLabel" for="memGender">性別</label><br>
 					<div class="form-control form-control-lg container_radio">
 						<input type="radio" name="memGender" value="男" ${param.memGender=='男' ? 'Checked' : ''}/>男 
 						<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						<input type="radio" name="memGender" value="女" ${param.memGender=='女' ? 'Checked' : ''}/>女
+					</div>
+					<label id="memAccLabel" for="memAcc">地址</label>
+					<div class="form-control-lg container_radio">
+					<input class="form-control form-control-lg" type="text"
+						id="updateMemAcc" name="memCity" value="${param.memCity}" autofocus>-
+					<input class="form-control form-control-lg" type="text"
+						id="updateMemAcc" name="memDist" value="${param.memDist}" autofocus>-
+					<input class="form-control form-control-lg" type="text"
+						id="updateMemAcc" name="memAddr" value="${param.memAddr}" autofocus>
 					</div>
 					<label id="memEmailLabel" for="memEmail">信箱</label> <input
 						class="form-control form-control-lg" type="text"
