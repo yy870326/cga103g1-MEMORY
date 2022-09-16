@@ -25,7 +25,7 @@
 						<span class="nav-text">客服管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/instantMessaging/chat.jsp"">即時客服</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/customer_service/storeChat.jsp"">即時客服</a></li>
 					</ul>
 				</li>
 				

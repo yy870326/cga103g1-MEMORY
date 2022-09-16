@@ -25,6 +25,7 @@ public class LastNewsDAO implements I_LastNewsDAO {
 	private final String GETONEPIC = "select news_img from last_news WHERE news_no = ?";
 	// 顯示訊息
 	private final String GETLAST = "select * from last_news order by news_no desc limit 0,1";
+	private final String GETTHREE = "select * from last_news order by news_no desc limit 0,3";
 	
 	private static DataSource ds = null;
 	static {
@@ -108,6 +109,40 @@ public class LastNewsDAO implements I_LastNewsDAO {
 				newsALL.add(ln);
 			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return newsALL;
+	}
+	@Override
+	public List<LastNewsVO> getthree() {
+		List<LastNewsVO> newsALL = new ArrayList<>();
+		LastNewsVO ln = null;
+		ResultSet rs = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GETTHREE);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				ln = new LastNewsVO();
+				ln.setNews_no(rs.getInt("News_no"));
+				ln.setNews(rs.getString("News"));
+				ln.setNews_img(rs.getBytes("News_img"));
+				ln.setNews_time(rs.getDate("News_time"));
+				
+				newsALL.add(ln);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

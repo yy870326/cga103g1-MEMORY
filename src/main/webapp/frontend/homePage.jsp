@@ -22,7 +22,6 @@
 	<!-- header -->
 	<%@ include file="/frontend/header.file" %>
 	<%@ include file="/frontend/lastNews.file" %>
-	<%@ include file="/frontend/snm.file" %>
 	
   	<!-- Main Banner -->
 	<%@ include file="/frontend/homePageBanner.file" %> 

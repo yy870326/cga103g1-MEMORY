@@ -258,6 +258,18 @@ if (request.getAttribute("mem_email") == null) {
 	textarea {
 		resize: none;
 	}
+	.btn-primary1 {
+    background-color: #5bc9e2;
+    padding: 0 20px;
+    margin: 10px 231px;
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 12px;
+    border: none;
+    display: inline-block;
+    line-height: 42px;
+    color :#FFF;
+    }
 	</style>
     </head>
     <body>
@@ -402,7 +414,7 @@ if (request.getAttribute("mem_email") == null) {
 							<input type="hidden" name="days" value="${days}">
 							<input type="hidden" name="qty" value="${qty}">
 							<input type="hidden" name="action" value="paying">
-	                        <button type="submit" class="btn btn-primary col-xl-4 col-sm-5">確認訂房</button>
+	                        <button type="submit" class="btn btn-primary1 col-xl-4 col-sm-5">確認訂房</button>
                         </div>
 					</div>
 
@@ -443,7 +455,7 @@ if (request.getAttribute("mem_email") == null) {
 								<hr>
                                 <div class="d-flex justify-content-between">
                                 	<div>總價</div>
-                                	<div><fmt:formatNumber value="${rmTypeSvc.getOneRm(rm_type_no).rm_price*qty}" pattern="NT$ ###,###,###" /></div>
+                                	<div><fmt:formatNumber value="${rmTypeSvc.getOneRm(rm_type_no).rm_price*qty*days}" pattern="NT$ ###,###,###" /></div>
 								</div>
                             </div>
                         </div>
