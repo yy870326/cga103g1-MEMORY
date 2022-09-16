@@ -361,6 +361,114 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 	        	
 	        	
 	        }
+		  
+		  if("updateStatus".equals(action)) {
+	        	List<String> memlist = new LinkedList<String>();
+	        	req.setAttribute("memlist", memlist);
+	        	try {
+	        		Integer mem_no = new Integer(req.getParameter("mem_no"));
+	        	
+	        		
+	        		MemVO memVO = new MemVO();
+	        		MemService memSvc = new MemService();
+	        		
+	        		memVO = memSvc.updateStatus(1, mem_no);
+	        		
+	        		req.setAttribute("memVO", memVO);
+	        		String url = "/backend/mem/listMemPage.jsp";
+	        		RequestDispatcher success = req.getRequestDispatcher(url);
+	        		success.forward(req, res);
+	        	}catch(Exception e) {
+	        		
+	        	}
+	        }
+	        	if("unupdateStatus".equals(action)) {
+	        		List<String> memlist = new LinkedList<String>();
+	        		req.setAttribute("memlist", memlist);
+	        		try {
+	        			Integer mem_no = new Integer(req.getParameter("mem_no"));
+	        			
+	        			
+	        			MemVO memVO = new MemVO();
+	        			MemService memSvc = new MemService();
+	        			
+	        			memVO = memSvc.updateStatus(2, mem_no);
+	        			
+	        			req.setAttribute("memVO", memVO);
+	        			String url = "/backend/mem/listMemPage.jsp";
+	        			RequestDispatcher success = req.getRequestDispatcher(url);
+	        			success.forward(req, res);
+	        		}catch(Exception e) {
+	        			
+	        		}
+	        	}
+	        	if("getOneMem".equals(action)) {
+
+	    			List<String> mem = new LinkedList<String>();
+	    			req.setAttribute("mem", mem);
+
+	    				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+	    				String str = req.getParameter("mem_no");
+	    				if (str == null || (str.trim()).length() == 0) {
+	    					mem.add("請輸入會員編號");
+	    				}
+	    				// Send the use back to the form, if there were errors
+	    				if (!mem.isEmpty()) {
+	    					RequestDispatcher failureView = req
+	    							.getRequestDispatcher("/backend/mem/listMemPage.jsp");
+	    					failureView.forward(req, res);
+	    					return;//程式中斷
+	    				}
+	    				
+	    				Integer mem_no = null;
+	    				try {
+	    					mem_no = Integer.valueOf(str);
+	    				} catch (Exception e) {
+	    					mem.add("會員編號格式不正確");
+	    				}
+	    				// Send the use back to the form, if there were errors
+	    				if (!mem.isEmpty()) {
+	    					RequestDispatcher failureView = req
+	    							.getRequestDispatcher("/backend/mem/listMemPage.jsp");
+	    					failureView.forward(req, res);
+	    					return;//程式中斷
+	    				}
+	    				
+	    				/***************************2.開始查詢資料*****************************************/
+	    				MemService memSvc = new MemService();
+	    				MemVO memList = memSvc.getOneMem(mem_no);
+	    				if (memList == null) {
+	    					mem.add("查無資料");
+	    				}
+	    				// Send the use back to the form, if there were errors
+	    				if (!mem.isEmpty()) {
+	    					RequestDispatcher failureView = req.getRequestDispatcher("/backend/mem/listMemPage.jsp");
+	    					failureView.forward(req, res);
+	    					return;//程式中斷
+	    				}
+	    				
+	    				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+	    				req.setAttribute("memList", memList); // 資料庫取出的memList物件,存入req
+	    				String url = "/backend/mem/listMemPage.jsp";
+	    				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listMemPage.jsp
+	    				successView.forward(req, res);
+	    		}
+	        	if ("getOnePic".equals(action)) {
+	        		
+	        			/*************************** 1.接收請求參數 ****************************************/
+	        			Integer mem_no = new Integer(req.getParameter("mem_no"));
+
+	        			/*************************** 2.開始查詢資料 ****************************************/
+	        			MemService memSvc = new MemService();
+	        			MemVO memVO = memSvc.getOneMem(mem_no);
+
+	        			/*************************** 3.輸出圖片 ************/
+	        			byte[] content = memVO.getMem_pic();
+	        			ServletOutputStream out = res.getOutputStream();
+	        			out.write(content);
+	        			out.close();
+	        			return;
+	        		}
 		
 	}
 	

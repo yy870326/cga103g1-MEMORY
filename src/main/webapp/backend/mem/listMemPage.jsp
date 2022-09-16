@@ -78,7 +78,7 @@ pageContext.setAttribute("memList", memList);
 								<c:choose>
 									<c:when test="${memVO.mem_pic != null}">
 										<img
-											src="<%=request.getContextPath()%>/Mem?mem_no=${memVO.mem_no}&action=getOnePic">
+											src="<%=request.getContextPath()%>/mem.do?mem_no=${memVO.mem_no}&action=getOnePic">
 									</c:when>
 									<c:when test="${memVO.mem_pic == null}">
 										<img
@@ -95,7 +95,7 @@ pageContext.setAttribute("memList", memList);
 							</div>
 						</td>
 						<td>
-							<div>${memVO.mem_gender == "M" ? "男" : "女"}</div>
+							<div>${memVO.mem_gender}</div>
 						</td>
 						<td>
 							<div>${memVO.mem_acc}</div>
@@ -142,7 +142,7 @@ pageContext.setAttribute("memList", memList);
 									src="<%=request.getContextPath()%>/backend/assets/img/selectStatus.png">
 								</a>
 								<div class="dropdown-menu">
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Mem">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem.do">
 										<input class="dropdown-item container" type="submit"
 											value="${memVO.acc_status==1 ? '停權' : '啟用' }"> <input
 											type="hidden" name="mem_no" value="${memVO.mem_no}">
@@ -169,18 +169,25 @@ pageContext.setAttribute("memList", memList);
 		$("#pagename").text("MEMORY 會員管理");
 
 		function sendRequest(object) {
+			let memName = object.elements['memName'].value;
+			let memAcc = object.elements['memAcc'].value;
 			let memEmail = object.elements['memEmail'].value;
-			let emailxp = new RegExp(
-					'/^\w+((-\w+)|(\.\w+))*\@[\w]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/');
+			let memMobile = object.elements['memMobile'].value;
+			const namexp = new RegExp('^[\u4E00-\u9FA5]');
+			const accxp = new RegExp('^[A-Za-z0-9]{6,12}');
+			const emailxp = new RegExp('/\S+@\S+\.\S+/');
+			const mobilexp = new RegExp('^09\d{8}$');
 
-			if (memEmail === '') {
+			if (memName === '' || memAcc === '' || memEmail === '' || memMobile === '') {
 				alert('欄位不能為空');
 				return false;
-			}
-			if (emailxp.test(memEmail)) {
-				alert('請輸入正確格式');
+			}else if (!namexp.test(memName)) {
+				alert('格式錯誤,請輸入中文姓名');
 				return false;
-			}
+			}else if (!accxp.test(memAcc)) {
+				alert('帳號格式為6~12個字母或數字,請重新確認');
+				return false;
+			}else
 			object.submit();
 		}
 
