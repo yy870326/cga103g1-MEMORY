@@ -182,13 +182,11 @@ td, div {
 								</td>
 
 								<td class="d-flex">
-									<!-- 之後看能不能用 boostrap modal 跳彈跳視窗出來修改資料 --> <!-- <button type="button" class="btn btn-warning"
-										 data-toggle="modal" data-target="#updateCoupModal">修改</button> -->
+								
 
 									<!-- 修改 -->
 									<form method="post" action="<%=request.getContextPath()%>/tkt/updateTkt.do" class="mr-10">
 										<button type="submit" class="fa fa-pencil-alt btn" value="">
-											<!-- <i class="fa fa-pencil-alt"></i> -->
 										</button>
 										<input type="hidden" name="tkt_no" value="${tktVO.tkt_no}">
 										<input type="hidden" name="action" value="getOneUpdate">
@@ -196,25 +194,10 @@ td, div {
 
 									
 									
-									<!-- 上傳圖片 -->
-<%-- 			                    <a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneToUpload" class="btn">
-										<i class="fa fa-image"></i>
-									</a> --%>
+
 									<a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneForShowImages" class="btn goToAddImg">
 										<i class="fa fa-image"></i>
 									</a>
-									<%-- <form method="post" action="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do" class="mr-10">
-										<button type="submit" class="fa fa-image btn uploadImg" value="">
-											<!-- <i class="fa fa-pencil-alt"></i> -->
-										</button>
-										<input type="hidden" name="tkt_no" value="${tktVO.tkt_no}">
-										<input type="hidden" name="action" value="getOneToUpload">
-									</form> --%>
-									
-									<%-- <input type="hidden" name="tkt_no_s" value="${tktVO.tkt_no}" class="tkt_no_s">
-									<a href="<%=request.getContextPath()%>/backend/tkt_img/uploadTktImg.jsp" class="fa fa-image btn uploadImg">
-										<!-- <button type="submit" class="fa fa-image btn" value=""> </button> -->
-									</a> --%>
 
 								</td>
 
@@ -227,251 +210,15 @@ td, div {
 				
 				<%@ include file="/backend/tkt/pagination.file"%>
 			
-			<!-- ----------------------------------- -->
-			<!-- test -->
-
-	<!-- Button trigger modal -->
-	<!-- <button type="button" class="btn btn-primary mb-2"
-		data-bs-toggle="modal" data-bs-target="#exampleModalCenter">新增</button> -->
-	<!-- Modal -->
-	<%-- <div class="modal fade" id="exampleModalCenter">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">新增票券</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal">
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-row input-mb d-flex">
-						<!-- 1 -->
-						<div class="form-group col-md-5 input-mr">
-							<label class="form-label" for="tkt_name">票券名稱</label> <input
-								type="text" class="form-control" id="tkt_name" name="tkt_name"
-								value="${tktVO.tkt_name}">
-						</div>
-						<div class="form-group col-md-4 input-mr">
-							<label class="form-label" for="price">價格</label> <input
-								type="number" class="form-control" id="price" name="price"
-								value="${tktVO.price}">
-						</div>
-						<div class="form-group col-md-2">
-							<label for="">狀態</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="tkt_status"
-									id="statusOn" value="0" checked> <label
-									class="form-check-label" for="statusOn"> 未上架 </label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="tkt_status"
-									id="statusOff" value="1"> <label
-									class="form-check-label" for="statusOff"> 上架 </label>
-							</div>
-						</div>
-					</div>
-					<!-- 2 -->
-					<div class="form-row d-flex input-mb">
-						<div class="form-group col-md-3 input-mb input-mr">
-							<label class="form-label" for="">原始數量</label> <input
-								type="number" class="form-control" id="original_amount"
-								name="original_amount" value="${tktVO.original_amount}">
-						</div>
-
-
-
-						<div class="form-group col-md-9 input-mb">
-							<label class="form-label" for="locate">地點</label> <input
-								type="text" class="form-control" id="locate" name="locate"
-								value="${tktVO.locate}">
-						</div>
-					</div>
-
-					<!-- 3 -->
-
-					<div class="form-row d-flex input-mb">
-						<div class="form-group col-md-4 input-mr">
-							<label class="form-label" for="tkt_startdate">票券開始日期</label> <input
-								type="date" class="form-control" id="tkt_startdate"
-								name="tkt_startdate" value="${tktVO.tkt_startdate}">
-						</div>
-						<div class="form-group col-md-4 input-mr">
-							<label class="form-label" for="tkt_enddate">票券結束日期</label> <input
-								type="date" class="form-control" id="tkt_enddate"
-								name="tkt_enddate" value="${tktVO.tkt_enddate}">
-						</div>
-						<div class="form-group col-md-3">
-							<label class="form-label" for="kind">票券種類</label>
-							<select
-								id="inputState" class="default-select form-control wide"
-								name="kind">
-								<option value="0">景點門票</option>
-								<option value="1">主題樂園</option>
-								<option value="2">博物館展覽</option>
-							</select>
-						</div>
-					</div>
-					<!-- 4 -->
-					<div class="form-group col-md-12 input-mb">
-						<label class="form-label" for="address">體驗地點</label>
-						<textarea class="form-control" id="address" name="address">${tktVO.address}</textarea>
-					</div>
-					<!-- 5 -->
-					<div class="form-group col-md-12 input-mb">
-						<label class="form-label" for="instruction">票券說明</label>
-						<textarea class="form-control" id="instruction" name="instruction">${tktVO.instruction}</textarea>
-					</div>
-					<!-- 6 -->
-					<div class="form-group col-md-12 input-mb">
-						<label class="form-label" for="howuse">如何使用</label>
-						<textarea class="form-control" id="howuse" name="howuse">${tktVO.howuse}</textarea>
-					</div>
-					<!-- 7 -->
-					<div class="form-group col-md-12 input-mb">
-						<label class="form-label" for="canxpolicy">取消政策</label>
-						<textarea class="form-control" id="canxpolicy" name="canxpolicy">${tktVO.canxpolicy}</textarea>
-					</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger light"
-					data-bs-dismiss="modal">取消</button>
-				<button type="button" class="btn btn-primary" id="tktAdd">儲存</button>
-			</div>
-		</div>
-	</div>
-	</div>	 --%>
-				
-				
-				
-
-			<!-- pagination -->
-				<!-- <nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
-						<li class="page-item disabled"><a class="page-link">第一頁</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">最後一頁</a>
-						</li>
-					</ul>
-				</nav>
-
-			</div>
-		</div>
-	</div> -->
 
 	
 
 	<%@ include file="/backend/commonJS.file"%>
 	
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
-	
-	<!-- axios Test -->
-	<script>
-	
-	/* const goToAddImg = document.querySelectorAll(".goToAddImg");
-	
-	for(let i = 0; i < ${list.size()}; i++) {
-		
-		/* let tkt_no = parseInt(tkt_no_s[i].value); */
-	/* 	goToAddImg[i].addEventListener('click', function() {
-			axios({
- 		   		"method": "post", 
- 		   		"url": "uploadTktImg.do",
- 		   		"params": {
- 		   			"tkt_no": this.tkt_no
- 		   		}
- 		    }).then(function (response) {
- 		    	console.log("123");
- 		        console.log(response);
- 		    }).catch(function (error) {
- 		         console.log(error);
- 		    }); 
-		});
-		
-	} */
-	
-	/* const uploadImg = document.querySelectorAll(".uploadImg");
-	const tkt_no_s = document.querySelectorAll(".tkt_no_s");
-	
 
-	for(let i = 0; i < ${list.size()}; i++) {
-		
-		let tkt_no = parseInt(tkt_no_s[i].value);
-		
-		uploadImg[i].addEventListener('click', () => {
-	 		
-			axios({
- 		   		"method": "post", 
- 		   		"url": "uploadTktImg.do",
- 		   		"params": {
- 		   			"tkt_no": tkt_no
- 		   		}
- 		    }).then(function (response) {
- 		        console.log(response);
- 		    }).catch(function (error) {
- 		         console.log(error);
- 		    }); 
-	 		
-	   	});
-	} */
 	
 	
-	
-		/* const tktAdd = document.querySelector("#tktAdd"); */
-		
-		<%-- const data = {
-				tkt_name: ${tktVO.tkt_name},
-				price: ${tktVO.price},
-				tkt_status: ${tktVO.tkt_status},
-				original_amount: ${tktVO.original_amount},
-				locate: ${tktVO.locate},
-				tkt_startdate: ${tktVO.tkt_startdate},
-				tkt_enddate: ${tktVO.tkt_enddate},
-				kind: ${tktVO.kind},
-				address: ${tktVO.address},
-				instruction: ${tktVO.instruction},
-				howuse: ${tktVO.howuse},
-				canxpolicy: ${tktVO.canxpolicy},
-		};
-		
-		tktAdd.addEventListener("click", () => {
-			
-			fetch('<%=request.getContextPath()%>/tkt/addTkt.do', {
-				method: 'post',
-				headers: {
-			        "Content-Type": "application/json; charset=utf-8",
-			      },
-			    body: JSON.stringify(data)
-				
-			})
-			.then(function(response) {
-				console.log(response);
-			}).catch(function(err) {
-				console.log(error);
-			}) --%>
-
-			<%-- axios.post('<%=request.getContextPath()%>/tkt/addTkt.do', {
-				tkt_name: ${tktVO.tkt_name},
-				price: ${tktVO.price},
-				tkt_status: ${tktVO.tkt_status},
-				original_amount: ${tktVO.original_amount},
-				locate: ${tktVO.locate},
-				tkt_startdate: ${tktVO.tkt_startdate},
-				tkt_enddate: ${tktVO.tkt_enddate},
-				kind: ${tktVO.kind},
-				address: ${tktVO.address},
-				instruction: ${tktVO.instruction},
-				howuse: ${tktVO.howuse},
-				canxpolicy: ${tktVO.canxpolicy},
-			  })
-			  .then(function (response) {
-			    console.log(response);
-			  })
-			  .catch(function (error) {
-			    console.log(error);
-			  }); --%>
-		/* }); */
-	
-	</script>
 
 </body>
 </html>

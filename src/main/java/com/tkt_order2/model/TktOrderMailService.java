@@ -1,6 +1,7 @@
 package com.tkt_order2.model;
 
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -54,10 +55,11 @@ public class TktOrderMailService {
 			message.setText(messageText);
 
 			Transport.send(message);
-			System.out.println("傳送成功!");
+//			System.out.println("傳送成功!");
 		} catch (MessagingException e) {
-			System.out.println("傳送失敗!");
+//			System.out.println("傳送失敗!");
 			e.printStackTrace();
 		}
 	}
+
 }

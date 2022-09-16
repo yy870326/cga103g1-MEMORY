@@ -130,7 +130,7 @@ td, div {
 							<th scope="col">優惠券名稱</th>
 							<th scope="col">折抵金額</th>
 							<th scope="col">到期日</th>
-							<th scope="col">狀態</th>
+							<!-- <th scope="col">狀態</th> -->
 						</tr>
 					</thead>
 					
@@ -145,7 +145,7 @@ td, div {
 								<td>${memCoupVO.coupVO.coup_name}</td>
 								<td>${memCoupVO.coupVO.discount}</td>
 								<td>${memCoupVO.coupVO.enddate}</td>
-								<td>
+								<%-- <td>
 									<c:if test="${memCoupVO.coup_state == 0 }">
 										<span class="badge badge-danger light">未使用</span>
 									</c:if>
@@ -155,7 +155,7 @@ td, div {
 									<c:if test="${memCoupVO.coup_state == 2 }">
 										<span class="badge badge-info light">已過期</span>
 									</c:if>
-								</td>
+								</td> --%>
 							</tr>
 						</c:forEach>
 

@@ -31,14 +31,7 @@
 <body>
 
 <% 
-/* CartItemVO cartItemVO = new CartItemVO();
-System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
 List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems"); 
-/* System.out.println("cart.jsp cartItems:" + cartItems); */
- /*  CartItemService cartItemSrv = new CartItemService();
-  List<CartItemVO> list = cartItemSrv.getCart(sessionId);
-  pageContext.setAttribute("list", list); */
-  /* Integer cartItemSize = cartItems.size(); */
 %>
 
   <%-- header --%>
@@ -82,12 +75,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								</tr>
 							</thead>
 							<tbody>
-								<%-- <c:if test="${cartItems != null && (cartItemSize > 0)}"> --%>
 								<c:forEach var="cartItemVO" items="${cartItems}">
 								<tr class="tr">
-									<%-- <th scope="row">${cartItemVO.tkt_no}</th> --%>
 									<td>
-										<%-- <label>${cartItemVO.tkt_no}</label> --%>
 										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox">
 									</td>
 									<td>${cartItemVO.tkt_name}</td>
@@ -97,11 +87,8 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 										<span class="itemCount">${cartItemVO.count}</span>
 										<button type="button" class="btn btn-primary btn-small plus">+</button>
 									</td>
-									<%-- <td><input type="number" value="${cartItemVO.count}"></td>  --%>
 									<td class="itemsPrice">${cartItemVO.price * cartItemVO.count}</td>
 									<td>
-										<%-- <form method="post" action="<%=request.getContextPath()%>/cart/delCartItem.do">
-											<input type="hidden" name="action"  value="delItem"> --%>
               								<input class="tkt_no1" type="hidden" name="tkt_no1"  value="${cartItemVO.tkt_no}">
 											<!-- 刪除按鈕 -->
 											<button  type="button" class="btn btn-danger delItem"><i class="fas fa-trash-alt"></i></button>
@@ -110,13 +97,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 									</td>
 								</tr>
 								</c:forEach>
-								 <%-- </c:if> --%>
-								<%-- <c:if test="${cartItems == null && (cartItemSize == 0)}">
-								<tr>
-									<td>尚未加入票券到購物車</td>
-								</tr>
-								
-								</c:if> --%>
 								
 							</tbody>
 						</table>
@@ -124,20 +104,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 					
 					<hr>
 					
-					<!-- <div class="d-flex justify-content-end mb-3"> 
-						<p>總計： <span class="totalPrice" style="color: red;"></span> 元</p>
-					</div> -->
-					
 					<div class="d-flex justify-content-between">
 						<!-- <div class="d-flex"> -->
 							<a href="<%=request.getContextPath()%>/frontend/tkt/tktShopList.jsp" class="btn btn-outline-primary">繼續購物</a>  <!-- 返回票券列表要動態 -->
-							<!-- 再看看要不要做清空購物車按鈕 -->
-							<%-- <form method="post" action="<%=request.getContextPath()%>/cart/delCartItem.do">
-								<input type="hidden" name="action"  value="delItem">
-              					<input type="hidden" name="tkt_no"  value="${cartItemVO.tkt_no}">
-								<button class="btn btn-outline-primary">清空購物車</button>
-							</form>	 --%>			
-						<!-- </div> -->
 						<button type="submit" class="btn btn-primary checkOut"><i class="fas fa-arrow-circle-right"></i>前往結賬</button>
 					</div>
 					
@@ -178,57 +147,23 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   const tkt_no_s = document.querySelectorAll('.tkt_no1'); 
   const tr = document.querySelectorAll('.tr'); 
   const delItem = document.querySelectorAll('.delItem'); 
-/*   const checkOut = document.querySelector('.checkOut'); */
   const checkbox = document.querySelectorAll('.checkbox'); 
   const checkboxAll = document.querySelector('#checkboxAll'); 
  
-  /* let sum = 0; */
   
  
   for(let i = 0; i < ${cartItems.size()}; i++) {
 	  
-	  /* checkbox */
-	  /* 陣列裝被勾選的票券 */
- 	 /* let checkboxvalue = []; */
- 	 
- 	/*  checkboxAll.addEventListener('change', () => {
- 		checkbox.checked = true;
- 	 }); */
+	  // 全選 checkbox
+	  checkboxAll.addEventListener('change', () => {
+		  checkbox[i].checked = true;
+	  });
 	  
  	 // 被選的 checkbox
  	 checkbox[i].addEventListener('change', () => {
- 		 console.log(checkbox[i]);
+ 		 /* console.log(checkbox[i]); */
  		checkbox[i].checked = true;
- 		/* checkbox[i].checked = false; */
- 		/* checkbox[i].removeAttribute('checked'); */
-	  /* for (i in checkbox) {
-		  if(checkbox[i].checked) {
-			  checkboxvalue.push(checkbox[i].value);
-			  
-		  } */
 	  });
-	  
-		  /* console.log(checkboxvalue); */
-		  
-		  
-		  /* 送出 checkbox 選購項目 */
-		  /* 無法成功送出 checkbox  */
-		  /* checkOut.addEventListener('click', () => {
-			  axios({
-	 		   		"method": "post", 
-	 		   		"url": "cartCheckOut.do",
-	 		   	 	"Content-Type": "application/json",
-	 		   		"params": {
-	 		   			"tkt_no": checkboxvalue
-	 		   		}
-	 		    }).then(function (response) {
-	 		        console.log(response);
-	 		    }).catch(function (error) {
-	 		         console.log(error);
-	 		    }); 
-		  }); */
-		  
- 	 /*  }); */
 	  
 	  
 	  
@@ -245,9 +180,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	    })
 	    
 	    
-	   /* totalPrice 還沒完工*/
-	  /* sum += parseInt(itemsPrice[i].innerText);	
-	  totalPrice.innerText = sum; */
 	   
 	  /* delItem */
 	  
@@ -276,7 +208,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			   					"tkt_no": tkt_no
 			   				}
 			   		   }).then(function(response) { 
-			   		   		/* console.log(response); */
 			   		   		tr[i].setAttribute('style', 'display: none');
 			   		   }).catch((error) => console.log(error));
 
@@ -305,19 +236,10 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		   			"tkt_no": tkt_no
  		   		}
  		    }).then(function (response) {
- 		        /* console.log(response); */
  		    }).catch(function (error) {
  		         console.log(error);
  		    }); 
  			
- 			/* $.ajax({
- 				url: "changeCount.do",
- 				type: "post",
- 				data: {
- 					count: afterMinus,
- 					tkt_no: tkt_no
- 				}
- 			}); */
  			
  		} else if (parseInt(itemCount[i].innerText) === 1) { // 當購物車商品已經只剩下 1 時，還想要繼續 -1 會詢問會員是否要刪除品項
  			
@@ -348,21 +270,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		   				}
  		   		   }).then(function (response) {
  		   			  tr[i].setAttribute('style', 'display: none');
- 		              /* console.log(response); */
  		          }).catch(function (error) {
  		              console.log(error);
  		          }); 
- 		           /* $.ajax({
- 		 				url: "changeCount.do",
- 		 				type: "post",
- 		 				data: {
- 		 					count: afterMinus,
- 		 					tkt_no: tkt_no
- 		 				},
- 		 				success: function() {
- 		 					tr[i].setAttribute('style', 'display: none');
- 		 				}
- 		 			});  */
  		        }
 
  		    })
@@ -382,16 +292,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   		/* 更新小計 */
   		itemsPrice[i].innerText = parseInt(itemCount[i].innerText) * parseInt(onePrice[i].innerText); 
   	
-  		
-  		/* 更新 redis 數量 */
-  		/* $.ajax({
- 			url: "changeCount.do",
- 			type: "post",
- 			data: {
- 				count: afterPlus,
- 				tkt_no: tkt_no
- 			}
- 		}); */
  		
  		axios({
  			"method": "post", 
@@ -401,7 +301,6 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  				"tkt_no": tkt_no
  			}
  		}).then(function (response) {
-            /* console.log(response); */
         }).catch(function (error) {
             console.log(error);
         });

@@ -157,7 +157,7 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 			con.commit();
 			// 恢復預設
 			con.setAutoCommit(true);
-			System.out.println("刪除訂單編號" + tkt_order_no + "時,共有" + updateCount_Details + "筆訂單明細同時被刪除");
+//			System.out.println("刪除訂單編號" + tkt_order_no + "時,共有" + updateCount_Details + "筆訂單明細同時被刪除");
 
 			// Handle any driver errors
 		} catch (SQLException e) {
@@ -364,9 +364,9 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs.next()) {
 				next_tkt_order_no = rs.getInt(1);
-				System.out.println("自增主鍵值= " + next_tkt_order_no + "(剛新增成功的 tkt_order_no 編號)");
+//				System.out.println("自增主鍵值= " + next_tkt_order_no + "(剛新增成功的 tkt_order_no 編號)");
 			} else {
-				System.out.println("未取得自增主鍵值");
+//				System.out.println("未取得自增主鍵值");
 			}
 			rs.close();
 			
@@ -381,12 +381,12 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("list.size()-B=" + list.size());
-			System.out.println("新增票券訂單編號" + next_tkt_order_no + "時,共有" + list.size() + "筆訂單明細同時被新增");
+//			System.out.println("list.size()-B=" + list.size());
+//			System.out.println("新增票券訂單編號" + next_tkt_order_no + "時,共有" + list.size() + "筆訂單明細同時被新增");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("訂單、訂單明細新增失敗");
+//			System.out.println("訂單、訂單明細新增失敗");
 		} finally {
 			if (ps != null) {
 				try {
@@ -436,14 +436,14 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs.next()) {
 				next_tkt_order_no = rs.getInt(1);
-				System.out.println("自增主鍵值= " + next_tkt_order_no + "(剛新增成功的 tkt_order_no 編號)");
+//				System.out.println("自增主鍵值= " + next_tkt_order_no + "(剛新增成功的 tkt_order_no 編號)");
 			} else {
-				System.out.println("未取得自增主鍵值");
+//				System.out.println("未取得自增主鍵值");
 			}
 			rs.close();
 			// 再同時新增多方 TktDetail
 			TktItem2DAO dao = new TktItem2DAO();
-			System.out.println("list.size()-A=" + list.size());
+//			System.out.println("list.size()-A=" + list.size());
 			for (TktItem2VO aTktItem : list) {
 				aTktItem.setTkt_order_no(Integer.valueOf(next_tkt_order_no));
 				dao.insertDetailWithOrder(aTktItem, con);
@@ -452,12 +452,12 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("list.size()-B=" + list.size());
-			System.out.println("新增票券訂單編號" + next_tkt_order_no + "時,共有" + list.size() + "筆訂單明細同時被新增");
+//			System.out.println("list.size()-B=" + list.size());
+//			System.out.println("新增票券訂單編號" + next_tkt_order_no + "時,共有" + list.size() + "筆訂單明細同時被新增");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("訂單、訂單明細新增失敗");
+//			System.out.println("訂單、訂單明細新增失敗");
 		} finally {
 			if (ps != null) {
 				try {
@@ -585,26 +585,5 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 		return list;
 	}
 	
-	////////////
 	
-	
-//	public static void main(String[] args) {
-//		TktOrder2DAO dao = new TktOrder2DAO();
-//		TktOrder2VO tktOrder2VO = new TktOrder2VO();
-//		tktOrder2VO.setMem_no(1);
-//		tktOrder2VO.setMem_coup_no(4);
-//		tktOrder2VO.setOriginal_price(2000);
-//		tktOrder2VO.setTtl_price(1801);
-//		
-//		List<TktItem2VO> list = new ArrayList<TktItem2VO>();
-//		TktItem2VO tktItem2VO = new TktItem2VO();
-//		tktItem2VO.setTkt_no(1); 
-//		tktItem2VO.setAmount(1);
-//		tktItem2VO.setTkt_ori_price(666);
-//		tktItem2VO.setQrcode(null);
-//		list.add(tktItem2VO);
-//		
-//		dao.insertWithDetail(con, tktOrder2VO, list);
-//	}
-
 }
