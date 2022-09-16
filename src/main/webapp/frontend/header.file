@@ -80,7 +80,7 @@ pageContext.setAttribute("snm", snm);
                   <a class="dropdown-item" href="signin/addMem.jsp">註冊</a>
                   <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/store/storeLogin.jsp">廠商登入</a>
                   <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/store/StoreSignUp.jsp">廠商註冊</a>
-                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/act/memPage.html">會員中心</a>
+                  <a class="dropdown-item" href="<%=request.getContextPath()%>/frontend/memPage.jsp">會員中心</a>
                   <c:if test="${memVO!=null}">
                   <a class="dropdown-item" href="<%=request.getContextPath()%>/mem.do?action=log_out">登出</a>
                    </c:if>
