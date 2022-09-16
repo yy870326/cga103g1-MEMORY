@@ -95,13 +95,7 @@ td, div {
 <body>
 
 	<%@ include file="/backend/loading.file"%>
-	<!-- Header -->
-	<%@ include file="/backend/header.file"%>
-	<!-- sidebar -->
-	<%@ include file="/backend/sidebar.file"%>
-	
-	
-	
+
 
 	<!-- main -->
 	<div class="content-body">
