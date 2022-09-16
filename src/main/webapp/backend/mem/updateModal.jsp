@@ -34,9 +34,9 @@
 						id="updateMemAcc" name="memAcc" value="${param.memAcc}" autofocus>
 					<label id="memGenderLabel" for="memGender">性別</label><br>
 					<div class="form-control form-control-lg container_radio">
-						<input type="radio" name="memGender" value="M" />男 
+						<input type="radio" name="memGender" value="男" ${param.memGender=='男' ? 'Checked' : ''}/>男 
 						<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						<input type="radio" name="memGender" value="F" />女
+						<input type="radio" name="memGender" value="女" ${param.memGender=='女' ? 'Checked' : ''}/>女
 					</div>
 					<label id="memEmailLabel" for="memEmail">信箱</label> <input
 						class="form-control form-control-lg" type="text"

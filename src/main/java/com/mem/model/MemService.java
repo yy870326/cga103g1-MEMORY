@@ -82,4 +82,11 @@ public MemVO updatePassword(String mem_password,Integer mem_no) {
 	dao.upatePassword(memVO);
 	return memVO;
 }
+public MemVO updateStatus(Integer acc_status, Integer mem_no) {
+	MemVO memVO = new MemVO();
+	memVO.setAcc_status(acc_status);
+	memVO.setMem_no(mem_no);
+	dao.updateStatus(memVO);
+	return memVO;
+}
 }

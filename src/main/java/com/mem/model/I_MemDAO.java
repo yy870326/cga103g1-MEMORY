@@ -10,5 +10,7 @@ public interface I_MemDAO {
     public List<MemVO> getAll();
     MemVO getOneBymail(String mem_email);
     public void upatePassword(MemVO memVO);
+    public void updateStatus(MemVO mem_no);
+    public MemVO login(String mem_email, String mem_pwd);
     
 }
