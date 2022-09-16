@@ -263,7 +263,7 @@ public class MemDAO implements I_MemDAO{
 				memVO.setMem_pwd(rs.getString("mem_pwd"));
 				memVO.setAcc_status(rs.getInt("acc_status"));
 				memVO.setMem_name(rs.getString("mem_name"));
-				memVO.setMem_gender(rs.getString("mem_name"));
+				memVO.setMem_gender(rs.getString("mem_gender"));
 				memVO.setMem_email(rs.getString("mem_email"));
 				memVO.setMem_mobile(rs.getString("mem_mobile"));
 				memVO.setMem_city(rs.getString("mem_city"));
@@ -398,5 +398,66 @@ public class MemDAO implements I_MemDAO{
 			}
 		 }
 		
+	}
+	@Override
+	public MemVO login(String mem_email, String mem_pwd) {
+		MemVO memVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(LOGIN);
+			
+			pstmt.setString(1, mem_email);
+			pstmt.setString(2, mem_pwd);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memVO = new MemVO();
+				memVO = new MemVO();
+				memVO.setMem_no(rs.getInt("mem_no"));
+				memVO.setMem_acc(rs.getString("mem_acc"));
+				memVO.setMem_pwd(rs.getString("mem_pwd"));
+				memVO.setAcc_status(rs.getInt("acc_status"));
+				memVO.setMem_name(rs.getString("mem_name"));
+				memVO.setMem_gender(rs.getString("mem_gender"));
+				memVO.setMem_email(rs.getString("mem_email"));
+				memVO.setMem_mobile(rs.getString("mem_mobile"));
+				memVO.setMem_city(rs.getString("mem_city"));
+				memVO.setMem_dist(rs.getString("mem_dist"));
+				memVO.setMem_addr(rs.getString("mem_addr"));
+				memVO.setMem_reg_date(rs.getDate("mem_reg_date"));
+				memVO.setMem_pic(rs.getBytes("mem_pic"));
+				memVO.setMem_report_count(rs.getInt("mem_report_count"));
+				memVO.setMem_card(rs.getString("mem_card"));
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured, " + e.getMessage());
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				}catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+		return memVO;
 	}
 }
