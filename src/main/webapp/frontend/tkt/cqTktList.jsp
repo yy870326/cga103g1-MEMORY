@@ -121,7 +121,6 @@ List<TktVO> list = tktSvc.getAll();
                   <input type="hidden" name="tkt_no" value="${tktVO.tkt_no}" class="tkt_no">
                   <input type="hidden" name="count"  value="1" class="count">
                     <button  type="button" class="TravelGo-category-price btn-grad addItem"><span>加入購物車</span><i class="fas fa-cart-arrow-down"></i></button>
-                  	<!-- <span class="badge badge-pill badge-primary text-white"># 景點門票</span> -->
                   </div>
                 </div>
               </article>

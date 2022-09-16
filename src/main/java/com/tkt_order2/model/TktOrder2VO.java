@@ -2,6 +2,11 @@ package com.tkt_order2.model;
 
 import java.sql.Date;
 
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
+import com.tkt.model.TktService;
+import com.tkt.model.TktVO;
+
 public class TktOrder2VO {
 	private Integer tkt_order_no;
 	private Integer mem_no;
@@ -10,11 +15,12 @@ public class TktOrder2VO {
 	private Integer original_price;
 	private Date orderdate;
 	private Integer ttl_price;
-	
-	public TktOrder2VO() {}
-	
-	public TktOrder2VO(Integer tkt_order_no, Integer mem_no, Integer mem_coup_no,
-			Integer original_price, Date orderdate, Integer ttl_price) {
+
+	public TktOrder2VO() {
+	}
+
+	public TktOrder2VO(Integer tkt_order_no, Integer mem_no, Integer mem_coup_no, Integer original_price,
+			Date orderdate, Integer ttl_price) {
 		super();
 		this.tkt_order_no = tkt_order_no;
 		this.mem_no = mem_no;
@@ -80,11 +86,12 @@ public class TktOrder2VO {
 	public void setTtl_price(Integer ttl_price) {
 		this.ttl_price = ttl_price;
 	}
-	
-	
-	
-	
-	
+
+	// join MemVO
+	public MemVO getMemVO() {
+		MemService memSrv = new MemService();
+		MemVO memVO = memSrv.getOneMem(mem_no);
+		return memVO;
+	}
+
 }
-
-

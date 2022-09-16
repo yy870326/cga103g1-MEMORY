@@ -7,12 +7,6 @@
 <%@ page import="java.time.LocalDate"%>
 <jsp:useBean id="coupSvc" class="com.coup.model.CoupService" />
 
- <%
-/* System.out.println("add -s"); // 印出來看 */
-/* CoupVO coupVO = (CoupVO) request.getAttribute("coupVO"); //  */
-/* System.out.println(coupVO); // 印出來看
-System.out.println("add -e"); // 印出來看 */
-%> 
 
 <!DOCTYPE html>
 <html>
@@ -24,14 +18,6 @@ System.out.println("add -e"); // 印出來看 */
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 	
-<!-- jquery-ui -->	
-<!-- <link rel="stylesheet" type="text/css"
-	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" /> -->
-	
-
-<!-- bootstrap cdn 用了會跑版先註解 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
 <%@ include file="/backend/commonCSS.file"%>
 
@@ -120,14 +106,7 @@ td, div {
 				<h1 class="coup-list-h1">新增優惠券</h1>
 			</div>
 			
-			<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
-			<%-- <font style="color:red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color:red" class="error-list-mb">${message}</li>
-					</c:forEach>
-				</ul> --%>
 				
 				<div class="alert alert-danger alert-dismissible fade show">
 					<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
@@ -158,8 +137,6 @@ td, div {
 								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
-								<%-- <label for="status">狀態</label> 
-								<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}"> --%>
 								
 								<label for="status">狀態</label>
 								<div class="form-check">
@@ -175,28 +152,6 @@ td, div {
           							</label>
         						</div>
 								
-								<%-- <label>狀態</label>
-								<select class="custom-select custom-select-lg mb-3" id="status">
-									<option value="0" selected>
-										<c:if test="${coupVO.status == 0 }" var="true">
-											未上架
-										</c:if>
-									</option>
-									<option value="1">
-										<c:if test="${coupVO.status == 1 }" var="true">
-											未上架
-										</c:if>
-									</option>
-								</select> --%>
-								
-							<%-- <td>
-								<select size="1" name="OrderState" required>
-									<option value="0" <c:if test="${coupVO.status == 0}"><c:out value="selected"></c:out></c:if>>未上架</option>
-									<option value="1" <c:if test="${coupVO.status == 1}"><c:out value="selected"></c:out></c:if>>已上架</option>
-								</select>
-							</td> --%>
-							
-							
 							
 								
 							</div>
@@ -209,8 +164,6 @@ td, div {
 							<div class="form-group col-md-5 input-mr">
 								<label for="startDate">開始日期</label> 
 								<input type="date" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}">
-								<!-- 用 jquery-ui 抓不到日期值 -->
-								<%-- <input type="text" id="datepicker" class="form-control" id="startDate" name="startdate" value="${coupVO.startdate}"> --%>
 							</div>
 							<div class="form-group col-md-5">
 								<label for="endDate">結束日期</label> 
@@ -234,21 +187,5 @@ td, div {
 
 	<%@ include file="/backend/commonJS.file"%>
 	
-	<!-- jquery-ui -->
-	<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-	<script>
-		$( function() {
-	    	$( "#datepicker" ).datepicker();
-	 	} );
-	</script> -->
-
-	<!-- bootstrap cdn 用了會跑版先註解-->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script> -->
 </body>
 </html>

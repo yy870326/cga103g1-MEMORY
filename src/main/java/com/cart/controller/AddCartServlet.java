@@ -29,7 +29,6 @@ public class AddCartServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset = UTF-8");
-//		HttpSession session = req.getSession();
 		
 		
 		// ------------ getParameter ------------
@@ -43,10 +42,6 @@ public class AddCartServlet extends HttpServlet {
 		// ------------ 永續層 -------------
 		CartItemService cartItemSrv = new CartItemService();
 		cartItemSrv.addItemToCart(sessionId, tkt_no, count);
-//		cartItemSrv.getCart(sessionId);
-		// ------------ forward -----------
-//		RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
-//		rd.forward(req, res);
 		
 	}
 

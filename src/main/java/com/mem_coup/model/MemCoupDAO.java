@@ -262,7 +262,7 @@ public class MemCoupDAO implements I_MemCoupDAO {
 	}
 
 	@Override
-	public void changeState(Connection conn, Integer mem_coup_no, Integer coup_state) {
+	public void changeState(Integer mem_coup_no, Integer coup_state) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		MemCoupVO memCoupVO = null;
@@ -273,6 +273,43 @@ public class MemCoupDAO implements I_MemCoupDAO {
 			ps = con.prepareStatement(CHANGE_STATE);
 
 			ps.setInt(1, memCoupVO.getCoup_state());
+			ps.setInt(2, memCoupVO.getMem_coup_no());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void memCoupUsedState(Integer mem_coup_no, Integer coup_state) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		MemCoupVO memCoupVO = null;
+		
+		try {
+			memCoupVO = new MemCoupVO();
+			con = ds.getConnection();
+			ps = con.prepareStatement(CHANGE_STATE);
+
+			ps.setInt(1, 1);
 			ps.setInt(2, memCoupVO.getMem_coup_no());
 
 			ps.executeUpdate();

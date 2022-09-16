@@ -29,14 +29,6 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 	
-<!-- jquery-ui -->	
-<!-- <link rel="stylesheet" type="text/css"
-	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" /> -->
-	
-
-<!-- bootstrap cdn 用了會跑版先註解 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
 <%@ include file="/backend/commonCSS.file"%>
 
@@ -127,12 +119,6 @@ td, div {
 			
 			<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
-			<%-- <font style="color:red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color:red" class="error-list-mb">${message}</li>
-					</c:forEach>
-				</ul> --%>
 				
 				<div class="alert alert-danger alert-dismissible fade show">
 					<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
@@ -157,7 +143,6 @@ td, div {
 							<div class="form-group col-md-3 input-mr">
 							<!-- 改針對會員帳號發送 -->
 								<label for="coupName">輸入會員帳號</label> 
-								<%-- <input type="text" class="form-control" id="mem_no" name="mem_acc" value="${memCoupVO.memVO.mem_acc}"> --%>
 								<input type="number" class="form-control" id="mem_no" name="mem_no" value="${memCoupVO.mem_no}">
 							</div>
 							<div class="form-group col-md-4 input-mr">

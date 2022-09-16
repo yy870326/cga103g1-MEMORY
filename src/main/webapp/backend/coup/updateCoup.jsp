@@ -8,7 +8,6 @@
 
 <%
 CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
-/* System.out.print(coupVO); // 看資料有沒有傳過來 */
 %>
 
 <!DOCTYPE html>
@@ -21,9 +20,6 @@ CoupVO coupVO = (CoupVO) request.getAttribute("coupVO");
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 
-<!-- bootstrap cdn 用了會跑版先註解 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
 
 <%@ include file="/backend/commonCSS.file"%>
 
@@ -105,12 +101,6 @@ td, div {
 			
 			<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
-			<%-- <font style="color:red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color:red" class="error-list-mb">${message}</li>
-					</c:forEach>
-				</ul> --%>
 				
 				<div class="alert alert-danger alert-dismissible fade show">
 					<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
@@ -140,8 +130,6 @@ td, div {
 								<input type="number" class="form-control" id="discount" name="discount" value="${coupVO.discount}">
 							</div>
 							<div class="form-group col-md-2">
-							<%-- <label for="status">狀態</label> 
-							<input type="number" class="form-control" id="status" name="status" value="${coupVO.status}"> --%>
 							
 							<label for="status">狀態</label>
 							<div class="form-check">
@@ -157,11 +145,6 @@ td, div {
           						</label>
         					</div>
 							
-								<!-- <p>狀態</p> 
-								<select class="custom-select custom-select-lg mb-3" id="status">
-									<option value="0" selected>未上架</option>
-									<option value="1">已上架</option>
-								</select> -->
 							</div>
 						</div>
 						<div class="form-group col-md-12 input-mb">
@@ -197,40 +180,5 @@ td, div {
 
 	<%@ include file="/backend/commonJS.file"%>
 	
-	<!-- sweetalert cdn-->
-	<!-- cdn 抓不到 -->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		const saveBtn = document.querySelector('#updateSave');
-		saveBtn.addEventListener('click', () => {
-			Swal.fire({
-				  title: '確定要修改票券內容?',
-				  text: "修改後內容立即更動",
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3badb5',
-				  cancelButtonColor: '#fbd498',
-				  confirmButtonText: '確定',
-				  cancelButtonText: '取消'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    Swal.fire(
-				      '成功保存',
-				      '修改內容已保存',
-				      '成功'
-				  )
-				}
-			})
-		});
-	
-	</script> -->
-
-	<!-- bootstrap cdn 用了會跑版先註解-->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script> -->
 </body>
 </html>

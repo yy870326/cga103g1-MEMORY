@@ -29,9 +29,6 @@ public class GetCartServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset = UTF-8");
 		
-//		HttpSession session = req.getSession();
-//		
-//		Gson gson = new Gson();
 		
 		String sessionId = (String) req.getSession().getAttribute("sessionId"); // 取得 session 的 ID
 //		System.out.println("getcartservlet sessionid:-------------------" + sessionId);
@@ -45,12 +42,6 @@ public class GetCartServlet extends HttpServlet {
 		RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/cart.jsp");
 		rd.forward(req, res);
 		
-		// 轉回 JSON 傳到前端
-//		PrintWriter out = res.getWriter();
-//		String cartItemsJson = gson.toJson(cartItems);
-//		out.write(cartItemsJson);
-//		out.flush();
-//		out.close();
 	}
 
 }
