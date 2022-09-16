@@ -126,7 +126,7 @@ td, div {
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">編號</th>
-							<th scope="col">會員帳號</th>
+							<th scope="col">會員姓名</th>
 							<th scope="col">優惠券名稱</th>
 							<th scope="col">折抵金額</th>
 							<th scope="col">到期日</th>
@@ -141,7 +141,7 @@ td, div {
 					<c:forEach var="memCoupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td># ${memCoupVO.mem_coup_no}</td>
-								<td>${memCoupVO.memVO.mem_acc}</td>
+								<td>${memCoupVO.memVO.mem_name}</td>
 								<td>${memCoupVO.coupVO.coup_name}</td>
 								<td>${memCoupVO.coupVO.discount}</td>
 								<td>${memCoupVO.coupVO.enddate}</td>
