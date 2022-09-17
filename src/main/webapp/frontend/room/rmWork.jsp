@@ -116,8 +116,8 @@ table.dataTable tbody td {
 }
 
 h3.checkInTitle {
-	color: #fff;
-	background: #a2bfb9;
+
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
@@ -129,8 +129,8 @@ table#checkInTable tr.odd {
 }
 
 h3.checkOutTitle {
-	color: #fff;
-	background: #C7B8A1;
+	
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
@@ -142,8 +142,8 @@ table#checkOutTable tr.odd {
 }
 
 h3.stayTitle {
-	color: #fff;
-	background: #c0c4d3;
+
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
