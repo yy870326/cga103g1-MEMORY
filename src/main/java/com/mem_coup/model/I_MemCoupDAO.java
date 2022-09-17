@@ -12,7 +12,8 @@ public interface I_MemCoupDAO {
     public List<MemCoupVO> getOneMember(Integer mem_no); // 會員查看自己有哪些優惠券
 //    public void changeState(Connection conn, Integer mem_coup_no, Integer coup_state);
     public void changeState(Integer mem_coup_no, Integer coup_state);
-    public void memCoupUsedState(Integer mem_coup_no, Integer coup_state);
+    public void memCoupUsedState(Integer mem_coup_no);
+    public void memCoupOverdueState(Integer mem_coup_no);
     //  public void delete(Integer memCoupVO);
 
     

@@ -39,8 +39,11 @@ public class MemCoupService {
 	}
 	
 	
-	public void memCoupUsedState(Integer mem_coup_no, Integer coup_state) {
-		dao.changeState(mem_coup_no, 1);
+	public void memCoupUsedState(Integer mem_coup_no) {
+		dao.memCoupUsedState(mem_coup_no);
+	}
+	public void memCoupOverdueState(Integer mem_coup_no) {
+		dao.memCoupOverdueState(mem_coup_no);
 	}
 	
 	public MemVO sendCoupToMem(Integer mem_no, Integer coup_no, Integer coup_state) {

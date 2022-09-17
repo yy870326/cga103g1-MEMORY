@@ -128,9 +128,9 @@ public class CheckOutService {
 			
 			
 			// 更改會員優惠券使用狀態
-//			if (!mem_coup_no.equals(0)) {
-//				daoMemCoup.changeState(mem_coup_no, 1);
-//			}
+			if (!mem_coup_no.equals(0)) {
+				daoMemCoup.memCoupUsedState(mem_coup_no);
+			}
 //			System.out.println(mem_coup_no);
 //			daoMemCoup.memCoupUsedState(mem_coup_no, 1);
 			
