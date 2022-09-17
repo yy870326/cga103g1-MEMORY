@@ -13,7 +13,7 @@
 
 <%
 if (request.getAttribute("mem_email") == null) {
-	String mem_email = "peter@gmail.com";
+	String mem_email = "Q123434565@yahoo.com";
 	pageContext.setAttribute("mem_email", mem_email);
 }
 

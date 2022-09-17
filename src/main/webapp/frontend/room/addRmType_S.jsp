@@ -100,8 +100,8 @@
 						<div class="col-xl-8">
 							<div class="row mb-2">
 							    <label for="store_no" class="col-sm-3 col-form-label">廠商名稱</label>
-							    <div class="col-sm-8">
 							    
+							    <div class="col-sm-8">
 							    <select class="form-control" name="store_no" >
 									<jsp:useBean id="storeSvc" scope="page"
 										class="com.store.model.StoreService" />
@@ -154,7 +154,7 @@
 					</div>
 					<div class="mb-3 d-flex justify-content-center align-items-center">
 						<input type="hidden" name="action" value="insert">
-						<input type="hidden" name="rm_update" value="1"> 
+						<!-- <input type="hidden" name="rm_update" value="0">  -->
 						<input class="btn btn-primary col-lg-3" type="submit" value="新增">
                 	</div>
 				</form>

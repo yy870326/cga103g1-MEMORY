@@ -109,7 +109,7 @@
 			<c:forEach var="rmOrderListVO" items="${rmorderlistSvc.getAllByRmOrderNo(rm_order_no)}">
 			<div class="top-area col-lg-12">
 				<h1 class="confirmation-head-title"><i class='bx bx-check-circle' ></i>您的預訂已確認</h1>
-                <p class="row">預訂確認已發送至您提供的電郵地址。</p>
+                <p class="row">預訂確認單至發送至民宿，民宿確認後會立即與您聯繫。</p>
                 <p class="row">入住日期/退房日期：
 					<span id="guest_checkinDate" class="mr-10">${rmOrderListVO.arrival_date}</span> <i class='bx bx-right-arrow-alt'></i> <span id="guest_checkoutDate">${rmOrderListVO.departure_date}</span>
             	</p>
