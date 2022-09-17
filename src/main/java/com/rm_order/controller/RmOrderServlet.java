@@ -104,6 +104,9 @@ public class RmOrderServlet extends HttpServlet {
 				Integer rm_order_no = new Integer(req.getParameter("rm_order_no"));
 				Integer store_no = new Integer(req.getParameter("store_no"));
 				RmOrderService rmOrderSvc = new RmOrderService();
+				if (rmOrderSvc.getOne(rm_order_no)==null) {
+					errorMsgs.add("查無此訂單編號");
+				}
 				Integer exp = rmOrderSvc.getOne(rm_order_no).getStore_no();
 				
 				if (!exp.equals(store_no)) {
@@ -111,7 +114,7 @@ public class RmOrderServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp");	//查無資料返回登入
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/store/listStoreOrder.jsp");	//查無資料返回登入
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -121,12 +124,12 @@ public class RmOrderServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				
 				req.setAttribute("orderlist", orderlist);
-				String url = "/frontend/room/listStoreOrder.jsp";
+				String url = "/frontend/store/listStoreOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				req.getRequestDispatcher("/frontend/room/listStoreOrder.jsp").forward(req, res);
+				req.getRequestDispatcher("/frontend/store/listStoreOrder.jsp").forward(req, res);
 			}
 		}
 		
@@ -139,8 +142,10 @@ public class RmOrderServlet extends HttpServlet {
 				Integer rm_order_no = new Integer(req.getParameter("rm_order_no"));
 				Integer mem_no = new Integer(req.getParameter("mem_no"));
 				RmOrderService rmOrderSvc = new RmOrderService();
+				if (rmOrderSvc.getOne(rm_order_no)==null) {
+					errorMsgs.add("查無此訂單編號");
+				}
 				Integer exp = rmOrderSvc.getOne(rm_order_no).getMem_no();
-				
 				if (!exp.equals(mem_no)) {
 					errorMsgs.add("查無此訂單編號");
 				}

@@ -116,8 +116,8 @@ table.dataTable tbody td {
 }
 
 h3.checkInTitle {
-	color: #fff;
-	background: #a2bfb9;
+
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
@@ -129,8 +129,8 @@ table#checkInTable tr.odd {
 }
 
 h3.checkOutTitle {
-	color: #fff;
-	background: #C7B8A1;
+	
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
@@ -142,8 +142,8 @@ table#checkOutTable tr.odd {
 }
 
 h3.stayTitle {
-	color: #fff;
-	background: #c0c4d3;
+
+	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
 	position: relative;
@@ -285,7 +285,7 @@ td.sorting_1 {
 								</div>
 								<div>
 									<input type="hidden" name="action" value="getEnoughTypeByStore">
-									<input type="submit" class="btn btn-primary" value="查詢">
+									<input type="submit" class="btn btn-grad" value="查詢">
 								</div>
 							</div>
 							<c:forEach var="rmVO" items="${ableList}">
@@ -328,7 +328,6 @@ td.sorting_1 {
 										<th>會員電話</th>
 										<th>入住日</th>
 										<th>退房日</th>
-										<th>入住人姓名</th>
 										<th></th>
 										<th></th>
 									</tr>
@@ -339,17 +338,16 @@ td.sorting_1 {
 										<tr>
 											<td>${checkInVO.rm_order_no}</td>
 											<td>${rmTypeSvc.getOneRm(checkInVO.rm_type_no).rm_name}</td>
-											<td>${checkOutVO.rm_amount}</td>
+											<td>${checkInVO.rm_amount}</td>
 											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
 											<td class="hidden">${rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no}</td>
 											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
 											<td>${checkInVO.arrival_date}</td>
 											<td>${checkInVO.departure_date}</td>
-											<td>${checkInVO.rm_check_in}</td>
 											<td><div>
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/RmOrder">
-														<input type="submit" class="btn btn-primary" value="訂單資訊">
+														<input type="submit" class="btn btn-grad" value="訂單資訊">
 														<input type="hidden" name="rm_order_no"
 															value="${checkInVO.rm_order_no}"> <input
 															type="hidden" name="store_no" value="${store_no}">
@@ -359,7 +357,7 @@ td.sorting_1 {
 											<td><div>
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/RmOrder">
-														<input type="submit" class="btn btn-primary" value="入住">
+														<input type="submit" class="btn btn-grad" value="入住">
 														<input type="hidden" name="rm_order_no"
 															value="${checkInVO.rm_order_no}"> <input
 															type="hidden" name="action" value="checkIn">
@@ -389,7 +387,6 @@ td.sorting_1 {
 												<th>會員電話</th>
 												<th>入住日</th>
 												<th>退房日</th>
-												<th>入住人姓名</th>
 												<th></th>
 												<th></th>
 											</tr>
@@ -406,11 +403,10 @@ td.sorting_1 {
 													<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
 													<td>${checkOutVO.arrival_date}</td>
 													<td>${checkOutVO.departure_date}</td>
-													<td>${checkOutVO.rm_check_in}</td>
 													<td><div>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/RmOrder">
-																<input type="submit" class="btn btn-primary"
+																<input type="submit" class="btn btn-grad"
 																	value="訂單資訊"> <input type="hidden"
 																	name="rm_order_no" value="${checkOutVO.rm_order_no}">
 																<input type="hidden" name="store_no" value="${store_no}">
@@ -420,7 +416,7 @@ td.sorting_1 {
 													<td><div>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/RmOrder">
-																<input type="submit" class="btn btn-primary" value="退房">
+																<input type="submit" class="btn btn-grad" value="退房">
 																<input type="hidden" name="rm_order_no"
 																	value="${checkOutVO.rm_order_no}"> <input
 																	type="hidden" name="action" value="checkOut">
@@ -451,7 +447,6 @@ td.sorting_1 {
 														<th>會員電話</th>
 														<th>入住日</th>
 														<th>退房日</th>
-														<th>入住人姓名</th>
 														<th></th>
 														<th></th>
 													</tr>
@@ -462,17 +457,16 @@ td.sorting_1 {
 														<tr>
 															<td>${stayVO.rm_order_no}</td>
 															<td>${rmTypeSvc.getOneRm(stayVO.rm_type_no).rm_name}</td>
-															<td>${checkOutVO.rm_amount}</td>
+															<td>${stayVO.rm_amount}</td>
 															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
 															<td class="hidden">${rmOrderSvc.getOne(stayVO.rm_order_no).mem_no}</td>
 															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
 															<td>${stayVO.arrival_date}</td>
 															<td>${stayVO.departure_date}</td>
-															<td>${stayVO.rm_check_in}</td>
 															<td><div>
 																	<FORM METHOD="post"
 																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-primary"
+																		<input type="submit" class="btn btn-grad"
 																			value="訂單資訊"> <input type="hidden"
 																			name="rm_order_no" value="${stayVO.rm_order_no}">
 																		<input type="hidden" name="store_no"
@@ -483,7 +477,7 @@ td.sorting_1 {
 															<td><div>
 																	<FORM METHOD="post"
 																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-primary"
+																		<input type="submit" class="btn btn-grad"
 																			value="提早退房"> <input type="hidden"
 																			name="rm_order_no" value="${stayVO.rm_order_no}">
 																		<input type="hidden" name="rm_type_no"
