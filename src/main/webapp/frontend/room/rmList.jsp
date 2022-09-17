@@ -8,6 +8,7 @@
 <jsp:useBean id="rmTypeSvc" scope="page" class="com.rm_type.model.RmTypeService" />
 <jsp:useBean id="rmPicSvc" scope="page" class="com.rm_pic.model.RmPicService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
+<jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService" />
 
 <%
 	// 沒有搜尋過進來就顯示全部allList，有沒有搜尋過用ableList判斷
@@ -27,6 +28,9 @@
 	<%@ include file="/frontend/commonCSS.file" %>
 		<!-- 基本CSS檔案 -->
 <style>
+h3, .h3 {
+    font-size: 25px;
+}
 .room-text {
 	border-left: 3px solid #d0af6d;
 }
@@ -396,7 +400,7 @@ body {
 				
 						<div class="col-sm-6 col-lg-5 p-0 room-text">
 							<div class="room-card-content">
-								<h3>${rmTypeVO.rm_name}</h3>
+								<h3>${rmTypeVO.storeVO.store_name}-[${rmTypeVO.rm_name}]</h3>
 								<div>
 									<i class='bx bx-user-circle'></i>${rmTypeVO.rm_people}人
 								</div>
@@ -441,7 +445,7 @@ body {
 
 						<div class="col-sm-6 col-lg-5 p-0 room-text">
 							<div class="room-card-content">
-								<h3>${rmTypeVO.rm_name}</h3>
+								<h3>${rmTypeVO.storeVO.store_name}-[${rmTypeVO.rm_name}]</h3>
 								<div>
 									<i class='bx bx-user'></i>${rmTypeVO.rm_people} 人
 								</div>

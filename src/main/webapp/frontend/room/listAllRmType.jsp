@@ -44,6 +44,10 @@ if (session.getAttribute("rangedate") != null) {
 <title>尋找下榻民宿</title>
 <%@ include file="/frontend/commonCSS.file"%>
 <%@ include file="/frontend/commonCSS.file"%>
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
 
 
 <style>
@@ -263,58 +267,27 @@ if (session.getAttribute("rangedate") != null) {
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
-  <!-- <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
-  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-  <link rel="stylesheet" href="jqueryui/style.css">
-  <link rel="stylesheet" href="./jquery-ui-1.12.1/jquery-ui.css">
-  <script>
   
-  $(function() {
-    $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+1M +10D" });
-  });
-  $(function() {
-	    $( "#datepicker-out" ).datepicker({ minDate: +1, maxDate: "+1M +10D" });
-	  });
-  
-  $(function () {
-	  $("#datepicker").datepicker({
-	    dateFormat: "yyyy-mm-dd", //修改顯示順序
-	  });
-	});
-
-  </script>
-	 -->
+ 
 <script>	
-/* $("#datepicker").flatpickr({
-    mode: 'range',
-    dateFormat: "Y-m-d",
-    defaultDate: ["${start_date}", "${end_date}"],
-    minDate: "today",
-    maxDate: new Date().fp_incr(90),
-    disable: [],
-});
 function check(){
-	let duringStay = document.getElementById('datepicker');
-
-			if (duringStay.value.length != 24) {
-				duringStay.focus();
-				rangeDateIsNull();
-				return false;
-			} else {
-				document.getElementById('getEnoughType').submit();
-			}
-		}
-		function rangeDateIsNull() {
-			swal.fire({
-				icon : 'error',
-				title : '請選擇 入住日 和 退房日',
-				showConfirmButton : false,
-				timer : 1000
-			})
-		} 
-	
- */	
+	let datepicker = document.getElementById('datepicker');
+		
+	if (datepicker == null){
+		datepicker.focus();
+		datepickerIsNull();
+		return false;
+	} 
+}
+      	// alert樣式
+       function datepickerIsNull() {
+    		swal.fire({
+    			icon : 'error',
+    			title : '請選擇 入住日 和 退房日',
+    			showConfirmButton : false,
+    			timer : 1000
+    		})		
+    	}
 	</script>
 </body>
 </html>
