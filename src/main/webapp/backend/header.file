@@ -24,8 +24,8 @@
 								
 								<img src="<%=request.getContextPath()%>/backend/assets/img/w11.jpg" alt="">
 								<div class="header-info ms-3">
-									<small>Superadmin${depSvc1.getOne(empVO.emp_no).emp_name}</small>
-									<span>CGA103_G1${empVO.emp_name}</span>
+									<small>Superadmin</small>
+									<span>${empVO.emp_name}</span>
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end">

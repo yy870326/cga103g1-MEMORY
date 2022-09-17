@@ -164,8 +164,8 @@ div.main-content {
 
 <body>
 	<%@ include file="/frontend/header.file"%>
-	<%@ include file="/frontend/memSidebar.file"%>
-	<div class="col-lg-9">
+	<%@ include file="/frontend/store/storeSidebar.file"%>
+	<div class="main-content col-lg-9">
 	<h3 class="mt-5 mb-3">廠商訂單管理</h3>
 		<div style="margin-left: 850px;">
 			<%-- 錯誤表列 --%>
@@ -228,7 +228,7 @@ div.main-content {
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
 								pattern="$###,###,###" /> <c:if
 								test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
-								<div>(已扣除取消後退款)</div>
+								<div>(已扣除退款)</div>
 							</c:if></td>
 						<td><c:choose>
 								<c:when test="${rmOrderVO.rm_order_status==0}">
@@ -271,7 +271,7 @@ div.main-content {
 										<th>間數</th>
 										<th>住房日期</th>
 										<th>退房日期</th>
-										<th>入住人姓名</th>
+										<th></th>
 										<th></th>
 									</tr>
 								</thead>
@@ -284,7 +284,7 @@ div.main-content {
 											<td><div>${rmOrderListVO.rm_amount}</div></td>
 											<td><div>${rmOrderListVO.arrival_date}</div></td>
 											<td><div>${rmOrderListVO.departure_date}</div></td>
-											<td><div>${rmOrderListVO.rm_check_in}</div></td>
+											<td><div></div></td>
 											<td><div></div></td>
 										</tr>
 									</c:forEach>
@@ -299,7 +299,7 @@ div.main-content {
 										<td>總金額 <fmt:formatNumber value="${rmOrderVO.rm_charge}"
 												pattern="$###,###,###" /> <c:if
 												test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
-												<div>(已扣掉取消後退款金額)</div>
+												<div>(已扣除退款)</div>
 											</c:if>
 										</td>
 										<td><div>
@@ -310,7 +310,7 @@ div.main-content {
 														class="btn btn-primary" style="background-color: #5bc9e2"
 														value="取消訂單"> <input type="hidden"
 														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
-													<input type="hidden" name="action" value="storeCancel">
+													<input type="hidden" name="action" value="cancel">
 												</FORM>
 											</div></td>
 									</tr>
@@ -328,7 +328,12 @@ div.main-content {
 	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
-		
+		$(document).ready(function() {
+			$("#pagename").text("訂單管理");
+			$(".fold-table tr.view").on("click", function() {
+				$(this).toggleClass("open").next(".fold").toggleClass("open");
+			});
+		});
 	</script>
 </body>
 </html>
