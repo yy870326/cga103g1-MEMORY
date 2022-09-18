@@ -127,7 +127,7 @@
 	</tr>
 </table>
 <br>
-<input type="hidden" name="action" value="update">
+<input type="hidden" name="action" value="updatemem">
 <input type="hidden" name="mem_no" value="<%=memVO.getMem_no()%>">
 <input type="submit" value="°e¥X­×§ï"></FORM>
 </body>

@@ -36,6 +36,8 @@ public class LoginHandler extends HttpServlet {
     // 【取得使用者 帳號(account) 密碼(password)】
     String mem_email = req.getParameter("mem_email");
     String mem_pwd = req.getParameter("mem_pwd");
+    MemService memSvc = new MemService();
+    MemVO memVO = memSvc.login(mem_email,mem_pwd);
 
     // 【檢查該帳號 , 密碼是否有效】
     if (!allowUser(mem_email, mem_pwd)) {          //【帳號 , 密碼無效時】
@@ -45,8 +47,8 @@ public class LoginHandler extends HttpServlet {
       out.println("</BODY></HTML>");
     }else {                                       //【帳號 , 密碼有效時, 才做以下工作】
       HttpSession session = req.getSession();
-      session.setAttribute("mem_email", mem_email);   //*工作1: 才在session內做已經登入過的標識
-      
+      session.setAttribute("memVO", memVO);//*工作1: 才在session內做已經登入過的標識
+      session.setAttribute("mem_email", mem_email);
        try {                                                        
          String location = (String) session.getAttribute("location");
          if (location != null) {
