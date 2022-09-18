@@ -192,6 +192,59 @@ public class MemServlet extends HttpServlet{
 				successView.forward(req, res);
 		}
 
+		if ("updatemem".equals(action)) { // 來自update_emp_input.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer mem_no = Integer.valueOf(req.getParameter("mem_no").trim());
+				 String  mem_pwd  = req.getParameter("mem_pwd");         
+				 String  mem_name    =req.getParameter("mem_name"); 
+				 String  mem_gender  =req.getParameter("mem_gender"); 
+				 String  mem_email   =req.getParameter("mem_email"); 
+				 String  mem_mobile  =req.getParameter("mem_mobile");
+				 String  mem_city    =req.getParameter("mem_city");
+				 //存入圖片
+//				 Part part = req.getPart("mem_pic");
+//			      InputStream in = part.getInputStream();
+//			      ByteArrayOutputStream out = new ByteArrayOutputStream();
+//			      byte[] buff = new byte[1024];
+//			      int len;
+//			    //若in.read(buff)能讀到資料，把資料長度設給len，讓out寫出資料(從0寫到len的長度)
+//			      while((len = in.read(buff)) != -1) {
+//			        out.write(buff, 0, len);
+//			      }
+//			      //out寫出完成後，把資料轉存為byte[]
+//			      byte[] mem_pic = out.toByteArray();
+				  MemVO memVO = new MemVO();
+				  	 memVO.setMem_no(mem_no);	
+					 memVO.setMem_pwd(mem_pwd);
+					 memVO.setMem_name(mem_name);
+					 memVO.setMem_gender(mem_gender);
+					 memVO.setMem_email(mem_email);
+					 memVO.setMem_mobile(mem_mobile);
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/mem/update_mem_input.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+				
+				/***************************2.開始修改資料*****************************************/
+				MemService memSvc = new MemService();
+				memVO = memSvc.update( mem_pwd,  mem_name, mem_gender, mem_email, mem_mobile, mem_city,mem_no);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/frontend/mem/listOneMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+		}
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();

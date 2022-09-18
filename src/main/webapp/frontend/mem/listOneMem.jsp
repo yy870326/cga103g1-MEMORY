@@ -1,86 +1,95 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.coup.model.*"%>
 <%@ page import="com.mem.model.*"%>
-<%-- ¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È --%>
-
 <%
-  MemVO memVO = (MemVO) request.getAttribute("memVO"); //EmpServlet.java(Concroller), ¦s¤JreqªºempVOª«¥ó
+MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+MemService memSvc = new MemService();
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
-<title>­û¤u¸ê®Æ - listOneMem.jsp</title>
-
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
-  table {
-	width: 600px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-</style>
-
+<meta charset="UTF-8">
+<title>æœƒå“¡åŸºæœ¬è³‡æ–™ç®¡ç†</title>
+<%-- CSS --%>
+	<%@ include file="/frontend/commonCSS.file" %>
 </head>
-<body bgcolor='white'>
+<body>
+  <%-- header --%>
+  <%@ include file="/frontend/header.file" %>
+  <!-- mem-sidebar -->
+  <%@ include file="/frontend/memSidebar.file" %>
+	
+      <!-- ä¸»è¦å…§å®¹ Start -->
 
-<h4>¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È:</h4>
-<table id="table-1">
-	<tr><td>
-		 <h3>­û¤u¸ê®Æ - ListOneMem.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
-	</td></tr>
-</table>
+      <div class="col-lg-9">
+        <!-- h5 æ”¹ h3 -->
+        <h3 class="mt-5 mb-3">æœƒå“¡åŸºæœ¬è³‡æ–™ç®¡ç†</h3>
+        <div>
+<h2>${memVO.mem_name}</h2>æ‚¨å¥½
+</div>
+		
+		
+		<div class="col-sm-12 mb-5">
+					<h5 class="text-center mb-4"></h5>
+					<div class="table-responsive-sm">
+						<table class="table table-lg table-bordered table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Name</th>
+									<th scope="col">${memVO.mem_name}</th>
+					
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">Sex</th>
+									<td>${memVO.mem_gender}</td>
+								
+								</tr>
+								<tr>
+									<th scope="row">Email</th>
+									<td>${memVO.mem_email}</td>
+								
+								</tr>
+								<tr>
+									<th scope="row">Password</th>
+									<td>${memVO.mem_pwd}</td>
+								
+								</tr>
+								<tr>
+									<th scope="row">Mobile</th>
+									<td>${memVO.mem_mobile}</td>
+								
+								</tr>
+								<tr>
+									<th scope="row">Address</th>
+									<td>${memVO.mem_city}</td>
+								</tr>
 
-<table>
-	<tr>
-		<th>­û¤u½s¸¹</th>
-		<th>­û¤u©m¦W</th>
-		<th>Â¾¦ì</th>
-		<th>¶±¥Î¤é´Á</th>
-		<th>Á~¤ô</th>
-		<th>¼úª÷</th>
-		<th>³¡ªù</th>
-	</tr>
-	<tr>
-		<td>${memVO.mem_no}</td>
-				<td>${memVO.mem_acc}</td>
-				<td>${memVO.mem_pwd}</td>
-				<td>${memVO.acc_status}</td>
-				<td>${memVO.mem_name}</td>
-				<td>${memVO.mem_email}</td>
-				<td>${memVO.mem_mobile}</td>
-				<td>${memVO.mem_city}</td>
-				<td>${memVO.mem_dist}</td>
-				<td>${memVO.mem_addr}</td>
-				<td>${memVO.mem_reg_date}</td>
-				<td>${memVO.mem_pic}</td>
-				<td>${memVO.mem_report_count}</td>
-				<td>${memVO.mem_card}</td>
-	</tr>
-</table>
+							</tbody>
+						</table>
+						<form action="<%=request.getContextPath()%>/mem.do" method="post" name="goto_update" enctype="multipart/form-data">
+							<input class="btn btn-outline-primary" type="submit" value="ä¿®æ”¹åŸºæœ¬è³‡æ–™"> 
+							<input name="mem_no" type="hidden" value="${memVO.mem_no }"> <input name="action" type="hidden" value="getOne_For_Update">
+								</form>
+					</div>
+				</div>
+				
+
+    </div> <!-- é€™å…©å€‹ div æœƒå½±éŸ¿ footer ä¸å¯åˆª -->
+  </div> <!-- é€™å…©å€‹ div  footer ä¸å¯åˆª -->
+
+  <!-- ä¸»å…§å®¹ end -->
+
+  <%-- footer --%>
+	<%@ include file="/frontend/footer.file" %>
+  	
+  	<%-- commonJS --%>
+	<%@ include file="/frontend/commonJS.file" %>
 
 </body>
 </html>

@@ -29,6 +29,8 @@ public class MemDAO implements I_MemDAO{
 			"DELETE FROM mem where mem_no = ?";
 		private static final String UPDATE = 
 			"UPDATE mem set mem_acc =?,mem_pwd=?,acc_status=?,mem_name=?,mem_gender=?,mem_email=?,mem_mobile=?,mem_city=?,mem_dist=?,mem_addr=?,mem_reg_date=?,mem_pic=?,mem_report_count=?,mem_card=? where mem_no = ?";
+		private static final String UPDATEMEM = 
+				"UPDATE mem set mem_acc =?,mem_pwd=?,acc_status=?,mem_name=?,mem_gender=?,mem_email=?,mem_mobile=?,mem_city=?,mem_dist=?,mem_addr=?,mem_reg_date=?,mem_pic=?,mem_report_count=?,mem_card=? where mem_no = ?";
 		private static final String LOGIN = 
 				"SELECT mem_no,mem_acc,mem_pwd,acc_status,mem_name,mem_gender,mem_email,mem_mobile,mem_city,mem_dist,mem_addr,mem_reg_date,mem_pic,mem_report_count,mem_card  FROM mem WHERE  mem_email= ? and mem_pwd= ?"; 
 		private static final String GET_ONE_BY_MAIL = 
@@ -497,4 +499,49 @@ public class MemDAO implements I_MemDAO{
 			}
 		}
 	}
+	@Override
+	public void updateMem(MemVO memVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEMEM);
+
+			pstmt.setString(1, memVO.getMem_pwd());
+			pstmt.setString(2, memVO.getMem_name());
+			pstmt.setString(3,memVO.getMem_gender());
+			pstmt.setString(4, memVO.getMem_email());
+			pstmt.setString(5, memVO.getMem_mobile());
+			pstmt.setString(6, memVO.getMem_city());
+			pstmt.setInt(7, memVO.getMem_no());
+			
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
+	}
+
 }

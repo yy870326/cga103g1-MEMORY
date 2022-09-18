@@ -60,6 +60,22 @@ public class MemService {
 
 		return memVO;
 	}
+	public MemVO update( String mem_pwd, String mem_name,
+			String mem_gender, String mem_email, String mem_mobile, String mem_city, 
+			 Integer mem_no) {
+		MemVO memVO = new MemVO();
+
+		memVO.setMem_pwd(mem_pwd);
+		memVO.setMem_name(mem_name);
+		memVO.setMem_gender(mem_gender);
+		memVO.setMem_email(mem_email);
+		memVO.setMem_mobile(mem_mobile);
+		memVO.setMem_city(mem_city);
+		memVO.setMem_no(mem_no);
+		dao.update(memVO);
+
+		return memVO;
+	}
 	public void deleteMem(Integer memno) {
 		dao.delete(memno);
 	}
@@ -88,5 +104,8 @@ public MemVO updateStatus(Integer acc_status, Integer mem_no) {
 	memVO.setMem_no(mem_no);
 	dao.updateStatus(memVO);
 	return memVO;
+}
+public MemVO login(String mem_email, String mem_pwd) {
+	return dao.login(mem_email, mem_pwd);
 }
 }
