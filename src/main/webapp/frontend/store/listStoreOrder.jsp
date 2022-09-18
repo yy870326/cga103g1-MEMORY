@@ -191,7 +191,7 @@ div.main-content {
 						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已實現
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatus">已取消
+						href="<%=request.getContextPath()%>/RmOrder?store_no=${store_no}&rm_order_status=2&action=getStoreStatusCancel">已取消
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
