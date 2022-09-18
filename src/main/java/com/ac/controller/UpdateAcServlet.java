@@ -43,7 +43,8 @@ public class UpdateAcServlet extends HttpServlet {
 		HttpSession session = req.getSession();
         Integer memNo1 = (Integer) session.getAttribute("memNo1");
         Integer memNo2 = (Integer) session.getAttribute("memNo2");
-        
+        Integer memNo3 = (Integer) session.getAttribute("memNo3");
+
 		AcServiceImpl acServiceImpl = new AcServiceImpl();
 		AcPicService acPicService = new AcPicService();
 		List<AcPicVO> acPicList = new LinkedList<AcPicVO>();
@@ -59,7 +60,7 @@ public class UpdateAcServlet extends HttpServlet {
 				.stream()
 				.filter(ac -> ac.getAc_no() == acNo).findFirst().get().getMem_no();
 		System.out.println("發表此篇文章的會員編號：" + findAcMenNo);
-		if (findAcMenNo == memNo1) {
+		if (findAcMenNo == memNo2) {
 			if ("alterAc".equals(action)) {				
 				/***************************查詢完成,準備轉交(Send the Success view)************/
 				String param = "?title="  + acVO.getAc_title() +
@@ -97,7 +98,8 @@ public class UpdateAcServlet extends HttpServlet {
 		HttpSession session = req.getSession();
         Integer memNo1 = (Integer) session.getAttribute("memNo1");
         Integer memNo2 = (Integer) session.getAttribute("memNo2");
-        
+        Integer memNo3= (Integer) session.getAttribute("memNo3");
+
 		if ("確定修改".equals(action)) { 			
 //			Integer acNo = Integer.valueOf(req.getParameter("acNo"));
 //			System.out.println(acNo);

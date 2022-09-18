@@ -1,7 +1,6 @@
 package com.act.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,9 +13,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.act_participant.model.ActParticipantService;
-import com.act_participant.model.ActParticipantVO;
 
 public class ActDAO implements I_ActDAO{
 	
@@ -229,7 +225,14 @@ public class ActDAO implements I_ActDAO{
 	}
 	
 	public void updateActPeopleAmount(ActVO actVO) {
-		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(UPDATE_ACT_PEOPLE_AMOUNT)) {
+			ps.setInt(1, actVO.getAct_current_count());
+			ps.setInt(2, actVO.getAct_no());			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 

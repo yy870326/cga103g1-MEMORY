@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.act_pic.model.ActPicService;
 import com.act_pic.model.ActPicVO;
-import com.google.gson.Gson;
 
 @WebServlet("/getOneActPic")
 public class GetOneActPicServlet extends HttpServlet {
