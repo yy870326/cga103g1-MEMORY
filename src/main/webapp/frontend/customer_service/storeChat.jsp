@@ -140,7 +140,7 @@ ul li {
 </body>
 <script>
 	
-	var MyPoint = "/FriendWS/${storeSvc.getOneStoreByAcc(storevo.store_acc).store_name}";
+	var MyPoint = "/FriendWS/${storeSvc.getOneStoreByAcc(store_acc).store_name}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -148,7 +148,7 @@ ul li {
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = "${storeSvc.getOneStoreByAcc(storevo.store_acc).store_name}";
+	var self = "${storeSvc.getOneStoreByAcc(store_acc).store_name}";
 	var webSocket;
 
 	function connect() {
