@@ -21,14 +21,14 @@
 	</head>
 
 	<body>
-		<%@ include file="/frontend/store/header.file" %><!-- header -->
+		<%@ include file="/frontend/header.file"%>
 		<%@ include file="/frontend/store/storeSidebar.file" %> <!-- sidebar -->
 		
 
 		
 
 <!-- 	內容寫在main-content這個div內    -->
-<div class="col-lg-9">
+<div class=" col-lg-9 card card-body table-responsive">
 <div>
 <h4>${storeSvc.getOneStoreByAcc(store_acc).store_name}</h4>您好
 </div>

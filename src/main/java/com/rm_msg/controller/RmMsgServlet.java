@@ -95,5 +95,37 @@ public class RmMsgServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 			}
+			
+			if("getOneMsgByStore".equals(action)) {
+				Map<String, String> errorMsgs = new LinkedHashMap<>();
+				req.setAttribute("errorMsgs", errorMsgs);
+				
+				//===========接收參數===================
+				
+				String store_no = req.getParameter("store_no");
+				
+				if(store_no == null || store_no.trim().length() == 0) {
+					errorMsgs.put("store_no", "請輸入廠商編號");
+					
+				}
+				if(!errorMsgs.isEmpty()) {
+					RequestDispatcher failure = req.getRequestDispatcher("/backend/store/ListAllMsgs.jsp");
+					failure.forward(req, res);
+					return;
+				}
+				
+				Integer storeno = Integer.valueOf(store_no);
+				
+				//=============資料存取==================
+				Rm_msgService rmmsgSvc = new Rm_msgService();
+				List<Rm_msgVO> list = rmmsgSvc.getAllMsgByStoreNumber(storeno);
+			
+				//=================轉交資料======================
+				req.setAttribute("list", list);
+				String url = "";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+			
+			}
 	}
 }

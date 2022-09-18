@@ -85,7 +85,7 @@ pageContext.setAttribute("storeVO", storeVO);
 			pageContext.setAttribute("storeVO", storeVO);
 		%>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store.do" name="form1">
-        <h2><font >查詢:</font></h2> <br>
+        <h2><font >查詢:</font></h2><h2 style="color:red;">${errorMsgs.map}</h2> <br>
         <div>
         <p>輸入廠商會員編號:</p>
         <input type="text" name="store_no" value=""><br>
@@ -117,7 +117,9 @@ pageContext.setAttribute("storeVO", storeVO);
 		</div>        
         <input type="submit" value="查詢">
         <input type="hidden" name="action" value="listStoreByCompositeQuery">
-     </FORM>			
+        
+     </FORM>		
+     
 </div>
 
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
