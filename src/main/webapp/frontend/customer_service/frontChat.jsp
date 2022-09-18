@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.store.*" %>
+<%@ page import="com.mem.*" %>
 
-<jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService" />
 
 <!DOCTYPE html>
 <html>
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
@@ -140,7 +140,7 @@ ul li {
 </body>
 <script>
 	
-	var MyPoint = "/FriendWS/${storeSvc.getOneStoreByAcc(storeVO.store_acc).store_name}";
+	var MyPoint = "/FriendWS/${memSvc.getOneBymail(mem_email).mem_name}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -148,7 +148,7 @@ ul li {
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = "${storeSvc.getOneStoreByAcc(storeVO.store_acc).store_name}";
+	var self = "${memSvc.getOneBymail(mem_email).mem_name}";
 	var webSocket;
 
 	function connect() {
