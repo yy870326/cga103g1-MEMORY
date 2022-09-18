@@ -227,7 +227,7 @@ pageContext.setAttribute("snm", snm);
             <div id="message"
               class="nav-item border-0 d-none d-lg-inline-block align-self-center"
             >
-              <a href="#" class="btn btn-sm btn-grad text-white mb-0"
+              <a href="<%=request.getContextPath()%>/frontend/customer_service/frontChat.jsp" class="btn btn-sm btn-grad text-white mb-0"
                 >即時客服</a
               >
             </div>
@@ -237,13 +237,3 @@ pageContext.setAttribute("snm", snm);
       </nav>
     </header>
     
-    <script>
-    $("#message").click(function(){
-    	"${storeSvc.getOneStoreByAcc(storeVO.store_acc).store_name}" === null?location="<%=request.getContextPath()%>/frontend/customer_service/storeChat.jsp":location="<%=request.getContextPath()%>/frontend/customer_service/frontChat.jsp";
-    });
-    
-    $(".snmblur").focus(function(){
-    	$(".snmblur").css("background-color", "gray");
-    });
-    
-    </script>
