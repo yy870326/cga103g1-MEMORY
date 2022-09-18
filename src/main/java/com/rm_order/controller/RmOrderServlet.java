@@ -81,8 +81,9 @@ public class RmOrderServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				RmOrderService rmOrderSvc = new RmOrderService();
-				List<RmOrderVO> orderlist = rmOrderSvc.getStoreStatus(store_no, rm_order_status);
-
+				List<RmOrderVO> orderlist = 
+						rmOrderSvc.getStoreStatus(store_no, rm_order_status)
+						.stream().filter(t -> t.getRm_charge()!=0).toList();
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 				req.setAttribute("orderlist", orderlist);
@@ -90,6 +91,29 @@ public class RmOrderServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
+			} catch (Exception e) {
+				req.getRequestDispatcher("/frontend/store/listStoreOrder.jsp").forward(req, res);
+			}
+		}
+		
+		if ("getStoreStatusCancel".equals(action)) { // 取得該廠商訂單狀態
+			
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer store_no = new Integer(req.getParameter("store_no"));
+				Integer rm_order_status = new Integer(req.getParameter("rm_order_status"));
+				
+				/*************************** 2.開始查詢資料 ****************************************/
+				RmOrderService rmOrderSvc = new RmOrderService();
+				List<RmOrderVO> orderlist = 
+						rmOrderSvc.getStoreStatus(store_no, rm_order_status)
+						.stream().filter(t -> t.getRm_charge()==0).toList();
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("orderlist", orderlist);
+				String url = "/frontend/store/listStoreOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
 			} catch (Exception e) {
 				req.getRequestDispatcher("/frontend/store/listStoreOrder.jsp").forward(req, res);
 			}
