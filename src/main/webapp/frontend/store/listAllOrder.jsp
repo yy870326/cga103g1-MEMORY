@@ -41,7 +41,7 @@ pageContext.setAttribute("orderlist", orderlist);
 
 
 	<!-- 	內容寫在main-content這個div內    -->
-	<div class="col-lg-9">
+	<div class=" col-lg-9 card card-body table-responsive">
 		<table id="example4 " class="stripe table fold-table" style="min-width: 845px">
 			<thead>
 				<tr>

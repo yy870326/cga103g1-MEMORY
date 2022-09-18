@@ -185,7 +185,7 @@ div.main-content {
 	<%@ include file="/frontend/store/storeSidebar.file"%>
 	<!-- sidebar -->
 
-	<div class="col-lg-9">
+	<div class=" col-lg-9 card card-body table-responsive">
 	
 	
 		<table class="table fold-table">

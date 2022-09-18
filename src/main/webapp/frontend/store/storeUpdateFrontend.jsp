@@ -40,7 +40,7 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 		
 
 <!-- 	內容寫在main-content這個div內    -->
-<div class="col-lg-9" >
+<div class=" col-lg-9 card card-body table-responsive" >
 	<form method="post" name="form1" action="<%=request.getContextPath()%>/store.do" >
 		<table id="example4" class="display" style="min-width: 845px">
 		
