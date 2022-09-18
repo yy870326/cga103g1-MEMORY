@@ -29,7 +29,7 @@ pageContext.setAttribute("orderlist", orderlist);
 	<!-- loading -->
 	<%@ include file="/backend/header.file"%>
 	<!-- Header -->
-	<%@ include file="/backend/sidebar.file"%>
+	<%@ include file="/backend/store/sidebar.file"%>
 	<!-- sidebar -->
 
 
@@ -52,13 +52,13 @@ pageContext.setAttribute("orderlist", orderlist);
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
 						<td>
-						<div class="container text-primary">#${rmOrderVO.rm_order_no}</div>
+						<div class="container text-primary">${rmOrderVO.rm_order_no}</div>
 					</td>
-						<td><span class="text-primary">#${rmOrderVO.mem_no}</span>
+						<td>
 							<h4 class="mb-0 mt-1">
-								<a class="text-black">${memSvc.getOne(rmOrderVO.mem_no).mem_name}</a>
+								<a class="text-black">${memSvc.getOneMem(rmOrderVO.mem_no).mem_name}</a>
 							</h4></td>
-						<td><span class="text-primary">#${rmOrderVO.store_no}</span>
+						<td>
 							<h4 class="mb-0 mt-1">
 								<a class="text-black">${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</a>
 							</h4></td>

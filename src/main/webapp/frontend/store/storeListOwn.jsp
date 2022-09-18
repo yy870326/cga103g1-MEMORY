@@ -21,7 +21,7 @@
 	</head>
 
 	<body>
-		<%@ include file="/frontend/store/header.file" %><!-- header -->
+		<%@ include file="/frontend/header.file"%>
 		<%@ include file="/frontend/store/storeSidebar.file" %> <!-- sidebar -->
 		
 

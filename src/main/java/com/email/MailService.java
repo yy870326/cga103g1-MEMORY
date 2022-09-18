@@ -48,8 +48,8 @@ public class MailService {
        //     ●5-3) 最後按【產生】密碼
 //	     final String myGmail = "ixlogic.wu@gmail.com";
 //	     final String myGmail_password = "ddjomltcnypgcstn";
-	     final String myGmail = "oliver867524@gmail.com";
-	     final String myGmail_password = "fcjlhnkzjyxqsboq";
+	     final String myGmail = "oliver20220810@gmail.com";
+	     final String myGmail_password = "ioauteitwaxnqfiv";
 		   Session session = Session.getInstance(props, new Authenticator() {
 			   protected PasswordAuthentication getPasswordAuthentication() {
 				   return new PasswordAuthentication(myGmail, myGmail_password);

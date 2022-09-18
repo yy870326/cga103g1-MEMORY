@@ -827,9 +827,17 @@ public class StoreServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			//===========接收資料=================
 			Map<String, String[]> map = req.getParameterMap();
-			//=================資料存取
+			//=================資料存取==================
 			StoreService StoreSvc = new StoreService();
 			List<StoreVO> list = StoreSvc.StoreCompositeQuery(map);
+			if(list.isEmpty()) {
+				errorMsgs.put("map", "查無資料，請重新輸入");
+				
+			}
+			if(!errorMsgs.isEmpty()){
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/store/storeSelectPage.jsp");
+				failureView.forward(req, res);
+			}
 			//==============資料送出============================
 			req.setAttribute("listStoreByCompositeQuery", list);
 			RequestDispatcher SuccessView = req.getRequestDispatcher("/backend/store/StoreCompositeQueryList.jsp");

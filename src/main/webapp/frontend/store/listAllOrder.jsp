@@ -42,7 +42,7 @@ pageContext.setAttribute("orderlist", orderlist);
 
 	<!-- 	內容寫在main-content這個div內    -->
 	<div class="col-lg-9">
-		<table id="example4" class="stripe" style="min-width: 845px">
+		<table id="example4 " class="stripe table fold-table" style="min-width: 845px">
 			<thead>
 				<tr>
 					<th>訂單編號</th>
@@ -57,32 +57,36 @@ pageContext.setAttribute("orderlist", orderlist);
 			<tbody>
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
-						<td>
-						<div class="container text-primary">#${rmOrderVO.rm_order_no}</div>
+					<td>
+						<div class="container text-primary">${rmOrderVO.rm_order_no}</div>
 					</td>
-						<td><span class="text-primary">#${rmOrderVO.mem_no}</span>
+					<td>
 							<h4 class="mb-0 mt-1">
 								<a class="text-black">${memSvc.getOneMem(rmOrderVO.mem_no).mem_name}</a>
-							</h4></td>
-						<td><span class="text-primary">#${rmOrderVO.store_no}</span>
-							<h4 class="mb-0 mt-1">
+							</h4>
+					</td>
+					<td>
+						
+						<h4 class="mb-0 mt-1">
 								<a class="text-black">${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</a>
-							</h4></td>
-						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_tel}</td>
-						<td>${rmOrderVO.order_date}</td>
-						<td>${rmOrderVO.rm_charge}</td>
-						<td><c:choose>
-								<c:when test="${rmOrderVO.rm_order_status==0}">
+						</h4>
+					</td>
+					<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_tel}</td>
+					<td>${rmOrderVO.order_date}</td>
+					<td>${rmOrderVO.rm_charge}</td>
+					<td><c:choose>
+							<c:when test="${rmOrderVO.rm_order_status==0}">
 									<i class='bx bxs-circle' style='color: red'></i>入住中</c:when>
-								<c:when test="${rmOrderVO.rm_order_status==1}">
+							<c:when test="${rmOrderVO.rm_order_status==1}">
 									<i class='bx bxs-circle' style='color: green'></i>正常</c:when>
-								<c:when
+							<c:when
 									test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge!=0}">
 									<i class='bx bxs-circle' style='color: #aaa'></i>已實現</c:when>
-								<c:when
+							<c:when
 									test="${rmOrderVO.rm_order_status==2 && rmOrderVO.rm_charge==0}">
 									<i class='bx bxs-circle' style='color: yellow'></i>已取消</c:when>
-							</c:choose></td>
+						</c:choose>
+					</td>
 					</tr>
 				</c:forEach>
 			</tbody>
