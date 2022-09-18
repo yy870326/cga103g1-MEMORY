@@ -38,7 +38,7 @@
 
 <body>
 	<!-- header -->
-	<%@ include file="/frontend/store/header.file" %>
+	<%@ include file="/frontend/header.file"%>
 	
 <div class="loginSection">	
 	<section class="login-area">
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="col-md-12 password">
                                         <label>密碼:</label>
-                                        <input type="text" name="store_pwd" placeholder="在這輸入密碼">
+                                        <input type="password" name="store_pwd" placeholder="在這輸入密碼">
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div class="chqbox">

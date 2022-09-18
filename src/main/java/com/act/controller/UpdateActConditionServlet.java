@@ -34,7 +34,9 @@ public class UpdateActConditionServlet extends HttpServlet {
 	      System.out.println("Fetch Request -> UpdateActConditionServlet");
 	     
 	      HttpSession session = req.getSession();
-	      Integer memNo = (Integer) session.getAttribute("memNo1");
+	      Integer memNo1 = (Integer) session.getAttribute("memNo1");
+	      Integer memNo2 = (Integer) session.getAttribute("memNo2");
+	      Integer memNo3 = (Integer) session.getAttribute("memNo3");
 	      
 	      ActService actService = new ActService();
 	      BufferedReader br = req.getReader();
@@ -46,7 +48,7 @@ public class UpdateActConditionServlet extends HttpServlet {
 	      gson = gsonBuilder.setPrettyPrinting().create();
 	      ActVO actVO = gson.fromJson(br, ActVO.class);
 	     
-	      actVO.setMen_no(memNo);
+	      actVO.setMen_no(memNo1);
 	      actService.updateAct(actVO);
 	      
 	      // 設定活動編號參數，給UpdateActImageServlet使用

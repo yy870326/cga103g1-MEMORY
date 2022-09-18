@@ -46,8 +46,10 @@ public class CreateActServlet extends HttpServlet {
         System.out.println("Fetch Request -> CreateActServelt");
         
         HttpSession session = req.getSession();
-        Integer memNo = (Integer) session.getAttribute("memNo1");
-      
+        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+        Integer memNo3 = (Integer) session.getAttribute("memNo3");
+
         ActService actService = new ActService();
 		BufferedReader br = req.getReader();
 		
@@ -58,7 +60,7 @@ public class CreateActServlet extends HttpServlet {
         gson = gsonBuilder.setPrettyPrinting().create();
         ActVO actVO = gson.fromJson(br, ActVO.class);
         
-        actVO.setMen_no(memNo);
+        actVO.setMen_no(memNo2);
         actVO.setAct_status(0);
         actVO.setAct_rate_sum(0);
         actVO.setEval_sum(0);
@@ -86,7 +88,7 @@ public class CreateActServlet extends HttpServlet {
 	    LocalDateTime currentTime = LocalDateTime.now();
 	    ActParticipantVO actParticipantVO = new ActParticipantVO();
 	    actParticipantVO.setEnroll_status(0);
-	    actParticipantService.addActParticipant(actNo, memNo, currentTime);
+	    actParticipantService.addActParticipant(actNo, memNo2, currentTime);
         
 	    // 回傳至Browser 確認創建成功及資料
 	    String json = gson.toJson(actVO);

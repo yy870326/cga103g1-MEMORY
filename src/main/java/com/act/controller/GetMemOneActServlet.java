@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,9 @@ public class GetMemOneActServlet extends HttpServlet {
         System.out.println("MemPage Fetch Request -> GetMemOneActServlet"); 
         
         HttpSession actSession = req.getSession();       
-        Integer memNo = (Integer) actSession.getAttribute("memNo1");
+        Integer memNo1 = (Integer) actSession.getAttribute("memNo1");
+        Integer memNo2 = (Integer) actSession.getAttribute("memNo2");
+        Integer memNo3 = (Integer) actSession.getAttribute("memNo3");
 		ActService actService = new ActService();
 		
 		BufferedReader br = req.getReader();
@@ -43,15 +46,31 @@ public class GetMemOneActServlet extends HttpServlet {
 		gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		ActVO actfromFront = gson.fromJson(br, ActVO.class);
-		ActVO actVO = 
-				actService.getAll()
-				.stream()
-				.filter(act -> act.getAct_no() == actfromFront.getAct_no())
-				.filter(act -> act.getMen_no() == memNo)
-				.findFirst().get();
-		String json = gson.toJson(actVO);
-	    PrintWriter pw = res.getWriter();
-	    pw.print(json);
+		ActVO actVO = new ActVO();
+		Stream<ActVO> actStream = actService.getAll().stream();
+		if(actStream.anyMatch(act -> act.getAct_no() == actfromFront.getAct_no())) {
+			Boolean isActVoExist = actService.getAll().stream()
+					.filter(act -> act.getAct_no() == actfromFront.getAct_no())
+					.anyMatch(act -> act.getMen_no() == memNo1);
+			System.out.println("isActVoExist: " + isActVoExist);
+			
+			if (isActVoExist) {
+				actVO = actService.getAll().stream()
+						.filter(act -> act.getAct_no() == actfromFront.getAct_no())
+						.filter(act -> act.getMen_no() == memNo1)
+						.findFirst().get();
+				String JsonString = gson.toJson(actVO);
+				res.getWriter().write(JsonString);
+			}else {
+				String JsonString = gson.toJson("該活動非您主辦，請查詢編號再次輸入");
+				res.getWriter().write(JsonString);
+			}
+		}else {
+			String JsonString = gson.toJson("查無此揪團活動編號");
+			res.getWriter().write(JsonString);
+		}
+		
+		
   
 	}
 

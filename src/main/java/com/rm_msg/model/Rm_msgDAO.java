@@ -247,7 +247,7 @@ public class Rm_msgDAO implements I_Rm_msgDAO{
 	@Override
 	public List<Rm_msgVO> getAll() {
 		List<Rm_msgVO> list = new ArrayList<Rm_msgVO>();
-		Rm_msgVO rm = new Rm_msgVO();
+		Rm_msgVO rm = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -256,7 +256,9 @@ public class Rm_msgDAO implements I_Rm_msgDAO{
 		try{	con = ds.getConnection();
 				 ps = con.prepareStatement(sql);
 				 rs = ps.executeQuery();
+				 
 			while(rs.next()) {
+				rm = new Rm_msgVO();
 				rm.setRm_msg_no(rs.getInt("rm_msg_no"));
 				rm.setEmp_no(rs.getInt("emp_no"));
 				rm.setMem_no(rs.getInt("mem_no"));

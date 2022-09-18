@@ -36,10 +36,11 @@ public class GetOwnActServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         System.out.println("Fetch Request -> GetOwnActServlet");
         HttpSession session = req.getSession();
-        Integer memNo = (Integer) session.getAttribute("memNo1");
-        
+        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+
 		ActService actService = new ActService();
-		List<ActVO> actList = actService.getOwnActParti(memNo);
+		List<ActVO> actList = actService.getOwnActParti(memNo1);
 		actList.forEach(System.out::println);
 		
         GsonBuilder gsonBuilder = new GsonBuilder();  
@@ -47,8 +48,13 @@ public class GetOwnActServlet extends HttpServlet {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
 		// Java物件 轉成 JSON 字串
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
-		String JsonString = gson.toJson(actList);
-		res.getWriter().write(JsonString);
+		if(actList.size() != 0) {
+			String JsonString = gson.toJson(actList);
+			res.getWriter().write(JsonString);			
+		}else {
+			String JsonString = gson.toJson("目前您無參與任何活動");
+			res.getWriter().write(JsonString);
+		}
 	}
 
 }

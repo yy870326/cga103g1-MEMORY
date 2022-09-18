@@ -3,43 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.store.model.*"%>
-
 <%@ page import="com.rm_msg.model.*"%>
 <%@ page import="java.time.LocalDate"%>
 
 
+<%
+// 取得自己的store所有資訊存放至pageContext
+ Rm_msgService rmMsgSvc = new Rm_msgService();
 
+List<Rm_msgVO> list = rmMsgSvc.getAll();
+
+pageContext.setAttribute("list", list);
+%>
 <!DOCTYPE html>
 <html>
 
-
-<!--  
-
--->
-<% 
-
-
- String store_acc =(String) session.getAttribute("store_acc");
-
- StoreService storeSvc = new StoreService();
- 
- Rm_msgService rmMsgSvc = new Rm_msgService();
-
- StoreVO storeVO = storeSvc.getOneStoreByAcc(store_acc);
- 
- Integer store_no = storeVO.getStore_no();
- 
- List<Rm_msgVO> list = rmMsgSvc.getAllMsgByStoreNumber(store_no);
- 
- pageContext.setAttribute("list", list);
- 
- 
-	
-%>
 	<head>
-
-
+	<!-- 基本CSS檔案 -->
+<%@ include file="/backend/commonCSS.file"%>
 
 <style>
 table.fold-table tbody tr.view {
@@ -168,55 +149,85 @@ div.main-content {
 
 
 <!-- CSS -->
-    <%@ include file="/frontend/commonCSS.file" %>
 	<%@ include file="/backend/commonCSS.file"%>
-	<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
-	<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
 	
 	</head>
 
 <body>
+	
+		<%@ include file="/backend/loading.file" %> <!-- loading -->
+		<%@ include file="/backend/header.file" %> <!-- Header -->
+		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
 
+	<div class="main-content">
 	
-	<%@ include file="/frontend/header.file"%>
-	<!-- Header -->
-	<%@ include file="/frontend/store/storeSidebar.file"%>
-	<!-- sidebar -->
+		<div class="d-flex mb-4 align-items-center flex-wrap">
 
-	<div class=" col-lg-9 card card-body table-responsive">
-	
-	
+			<div class="card-tabs mt-3 mt-sm-0">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">所有廠商
+							</a></li>
+					<li class="nav-item">
+						<!-- Search -->
+						<form METHOD="post" action="<%=request.getContextPath()%>/RmMsgServlet">
+							<div class="input-group search-area" style="margin-left:75%;">
+								<input class="form-control" type="text" name="store_no"
+									placeholder="請輸入廠商編號" />
+								<input type="submit"
+									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
+								<input type="hidden" name="action" value="getOneMsgByStore">
+							</div>
+						</form>
+					</li>		
+					
+				</ul>
+
+			</div>
+		</div>
+
 		<table class="table fold-table">
 			<thead>
 				<tr>
 					<th>訊息編號</th>
-					<th>處理人員</th>
+					<th>員工編號</th>
 					<th>會員編號</th>
 					<th>廠商編號</th>
 					<th>投訴日期</th>
+					<th>處理完成日期</th>
+					<th>處理狀況</th>
 					
 				</tr>
 			</thead>
 			<tbody>
-				
-				<c:forEach var="rm_msgVO" items="${list}">
+				<c:forEach var="Rm_msgVO" items="${list}">
 					<tr class="view">
-						<td>${rm_msgVO.rm_msg_no}</td>
-						<td>${rm_msgVO.emp_no}</td>
-						<td>${rm_msgVO.mem_no}</td>
-						<td>${rm_msgVO.store_no}</td>
-						<td>${rm_msgVO.rm_msg_date}</td>
-
+						<td>${Rm_msgVO.rm_msg_no}</td>
+						<td>${Rm_msgVO.emp_no}</td>
+						<td>${Rm_msgVO.mem_no}</td>
+						<td>${Rm_msgVO.store_no}</td>
+						<td>${Rm_msgVO.rm_msg_date}</td>
+						<td>${Rm_msgVO.rm_msg_date}</td>
+						<td><c:choose>
+								<c:when test="${Rm_msgVO.rm_msg_status==0}">
+									<i class='bx bxs-circle' style='color: red'></i>未處理</c:when>
+								<c:when test="${Rm_msgVO.rm_msg_status==1}">
+									<i class='bx bxs-circle' style='color: green'></i>通過</c:when>
+								<c:when test="${Rm_msgVO.rm_msg_status==2}">
+									<i class='bx bxs-circle' style='color: #aaa'></i>不通過</c:when>
+							</c:choose>
+						</td>
+						
 					</tr>
 					<tr class="fold">
 						<td colspan="8">
 							<div class="row d-flex justify-content-around my-2">
-								<div class="col-4 order-data">
-									<div>訊息內容：${rm_msgVO.rm_msg_reason}</div>
+								<div class="col-4 order-data">	
+									<div>投訴內容:${Rm_msgVO.rm_msg_reason}</div>
 								</div>
+								
 							</div>
+							
 						</td>
 					</tr>
 				</c:forEach>
@@ -226,8 +237,7 @@ div.main-content {
 
 	
 	
-	<%@ include file="/frontend/footer.file"%>
-	<%@ include file="/frontend/commonJS.file"%>
+	<!-- 放置基本JS檔案 -->
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
 		$(document).ready(

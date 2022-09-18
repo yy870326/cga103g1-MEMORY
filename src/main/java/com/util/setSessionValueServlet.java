@@ -28,18 +28,18 @@ public class setSessionValueServlet extends HttpServlet {
         session.setAttribute("memNo1", memNo1);
         session.setAttribute("memNo2", memNo2);
         session.setAttribute("memNo3", memNo3);
-        session.setAttribute("memNo1Acc", "Q123434565@gmail.com");
-        session.setAttribute("memNo2Acc", "A138775451@gmail.com");
-        session.setAttribute("memNo3Acc", "D129242193@gmail.com");
-        String memNo1Acc = (String) session.getAttribute("memNo1Acc");
-        String memNo2Acc = (String) session.getAttribute("memNo2Acc");
-        String memNo3Acc = (String) session.getAttribute("memNo3Acc");
-        List<String> memNoList = new ArrayList<String>();
-        memNoList.add(memNo1Acc);
-        memNoList.add(memNo2Acc);
-        memNoList.add(memNo3Acc);
+        session.setAttribute("memNoEmail1", "Q123434565@gmail.com");
+        session.setAttribute("memNoEmail2", "A138775451@gmail.com");
+        session.setAttribute("memNoEmail3", "D129242193@gmail.com");
+        String memNoEmail1 = (String) session.getAttribute("memNoEmail1");
+        String memNoEmail2 = (String) session.getAttribute("memNoEmail2");
+        String memNoEmail3 = (String) session.getAttribute("memNoEmail3");
+        List<String> memNoEmaiList = new ArrayList<String>();
+        memNoEmaiList.add(memNoEmail1);
+        memNoEmaiList.add(memNoEmail2);
+        memNoEmaiList.add(memNoEmail3);
         Gson gson = new Gson();
-        String actNoJson = gson.toJson(memNoList);
+        String actNoJson = gson.toJson(memNoEmaiList);
         res.getWriter().write(actNoJson);
 
 	}

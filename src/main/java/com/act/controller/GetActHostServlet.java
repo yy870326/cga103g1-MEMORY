@@ -33,18 +33,25 @@ public class GetActHostServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         System.out.println("Fetch Request -> GetActHostServlet");
         HttpSession session = req.getSession();
-        Integer memNo = (Integer) session.getAttribute("memNo1");
-        
+        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+        Integer memNo3 = (Integer) session.getAttribute("memNo3");
+
         
         ActService actService = new ActService();
-		List<ActVO> actList = actService.getHostAct(memNo);		
+		List<ActVO> actList = actService.getHostAct(memNo1);		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
 		// Java物件 轉成 JSON 字串
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
-		String personJsonString = gson.toJson(actList);
-		res.getWriter().write(personJsonString);
+		if(actList.size() != 0) {			
+			String personJsonString = gson.toJson(actList);
+			res.getWriter().write(personJsonString);
+		}else {
+			String personJsonString = gson.toJson("您目前無任何主辦活動");
+			res.getWriter().write(personJsonString);
+		}
 	}
 
 }

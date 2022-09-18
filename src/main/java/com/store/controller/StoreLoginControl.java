@@ -52,7 +52,20 @@ public class StoreLoginControl extends HttpServlet {
 					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/store/storeLogin.jsp");
 					failureView.forward(req, res);
 				}
-			}else {
+			} else if(storevo.getAcc_status() == 0) {
+				errorMsgs.put("storevo", "帳號未啟用");
+				if(!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/store/storeLogin.jsp");
+					failureView.forward(req, res);
+				}
+			}else if(storevo.getAcc_status() == 2) {
+				errorMsgs.put("storevo", "帳號停權");
+				if(!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/store/storeLogin.jsp");
+					failureView.forward(req, res);
+				}
+			}
+			else {
 				
 				session.setAttribute("store_acc", store_acc);
 				session.setAttribute("storevo", storevo);
