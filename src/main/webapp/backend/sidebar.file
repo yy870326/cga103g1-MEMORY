@@ -36,7 +36,7 @@
 						<li><a href="<%=request.getContextPath()%>/backend/xxx/todayWorkList.jsp">廠商列表</a></li>
 						<li><a href="<%=request.getContextPath()%>/backend/XXX/XXX.jsp">審核廠商</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">廠商檢舉管理</a></li>
-						<li><a href="<%=request.getContextPath()%>/backend/listAllOrder.jsp">訂房訂單查詢</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/store/listAllOrder.jsp">訂房訂單查詢</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">廠商通知訊息</a></li>
 					</ul>
 				</li>

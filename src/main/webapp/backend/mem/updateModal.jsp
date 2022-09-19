@@ -24,7 +24,7 @@
 				</c:if> -->
 				
 				<form id="updateMemForm${param.memNo}" method="post"
-					action="<%=request.getContextPath()%>/Mem">
+					action="<%=request.getContextPath()%>/mem.do">
 
 					<label id="memNameLabel" for="memName">姓名</label> <input
 						class="form-control form-control-lg" type="text"
@@ -53,7 +53,7 @@
 						id="updateMemMobile" name="memMobile" value="${param.memMobile}"
 						autofocus> <input type="hidden" name="memNo"
 						value="${param.memNo}"> <input type="hidden" name="action"
-						value="updateMem">
+						value="updateMemB">
 				</form>
 
 			</div>
