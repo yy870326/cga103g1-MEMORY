@@ -89,6 +89,9 @@ td, div {
 .tktImgWidth {
 	width: 100px;
 }
+.mt-20 {
+	margin-top: 20px;
+}
 
 
 </style>
@@ -185,9 +188,8 @@ td, div {
 								
 
 									<!-- 修改 -->
-									<form method="post" action="<%=request.getContextPath()%>/tkt/updateTkt.do" class="mr-10">
-										<button type="submit" class="fa fa-pencil-alt btn" value="">
-										</button>
+									<form method="post" action="<%=request.getContextPath()%>/tkt/updateTkt.do" class="mr-10 mt-20">
+										<button type="submit" class="fa fa-pencil-alt btn" value=""></button>
 										<input type="hidden" name="tkt_no" value="${tktVO.tkt_no}">
 										<input type="hidden" name="action" value="getOneUpdate">
 									</form>
@@ -195,7 +197,7 @@ td, div {
 									
 									
 
-									<a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneForShowImages" class="btn goToAddImg">
+									<a href="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=getOneToUpload" class="btn goToAddImg mt-20">
 										<i class="fa fa-image"></i>
 									</a>
 
