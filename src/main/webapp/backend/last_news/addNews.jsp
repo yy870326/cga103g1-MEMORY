@@ -27,8 +27,6 @@ LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
 
 
 	<div class="main-content">
-		<hr>
-		<br> <br>
 		<h3>新增最新消息</h3>
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
@@ -44,17 +42,19 @@ LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
 				<thead>
 					<tr>
 
-						<th>文字</th>
-						<th>圖片</th>
-						<th>#</th>
+						<th><p>文字</p></th>
+						<th><p style="margin-left: 10px">圖片</p></th>
+						<th><p></p></th>
+						<th><p style="margin-left: 10px"></p></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><textarea name="news" rows="3"></textarea></td>
-						<td><input type="file" name="news_img"	 accept="image/*" /></td>
+						<td><textarea name="news" rows="3" style="width: 200px"></textarea></td>
+						<td><input type="file" name="news_img"	id="news_img" accept="image/*" style="width:200px ;margin-left: 10px" /> </td>
+						<td><img id="demo" style="margin-left: 10px;width:100px"></td>
 						<td><input type="hidden" name="action" value="insert" /></td>
-						<td><input type="submit" value="送出新增" /></td>
+						<td><input type="submit" value="送出新增" style="margin-left: 10px"/></td>
 
 					</tr>
 				</tbody>
@@ -69,7 +69,16 @@ LastNewsVO lastNewsVO = (LastNewsVO) request.getAttribute("lastNewsVO");
 	<!-- 基本JS檔案 -->
 	<script>
 		// 			● 可在這更改這一頁header的標題，不寫也可以，但請變成空字串 
-		$("#pagename").text("MEMORY 後台管理");
+		$("#pagename").text("最新消息管理");
+		
+		$('#news_img').change(function() {
+			  var file = $('#news_img')[0].files[0];
+			  var reader = new FileReader;
+			  reader.onload = function(e) {
+			    $('#demo').attr('src', e.target.result);
+			  };
+			  reader.readAsDataURL(file);
+			});
 	</script>
 </body>
 </html>

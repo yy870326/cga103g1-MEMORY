@@ -23,8 +23,6 @@
 	<!-- sidebar -->
 
 	<div class="main-content">
-		<hr>
-		<br> <br>
 		<h3>新增系統訊息</h3>
 		
 		<%-- 錯誤表列 --%>
@@ -42,18 +40,20 @@
 				<thead>
 					<tr>
 
-						<th>系統訊息</th>
-						<th>圖片</th>
-						<th>員工編號</th>
+						<th><p>系統訊息</p></th>
+						<th><p style="margin-left: 10px">圖片</p></th>
+						<th></th>
+						<th><p style="margin-left: 10px">員工編號</p></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><textarea name="msg" rows="3" cols="30" ><%= (SNMVO==null)? "": SNMVO.getMsg()%></textarea></td>
-						<td><input type="file" name="msg_img"	 accept="image/*" /></td>
-						<td><input type="text" name="emp_no" value="<%= (SNMVO==null)? "": SNMVO.getEmp_no()%>" /></td>
+						<td><textarea name="msg" rows="5" cols="25" ><%= (SNMVO==null)? "": SNMVO.getMsg()%></textarea></td>
+						<td><input type="file" name="msg_img" id="msg_img" accept="image/*" style="width:150px;margin-left: 10px"/></td>
+						<td><img id="demo" style="width: 100px"></td>
+						<td><input type="text" name="emp_no" style="width: 70px;margin-left: 10px"/></td>
 						<td><input type="hidden" name="action" value="insert" /></td>
-						<td><input type="submit" value="送出新增" /></td>
+						<td><input type="submit" value="送出新增" style="margin-left: 10px" /></td>
 
 					</tr>
 				</tbody>
@@ -69,6 +69,15 @@
 	<script>
 		// 			● 可在這更改這一頁header的標題，不寫也可以，但請變成空字串 
 		$("#pagename").text("MEMORY 後台管理");
+		
+		$('#msg_img').change(function() {
+			  var file = $('#msg_img')[0].files[0];
+			  var reader = new FileReader;
+			  reader.onload = function(e) {
+			    $('#demo').attr('src', e.target.result);
+			  };
+			  reader.readAsDataURL(file);
+			});
 	</script>
 </body>
 </html>

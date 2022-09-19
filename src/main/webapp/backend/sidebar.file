@@ -86,8 +86,14 @@
 						</li>
 						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">最新消息管理</a>
 							<ul aria-expanded="false">
-								<li><a href="<%=request.getContextPath()%>/activity/Activity?action=beginActAdd">新增消息</a></li>
-								<li><a href="<%=request.getContextPath()%>/activity/Activity?action=getAll">消息列表</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/last_news/lastNews.jsp">消息列表</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/last_news/addNews.jsp">新增消息</a></li>
+							</ul>
+						</li>
+						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">系統消息管理</a>
+							<ul aria-expanded="false">
+								<li><a href="<%=request.getContextPath()%>/backend/system_notification_message/listSNM.jsp">系統消息列表</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/system_notification_message/addSNM.jsp">新增系統消息</a></li>
 							</ul>
 						</li>
 					</ul>
