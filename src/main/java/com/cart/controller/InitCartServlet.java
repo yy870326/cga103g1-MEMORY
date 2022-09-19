@@ -47,16 +47,16 @@ public class InitCartServlet extends HttpServlet {
 			Cookie userCookie = cookies[i];
 
 			if ("shoppingCart".equals(userCookie.getName())) {
-				// 讓每的頁面可以透過sessionId呼叫CartService的方法
+				// 讓每個頁面可以透過 sessionId 呼叫 CartService 的方法
 				session.setAttribute("sessionId", userCookie.getValue());
 
-				RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp"); // 看能不能改成動態
-				rd.forward(req, res);
+//				RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp"); // 看能不能改成動態
+//				rd.forward(req, res);
 				return;
 			}
 
-			// 若未找到shoppingCart，新增cookie，並將session作為key存入Redis
-			// cookie的key:shoppingCart value:sessionid
+			// 若未找到 shoppingCart，新增 cookie，並將 session 作為 key 存入 Redis
+			// cookie 的 key:shoppingCart value:sessionid
 			Cookie shoppingCart = new Cookie("shoppingCart", session.getId());
 			shoppingCart.setMaxAge(3 * 24 * 60 * 60); // 存活3天，以秒為單位
 			shoppingCart.setHttpOnly(true);
@@ -66,8 +66,8 @@ public class InitCartServlet extends HttpServlet {
 //				System.out.println(shoppingCart);
 
 //			req.setAttribute("cartItems", cartItems);
-			RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
-			rd.forward(req, res);
+//			RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
+//			rd.forward(req, res);
 
 
 		}
