@@ -13,6 +13,13 @@
 TktService tktSvc = new TktService();
 List<TktVO> list = tktSvc.getAllByStatus();
 pageContext.setAttribute("list", list);
+
+
+
+/* Integer cartItemNum = (Integer)request.getAttribute("cartItemNum");
+System.out.println(cartItemNum);
+pageContext.setAttribute("cartItemNum", cartItemNum); */
+
 %>
 
 
@@ -61,6 +68,25 @@ pageContext.setAttribute("list", list);
 	.tktImgHeight {
 		max-height: 220px;
 	}
+	
+	#cartNum {
+    font-size: 8px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 2px;
+    vertical-align: top;
+    margin-left: -15px;
+}
+.badgeNum {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  border-radius: 100%;
+}
+
+.label-warning[href],
+.badgeNum-warning[href] {
+  background-color: #c67605;
+}
 	
 	</style>
 
@@ -229,6 +255,7 @@ pageContext.setAttribute("list", list);
       
  	  <a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn cartBtn">	
 		<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
+		<!-- <span class="badgeNum badgeNum-warning" id="cartNum">0</span> -->
       </a>
 
     </div>
@@ -254,7 +281,27 @@ pageContext.setAttribute("list", list);
 	const addItem = document.querySelectorAll('.addItem');
  	const tkt_no = document.querySelectorAll('.tkt_no');
  	const count = document.querySelectorAll('.count');
+ 	/* const cartNum = document.querySelector('#cartNum');
+ 	const cartQty = document.querySelector('#cartNum').innerText; */
+
  	
+ 	
+ 	/* axios({
+	 		"method": "get", 
+	 		"url": "/CGA103G1/cart/getCartNum.do"
+	 		"data": {
+	 			"cartItemNum": cartItemNum
+	 		} 
+		}).then(function (response) {
+			console.log(response.data);
+	 	    console.log(response.status);
+	 	    console.log(response.headers);
+	 	    console.log(response.config);
+	 	    console.log(cartItemNum);
+		}).catch(function (error) {
+	    	console.log(error);
+		}); */
+		
  	
  	/* sweetalert btn setting*/
 	const swalWithBootstrapButtons = Swal.mixin({
@@ -264,6 +311,8 @@ pageContext.setAttribute("list", list);
        },
        buttonsStyling: false
     })
+    
+    
  	
  	for(let i = 0; i < ${list.size()}; i++) {
  		addItem[i].addEventListener('click', () => {
@@ -284,11 +333,27 @@ pageContext.setAttribute("list", list);
   					showConfirmButton: false,
   					timer: 1500
 				})
+				// 加入成功改變數量到 cart icon
+				/* cartNum.innerHTML = parseInt(cartQty) + 1; */
  	        }).catch(function (error) {
  	            console.log(error);
  	        });
  	 	});
  	}
+ 	
+		
+		
+ 	// 取得購物車列表總數
+ 	/* axios({
+ 	 		"method": "post", 
+ 	 		"url": "/CGA103G1/cart/getCart.do"
+ 		}).then(function (response) {
+ 	    	console.log(response);
+ 		}).catch(function (error) {
+ 	    	console.log(error);
+ 		}); */
+ 	
+ 	
  	
  	// 載入商品單一頁面或商品列表頁就自動初始化
  	
@@ -301,6 +366,7 @@ pageContext.setAttribute("list", list);
  		}).catch(function (error) {
  	    	console.log(error);
  		});
+ 		
  	}
  	// 當畫面載入時初始化
  	window.onload = init();
