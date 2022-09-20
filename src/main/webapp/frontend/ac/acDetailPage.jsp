@@ -44,7 +44,7 @@
 	          </div>
           
 	          <div class="author-box">
-	            <div class="author-content"><a href="#" class="author-name">作者姓名(會員姓名)</a></div>
+	            <div class="author-content"><a href="#" class="author-name"></a></div>
 	          </div>
 	        
 	        </div>
@@ -86,12 +86,7 @@
 		}
 						
 	</script>
-	
-	
-	
-	
-	
-	
+
 	<%-- footer --%>
 	<%@ include file="/frontend/footer.file" %>
   	

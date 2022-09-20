@@ -23,21 +23,14 @@ public class GetActHostServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
   
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        System.out.println("Fetch Request -> GetActHostServlet");
         HttpSession session = req.getSession();
         Integer memNo1 = (Integer) session.getAttribute("memNo1");
         Integer memNo2 = (Integer) session.getAttribute("memNo2");
         Integer memNo3 = (Integer) session.getAttribute("memNo3");
-
-        
         ActService actService = new ActService();
 		List<ActVO> actList = actService.getHostAct(memNo1);		
         GsonBuilder gsonBuilder = new GsonBuilder();  

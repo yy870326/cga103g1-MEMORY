@@ -31,11 +31,15 @@ let image = document.querySelector("#image");
 function validate(){
     let flag = true;
     if(actTitle.value.length === 0 || actTitle.value === "" || actTitle.value === null){
-        title.textContent = "活動名稱有誤，不得空白";
+        title.textContent = "活動名稱有誤或不得空白";
+        flag = false;
+    }
+    if(actContent.value.length === 0 || actContent.value === "" || actContent.value === null){
+        actDescribe.textContent = "活動內容有誤或不得空白";
         flag = false;
     }
     if(address.value.length === 0 || address.value === "" || address.value === null ){
-        addr.textContent = "活動地址有誤，不得空白";
+        addr.textContent = "活動地址有誤或不得空白";
         flag = false;
     }
     if(enrollStart.value === null || enrollEnd.value === null 

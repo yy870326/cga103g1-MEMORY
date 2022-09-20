@@ -33,7 +33,6 @@ public class UploadAcImageServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		Integer acNo = (Integer) session.getAttribute("afterCreateAcNo");
-		System.out.println("acNo：" + acNo);
 		
 	    AcPicVO acPicVO = new AcPicVO();
 	    acPicVO.setAc_pic_img(image);

@@ -32,18 +32,12 @@ import net.bytebuddy.agent.builder.AgentBuilder.InitializationStrategy.Dispatche
 public class CreateActServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {		
 	    req.setCharacterEncoding("UTF-8");
         res.setContentType("application/json, text/html; charset=UTF-8");
 	    res.setCharacterEncoding("UTF-8");
-        System.out.println("Fetch Request -> CreateActServelt");
         
         HttpSession session = req.getSession();
         Integer memNo1 = (Integer) session.getAttribute("memNo1");
@@ -60,26 +54,14 @@ public class CreateActServlet extends HttpServlet {
         gson = gsonBuilder.setPrettyPrinting().create();
         ActVO actVO = gson.fromJson(br, ActVO.class);
         
-        actVO.setMen_no(memNo2);
+        actVO.setMen_no(memNo1);
         actVO.setAct_status(0);
         actVO.setAct_rate_sum(0);
         actVO.setEval_sum(0);
         actVO.setAct_current_count(1);
-        System.out.println("act_title: " + actVO.getAct_title());
-        System.out.println("act_content: " + actVO.getAct_content());
-        System.out.println("act_Type: " + actVO.getAct_type_no());
-        System.out.println("act_loc: " + actVO.getAct_loc());
-        System.out.println("act_pl: " + actVO.getAct_pl());
-        System.out.println("act_enroll_begin: " + actVO.getAct_enroll_begin());
-        System.out.println("act_enroll_end: " + actVO.getAct_enroll_end());
-        System.out.println("act_start: " + actVO.getAct_start());
-        System.out.println("act_end: " + actVO.getAct_end());
-        System.out.println("act_min_count: " + actVO.getAct_min_count());
-        System.out.println("act_max_count: " + actVO.getAct_max_count());
-        
+
         // 創建活動，回傳MySQL AI 編號
         Integer actNo = actService.createAct(actVO);
-        System.out.println("活動編號AI：" + actNo);
         // 設定活動編號參數，給UploadActImageServlet使用
         session.setAttribute("afterInsertActNO", actNo);
         

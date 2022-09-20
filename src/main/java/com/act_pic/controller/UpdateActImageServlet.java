@@ -25,9 +25,7 @@ public class UpdateActImageServlet extends HttpServlet {
         res.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    res.setCharacterEncoding("UTF-8");	    
       
-	    System.out.println("Fetch Request -> UpdateActImageServlet");  
         HttpSession session = req.getSession();
-        System.out.println("UpdateActImageServlet : " + (Integer)session.getAttribute("afterUpdateActNo"));
         
         InputStream is = req.getInputStream();
 		byte[] image = org.apache.commons.io.IOUtils.toByteArray(is);

@@ -91,17 +91,7 @@ public class ActService {
 	
 	// 取得所有揪團活動的所有資訊
 	public List<ActVO> getAll() {
-//		return dao.getAll();
-//		ActRpService actRpService = new ActRpService();
-//        List<ActRpVO> actNoRpList = actRpService.getall();
-//        ActService actService = new ActService();
-//        List<ActVO> actList = actService.getAll();
-//        for (int i = 0; i < actNoRpList.size(); i++) {
-//			if (actList.get(i).getAct_no() == actNoRpList.get(i).getAct_no()) {
-//				actList.remove(i);
-//			}
-//		}
-//        
+		
         List<ActVO> actList =  dao.getAll()
 		.stream()
 		.filter(act -> act.getAct_status() != 1)

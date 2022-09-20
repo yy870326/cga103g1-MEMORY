@@ -27,7 +27,6 @@ public class GetOneAcImageServlet extends HttpServlet {
 		 if("acImgList".equals(action)) {
 				AcPicService acPicService = new AcPicService();
 				Integer ac_no = new Integer(req.getParameter("acNo").trim());
-				System.out.println(ac_no);
 				List<AcPicVO> list = acPicService.getOneByAcNo(ac_no);
 				byte[] imgArray = list.stream().findFirst().get().getAc_pic_img();
 				ServletOutputStream out = resp.getOutputStream();

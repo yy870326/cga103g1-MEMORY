@@ -31,7 +31,6 @@ public class UpdateActConditionServlet extends HttpServlet {
 		  req.setCharacterEncoding("UTF-8");
 	      res.setContentType("application/json, text/html; charset=UTF-8");
 		  res.setCharacterEncoding("UTF-8");
-	      System.out.println("Fetch Request -> UpdateActConditionServlet");
 	     
 	      HttpSession session = req.getSession();
 	      Integer memNo1 = (Integer) session.getAttribute("memNo1");
