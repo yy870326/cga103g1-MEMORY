@@ -2,8 +2,12 @@ package com.tkt_order2.model;
 
 import java.sql.Date;
 
+import com.coup.model.CoupService;
+import com.coup.model.CoupVO;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
+import com.mem_coup.model.MemCoupService;
+import com.mem_coup.model.MemCoupVO;
 import com.tkt.model.TktService;
 import com.tkt.model.TktVO;
 
@@ -93,5 +97,14 @@ public class TktOrder2VO {
 		MemVO memVO = memSrv.getOneMem(mem_no);
 		return memVO;
 	}
+	
+
+	// join MemCoupVO
+	public MemCoupVO getMemCoupVO() {
+		MemCoupService memCoupSrv = new MemCoupService();
+		MemCoupVO memCoupVO = memCoupSrv.getOneMemCoup(mem_coup_no);
+		return memCoupVO;
+	}
+	
 
 }

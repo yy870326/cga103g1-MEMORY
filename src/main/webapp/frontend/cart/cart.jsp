@@ -25,6 +25,10 @@
 			height: 25px;
 			text-align: center;
 		}
+		
+		.tktImgWidth {
+			width: 80px;
+		}
 	</style>
 	
 </head>
@@ -68,6 +72,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 										<input type="checkbox" id="checkboxAll">
 									</th>
 									<th scope="col">票券名稱</th>
+									<th scope="col"></th>
 									<th scope="col">單價</th>
 									<th scope="col">數量</th>
 									<th scope="col">小計</th>
@@ -79,6 +84,9 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 								<tr class="tr">
 									<td>
 										<input type="checkbox" name="tkt_no" value="${cartItemVO.tkt_no}" class="checkbox">
+									</td>
+									<td>
+										<img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${cartItemVO.tkt_no}&action=showFirstImages" class="tktImgWidth">
 									</td>
 									<td>${cartItemVO.tkt_name}</td>
 									<td>NT$ <span class="onePrice">${cartItemVO.price}</span></td>
@@ -157,12 +165,14 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 	  // 全選 checkbox
 	  checkboxAll.addEventListener('change', () => {
 		  checkbox[i].checked = true;
+		  this.checked = !this.checked;
 	  });
 	  
  	 // 被選的 checkbox
  	 checkbox[i].addEventListener('change', () => {
  		 /* console.log(checkbox[i]); */
- 		checkbox[i].checked = true;
+ 		/* checkbox[i].checked = true; */
+ 		this.checked = !this.checked;
 	  });
 	  
 	  

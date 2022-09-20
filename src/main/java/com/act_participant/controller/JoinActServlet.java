@@ -18,7 +18,7 @@ import com.act_participant.model.ActParticipantVO;
 import com.google.gson.Gson;
 import com.mem.model.MemService;
 
-@WebServlet("/joinAct")
+@WebServlet("/frontend/act/joinAct")
 public class JoinActServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

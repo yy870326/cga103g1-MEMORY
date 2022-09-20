@@ -27,11 +27,9 @@ pageContext.setAttribute("lastNews", lastNews);
 	<div class="main-content">
 
 
-		<hr>
-		<br> <br>
 
 		<h3>
-			最新消息管理 <a
+			消息列表 <a
 				href="<%=request.getContextPath()%>/backend/last_news/addNews.jsp">新增</a>
 		</h3>
 		<table class="table" id="example4">
@@ -74,7 +72,7 @@ pageContext.setAttribute("lastNews", lastNews);
 	<%@ include file="/backend/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script>
-	$("#pagename").text("MEMORY 後台管理");
+	$("#pagename").text("最新消息管理");
 // 		$(document).ready(
 // 				function() {
 // 					$(document).ready(function() {

@@ -3,7 +3,7 @@ const joinBtn = document.getElementById('joinBtn');
 
 joinBtn.addEventListener('click', function(){
     
-    fetch('/CGA103G1/joinAct',{
+    fetch('joinAct',{
         method:"POST",
         headers:{
         'Accept': 'application/json, text/plain, */*',

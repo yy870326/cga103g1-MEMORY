@@ -57,7 +57,7 @@ public class UploadTktImg extends HttpServlet {
 //			RequestDispatcher successView = req.getRequestDispatcher("/backend/tkt/addTktImg.jsp");
 //			successView.forward(req, res);
 //		}
-		// showFirstImages
+		// 在 listAllTkt、 tktShopList、tktDetail 用 queryString 取得照片
 		if ("showFirstImages".equals(action)) {
 			// ------------------------- getParameter ----------------
 			Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
@@ -76,8 +76,8 @@ public class UploadTktImg extends HttpServlet {
 			return;
 		}
 
-		// getOneForShowImages // 前往新增票券圖片頁面
-		if ("getOneForShowImages".equals(action)) {
+		// getOneToUpload // 前往新增票券圖片頁面
+		if ("getOneToUpload".equals(action)) {
 			// ------------------------- getParameter ----------------
 			Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
 
@@ -93,29 +93,25 @@ public class UploadTktImg extends HttpServlet {
 			successView.forward(req, res);
 		}
 
-//		if ("delete".equals(action)) {
-//			
-//			
-//		}
 
 		// 顯示單張圖片
-		if ("showImages".equals(action)) {
-			// ------------------------- getParameter ----------------
-			Integer tkt_img_no = Integer.valueOf(req.getParameter("tkt_img_no"));
+//		if ("showImages".equals(action)) {
+//			// ------------------------- getParameter ----------------
+//			Integer tkt_img_no = Integer.valueOf(req.getParameter("tkt_img_no"));
+//
+//			// ------------------------- 永續層 ----------------
+//			Tktimg2Service tktimg2Srv = new Tktimg2Service();
+//			TktImg2VO tktImg2VO = tktimg2Srv.getOne(tkt_img_no);
+//			
+//			// ------------------------- forward ----------------
+//			byte[] content = tktImg2VO.getTkt_img();
+//			ServletOutputStream out = res.getOutputStream();
+//			out.write(content);
+//			out.close();
+//			return;
+//		}
 
-			// ------------------------- 永續層 ----------------
-			Tktimg2Service tktimg2Srv = new Tktimg2Service();
-			TktImg2VO tktImg2VO = tktimg2Srv.getOne(tkt_img_no);
-			
-			// ------------------------- forward ----------------
-			byte[] content = tktImg2VO.getTkt_img();
-			ServletOutputStream out = res.getOutputStream();
-			out.write(content);
-			out.close();
-			return;
-		}
-
-		// uploadTktImg
+		// uploadTktImg 上傳照片
 		if ("uploadTktImg".equals(action)) {
 
 			Set<String> errorMsgs = new LinkedHashSet<String>();
@@ -163,7 +159,8 @@ public class UploadTktImg extends HttpServlet {
 		}
 
 	}
-
+	
+	// 上傳圖片取得檔案名用
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 		// System.out.println("header=" + header); // 測試用

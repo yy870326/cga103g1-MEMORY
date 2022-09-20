@@ -26,10 +26,7 @@ pageContext.setAttribute("snm", snm);
 	<div class="main-content">
 
 
-		<hr>
-		<br> <br>
-
-		<h3>系統訊息管理
+		<h3>系統訊息列表
 		<a href="<%=request.getContextPath()%>/backend/system_notification_message/addSNM.jsp">新增</a>
 		</h3>
 		<table class="table" id="example4">
