@@ -60,7 +60,7 @@ public class ActRpServlet extends HttpServlet {
 			// 檢舉事由
 			String act_rp_reason = req.getParameter("act_rp_reason").trim();
 			if (act_rp_reason == null || act_rp_reason.trim().length() == 0) {
-				errorMsgs.add("請輸入檢舉文字內容");
+				errorMsgs.add("請選擇檢舉事由");
 			}
 
 			// 檢舉時間
