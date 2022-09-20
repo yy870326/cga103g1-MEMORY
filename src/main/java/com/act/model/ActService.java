@@ -1,8 +1,12 @@
 package com.act.model;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.act_rp.model.ActRpService;
+import com.act_rp.model.ActRpVO;
 
 
 public class ActService {
@@ -88,10 +92,22 @@ public class ActService {
 	// 取得所有揪團活動的所有資訊
 	public List<ActVO> getAll() {
 //		return dao.getAll();
-		return dao.getAll()
-				.stream()
-				.filter(act -> act.getAct_status() != 1)
-				.collect(Collectors.toList());
+//		ActRpService actRpService = new ActRpService();
+//        List<ActRpVO> actNoRpList = actRpService.getall();
+//        ActService actService = new ActService();
+//        List<ActVO> actList = actService.getAll();
+//        for (int i = 0; i < actNoRpList.size(); i++) {
+//			if (actList.get(i).getAct_no() == actNoRpList.get(i).getAct_no()) {
+//				actList.remove(i);
+//			}
+//		}
+//        
+        List<ActVO> actList =  dao.getAll()
+		.stream()
+		.filter(act -> act.getAct_status() != 1)
+		.collect(Collectors.toList());
+        
+		return actList;
 	};
 	
 	// 取得 揪團活動舉辦者所有舉辦的活動 
