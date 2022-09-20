@@ -37,7 +37,8 @@ public class EmpLogin extends HttpServlet {
     // 【取得使用者 帳號(account) 密碼(password)】
     String emp_acc = req.getParameter("emp_acc");
     String emp_pwd = req.getParameter("emp_pwd");
-
+    EmpService emp = new EmpService();
+    EmpVO empVO = emp.login(emp_acc, emp_pwd);
     // 【檢查該帳號 , 密碼是否有效】
     if (!allowUser(emp_acc, emp_pwd)) {          //【帳號 , 密碼無效時】
       out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
@@ -47,7 +48,7 @@ public class EmpLogin extends HttpServlet {
     }else {                                       //【帳號 , 密碼有效時, 才做以下工作】
       HttpSession session = req.getSession();
       session.setAttribute("emp_acc", emp_acc);   //*工作1: 才在session內做已經登入過的標識
-      
+      session.setAttribute("empVO", empVO);
        try {                                                        
          String location = (String) session.getAttribute("location");
          if (location != null) {
