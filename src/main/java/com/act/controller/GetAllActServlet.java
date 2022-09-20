@@ -45,7 +45,9 @@ public class GetAllActServlet extends HttpServlet {
         			&& actNoRpList.get(j).getAct_rp_status() == 1) {
         		actList.remove(i);
         		flag = true;
-        	}				
+        	}else {
+				flag = false;
+			}				
 		}
 //        ActService actService = new ActService();
 //        List<ActVO> actList = actService.getAll();
