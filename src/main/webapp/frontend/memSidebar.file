@@ -25,7 +25,7 @@
                 基本資料維護
               </a>
             </div>
-            <div class="collapse show" id="collapse-1" data-parent="#accordion1">
+            <div class="collapse" id="collapse-1" data-parent="#accordion1">
               <!-- 這邊有加 flex-column align-items-start 讓按鈕垂直排列靠左 因為註解調不需要的欄位也會跑版 -->
               <div class="accordion-content d-flex flex-column align-items-start">
                 <button type="button" class="btn">
@@ -47,7 +47,7 @@
                 訂房訂單管理
               </a>
             </div>
-            <div class="collapse" id="collapse-2" data-parent="#accordion1">
+            <div class="collapse show" id="collapse-2" data-parent="#accordion1">
               <!-- 這邊有加 flex-column align-items-start 讓按鈕垂直排列靠左 因為註解調不需要的欄位也會跑版 -->
               <div class="accordion-content d-flex flex-column align-items-start">
                 <a href="<%=request.getContextPath()%>/frontend/mem/listMemOrder.jsp" class="btn">
