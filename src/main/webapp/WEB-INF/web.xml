@@ -30,15 +30,15 @@ id="WebApp_ID" version="4.0">
 	<filter-mapping>
 		<filter-name>MemberFilter</filter-name>
 		<url-pattern>/frontend/memPage.jsp</url-pattern>
-		<url-pattern>/tktOrder/addTktOrd.do</url-pattern>
+<!-- 		<url-pattern>/tktOrder/addTktOrd.do</url-pattern> -->
 		<url-pattern>/frontend/listMemOrder.jsp</url-pattern>
 		<url-pattern>/frontend/listStoreOrder.jsp</url-pattern>
 		<url-pattern>/frontend/act/*</url-pattern>
 		<url-pattern>/frontend/ac/*</url-pattern>
 		<url-pattern>/frontend/rmDetail.jsp</url-pattern>
-		<url-pattern>/RmRsv/RmRsv.do</url-pattern>
-		<url-pattern></url-pattern>
-		<url-pattern></url-pattern>
+		<url-pattern>/frontend/cart/*</url-pattern>
+		<url-pattern>/frontend/tkt/*</url-pattern>
+<!-- 		<url-pattern>/RmRsv/RmRsv.do</url-pattern> -->
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
