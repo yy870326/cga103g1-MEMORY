@@ -23,7 +23,7 @@ public class TktOrder2DAO implements I_TktOrder2DAO {
 
 	private static final String INSERT = "INSERT INTO tkt_order (mem_no, mem_coup_no, original_price, orderdate, ttl_price) VALUES ( ?, ?, ?, NOW(), ?)";
 	private static final String INSERT_WITHOUT_COUP = "INSERT INTO tkt_order (mem_no, original_price, orderdate, ttl_price) VALUES ( ?, ?, NOW(), ?)";
-	private static final String GET_ALL = "SELECT tkt_order_no, mem_no, mem_coup_no, original_price, orderdate, ttl_price FROM tkt_order ORDER BY tkt_order_no";
+	private static final String GET_ALL = "SELECT tkt_order_no, mem_no, mem_coup_no, original_price, orderdate, ttl_price FROM tkt_order ORDER BY tkt_order_no DESC";
 	private static final String GET_ONE = "SELECT tkt_order_no, mem_no, mem_coup_no, original_price, orderdate, ttl_price FROM tkt_order WHERE tkt_order_no = ?";
 	private static final String GET_DETAIL_BY_TKT_ORD_NO = "SELECT tkt_order_no, amount, qrcode, tkt_ori_price FROM tkt_item WHERE tkt_order_no =?";
 	private static final String DEL_DETAILS = "DELETE FROM tkt_item WHERE tkt_order_no = ?";

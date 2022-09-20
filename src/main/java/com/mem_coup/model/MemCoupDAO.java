@@ -19,7 +19,7 @@ public class MemCoupDAO implements I_MemCoupDAO {
 	private static final String USED_STATE = "UPDATE mem_coup SET coup_state = 1 WHERE mem_coup_no = ?;";
 	private static final String ORVERDUE_STATE = "UPDATE mem_coup SET coup_state = 2 WHERE mem_coup_no = ?;";
 	private static final String GET_ONE = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_coup_no = ?;";
-	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no;";
+	private static final String GET_ALL = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup ORDER BY mem_coup_no DESC;";
 	private static final String GET_MEMCOUP_BY_MEMNO = "SELECT mem_coup_no ,mem_no, coup_no, coup_state FROM mem_coup WHERE mem_no =?";
 
 	private static DataSource ds = null;
