@@ -168,7 +168,7 @@ pageContext.setAttribute("snm", snm);
               <li class="nav-item">
                 <a
                   class="nav-link "
-                  href="#"
+                  href="<%=request.getContextPath()%>/frontend/room/listAllRmType.jsp"
                   id="docMenu"
                   aria-haspopup="true"
                   aria-expanded="false"
@@ -179,11 +179,11 @@ pageContext.setAttribute("snm", snm);
               <li class="nav-item">
                 <a
                   class="nav-link "
-                  href="#"
+                  href="<%=request.getContextPath()%>/frontend/tkt/tktShopList.jsp"
                   id="docMenu"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  >票券商成</a
+                  >票券商城</a
                 >
               </li>
               <li class="nav-item">
