@@ -35,8 +35,8 @@ id="WebApp_ID" version="4.0">
 		<url-pattern>/frontend/act/*</url-pattern>
 		<url-pattern>/frontend/ac/*</url-pattern>
 		<url-pattern>/frontend/rmDetail.jsp</url-pattern>
-		<url-pattern>/frontend/cart/*</url-pattern>
-		<url-pattern>/frontend/tkt/*</url-pattern>
+		<!-- <url-pattern>/frontend/cart/*</url-pattern>
+		<url-pattern>/frontend/tkt/*</url-pattern> -->
 <!-- 		<url-pattern>/RmRsv/RmRsv.do</url-pattern> -->
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
