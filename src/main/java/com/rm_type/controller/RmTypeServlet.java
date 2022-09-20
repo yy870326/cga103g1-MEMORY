@@ -33,6 +33,8 @@ public class RmTypeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		HttpSession session = req.getSession();
+		
 		if ("insert".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -84,7 +86,7 @@ public class RmTypeServlet extends HttpServlet {
 				if (rm_intro == null || rm_intro.trim().length() == 0) {
 					errorMsgs.add("房型資訊 請勿空白");
 				}
-				Integer rm_update =Integer.valueOf("rm_update");
+//				Integer rm_update =Integer.valueOf("rm_update");
 				
 				RmTypeVO rmTypeVO = new RmTypeVO();
 				rmTypeVO.setStore_no(store_no);
@@ -94,7 +96,7 @@ public class RmTypeServlet extends HttpServlet {
 				rmTypeVO.setRm_price(rm_price);
 				rmTypeVO.setRm_area(rm_area);
 				rmTypeVO.setRm_intro(rm_intro);
-				rmTypeVO.setRm_update(rm_update);
+//				rmTypeVO.setRm_update(0);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("rmTypeVO", rmTypeVO); // 含有輸入格式錯誤的VO物件,也存入req
@@ -210,6 +212,7 @@ public class RmTypeServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 		Integer rm_type_no = Integer.valueOf(req.getParameter("rm_type_no"));
+		session.setAttribute("rm_type_no",rm_type_no);
 //		System.out.print("==============" + rm_type_no);
 //		HttpSession session = req.getSession();
 //		Integer rm_total = (Integer) session.getAttribute("rm_total");

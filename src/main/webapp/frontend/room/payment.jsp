@@ -12,10 +12,10 @@
 
 
 <%
-if (request.getAttribute("mem_email") == null) {
+/* if (request.getAttribute("mem_email") == null) {
 	String mem_email = "Q123434565@yahoo.com";
 	pageContext.setAttribute("mem_email", mem_email);
-}
+} */
 
 %>
 
@@ -470,7 +470,7 @@ if (request.getAttribute("mem_email") == null) {
         
         <script>
 		// header顯示在哪個區塊
-        $(`.nav-item:nth-child(1)>a`).attr('class', 'active');
+   /*      $(`.nav-item:nth-child(1)>a`).attr('class', 'active'); */
 		
 //      	// 使用別張信用卡區塊顯示
 //         $('input[type=radio][name="creditcard"]').on('change', function() {
@@ -493,7 +493,7 @@ if (request.getAttribute("mem_email") == null) {
 // 		});
      	
      	// 欄位驗證
-     	function check(){
+    <%--  	function check(){
 			let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 			let name = document.getElementById('name');
 			let phone = document.getElementById('phone');
@@ -551,7 +551,7 @@ if (request.getAttribute("mem_email") == null) {
      		}).then(function () {
      	        window.location.href = "<%=request.getContextPath()%>/frontend/room/listAllRmType.jsp";
      	    })
-     	}
+     	} --%>
         </script>
         
     </body>
