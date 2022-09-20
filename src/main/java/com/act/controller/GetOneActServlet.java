@@ -27,11 +27,9 @@ public class GetOneActServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
         res.setContentType("application/json, text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        System.out.println("DetailPage Fetch Request -> GetOneActServlet"); 
         
         HttpSession actSession = req.getSession();       
 		Integer actNo = (Integer) actSession.getAttribute("actNo");
-		System.out.println("GetOneActServlet : " + actNo);
 		ActService actService = new ActService();
 		ActVO actVO = actService.getAll().stream().filter(act -> act.getAct_no() == actNo).findFirst().get();		
 		GsonBuilder gsonBuilder = new GsonBuilder();  
@@ -40,11 +38,6 @@ public class GetOneActServlet extends HttpServlet {
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String personJsonString = gson.toJson(actVO);
 		res.getWriter().write(personJsonString);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
 	}
 
 }

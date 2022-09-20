@@ -31,6 +31,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 <section class="pt80 pb80">
 <div class="container-fluid">
 	<h3>文章標題</h3>
+	<span id="titleMsg" style="color: red;"></span>
 	<div class="row">
 		<div class="col-md-8">
 			<div class="form-group">
@@ -47,6 +48,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	
 	<h3>文章種類</h3>
 	<h6 style="color:red">${errorMsgs.customRadio}</h6>
+	<span id="radioMsg" style="color: red;"></span>
 	<div class="">
 		<select id="customRadio" class="custom-select select-big mb-3 col-5 d-inline-block">
 			<option value="0">請選擇</option>
@@ -102,7 +104,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 		<div class="col-md-12">
 			<div class="bg-light py-4 mb-4">
 				<h6 style="color:red">${errorMsgs.content}</h6>
-				<h3>文章內容</h3>
+				<h3>文章內容</h3><span id="contentMsg" style="color: red;"></span>
 				<div class="form-group">
 					<textarea class="form-control" rows="8" placeholder="Example textarea" name="content" id="content"></textarea>			
 				</div>	
@@ -131,6 +133,7 @@ AcVO ac = (AcVO)request.getAttribute("ac");
 	
 	<div class="bg-light py-6 mb-6">
 		<h6 style="color:red">${errorMsgs.upload}</h6>
+		<span id="imageMsg" style="color: red;"></span>
 	    <input type="file" name="upload" value="上傳圖片" id="inputFile" />
 	</div>
 

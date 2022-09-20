@@ -24,15 +24,10 @@ import com.util.LocalDateTimeSerializer;
 public class GetMemOneActServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	
-	}
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
         res.setContentType("application/json, text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        System.out.println("MemPage Fetch Request -> GetMemOneActServlet"); 
         
         HttpSession actSession = req.getSession();       
         Integer memNo1 = (Integer) actSession.getAttribute("memNo1");
@@ -52,7 +47,6 @@ public class GetMemOneActServlet extends HttpServlet {
 			Boolean isActVoExist = actService.getAll().stream()
 					.filter(act -> act.getAct_no() == actfromFront.getAct_no())
 					.anyMatch(act -> act.getMen_no() == memNo1);
-			System.out.println("isActVoExist: " + isActVoExist);
 			
 			if (isActVoExist) {
 				actVO = actService.getAll().stream()

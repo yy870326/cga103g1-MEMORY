@@ -82,6 +82,23 @@ function locationConvert(actVO) {
         }
     };
 }
+function convertLocation(actVO) {
+    let locationArr = ["臺北市", '新北市', '桃園市', '臺中市', "臺南市", "高雄市", "宜蘭縣", "新竹縣", "苗栗縣", "彰化縣",
+        "南投縣", "雲林縣", "嘉義縣", "屏東縣", "花蓮縣", "臺東縣", "澎湖縣", "基隆市", "新竹市", "嘉義市"];
+    for (let i = 0; i < locationArr.length; i++) {
+        if (actVO.act_loc === locationArr[i]) {
+            actVO.act_loc = i+1;
+        }
+    };
+}
+function convertActType(actVO){
+    let typeArr = ["競技", '運動', '美食', '露營', "電影", "社會服務活動", "演場會"];
+    for (let i = 0; i < typeArr.length; i++) {
+        if (actVO.act_type_no === typeArr[i] ) {
+            actVO.act_type_no = i + 1;
+        }
+    };
+}
 function createActTable1(actVO){
     let table = `
     <table class="table table-hover">
@@ -256,10 +273,15 @@ search.addEventListener('click', function(){
            let output = "";
            console.log(actVo);
            if(actVo === "查無此揪團活動編號"){
-               let msg = `
-               <h1 class="text-center" style="color: red;">${actVo}</h1>
-               `;
-               mainContent.innerHTML = msg; 
+                let msg = `
+                <h1 class="text-center" style="color: red;">${actVo}</h1>
+                `;
+                mainContent.innerHTML = msg; 
+            }else if(actVo === "該活動非您主辦，請查詢編號再次輸入"){
+                let msg = `
+                <h1 class="text-center" style="color: red;">${actVo}</h1>
+                `;
+                mainContent.innerHTML = msg; 
             }else{
                actTypeConvert(actVo);
                locationConvert(actVo);

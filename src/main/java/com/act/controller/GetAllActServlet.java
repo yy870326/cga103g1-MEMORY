@@ -31,7 +31,7 @@ public class GetAllActServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        System.out.println("jQuery Ajax / Fetch Request -> GetAllActServlet");
+
         ActRpService actRpService = new ActRpService();
         List<ActRpVO> actNoRpList = actRpService.getall();
         ActService actService = new ActService();
@@ -49,10 +49,6 @@ public class GetAllActServlet extends HttpServlet {
 				flag = false;
 			}				
 		}
-//        ActService actService = new ActService();
-//        List<ActVO> actList = actService.getAll();
-        actNoRpList.forEach(actRp -> actRp.getAct_rp_status());
-		actList.forEach(act->act.getAct_no());
 		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      

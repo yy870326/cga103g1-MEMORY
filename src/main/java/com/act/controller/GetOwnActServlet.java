@@ -34,14 +34,13 @@ public class GetOwnActServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        System.out.println("Fetch Request -> GetOwnActServlet");
+        
         HttpSession session = req.getSession();
         Integer memNo1 = (Integer) session.getAttribute("memNo1");
         Integer memNo2 = (Integer) session.getAttribute("memNo2");
 
 		ActService actService = new ActService();
 		List<ActVO> actList = actService.getOwnActParti(memNo1);
-		actList.forEach(System.out::println);
 		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      

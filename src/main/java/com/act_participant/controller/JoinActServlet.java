@@ -26,8 +26,8 @@ public class JoinActServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
         res.setContentType("application/json, text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-		System.out.println("fetch Request -> JoinActServlet");
-		HttpSession session = req.getSession();
+
+        HttpSession session = req.getSession();
 		Integer actNo =  (Integer) session.getAttribute("actNo");
 		Integer memNo1 =  (Integer) session.getAttribute("memNo1");
 		Integer memNo2 = (Integer) session.getAttribute("memNo2");
@@ -38,23 +38,23 @@ public class JoinActServlet extends HttpServlet {
 		String memLoginEmail3 = (String) session.getAttribute("memNoEmail3");
 	
 		MemService memService = new MemService();
-		String memEmail = memService.getOneMem(3).getMem_email();
+		String memEmail = memService.getOneMem(1).getMem_email();
 		Gson gson = new Gson();
 		ActService actService = new ActService();
 		ActParticipantService actParticipantService = new ActParticipantService();
 		
 		List<ActParticipantVO> findActPartiMenNoList = 
 		actParticipantService.getAll().stream().filter(actP -> actP.getAct_no() == actNo).toList();		
-		findActPartiMenNoList.forEach(System.out::println);
+//		findActPartiMenNoList.forEach(System.out::println);
 		boolean isJoin = false;
 		
 		for (ActParticipantVO actParticipantVO : findActPartiMenNoList) {
-			if(actParticipantVO.getMem_no() == memNo3) {
+			if(actParticipantVO.getMem_no() == memNo1) {
 				isJoin = true;
 			}
 		}		
 		
-		System.out.println("isJoin = " + isJoin);
+//		System.out.println("isJoin = " + isJoin);
 		
 		Integer actMaxCount =
 				actService.getAll().stream().filter(act -> act.getAct_no() == actNo).findFirst().get().getAct_max_count();
@@ -66,7 +66,7 @@ public class JoinActServlet extends HttpServlet {
 		if(!isJoin) {
 			if ((memEmail).equals(memLoginEmail3) && actMaxCount > actCurrentCount) {
 			    LocalDateTime currentTime = LocalDateTime.now();
-				actParticipantService.addActParticipant(actNo, memNo3, currentTime);			
+				actParticipantService.addActParticipant(actNo, memNo1, currentTime);			
 				String resInfo ="";			
 				actService.updateActPeopleAmount(actNo, actCurrentCount+1);
 				resInfo = gson.toJson("加入成功");

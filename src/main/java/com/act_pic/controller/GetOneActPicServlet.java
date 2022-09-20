@@ -26,12 +26,10 @@ public class GetOneActPicServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("image/jpeg, image/jpg, image/png, */*");
 		String action = req.getParameter("action");	
-		System.out.println("<img> Request -> GetOneActPicServlet");
 		
 		if("actImg".equals(action)) {
 			ActPicService actPicService = new ActPicService();
 			Integer act_no = new Integer(req.getParameter("actNo").trim());
-			System.out.println(act_no);
 			List<ActPicVO> list = actPicService.getOneActPic(act_no);
 			byte[] actImg = list.stream().findFirst().get().getAct_pic();
 			ServletOutputStream sos = res.getOutputStream();

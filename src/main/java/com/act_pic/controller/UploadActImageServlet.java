@@ -25,9 +25,7 @@ public class UploadActImageServlet extends HttpServlet {
         res.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 	    res.setCharacterEncoding("UTF-8");
 	    
-        System.out.println("Fetch Request -> UploadActImageServlet");
         HttpSession session = req.getSession();
-        System.out.println("UploadActImageServlet : " + (Integer)session.getAttribute("afterInsertActNO"));
         
 		InputStream is = req.getInputStream();
 		byte[] image = org.apache.commons.io.IOUtils.toByteArray(is);
