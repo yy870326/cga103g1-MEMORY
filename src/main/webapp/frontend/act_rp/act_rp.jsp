@@ -86,7 +86,7 @@ div#error {
 				<tr>
 					<td>活動檢舉事由:</td>
 					<td><select name="act_rp_reason">
-							<option value="" disabled selected></option>
+							<option value="" ></option>
 							<option value="活動內容與標題不符">活動內容與標題不符</option>
 							<option value="活動內容違反善良風俗">活動內容違反善良風俗</option>
 							<option value="騷擾行為">騷擾行為</option>
