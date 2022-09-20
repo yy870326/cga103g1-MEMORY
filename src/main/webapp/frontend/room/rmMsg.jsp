@@ -33,8 +33,8 @@
 		}
 		
 		div.loginSection{
-			width: auto;
-			margin: 50px 100px;
+			width: 60%;
+			margin: 10px 10px;
 		}
 		h1{
 			margin-bottom: 50px;
@@ -56,56 +56,18 @@
 <body>
 	<!-- header -->
 		
-		<%@ include file="/frontend/store/header.file" %><!-- header -->
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/frontend/store/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/frontend/header.file"%>
+		<%@ include file="/frontend/store/storeSidebar.file" %> <!-- sidebar -->
 	
-<div class="innerpage-banner left bg-overlay-dark-7 py-7" style="background:url(images/07.jpg) repeat; background-size:cover;">
-  <div class="container">
-    <div class="row all-text-white">
-      <div class="col-md-12 align-self-center">
-        <h1 class="innerpage-title">意見提供</h1>
-        <h6 class="subtitle">請提供您寶貴的意見</h6>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="<%=request.getContextPath()%>/frontend/homePage.jsp"><i class="ti-home"></i> 回首頁</a></li>
-            <li class="breadcrumb-item">意見提供</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!-- =======================
 	Banner innerpage -->
-
-<section class="pt80 pb80 booking-section login-area">
+<div class="loginSection">
+<section class=" login-area">
   <div class="container">
     <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        
-        <div class="listing-item">
-          <article class="TravelGo-category-listing fl-wrap">
-            <div class="TravelGo-category-content fl-wrap title-sin_item">
-              <div class="TravelGo-category-content-title fl-wrap NeedHelp">
-                <div class="TravelGo-category-content-title-item">
-                  <h3 class="title-sin_map">Need Help?</h3>
-                  <div class="TravelGo-category-location fl-wrap"></div>
-                </div>
-              </div>
-              <div class="NeedhelpSection">
-                <P>聯絡我們</P>
-                <ul>
-                  <li><span><i class="fas fa-phone-volume"></i></span> (02)3345678</li>
-                  <li><span><i class="far fa-envelope"></i></span> cga103g1@gmail.com</li>
-                  <li><span><i class="fab fa-skype"></i> </span> cga103g1@Skype</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="col-lg-8 col-md-6 col-sm-12">
+      
+      <div class="col-lg-9 col-md-6 col-sm-11">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="login-box Booking-box">
@@ -148,7 +110,7 @@
     </div>
   </div>
 </section>
-    
+</div>    
   
 <!-- 額外Section 區域  -->
  

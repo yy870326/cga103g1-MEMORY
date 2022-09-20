@@ -4,11 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
+<%@ page import="com.emp.model.*"%>
 
 <%@ page import="com.rm_msg.model.*"%>
 <%@ page import="java.time.LocalDate"%>
 
-
+<jsp:useBean id="empSvc" class="com.emp.model.EmpService" />
 
 <!DOCTYPE html>
 <html>
@@ -34,6 +35,8 @@
  
  pageContext.setAttribute("list", list);
  
+ 
+  
  
 	
 %>
@@ -204,7 +207,7 @@ div.main-content {
 				<c:forEach var="rm_msgVO" items="${list}">
 					<tr class="view">
 						<td>${rm_msgVO.rm_msg_no}</td>
-						<td>${rm_msgVO.emp_no}</td>
+						<td>${empSvc.getOneEmp(rm_msgVO.emp_no).emp_name}</td>
 						<td>${rm_msgVO.mem_no}</td>
 						<td>${rm_msgVO.store_no}</td>
 						<td>${rm_msgVO.rm_msg_date}</td>

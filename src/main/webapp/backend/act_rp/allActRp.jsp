@@ -27,8 +27,6 @@ pageContext.setAttribute("actRp", actRp);
 	<div class="main-content">
 
 
-		<hr>
-		<br> <br>
 
 		<h3>揪團檢舉管理</h3>
 		<table class="table" id="example4">
@@ -78,7 +76,7 @@ pageContext.setAttribute("actRp", actRp);
 	<%@ include file="/backend/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script>
-		$("#pagename").text("MEMORY 後台管理");
+		$("#pagename").text("揪團檢舉管理");
 	</script>
 </body>
 </html>

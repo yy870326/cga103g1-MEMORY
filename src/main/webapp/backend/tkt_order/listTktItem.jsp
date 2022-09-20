@@ -85,7 +85,7 @@ td, div {
 	margin-right: 10px;
 }
 .tktImgWidth {
-	width: 100px;
+	width: 80px;
 }
 
 
@@ -117,6 +117,7 @@ td, div {
 				<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr>
+							<th scope="col"></th>
 							<th scope="col">票券名稱</th>
 							<th scope="col">付款金額</th>
 							<th scope="col">票券數量</th>
@@ -127,6 +128,9 @@ td, div {
 					
 						<c:forEach var="tktItem2VO" items="${tktItemList}">
 							<tr>
+								<td>
+									<img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktItem2VO.tktVO.tkt_no}&action=showFirstImages" class="tktImgWidth">
+								</td>
 								<td>${tktItem2VO.tktVO.tkt_name}</td>
 								<td>${tktItem2VO.tkt_ori_price}</td>
 								<td>${tktItem2VO.amount}</td>

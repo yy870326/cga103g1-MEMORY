@@ -128,6 +128,7 @@ td, div {
 							<th scope="col">訂單編號</th>
 							<th scope="col">會員帳號</th>
 							<th scope="col">原始金額</th>
+							<th scope="col">折扣金額</th>
 							<th scope="col">付款總金額</th>
 							<th scope="col">訂單成立日期</th>
 							<th scope="col">查看訂單明細</th>
@@ -140,8 +141,9 @@ td, div {
 						
 							<tr>
 								<td># ${tktOrder2VO.tkt_order_no}</td>
-								<td>${tktOrder2VO.memVO.mem_acc}</td>
+								<td>${tktOrder2VO.memVO.mem_name}</td>
 								<td>NT$ ${tktOrder2VO.original_price}</td>
+								<td>- ${tktOrder2VO.memCoupVO.coupVO.discount}, ${ tktOrder2VO.memCoupVO.coupVO.coup_name}</td>
 								<td>NT$ ${tktOrder2VO.ttl_price}</td>
 								<td>${tktOrder2VO.orderdate}</td>
 								<td>

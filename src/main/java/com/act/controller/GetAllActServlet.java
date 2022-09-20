@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.act.model.ActService;
 import com.act.model.ActVO;
+import com.act_rp.model.ActRpService;
+import com.act_rp.model.ActRpVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.util.LocalDateTimeDeserializer;
@@ -30,10 +32,28 @@ public class GetAllActServlet extends HttpServlet {
         res.setContentType("text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
         System.out.println("jQuery Ajax / Fetch Request -> GetAllActServlet");
-       
+        ActRpService actRpService = new ActRpService();
+        List<ActRpVO> actNoRpList = actRpService.getall();
         ActService actService = new ActService();
-		List<ActVO> actList = actService.getAll();
-		actList.forEach(System.out::println);
+        List<ActVO> actList = actService.getAll();
+        boolean flag = false;
+        for (int i = 0, j = 0; i < actNoRpList.size() && j < actNoRpList.size(); i++, j++) {
+        	if (flag) {
+				i--;
+			}
+        	if ((actList.get(i).getAct_no() == actNoRpList.get(j).getAct_no())
+        			&& actNoRpList.get(j).getAct_rp_status() == 1) {
+        		actList.remove(i);
+        		flag = true;
+        	}else {
+				flag = false;
+			}				
+		}
+//        ActService actService = new ActService();
+//        List<ActVO> actList = actService.getAll();
+        actNoRpList.forEach(actRp -> actRp.getAct_rp_status());
+		actList.forEach(act->act.getAct_no());
+		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());

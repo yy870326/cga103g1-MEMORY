@@ -849,17 +849,25 @@ public class StoreServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
+			
 			String store_email = req.getParameter("store_email");
 			StoreService storeSvc = new StoreService();
-			List<StoreVO> lists = storeSvc.getAllStore();
-			
-			for(StoreVO list : lists) {
-				if(list.getStore_email() != store_email) {
-					errorMsgs.put("store_email", "此信箱沒有註冊請重新輸入");
-				}
-				break;
+			if(storeSvc.getOneStoreByEmail(store_email) == null) {
+				errorMsgs.put("store_email", "此信箱沒有註冊請重新輸入");
 			}
+//			List<StoreVO> lists = storeSvc.getAllStore();
+//			
+//			for(StoreVO list : lists) {
+//				if(list.getStore_email() != store_email) {
+//					errorMsgs.put("store_email", "此信箱沒有註冊請重新輸入");
+//				}break;	
+//			}
+			if(!errorMsgs.isEmpty()){
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/store/forgetPassword.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		
 			
 			
 		StoreVO	storeVO = storeSvc.getOneStoreByEmail(store_email);
@@ -871,20 +879,17 @@ public class StoreServlet extends HttpServlet {
 		
 		String subMain = "請輸入以下密碼 "+ randompass +" 登入後請馬上更新您的密碼";
 		
-		try {
+//		try {
 		mailSvc.sendMail(store_email, Main, subMain);
 		
 		RequestDispatcher successView = req.getRequestDispatcher("/frontend/store/newPasswordSendSuc.jsp");
 		successView.forward(req, res);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
 		
 			
-		}catch(Exception e) {
-			e.printStackTrace();
-			
-    	}	
+
 
 	
 		}

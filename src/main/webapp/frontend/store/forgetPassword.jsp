@@ -59,7 +59,7 @@
                                      <div class="col-md-12 d-flex justify-content-between">
                                     </div>
                                     <div class="col-md-12">
-                                        <button type="submit" name="action" value="forgetPassword">送出新的密碼到信箱</button><font>${errorMsgs.storevo}</font>
+                                        <button type="submit" name="action" value="forgetPassword">送出新的密碼到信箱</button><font>${errorMsgs.store_email}</font>
                                     </div>
                                 </div>
                             </form>
