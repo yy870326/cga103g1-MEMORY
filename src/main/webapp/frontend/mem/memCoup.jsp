@@ -66,7 +66,7 @@ pageContext.setAttribute("list", list);
 				</div>
 			</div> -->
 			
-			
+			<%@ include file="/frontend/mem/pageIndex.file"%>
 			<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr>
@@ -80,7 +80,7 @@ pageContext.setAttribute("list", list);
 					<tbody>
 					
 					
-					<c:forEach var="memCoupVO" items="${list}">
+					<c:forEach var="memCoupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<c:if test="${memCoupVO.coupVO.status == 1}">
 							<tr>
 								<td>${memCoupVO.coupVO.coup_name}</td>
@@ -103,6 +103,7 @@ pageContext.setAttribute("list", list);
 
 					</tbody>
 				</table>
+				<%@ include file="/frontend/mem/pagination.file"%>
 		</div>
         
       </div>
