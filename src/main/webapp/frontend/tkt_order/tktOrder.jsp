@@ -38,9 +38,10 @@ pageContext.setAttribute("list", list);
   <%-- header --%>
   <%@ include file="/frontend/header.file" %>
 
+
   	<!-- =======================
 	Banner innerpage -->
-<div class="innerpage-banner left py-7" style="background:url(https://i.imgur.com/wYzrG5n.jpg) repeat center; background-size:cover;">
+<!-- <div class="innerpage-banner left py-7" style="background:url(https://i.imgur.com/wYzrG5n.jpg) repeat center; background-size:cover;">
   <div class="container">
     <div class="row all-text-white">
       <div class="col-md-12 align-self-center">
@@ -48,7 +49,7 @@ pageContext.setAttribute("list", list);
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- =======================
 	Banner innerpage -->
   <!-- main -->

@@ -44,21 +44,15 @@
           <div class="accordion-item">
             <div class="accordion-title">
               <a class="collapsed" data-toggle="collapse" href="#collapse-2">
-                訂單管理
+                訂房訂單管理
               </a>
             </div>
             <div class="collapse" id="collapse-2" data-parent="#accordion1">
               <!-- 這邊有加 flex-column align-items-start 讓按鈕垂直排列靠左 因為註解調不需要的欄位也會跑版 -->
               <div class="accordion-content d-flex flex-column align-items-start">
-                <button type="button" class="btn">
-                  尚未付款
-                </button>
-                <button type="button" class="btn">
-                  取消訂單/退款
-                </button>
-                <button type="button" class="btn">
-                  訂單列表
-                </button>
+                <a href="<%=request.getContextPath()%>/frontend/mem/listMemOrder.jsp" class="btn">
+                  顯示訂房訂單列表
+                </a>
               </div>
             </div>
           </div>
@@ -100,15 +94,15 @@
           <div class="accordion-item">
             <div class="accordion-title">
               <a class="collapsed" data-toggle="collapse" href="#collapse-4">
-                信用卡管理
+                票券訂單管理
               </a>
             </div>
             <div class="collapse" id="collapse-4" data-parent="#accordion1">
               <!-- 這邊有加 flex-column align-items-start 讓按鈕垂直排列靠左 因為註解調不需要的欄位也會跑版 -->
               <div class="accordion-content d-flex flex-column align-items-start">
-                <button type="button" class="btn">
-                  新增信用卡
-                </button>
+                <a href="<%=request.getContextPath()%>/frontend/tkt_order/tktOrder.jsp" class="btn">
+                  顯示票券訂單列表
+                </a>
               </div>
             </div>
           </div>
@@ -138,18 +132,9 @@
             <div class="collapse" id="collapse-6" data-parent="#accordion1">
               <!-- 這邊有加 flex-column align-items-start 讓按鈕垂直排列靠左 因為註解調不需要的欄位也會跑版 -->
               <div class="accordion-content d-flex flex-column align-items-start">
-              	<button type="button" class="btn">
-                  顯示所有優惠券
-                </button>
-                <button type="button" class="btn">
-                  已到期
-                </button>
-                <button type="button" class="btn">
-                  輸入優惠券號碼
-                </button>
-                <button type="button" class="btn">
-                  未使用
-                </button>
+              	<a href="<%=request.getContextPath()%>/frontend/mem/memCoup.jsp" class="btn">
+                  顯示會員優惠券列表
+                </a>
               </div>
             </div>
           </div>
