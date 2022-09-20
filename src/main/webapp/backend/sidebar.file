@@ -8,8 +8,8 @@
 						<span class="nav-text">員工管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/xxx/xxxist.jsp">員工列表</a></li>
-						<li><a href="javascript:void()" aria-expanded="false">新增員工</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/emp/listAllEmp.jsp">員工列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/emp/addEmp.jsp">新增員工</a></li>
 						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">權限管理</a>
 							<ul aria-expanded="false">
 								<li><a href="<%=request.getContextPath()%>/backend/authfun/listAllAuthFun.jsp">所有權限列表</a></li>
@@ -33,11 +33,11 @@
 						<span class="nav-text">廠商管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/xxx/todayWorkList.jsp">廠商列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/store/storeListAll.jsp">廠商列表</a></li>
 						<li><a href="<%=request.getContextPath()%>/backend/XXX/XXX.jsp">審核廠商</a></li>
 						<li><a href="javascript:void()" aria-expanded="false">廠商檢舉管理</a></li>
 						<li><a href="<%=request.getContextPath()%>/backend/store/listAllOrder.jsp">訂房訂單查詢</a></li>
-						<li><a href="javascript:void()" aria-expanded="false">廠商通知訊息</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/store/ListAllMsg.jsp">廠商通知訊息</a></li>
 					</ul>
 				</li>
 				<li>
@@ -46,18 +46,12 @@
 						<span class="nav-text">商城管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="javascript:void()" aria-expanded="false">訂單列表</a></li>
-						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">票劵管理</a>
-							<ul aria-expanded="false">
-								<li><a href="<%=request.getContextPath()%>/activity/ActivitySession?action=beginActSessionAdd">商品上架</a></li>
-								<li><a href="<%=request.getContextPath()%>/activity/ActivitySession?action=getAll">商品下架</a></li>
-								<li><a href="<%=request.getContextPath()%>/activity/ActivitySession?action=getAll">修改商品</a></li>
-							</ul>
-						</li>
+						<li><a href="<%=request.getContextPath()%>/backend/tkt_order/listAllTktOrder.jsp">訂單列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/tkt/listAllTkt.jsp">票卷列表</a></li>
 						<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">優惠劵管理</a>
 							<ul aria-expanded="false">
-								<li><a href="<%=request.getContextPath()%>/activity/Activity?action=beginActAdd">新增優惠劵</a></li>
-								<li><a href="<%=request.getContextPath()%>/activity/Activity?action=getAll">下架優惠劵</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/coup/listAllCoup.jsp">優惠劵列表</a></li>
+								<li><a href="<%=request.getContextPath()%>/backend/mem_coup/listSendMemCoup.jsp">發放優惠劵</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -68,8 +62,7 @@
 						<span class="nav-text">揪團活動管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="javascript:void()" aria-expanded="false">活動列表</a></li>
-						<li><a href="javascript:void()" aria-expanded="false">活動檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/act_rp/allActRp.jsp">活動檢舉管理</a></li>
 					</ul>
 				</li>
 				<li>
@@ -104,7 +97,7 @@
 						<span class="nav-text">客服管理</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="<%=request.getContextPath()%>/backend/instantMessaging/chat.jsp"">即時客服</a></li>
+						<li><a href="<%=request.getContextPath()%>/backend/customer_service/backChat.jsp"">即時客服</a></li>
 					</ul>
 				</li>
 			</ul>
