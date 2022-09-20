@@ -22,8 +22,6 @@ ActRpVO actRpVO = (ActRpVO) request.getAttribute("actRpVO");
 	<%@ include file="/backend/sidebar.file"%>
 	<!-- sidebar -->
 <div class="main-content">
-		<hr>
-		<br> <br>
 		<h3>檢舉揪團</h3>
 		<div id="error">
 			<%-- 錯誤表列 --%>
@@ -81,7 +79,7 @@ ActRpVO actRpVO = (ActRpVO) request.getAttribute("actRpVO");
 	<%@ include file="/backend/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script>
-		$("#pagename").text("MEMORY 後台管理");
+		$("#pagename").text("揪團檢舉管理");
 	</script>
 </body>
 </html>
