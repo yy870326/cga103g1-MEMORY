@@ -13,9 +13,12 @@
 
 
 <% 
+/* MemVO memVO = new MemVO();
+memVO = (MemVO)request.getSession().getAttribute("memVO");
+Integer mem_no = memVO.getMem_no(); */
 
 MemCoupService memCoupSrv = new MemCoupService();
-List<MemCoupVO> memCoupList = memCoupSrv.listOneMemCoupon(1); // 寫死 mem_no = 1
+List<MemCoupVO> memCoupList = memCoupSrv.listOneMemCoupon(1);
 pageContext.setAttribute("memCoupList", memCoupList);
 /* CartItemVO cartItemVO = new CartItemVO();
 System.out.println("cart.jsp cartItemVO:" + cartItemVO); */
@@ -174,11 +177,11 @@ session.setAttribute("checkedList", checkedList);
                   <div class="d-flex justify-content-between mb-20">
                   <div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>姓名</label>
-                    <input type="text" name="tkt_order_mem_name" class="form-control">
+                    <input type="text" name="tkt_order_mem_name" class="form-control" value="${memVO.mem_name}">
                   </div>
                   	<div class="col-lg-6 col-md-12 col-sm-12 email">
                     <label><span class="text-danger">*</span>Email</label>
-                    <input type="text" name="tkt_order_mem_email" class="form-control">
+                    <input type="text" name="tkt_order_mem_email" class="form-control" value="${memVO.mem_email}">
                   </div>
                   </div>
                   
@@ -238,6 +241,7 @@ session.setAttribute("checkedList", checkedList);
                   <div class="col-md-12">
 						
                     	<input type="hidden" name="mem_no" value="1">
+                    	<%-- <input type="hidden" name="mem_no" value="${memVO.mem_no}"> --%>
                     	
 						<div class="d-flex justify-content-between">
 							<a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn btn-outline-primary">返回購物車</a>

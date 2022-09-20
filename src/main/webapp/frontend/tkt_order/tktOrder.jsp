@@ -12,6 +12,11 @@
 <%@ page import="com.mem.model.*"%>
 
 <% 
+
+/* MemVO memVO = new MemVO();
+memVO = (MemVO)request.getSession().getAttribute("memVO");
+Integer mem_no = memVO.getMem_no(); */
+
 TktOrder2Service tktOrder2Srv = new TktOrder2Service();
 List<TktOrder2VO> list = tktOrder2Srv.findAllOrderByMem(1);
 pageContext.setAttribute("list", list);
