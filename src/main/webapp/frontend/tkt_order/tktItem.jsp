@@ -7,8 +7,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.coup.model.*"%>
 <%@ page import="com.mem_coup.model.*"%>
-<%@ page import="com.tkt_order.model.*"%>
-<%@ page import="com.tkt_item.model.*"%>
+<%@ page import="com.tkt_order2.model.*"%>
+<%@ page import="com.tkt_item2.model.*"%>
 <%@ page import="com.mem.model.*"%>
 
 
@@ -84,7 +84,7 @@
 							<th scope="col">票券訂單編號</th>
 							<th scope="col"></th>
 							<th scope="col">票券名稱</th>
-							<th scope="col">付款金額</th>
+							<th scope="col">票券小計</th>
 							<th scope="col">票券數量</th>
 							
 						</tr>
@@ -100,7 +100,7 @@
 									<img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktItem2VO.tktVO.tkt_no}&action=showFirstImages" class="tktImgWidth">
 								</td>
 								<td>${tktItem2VO.tktVO.tkt_name}</td>
-								<td>${tktItem2VO.tkt_ori_price}</td>
+								<td><fmt:formatNumber value="${tktItem2VO.tkt_ori_price}" type="currency" /></td>
 								<td>${tktItem2VO.amount}</td>
 							</tr>
 						</c:forEach>
