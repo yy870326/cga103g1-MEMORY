@@ -51,13 +51,15 @@ pageContext.setAttribute("list", list);
   <section class="pt80 pb80 listingDetails Campaigns">
   <div class="container">
     <div class="row"> 
-      
+      <%@ include file="/frontend/tkt_order/pageIndex.file"%>
 	<div class="col-lg-12 col-md-12 col-sm-12 Filter-left mb-60">
       	
       	<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr class="text-center">
 							<th scope="col">票券訂單編號</th>
+							<th scope="col">原價</th>
+							<th scope="col">折扣</th>
 							<th scope="col">付款金額</th>
 							<th scope="col">訂單成立日期</th>
 							<th scope="col">查看詳情</th>
@@ -68,10 +70,12 @@ pageContext.setAttribute("list", list);
 					<tbody class="text-center">
 					
 					
-					<c:forEach var="tktOrder2VO" items="${list}">
+					<c:forEach var="tktOrder2VO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
-								<td>${tktOrder2VO.tkt_order_no}</td>
-								<td>${tktOrder2VO.ttl_price}</td>
+								<td># ${tktOrder2VO.tkt_order_no}</td>
+								<td>${tktOrder2VO.original_price}</td>
+								<td>- ${tktOrder2VO.memCoupVO.coupVO.discount}, ${ tktOrder2VO.memCoupVO.coupVO.coup_name}</td>
+								<td class="text-danger">${tktOrder2VO.ttl_price}</td>
 								<td>${tktOrder2VO.orderdate}</td>
 								<td>
 								<a href="/CGA103G1/tkt_order/tktItem.do?tkt_order_no=${tktOrder2VO.tkt_order_no}" class="btn btn-primary">訂單明細</a>
@@ -83,6 +87,7 @@ pageContext.setAttribute("list", list);
 					</tbody>
 				</table>
       </div>
+      <%@ include file="/frontend/tkt_order/pagination.file"%>
     </div>
   </div>
   

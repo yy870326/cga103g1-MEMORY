@@ -2,6 +2,7 @@ package com.mem_coup.model;
 
 import java.util.List;
 
+import com.coup.model.CoupVO;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
@@ -14,6 +15,10 @@ public class MemCoupService {
 	}
 	
 	public MemCoupVO getOne(Integer mem_coup_no, Integer mem_no, Integer coup_no, Integer tkt_order_no, Integer coup_state) {
+		return dao.findByPrimaryKey(mem_coup_no);
+	}
+	
+	public MemCoupVO getOneMemCoup(Integer mem_coup_no) {
 		return dao.findByPrimaryKey(mem_coup_no);
 	}
 	
