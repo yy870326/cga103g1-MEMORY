@@ -386,7 +386,7 @@
 							<div>
 								<span class="price"><fmt:formatNumber value="${rmTypeVO.rm_price}" pattern="$###,###" /></span><span> / 一晚</span>
 							</div>
-						<form method="post" action="<%=request.getContextPath()%>/RmRsv/RmRsv.do" id="immediateCheckoutForm">
+						<form method="post" action="<%=request.getContextPath()%>/RmRsv/RmRsvPayment.do">
 							<!-- <div class="row align-items-center">
 									<div class="col-lg-12">
 										<label for="check_in" class="form-label">入住時間</label> <input
@@ -417,7 +417,7 @@
 									<input type="hidden" name="qty" value="${qty}">
 									<input type="hidden" name="guest" value="${guest}">
 									<input type="hidden" name="action" value="payment">
-									<button type="submit" class="btn btn-primary1 line-btn" onclick="check();"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button>
+									<button type="submit" class="btn btn-primary1 line-btn"><div class="line"></div><i class='bx bx-chevron-right'></i>預訂</button>
 								</div>
 							
 						</form>
@@ -432,6 +432,35 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
-      
+     <%--  <script>
+	      	// 預訂時有無登入會員，有登入就驗證(qty是null就是session消失了，住宿期間錯誤可能是 重選選錯||session消失)
+	    	function check(){
+	    		if('${mem_mail}' === ''){
+	    			notLogin();
+	    			return false;
+	    		} else if ("${qty}" === ''){
+	    			qtyIsNull();
+	    			return false;
+	    		} else if (duringStay.value.length != 24){
+	    			duringStay.focus();
+	    			
+	    			return false;
+	    		} else {
+	    			document.getElementById('immediateCheckoutForm').submit();
+	    		}
+	    	}
+	      	// alert樣式
+	        function notLogin() {
+	    		swal.fire({
+	    			icon : 'error',
+	    			title : '請先登入',
+	    			showConfirmButton : false,
+	    			timer : 1000
+	    		}).then(function () {
+	     	        window.location.href = "<%=request.getContextPath()%>/frontend/signin/login.jsp";
+	     	    })
+	    	}
+	      
+        </script> --%>
 	</body>
 </html> 

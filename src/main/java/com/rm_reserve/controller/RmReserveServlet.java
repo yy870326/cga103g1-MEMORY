@@ -70,6 +70,8 @@ public class RmReserveServlet extends HttpServlet {
 			if (guest == null) {
 				errorMsgs.add("請選擇入住人數");
 			}
+
+		
 			// 日期格式處理
 			List<String> dateList = new LinkedList<String>();
 			dateList = Arrays.asList(arrival.split("-"));
@@ -147,75 +149,75 @@ public class RmReserveServlet extends HttpServlet {
 		}
 
 		// 到結帳頁
-		if ("payment".equals(action)) {
-
-			// 處理錯誤訊息
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			/*************************** 1.接收請求參數 ****************************************/
-			try {
-				String arrival = req.getParameter("arrival_date");
-				if (arrival == null) {
-					errorMsgs.add("請選擇住宿日期");
-				}
-
-				String departure = req.getParameter("departure_date");
-				if (departure == null) {
-					errorMsgs.add("請選擇退房日期");
-				}
-
-				Integer qty = Integer.valueOf(req.getParameter("qty"));
-				if (qty == null) {
-					errorMsgs.add("請選擇房間數量");
-				}
-
-				Integer guest = Integer.valueOf(req.getParameter("guest"));
-				if (guest == null) {
-					errorMsgs.add("請選擇入住人數");
-				}
-				Integer rm_type_no = Integer.valueOf(req.getParameter("rm_type_no"));
-
-				// 日期格式處理
-				List<String> dateList = new LinkedList<String>();
-				dateList = Arrays.asList(arrival.split("-"));
-				String arrival_date = dateList.get(2) + "-" + dateList.get(1) + "-" + dateList.get(0);
-
-				List<String> dateList1 = new LinkedList<String>();
-				dateList1 = Arrays.asList(departure.split("-"));
-				String departure_date = dateList1.get(2) + "-" + dateList1.get(1) + "-" + dateList1.get(0);
-
-				java.util.Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(arrival);
-				java.util.Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(departure);
-				long from = startDate.getTime();
-				long to = endDate.getTime();
-				int days = (int) ((to - from) / (1000 * 60 * 60 * 24));
-
-				/*************************** 2.開始查詢資料 ****************************************/
-				RmTypeService rmTypeSvc = new RmTypeService();
-				// 符合條件的
-
-				HttpSession session = req.getSession();
-//				session.setAttribute("rangedate", rangedate);
-				session.setAttribute("arrival_date", arrival_date);
-				session.setAttribute("departure_date", departure_date);
-				session.setAttribute("qty", qty);
-				session.setAttribute("guest", guest); // 人數只有搜尋時會用到，選完房型改記rm_type_no
-
-				req.setAttribute("rm_type_no", rm_type_no);
-				req.setAttribute("arrival_date", arrival_date);
-				req.setAttribute("departure_date", departure_date);
-				req.setAttribute("qty", qty);
-				req.setAttribute("days", days); // 只有結帳頁會用到
-
-				String url = "/frontend/room/payment.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交前台的rmList.jsp
-				successView.forward(req, res);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+//		if ("payment".equals(action)) {
+//
+//			// 處理錯誤訊息
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			/*************************** 1.接收請求參數 ****************************************/
+//			try {
+//				String arrival = req.getParameter("arrival_date");
+//				if (arrival == null) {
+//					errorMsgs.add("請選擇住宿日期");
+//				}
+//
+//				String departure = req.getParameter("departure_date");
+//				if (departure == null) {
+//					errorMsgs.add("請選擇退房日期");
+//				}
+//
+//				Integer qty = Integer.valueOf(req.getParameter("qty"));
+//				if (qty == null) {
+//					errorMsgs.add("請選擇房間數量");
+//				}
+//
+//				Integer guest = Integer.valueOf(req.getParameter("guest"));
+//				if (guest == null) {
+//					errorMsgs.add("請選擇入住人數");
+//				}
+//				Integer rm_type_no = Integer.valueOf(req.getParameter("rm_type_no"));
+//
+//				// 日期格式處理
+//				List<String> dateList = new LinkedList<String>();
+//				dateList = Arrays.asList(arrival.split("-"));
+//				String arrival_date = dateList.get(2) + "-" + dateList.get(1) + "-" + dateList.get(0);
+//
+//				List<String> dateList1 = new LinkedList<String>();
+//				dateList1 = Arrays.asList(departure.split("-"));
+//				String departure_date = dateList1.get(2) + "-" + dateList1.get(1) + "-" + dateList1.get(0);
+//
+//				java.util.Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(arrival);
+//				java.util.Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(departure);
+//				long from = startDate.getTime();
+//				long to = endDate.getTime();
+//				int days = (int) ((to - from) / (1000 * 60 * 60 * 24));
+//
+//				/*************************** 2.開始查詢資料 ****************************************/
+//				RmTypeService rmTypeSvc = new RmTypeService();
+//				// 符合條件的
+//
+//				HttpSession session = req.getSession();
+////				session.setAttribute("rangedate", rangedate);
+//				session.setAttribute("arrival_date", arrival_date);
+//				session.setAttribute("departure_date", departure_date);
+//				session.setAttribute("qty", qty);
+//				session.setAttribute("guest", guest); // 人數只有搜尋時會用到，選完房型改記rm_type_no
+//
+//				req.setAttribute("rm_type_no", rm_type_no);
+//				req.setAttribute("arrival_date", arrival_date);
+//				req.setAttribute("departure_date", departure_date);
+//				req.setAttribute("qty", qty);
+//				req.setAttribute("days", days); // 只有結帳頁會用到
+//
+//				String url = "/frontend/room/payment.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交前台的rmList.jsp
+//				successView.forward(req, res);
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
 
 		// 產生訂單
 		if ("paying".equals(action)) {
