@@ -157,7 +157,7 @@ td, div {
 										<img src="<%=request.getContextPath()%>/tkt_img2/uploadTktImg.do?tkt_no=${tktVO.tkt_no}&action=showFirstImages" class="tktImgWidth">
 									</c:when>
 									<c:otherwise>
-										<img src="<%=request.getContextPath()%>/frontend/assets/images/hotels/noimages.png" class="no-img">
+										<img src="<%=request.getContextPath()%>/frontend/assets/images/hotels/noimages.png" class="no-img tktImgWidth">
 									</c:otherwise>
 								</c:choose>
 								</td>
