@@ -9,8 +9,14 @@
 <%@ page import="com.mem_coup.model.*"%>
 
 <% 
+
+MemVO memVO = new MemVO();
+memVO = (MemVO)request.getSession().getAttribute("memVO");
+Integer mem_no = memVO.getMem_no();
+
+
 MemCoupService memCoupSrv = new MemCoupService();
-List<MemCoupVO> list = memCoupSrv.listOneMemCoupon(1); // 寫死 mem_no = 1
+List<MemCoupVO> list = memCoupSrv.listOneMemCoupon(mem_no); // 寫死 mem_no = 1
 pageContext.setAttribute("list", list);
 %>
 
