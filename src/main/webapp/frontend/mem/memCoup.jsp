@@ -16,7 +16,7 @@ Integer mem_no = memVO.getMem_no();
 
 
 MemCoupService memCoupSrv = new MemCoupService();
-List<MemCoupVO> list = memCoupSrv.listOneMemCoupon(mem_no); // 寫死 mem_no = 1
+List<MemCoupVO> list = memCoupSrv.listOneMemCoupon(mem_no);
 pageContext.setAttribute("list", list);
 %>
 
@@ -39,7 +39,7 @@ pageContext.setAttribute("list", list);
 
       <div class="col-lg-9">
         <!-- 內容Start -->
-        <div class="col-sm-12 col-md-11">
+        <div class="col-sm-12 col-md-11 mb-5">
         <h3 class="mt-5 mb-3">優惠券列表</h3>
 			<!-- <ul class="nav nav-tabs nav-justified">
 				<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-3-1"> 全部(20) </a> </li>
