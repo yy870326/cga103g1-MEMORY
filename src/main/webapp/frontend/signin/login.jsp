@@ -35,11 +35,11 @@
               <div class="row">
                 <div class="col-md-12 email">
                   <label>信箱</label>
-                  <input type="text" name="mem_email" placeholder="Enter your email here" value="hello@example.com">
+                  <input type="text" name="mem_email" placeholder="Enter your email here">
                 </div>
                 <div class="col-md-12 password">
                   <label>密碼</label>
-                  <input type="password" name="mem_pwd" placeholder="Enter password" value="Password">
+                  <input type="password" name="mem_pwd" placeholder="Enter password">
                 </div>
 
                   <div class="forget-btn">
