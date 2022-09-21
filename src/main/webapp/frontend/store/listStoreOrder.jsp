@@ -196,7 +196,7 @@ div.main-content {
 					<li class="nav-item">
 						<!-- Search -->
 						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
-							<div class="input-group search-area" style="margin-left: 400px;">
+							<div class="input-group search-area" style="margin-left: 350px;">
 								<input class="form-control" type="text" name="rm_order_no"
 									placeholder="請輸入訂單編號"/> <input type="submit"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">

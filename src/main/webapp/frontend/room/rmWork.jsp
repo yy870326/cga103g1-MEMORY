@@ -24,7 +24,6 @@ if (request.getAttribute("orderlist") == null) {
 	pageContext.setAttribute("orderlist", orderlist);
 }
 pageContext.setAttribute("store_no", 1);
-
 %>
 
 
@@ -116,7 +115,6 @@ table.dataTable tbody td {
 }
 
 h3.checkInTitle {
-
 	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
@@ -129,7 +127,6 @@ table#checkInTable tr.odd {
 }
 
 h3.checkOutTitle {
-	
 	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
@@ -142,7 +139,6 @@ table#checkOutTable tr.odd {
 }
 
 h3.stayTitle {
-
 	background: #F2F2F2;
 	padding: 10px;
 	font-weight: 600;
@@ -176,6 +172,10 @@ td.sorting_1 {
 	display: flex;
 	justify-content: center;
 }
+.pt-6, .py-6 {
+    padding-top: 4.5rem !important;
+    width: -webkit-fill-available;
+}
 </style>
 
 
@@ -183,9 +183,8 @@ td.sorting_1 {
 <body>
 	<%@ include file="/frontend/header.file"%>
 	<!-- sidebar -->
-
-	<div class="main-content">
-
+	<%@ include file="/frontend/store/storeSidebar.file"%>
+	<div class="main-content col-lg-9">
 		<div class="d-flex justify-content-around">
 			<div class="col-xl-2 card to-jump">
 				<a href="#checkInTable">
@@ -301,218 +300,220 @@ td.sorting_1 {
 											fill="none" stroke="currentColor" stroke-linecap="round"
 											stroke-linejoin="round" stroke-width="32" /></svg>
 									<a href="">&emsp;${rmVO.rm_name}&emsp;剩餘${rmVO.minqty}間 /
-										${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total} total 
+										${rmReserveSvc.getOneByRm(rmVO.rm_type_no).rm_total} total </a>
 								</h5>
 							</c:forEach>
 						</Form>
 					</div>
-
 				</div>
 			</div>
 		</div>
 
 		<h3 class="checkInTitle text-center">
 			<i class='bx bx-log-in-circle'></i> 今日待入住
-			<h3>
-				<div class="main-content">
-					<div class="align-items-center flex-wrap">
-						<div class="card-tabs mt-3 mt-sm-0">
-							<table id="checkInTable" class="display table fold-table">
-								<thead>
-									<tr>
-										<th>訂單編號</th>
-										<th>房型名稱</th>
-										<th>房間數量</th>
-										<th>會員資料</th>
-										<th class="hidden">會員帳號</th>
-										<th>會員電話</th>
-										<th>入住日</th>
-										<th>退房日</th>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="checkInVO"
-										items="${rmOrderListSvc.getCheckInByStore(store_no)}">
-										<tr>
-											<td>${checkInVO.rm_order_no}</td>
-											<td>${rmTypeSvc.getOneRm(checkInVO.rm_type_no).rm_name}</td>
-											<td>${checkInVO.rm_amount}</td>
-											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
-											<td class="hidden">${rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no}</td>
-											<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
-											<td>${checkInVO.arrival_date}</td>
-											<td>${checkInVO.departure_date}</td>
-											<td><div>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/RmOrder">
-														<input type="submit" class="btn btn-grad" value="訂單資訊">
-														<input type="hidden" name="rm_order_no"
-															value="${checkInVO.rm_order_no}"> <input
-															type="hidden" name="store_no" value="${store_no}">
-														<input type="hidden" name="action" value="getOneStore">
-													</FORM>
-												</div></td>
-											<td><div>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/RmOrder">
-														<input type="submit" class="btn btn-grad" value="入住">
-														<input type="hidden" name="rm_order_no"
-															value="${checkInVO.rm_order_no}"> <input
-															type="hidden" name="action" value="checkIn">
-													</FORM>
-												</div></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
+		</h3>
+		<div class="main-content">
+			<div class="align-items-center flex-wrap">
+				<div class="card-tabs mt-3 mt-sm-0">
+					<table id="checkInTable" class="display table fold-table">
+						<thead>
+							<tr>
+								<th>訂單編號</th>
+								<th>房型名稱</th>
+								<th>房間數量</th>
+								<th>會員資料</th>
+								<th class="hidden">會員帳號</th>
+								<th>會員電話</th>
+								<th>入住日</th>
+								<th>退房日</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="checkInVO"
+								items="${rmOrderListSvc.getCheckInByStore(store_no)}">
+								<tr>
+									<td>${checkInVO.rm_order_no}</td>
+									<td>${rmTypeSvc.getOneRm(checkInVO.rm_type_no).rm_name}</td>
+									<td>${checkInVO.rm_amount}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_name}</td>
+									<td class="hidden">${rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkInVO.rm_order_no).mem_no).mem_mobile}</td>
+									<td>${checkInVO.arrival_date}</td>
+									<td>${checkInVO.departure_date}</td>
+									<td><div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="訂單資訊">
+												<input type="hidden" name="rm_order_no"
+													value="${checkInVO.rm_order_no}"> <input
+													type="hidden" name="store_no" value="${store_no}">
+												<input type="hidden" name="action" value="getOneStore">
+											</FORM>
+										</div></td>
+									<td><div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="入住">
+												<input type="hidden" name="rm_order_no"
+													value="${checkInVO.rm_order_no}"> <input
+													type="hidden" name="action" value="checkIn">
+											</FORM>
+										</div></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
-				<h3 class="checkOutTitle text-center">
-					<i class='bx bx-log-in-circle'></i> 今日待退房
-					<h3>
-						<div class="main-content">
-							<div class="align-items-center flex-wrap">
-								<div class="card-tabs mt-3 mt-sm-0">
-									<table id="checkOutTable" class="display table fold-table">
-										<thead>
-											<tr>
-												<th>訂單編號</th>
-												<th>房型名稱</th>
-												<th>房間數量</th>
-												<th>會員資料</th>
-												<th class="hidden">會員帳號</th>
-												<th>會員電話</th>
-												<th>入住日</th>
-												<th>退房日</th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="checkOutVO"
-												items="${rmOrderListSvc.getCheckOutByStore(store_no)}">
-												<tr>
-													<td>${checkOutVO.rm_order_no}</td>
-													<td>${rmTypeSvc.getOneRm(checkOutVO.rm_type_no).rm_name}</td>
-													<td>${checkOutVO.rm_amount}</td>
-													<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_name}</td>
-													<td class="hidden">${rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no}</td>
-													<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
-													<td>${checkOutVO.arrival_date}</td>
-													<td>${checkOutVO.departure_date}</td>
-													<td><div>
-															<FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/RmOrder">
-																<input type="submit" class="btn btn-grad"
-																	value="訂單資訊"> <input type="hidden"
-																	name="rm_order_no" value="${checkOutVO.rm_order_no}">
-																<input type="hidden" name="store_no" value="${store_no}">
-																<input type="hidden" name="action" value="getOneStore">
-															</FORM>
-														</div></td>
-													<td><div>
-															<FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/RmOrder">
-																<input type="submit" class="btn btn-grad" value="退房">
-																<input type="hidden" name="rm_order_no"
-																	value="${checkOutVO.rm_order_no}"> <input
-																	type="hidden" name="action" value="checkOut">
-															</FORM>
-														</div></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-						</div>
-						<h3 class="stayTitle text-center">
-							<i class='bx bx-log-in-circle'></i> 入住中房間
-							<h3>
-								<div class="main-content">
-									<div class="align-items-center flex-wrap">
-										<div class="card-tabs mt-3 mt-sm-0">
-											<table id="stayTable" class="display table fold-table">
-												<thead>
-													<tr>
-														<th>訂單編號</th>
-														<th>房型名稱</th>
-														<th>房間數量</th>
-														<th>會員資料</th>
-														<th class="hidden">會員帳號</th>
-														<th>會員電話</th>
-														<th>入住日</th>
-														<th>退房日</th>
-														<th></th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="stayVO"
-														items="${rmOrderListSvc.getStayByStore(store_no)}">
-														<tr>
-															<td>${stayVO.rm_order_no}</td>
-															<td>${rmTypeSvc.getOneRm(stayVO.rm_type_no).rm_name}</td>
-															<td>${stayVO.rm_amount}</td>
-															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
-															<td class="hidden">${rmOrderSvc.getOne(stayVO.rm_order_no).mem_no}</td>
-															<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
-															<td>${stayVO.arrival_date}</td>
-															<td>${stayVO.departure_date}</td>
-															<td><div>
-																	<FORM METHOD="post"
-																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-grad"
-																			value="訂單資訊"> <input type="hidden"
-																			name="rm_order_no" value="${stayVO.rm_order_no}">
-																		<input type="hidden" name="store_no"
-																			value="${store_no}"> <input type="hidden"
-																			name="action" value="getOneStore">
-																	</FORM>
-																</div></td>
-															<td><div>
-																	<FORM METHOD="post"
-																		ACTION="<%=request.getContextPath()%>/RmOrder">
-																		<input type="submit" class="btn btn-grad"
-																			value="提早退房"> <input type="hidden"
-																			name="rm_order_no" value="${stayVO.rm_order_no}">
-																		<input type="hidden" name="rm_type_no"
-																			value="${stayVO.rm_type_no}"> <input
-																			type="hidden" name="departure_date"
-																			value="${stayVO.departure_date}"> <input
-																			type="hidden" name="action" value="checkOutEarly">
-																	</FORM>
-																</div></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
+			</div>
+		</div>
+		<h3 class="checkOutTitle text-center">
+			<i class='bx bx-log-in-circle'></i> 今日待退房
+		</h3>
+		<div class="main-content">
+			<div class="align-items-center flex-wrap">
+				<div class="card-tabs mt-3 mt-sm-0">
+					<table id="checkOutTable" class="display table fold-table">
+						<thead>
+							<tr>
+								<th>訂單編號</th>
+								<th>房型名稱</th>
+								<th>房間數量</th>
+								<th>會員資料</th>
+								<th class="hidden">會員帳號</th>
+								<th>會員電話</th>
+								<th>入住日</th>
+								<th>退房日</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="checkOutVO"
+								items="${rmOrderListSvc.getCheckOutByStore(store_no)}">
+								<tr>
+									<td>${checkOutVO.rm_order_no}</td>
+									<td>${rmTypeSvc.getOneRm(checkOutVO.rm_type_no).rm_name}</td>
+									<td>${checkOutVO.rm_amount}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_name}</td>
+									<td class="hidden">${rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(checkOutVO.rm_order_no).mem_no).mem_mobile}</td>
+									<td>${checkOutVO.arrival_date}</td>
+									<td>${checkOutVO.departure_date}</td>
+									<td>
+										<div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="訂單資訊">
+												<input type="hidden" name="rm_order_no"
+													value="${checkOutVO.rm_order_no}"> <input
+													type="hidden" name="store_no" value="${store_no}">
+												<input type="hidden" name="action" value="getOneStore">
+											</FORM>
 										</div>
-									</div>
-								</div>
-								<%@ include file="/frontend/footer.file"%>
-								<%@ include file="/backend/commonJS.file"%>
-								<!-- flatpickr CSS -->
-								<link rel="stylesheet"
-									href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-								<!-- 放置基本JS檔案 -->
-								<script>
-									$("#rangeDate").flatpickr(
-											{
-												mode : "range",
-												dateFormat : "Y-m-d",
-												defaultDate : [
-														"${arrival_date}",
-														"${departure_date}" ],
-												minDate : "today",
-												maxDate : new Date()
-														.fp_incr(90),
-												disable : [],
-											});
-								</script>
+									</td>
+									<td>
+										<div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="退房">
+												<input type="hidden" name="rm_order_no"
+													value="${checkOutVO.rm_order_no}"> <input
+													type="hidden" name="action" value="checkOut">
+											</FORM>
+										</div>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<h3 class="stayTitle text-center">
+			<i class='bx bx-log-in-circle'></i> 入住中房間
+		</h3>
+		<div class="main-content">
+			<div class="align-items-center flex-wrap">
+				<div class="card-tabs mt-3 mt-sm-0">
+					<table id="stayTable" class="display table fold-table">
+						<thead>
+							<tr>
+								<th>訂單編號</th>
+								<th>房型名稱</th>
+								<th>房間數量</th>
+								<th>會員資料</th>
+								<th class="hidden">會員帳號</th>
+								<th>會員電話</th>
+								<th>入住日</th>
+								<th>退房日</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="stayVO"
+								items="${rmOrderListSvc.getStayByStore(store_no)}">
+								<tr>
+									<td>${stayVO.rm_order_no}</td>
+									<td>${rmTypeSvc.getOneRm(stayVO.rm_type_no).rm_name}</td>
+									<td>${stayVO.rm_amount}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_name}</td>
+									<td class="hidden">${rmOrderSvc.getOne(stayVO.rm_order_no).mem_no}</td>
+									<td>${memSvc.getOneMem(rmOrderSvc.getOne(stayVO.rm_order_no).mem_no).mem_mobile}</td>
+									<td>${stayVO.arrival_date}</td>
+									<td>${stayVO.departure_date}</td>
+									<td>
+										<div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="訂單資訊">
+												<input type="hidden" name="rm_order_no"
+													value="${stayVO.rm_order_no}"> <input type="hidden"
+													name="store_no" value="${store_no}"> <input
+													type="hidden" name="action" value="getOneStore">
+											</FORM>
+										</div>
+									</td>
+									<td>
+										<div>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/RmOrder">
+												<input type="submit" class="btn btn-grad" value="退房">
+												<input type="hidden" name="rm_order_no"
+													value="${stayVO.rm_order_no}"> <input type="hidden"
+													name="rm_type_no" value="${stayVO.rm_type_no}"> <input
+													type="hidden" name="departure_date"
+													value="${stayVO.departure_date}"> <input
+													type="hidden" name="action" value="checkOutEarly">
+											</FORM>
+										</div>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%@ include file="/frontend/footer.file"%>
+	<%@ include file="/frontend/commonJS.file"%>
+	<%@ include file="/backend/commonJS.file"%>
+	<!-- flatpickr CSS -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<!-- 放置基本JS檔案 -->
+	<script>
+		$("#rangeDate").flatpickr({
+			mode : "range",
+			dateFormat : "Y-m-d",
+			defaultDate : [ "${arrival_date}", "${departure_date}" ],
+			minDate : "today",
+			maxDate : new Date().fp_incr(90),
+			disable : [],
+		});
+	</script>
 </body>
 </html>
