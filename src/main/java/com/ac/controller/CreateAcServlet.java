@@ -43,7 +43,8 @@ public class CreateAcServlet extends HttpServlet {
         res.setContentType("text/html; charset=UTF-8");
         System.out.println("request 過來了");
         HttpSession session = req.getSession();
-        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+        Integer memSpecNo = (Integer) session.getAttribute("memSpecNo");
+//        Integer memNo1 = (Integer) session.getAttribute("memNo1");
         
         
 		// String createAc = req.getParameter("action");
@@ -110,10 +111,10 @@ public class CreateAcServlet extends HttpServlet {
 			
 			/*************************** 2.開始新增資料 ***************************************/
 			AcServiceImpl acServiceImpl = new AcServiceImpl();
-			acVO.setMem_no(memNo1);
+			acVO.setMem_no(memSpecNo);
 			acVO.setAc_time(LocalDateTime.now());
 			Integer i = acServiceImpl.createAc(acVO);
-			System.out.println("i： " + i);
+//			System.out.println("i： " + i);
 			session.setAttribute("afterCreateAcNo", i);
 			
 			
