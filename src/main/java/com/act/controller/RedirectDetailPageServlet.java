@@ -27,10 +27,10 @@ public class RedirectDetailPageServlet extends HttpServlet {
 		
 		if ("actInner".equals(action)) {
         	try {
-        		res.sendRedirect("/CGA103G1/frontend/act/actDetailJoinPage.html");
+        		res.sendRedirect("/CGA103G1/frontend/act/actDetailJoinPage2.jsp");
 				return;
 			} catch (Exception e) {
-				res.sendRedirect("/CGA103G1/frontend/act/actSearchListPage.html");
+				res.sendRedirect("/CGA103G1/frontend/act/actSearchListPage2.jsp");
 				return;
 			}
 		}
