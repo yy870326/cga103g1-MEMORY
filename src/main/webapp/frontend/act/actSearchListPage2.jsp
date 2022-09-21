@@ -35,10 +35,12 @@
 </head>
 
 <body>
-  
-  <header class="header-static navbar-sticky navbar-light shadow">
 
-  </header>
+  	<%@ include file="/frontend/header.file" %>
+  
+<!--   <header class="header-static navbar-sticky navbar-light shadow"> -->
+
+<!--   </header> -->
 
   <!-- 	Banner innerpage -->
   <div id="actBanner">
@@ -257,9 +259,11 @@
 
 
   <!--  footer  -->
-  <footer class="footer footer-dark pt-6 position-relative">
+  	<%@ include file="/frontend/footer.file" %>
 
-  </footer>
+<!--   <footer class="footer footer-dark pt-6 position-relative"> -->
+
+<!--   </footer> -->
     <!-- footer  -->
 
 
@@ -270,7 +274,7 @@
     </script>
          
 
-    <script src="/CGA103G1/frontend/act/ownJS/includeFooterHeader.js" type="text/javascript"></script>
+<!--     <script src="/CGA103G1/frontend/act/ownJS/includeFooterHeader.js" type="text/javascript"></script> -->
     <script src="/CGA103G1/frontend/act/ownJS/includeActBanner.js" type="text/javascript"></script>
     <script src="/CGA103G1/frontend/act/ownJS/actSearchListPage.js" type="text/javascript"></script>
 

@@ -29,9 +29,11 @@
 
 <body>
 
-  <header class="header-static navbar-sticky navbar-light shadow">
+	<%@ include file="/frontend/header.file" %>
 
-  </header>
+<!--   <header class="header-static navbar-sticky navbar-light shadow"> -->
+
+<!--   </header> -->
 
 
   <div id="actBanner">
@@ -65,13 +67,15 @@
 
 
   <!--  footer  -->
-  <footer class="footer footer-dark pt-6 position-relative">
+  	<%@ include file="/frontend/footer.file" %>
+  
+<!--   <footer class="footer footer-dark pt-6 position-relative"> -->
 
-  </footer>
+<!--   </footer> -->
   <!-- footer  -->
 
   <script src="/CGA103G1/frontend/act/ownJS/actDetailJoin.js" type="text/javascript"></script>
-  <script src="/CGA103G1/frontend/act/ownJS/includeFooterHeader.js" type="text/javascript"></script>
+<!--   <script src="/CGA103G1/frontend/act/ownJS/includeFooterHeader.js" type="text/javascript"></script> -->
   <script src="/CGA103G1/frontend/act/ownJS/includeActBanner.js" type="text/javascript"></script>
   <script src="/CGA103G1/frontend/act/ownJS/getOneActDetailPage.js" type="text/javascript"></script>
 
