@@ -29,16 +29,19 @@ public class JoinActServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 		Integer actNo =  (Integer) session.getAttribute("actNo");
+		
+		Integer memSpecNo =  (Integer) session.getAttribute("memSpecNo");
 		Integer memNo1 =  (Integer) session.getAttribute("memNo1");
 		Integer memNo2 = (Integer) session.getAttribute("memNo2");
 		Integer memNo3 = (Integer) session.getAttribute("memNo3");
 
+		String memSpecEmail = (String) session.getAttribute("memSpecEmail");
 		String memLoginEmail1 = (String) session.getAttribute("memNoEmail1");
 		String memLoginEmail2 = (String) session.getAttribute("memNoEmail2");
-		String memLoginEmail3 = (String) session.getAttribute("memNoEmail3");
+//		String memLoginEmail3 = (String) session.getAttribute("memNoEmail3");
 	
 		MemService memService = new MemService();
-		String memEmail = memService.getOneMem(1).getMem_email();
+		String memEmail = memService.getOneMem(memSpecNo).getMem_email();
 		Gson gson = new Gson();
 		ActService actService = new ActService();
 		ActParticipantService actParticipantService = new ActParticipantService();
@@ -49,7 +52,7 @@ public class JoinActServlet extends HttpServlet {
 		boolean isJoin = false;
 		
 		for (ActParticipantVO actParticipantVO : findActPartiMenNoList) {
-			if(actParticipantVO.getMem_no() == memNo1) {
+			if(actParticipantVO.getMem_no() == memSpecNo) {
 				isJoin = true;
 			}
 		}		
@@ -64,9 +67,9 @@ public class JoinActServlet extends HttpServlet {
 		System.out.println("actCurrentCount: " + actCurrentCount);
 		
 		if(!isJoin) {
-			if ((memEmail).equals(memLoginEmail3) && actMaxCount > actCurrentCount) {
+			if ((memEmail).equals(memSpecEmail) && actMaxCount > actCurrentCount) {
 			    LocalDateTime currentTime = LocalDateTime.now();
-				actParticipantService.addActParticipant(actNo, memNo1, currentTime);			
+				actParticipantService.addActParticipant(actNo, memSpecNo, currentTime);			
 				String resInfo ="";			
 				actService.updateActPeopleAmount(actNo, actCurrentCount+1);
 				resInfo = gson.toJson("加入成功");
