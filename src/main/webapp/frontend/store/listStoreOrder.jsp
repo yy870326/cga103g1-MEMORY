@@ -303,14 +303,14 @@ div.main-content {
 											</c:if>
 										</td>
 										<td><div>
-												<FORM METHOD="post"
+												<FORM METHOD="post" id="storeCancel${rmOrderVO.rm_order_no}"
 													ACTION="<%=request.getContextPath()%>/RmOrder">
-													<input
-														type="${rmOrderVO.rm_order_status==1 ? 'submit' : 'hidden' }"
+													<input onclick="cancel(${rmOrderVO.rm_order_no})"
+														type="${rmOrderVO.rm_order_status==1 ? 'button' : 'hidden' }"
 														class="btn btn-primary" style="background-color: #5bc9e2"
 														value="取消訂單"> <input type="hidden"
 														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
-													<input type="hidden" name="action" value="cancel">
+													<input type="hidden" name="action" value="storeCancel">
 												</FORM>
 											</div></td>
 									</tr>
@@ -334,6 +334,13 @@ div.main-content {
 				$(this).toggleClass("open").next(".fold").toggleClass("open");
 			});
 		});
+		
+		function cancel(rm_order_no) {
+			let storeCancel = document.getElementById("storeCancel"+rm_order_no);
+		            if (confirm('確定取消訂單?')) {
+		            	storeCancel.submit();
+		            }
+		        };
 	</script>
 </body>
 </html>

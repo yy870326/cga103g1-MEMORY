@@ -172,9 +172,10 @@ td.sorting_1 {
 	display: flex;
 	justify-content: center;
 }
+
 .pt-6, .py-6 {
-    padding-top: 4.5rem !important;
-    width: -webkit-fill-available;
+	padding-top: 4.5rem !important;
+	width: -webkit-fill-available;
 }
 </style>
 
@@ -353,9 +354,9 @@ td.sorting_1 {
 											</FORM>
 										</div></td>
 									<td><div>
-											<FORM METHOD="post"
+											<FORM METHOD="post" id="checkIn${checkInVO.rm_order_no}"
 												ACTION="<%=request.getContextPath()%>/RmOrder">
-												<input type="submit" class="btn btn-grad" value="入住">
+												<input onclick="checkIn(${checkInVO.rm_order_no})" type="button" class="btn btn-grad" value="入住">
 												<input type="hidden" name="rm_order_no"
 													value="${checkInVO.rm_order_no}"> <input
 													type="hidden" name="action" value="checkIn">
@@ -415,9 +416,9 @@ td.sorting_1 {
 									</td>
 									<td>
 										<div>
-											<FORM METHOD="post"
+											<FORM METHOD="post" id="checkOut${checkOutVO.rm_order_no}"
 												ACTION="<%=request.getContextPath()%>/RmOrder">
-												<input type="submit" class="btn btn-grad" value="退房">
+												<input onclick="checkOut(${checkOutVO.rm_order_no})" type="button" class="btn btn-grad" value="退房">
 												<input type="hidden" name="rm_order_no"
 													value="${checkOutVO.rm_order_no}"> <input
 													type="hidden" name="action" value="checkOut">
@@ -478,9 +479,9 @@ td.sorting_1 {
 									</td>
 									<td>
 										<div>
-											<FORM METHOD="post"
+											<FORM METHOD="post" id="stay${stayVO.rm_order_no}"
 												ACTION="<%=request.getContextPath()%>/RmOrder">
-												<input type="submit" class="btn btn-grad" value="退房">
+												<input onclick="stay(${stayVO.rm_order_no})" type="button" class="btn btn-grad" value="退房">
 												<input type="hidden" name="rm_order_no"
 													value="${stayVO.rm_order_no}"> <input type="hidden"
 													name="rm_type_no" value="${stayVO.rm_type_no}"> <input
@@ -514,6 +515,28 @@ td.sorting_1 {
 			maxDate : new Date().fp_incr(90),
 			disable : [],
 		});
+
+		function checkIn(rm_order_no) {
+			let checkIn = document.getElementById("checkIn"+rm_order_no);
+			if (confirm('確認資料無誤，辦理入住?')) {
+				checkIn.submit();
+			}
+		};
+		
+		function checkOut(rm_order_no) {
+			let checkOut = document.getElementById("checkOut"+rm_order_no);
+			if (confirm('確定辦理退房?')) {
+				checkOut.submit();
+			}
+		};
+		
+		function stay(rm_order_no) {
+			let stay = document.getElementById("stay"+rm_order_no);
+			if (confirm('確定提前辦理退房?')) {
+				stay.submit();
+			}
+		};
+		
 	</script>
 </body>
 </html>
