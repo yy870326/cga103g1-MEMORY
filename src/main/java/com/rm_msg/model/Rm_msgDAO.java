@@ -78,6 +78,8 @@ public class Rm_msgDAO implements I_Rm_msgDAO{
 					ps.setInt(3, rm_msgVO.getRm_msg_status());
 					ps.setDate(4, rm_msgVO.getRm_msg_donetime());
 					ps.setInt(5, rm_msgVO.getRm_msg_no());
+					
+					ps.executeUpdate();
 		}catch(SQLException e){
 			throw new RuntimeException("A database error occured. "
 					+ e.getMessage());

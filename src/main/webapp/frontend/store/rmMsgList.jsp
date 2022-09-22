@@ -35,6 +35,8 @@
  
  pageContext.setAttribute("list", list);
  
+ Rm_msgVO rmmsgVO =(Rm_msgVO)request.getAttribute("rmmsgVO");
+ 
  
   
  
@@ -199,6 +201,7 @@ div.main-content {
 					<th>會員編號</th>
 					<th>廠商編號</th>
 					<th>投訴日期</th>
+					<th>處理狀態</th>
 					
 				</tr>
 			</thead>
@@ -211,6 +214,7 @@ div.main-content {
 						<td>${rm_msgVO.mem_no}</td>
 						<td>${rm_msgVO.store_no}</td>
 						<td>${rm_msgVO.rm_msg_date}</td>
+						<td>${rm_msgVO.rm_msg_status}</td>
 
 					</tr>
 					<tr class="fold">
@@ -220,10 +224,20 @@ div.main-content {
 									<div>訊息內容：${rm_msgVO.rm_msg_reason}</div>
 								</div>
 							</div>
+							<div>
+								<div>
+									<form method="post" action="<%=request.getContextPath()%>/RmMsgServlet">
+										<input type="submit" value="審核">
+										<input type="hidden" name="storeNO" value="${rm_msgVO.store_no}">
+										<input type="hidden" name="action" value="rmMsgUpdate">
+									</form>	
+								</div>
+							</div>
 						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
+
 		</table>
 	</div>
 
