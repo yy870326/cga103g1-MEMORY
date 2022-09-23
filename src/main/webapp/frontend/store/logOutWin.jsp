@@ -49,8 +49,8 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 	</head>
 
 	<body>
-		<%@ include file="/backend/loading.file" %> <!-- loading -->
-		<%@ include file="/backend/header.file" %> <!-- Header -->
+
+		<%@ include file="/frontend/header.file" %> <!-- Header -->
 		
 
 		
@@ -59,13 +59,14 @@ StoreVO storeVO = (StoreVO)request.getAttribute("storeVO");
 <div class="main-content card card-body table-responsive" >
 
 	<div>
-		<div><h1>以登出，將回到首頁</h1><div>
+		<div><h1>以登出，將回到首頁</h1></div>
 		<div>
 		<a href="<%=request.getContextPath()%>/frontend/homePage.jsp">如沒反應請按此回到首頁</a>
 		</div>
 	</div>
+</div>		
 
-</div>
+
 
 		<%@ include file="/backend/commonJS.file" %> <!-- JS -->
 		<script>
