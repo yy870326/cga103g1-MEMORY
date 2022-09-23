@@ -152,6 +152,8 @@
 							<div class="row col-12 d-flex justify-content-between">
 								<div>每晚每間單價</div>
 								<div><fmt:formatNumber value="${rmOrderListVO.rm_price}" pattern="NT$ ###,###" /></div>
+								<div>本次訂房總價</div>
+								<div><fmt:formatNumber value="${rmOrderListVO.rm_price*days}" pattern="NT$ ###,###" /></div>
 							</div>
 							<hr>
 <!-- 							<div class="row col-12 d-flex justify-content-between"> -->

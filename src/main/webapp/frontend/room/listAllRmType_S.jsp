@@ -215,7 +215,7 @@
 						<input type="hidden" name="action" value="${rmTypeVO.rm_update == 0 ? 'no' : 'on'}"></FORM>
 						</td>
 						<td>
-			     		<a class="btn btn-secondary1 btn-sm" href="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShowImages"><i class='bx bxs-image'></i>查看/新增圖片</a>
+			     		<a class="btn btn-secondary1 btn-sm" href="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShowImages"><i class='bx bxs-image'></i>查看/新增照片</a>
 						</td>
 						<td>
 						<a class="btn light btn-secondary1" href="<%=request.getContextPath()%>/rmtype/rmtype.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForUpdate"><i class='bx bxs-pencil'></i>修改</a>
