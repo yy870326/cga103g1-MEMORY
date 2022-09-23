@@ -25,7 +25,7 @@ if (request.getAttribute("orderlist") == null) {
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-
+pageContext.setAttribute("store_no", store_no);
 %>
 
 <!DOCTYPE html>
