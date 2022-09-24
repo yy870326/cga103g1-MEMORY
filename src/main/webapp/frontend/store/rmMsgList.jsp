@@ -214,7 +214,20 @@ div.main-content {
 						<td>${rm_msgVO.mem_no}</td>
 						<td>${rm_msgVO.store_no}</td>
 						<td>${rm_msgVO.rm_msg_date}</td>
-						<td>${rm_msgVO.rm_msg_status}</td>
+						<td>
+							<c:choose>
+								<c:when test="${rm_msgVO.rm_msg_status == 0}">
+								<i>未處理</i>
+								</c:when>
+								<c:when test="${rm_msgVO.rm_msg_status == 1}">
+								<i>已通過</i>
+								</c:when>
+								<c:when test="${rm_msgVO.rm_msg_status == 2}">
+								<i>未通過</i>
+								</c:when>
+								
+							</c:choose>
+						</td>
 
 					</tr>
 					<tr class="fold">
