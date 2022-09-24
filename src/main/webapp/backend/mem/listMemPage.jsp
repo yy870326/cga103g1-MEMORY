@@ -170,9 +170,9 @@ pageContext.setAttribute("memList", memList);
 			let memName = object.elements['memName'].value;
 			let memEmail = object.elements['memEmail'].value;
 			let memMobile = object.elements['memMobile'].value;
-			const namexp = new RegExp('^[\u4E00-\u9FA5]');
-			const emailxp = new RegExp('/\S+@\S+\.\S+/');
-			const mobilexp = new RegExp('^09\d{8}$');
+			const namexp = /^[\u4E00-\u9FA5]{2,4}$/;
+			const emailxp = /\S+@\S+\.\S+/;
+			const mobilexp = /^[0-9]{10}$/;
 
 			if (memName === '' || memEmail === '' || memMobile === '') {
 				alert('欄位不能為空');
@@ -180,8 +180,11 @@ pageContext.setAttribute("memList", memList);
 			}else if (!namexp.test(memName)) {
 				alert('格式錯誤,請輸入中文姓名');
 				return false;
-			}else if (!accxp.test(memEmail)) {
+			}else if (!emailxp.test(memEmail)) {
 				alert('Email格式錯誤,請重新確認');
+				return false;
+			}else if (!mobilexp.test(memMobile)) {
+				alert('手機格式錯誤,請重新確認');
 				return false;
 			}else
 			object.submit();

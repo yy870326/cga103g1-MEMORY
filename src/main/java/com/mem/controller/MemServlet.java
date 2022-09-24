@@ -522,6 +522,51 @@ byte[] mem_pic =req.getPart("mem_pic").getInputStream().readAllBytes();
 	        			out.close();
 	        			return;
 	        		}
+	        	if ("updateMemB".equals(action)) {
+	    			
+	    			List<String> errorMsgs = new LinkedList<String>();
+	    			// Store this set in the request scope, in case we need to
+	    			// send the ErrorPage view.
+	    			req.setAttribute("errorMsgs", errorMsgs);
+	    		
+	    				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+	    				Integer mem_no = Integer.valueOf(req.getParameter("memNo").trim());
+	    				 String mem_name = req.getParameter("memName");
+	    				 String mem_gender = req.getParameter("memGender"); 
+	    				 String mem_email = req.getParameter("memEmail"); 
+	    				 String mem_mobile = req.getParameter("memMobile");
+	    				 String mem_city = req.getParameter("memCity");
+	    				 String mem_dist = req.getParameter("memDist");
+	    				 String mem_addr = req.getParameter("memAddr");
+	    				
+	    				  MemVO memVO = new MemVO();
+	    				  	 memVO.setMem_no(mem_no);
+	    					 memVO.setMem_name(mem_name);
+	    					 memVO.setMem_gender(mem_gender);
+	    					 memVO.setMem_email(mem_email);
+	    					 memVO.setMem_mobile(mem_mobile);
+	    					 memVO.setMem_city(mem_city);
+	    					 memVO.setMem_dist(mem_dist);
+	    					 memVO.setMem_addr(mem_addr);
+	    				// Send the use back to the form, if there were errors
+	    				if (!errorMsgs.isEmpty()) {
+	    					req.setAttribute("memVO", memVO);
+	    					RequestDispatcher failureView = req
+	    							.getRequestDispatcher("/backend/mem/listMemPage.jsp");
+	    					failureView.forward(req, res);
+	    					return; //程式中斷
+	    				}
+	    				
+	    				/***************************2.開始修改資料*****************************************/
+	    				MemService memSvc = new MemService();
+	    				memVO = memSvc.updateMemB(mem_name, mem_gender, mem_email, mem_mobile, mem_city,mem_dist,mem_addr,mem_no);
+	    				
+	    				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+	    				req.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
+	    				String url = "/backend/mem/listMemPage.jsp";
+	    				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMemPage.jsp
+	    				successView.forward(req, res);
+	    		}
 		
 	}
 	

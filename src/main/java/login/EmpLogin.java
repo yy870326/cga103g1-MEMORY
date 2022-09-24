@@ -58,7 +58,7 @@ public class EmpLogin extends HttpServlet {
          }
        }catch (Exception ignored) { }
 
-      res.sendRedirect(req.getContextPath()+"/backend/index.jsp");  //*工作3: (-->如無來源網頁:則重導至login_success.jsp)
+      res.sendRedirect(req.getContextPath()+"/backend/mem/listMemPage.jsp");  //*工作3: (-->如無來源網頁:則重導至login_success.jsp)
     }
   }
 }
