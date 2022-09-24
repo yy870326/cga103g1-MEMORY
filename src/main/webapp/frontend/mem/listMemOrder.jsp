@@ -18,12 +18,15 @@
 	class="com.rm_order_list.model.RmOrderListService" />
 
 <%
+
+MemVO memVO = new MemVO();
+memVO = (MemVO)request.getSession().getAttribute("memVO");
+Integer mem_no = memVO.getMem_no();
 if (request.getAttribute("orderlist") == null) {
-	Integer mem_no = 2;
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("mem_no", 2);
+pageContext.setAttribute("mem_no", mem_no);
 %>
 
 <!DOCTYPE html>

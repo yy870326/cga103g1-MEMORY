@@ -18,12 +18,14 @@
 	class="com.rm_order_list.model.RmOrderListService" />
 
 <%
+StoreVO storeVO = new StoreVO();
+storeVO = (StoreVO)request.getSession().getAttribute("storevo");
+Integer store_no = storeVO.getStore_no();
 if (request.getAttribute("orderlist") == null) {
-	Integer store_no = 1;
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("store_no", 1);
+pageContext.setAttribute("store_no", store_no);
 %>
 
 <!DOCTYPE html>
