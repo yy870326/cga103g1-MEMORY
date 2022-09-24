@@ -166,7 +166,7 @@ div.main-content {
 	<%@ include file="/frontend/memSidebar.file"%>
 	<div class="col-lg-9">
 		<h3 class="mt-5 mb-3">會員訂房訂單管理</h3>
-		<div style="margin-left: 850px;">
+		<div style="margin-left: 750px;">
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<c:forEach var="message" items="${errorMsgs}">
@@ -183,7 +183,7 @@ div.main-content {
 					<li class="nav-item">
 						<!-- Search -->
 						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
-							<div class="input-group search-area" style="margin-left: 700px;">
+							<div class="input-group search-area" style="margin-left: 600px;">
 								<input class="form-control" type="text" name="rm_order_no"
 									placeholder="請輸入訂單編號" /> <input type="submit"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
@@ -290,10 +290,10 @@ div.main-content {
 										</td>
 										<td>
 											<div>
-												<FORM METHOD="post"
+												<FORM METHOD="post" id="memCancel${rmOrderVO.rm_order_no}"
 													ACTION="<%=request.getContextPath()%>/RmOrder">
-													<input
-														type="${rmOrderVO.rm_order_status==1 ? 'submit' : 'hidden' }"
+													<input onclick="cancel(${rmOrderVO.rm_order_no})"
+														type="${rmOrderVO.rm_order_status==1 ? 'button' : 'hidden' }"
 														class="btn btn-primary" style="background-color: #5bc9e2"
 														value="取消訂單"> <input type="hidden"
 														name="rm_order_no" value="${rmOrderVO.rm_order_no}">
@@ -322,6 +322,14 @@ div.main-content {
 				$(this).toggleClass("open").next(".fold").toggleClass("open");
 			});
 		});
+		
+		function cancel(rm_order_no) {
+		let memCancel = document.getElementById("memCancel"+rm_order_no);
+	            if (confirm('確定取消訂單?')) {
+	            	memCancel.submit();
+	            }
+	        };
+		
 	</script>
 </body>
 </html>

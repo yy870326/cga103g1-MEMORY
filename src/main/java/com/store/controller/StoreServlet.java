@@ -351,9 +351,9 @@ public class StoreServlet extends HttpServlet {
 			//======廠商密碼=======
 			String store_pwd = req.getParameter("store_pwd");
 			if(store_pwd == null|| store_pwd.trim().length() == 0) {
-				errorMsgs.put("store_pwd", "廠商帳號請勿空白");
+				errorMsgs.put("store_pwd", "廠商密碼請勿空白");
 			}else if(!store_pwd.trim().matches(reg)) {
-				errorMsgs.put("store_pwd", "廠商帳號只能是英文字母、數字，長度必須在7~20之間");
+				errorMsgs.put("store_pwd", "廠商密碼只能是英文字母、數字，長度必須在7~20之間");
 			}
 			//======廠商帳號狀態 0, 1, 2=======
 			Integer acc_status = Integer.valueOf(req.getParameter("acc_status").trim());

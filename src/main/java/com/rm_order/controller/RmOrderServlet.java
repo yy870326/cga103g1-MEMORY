@@ -80,6 +80,7 @@ public class RmOrderServlet extends HttpServlet {
 				Integer rm_order_status = new Integer(req.getParameter("rm_order_status"));
 
 				/*************************** 2.開始查詢資料 ****************************************/
+				// 取得廠商訂單資料(不包含已取消訂單)
 				RmOrderService rmOrderSvc = new RmOrderService();
 				List<RmOrderVO> orderlist = 
 						rmOrderSvc.getStoreStatus(store_no, rm_order_status)
@@ -104,6 +105,7 @@ public class RmOrderServlet extends HttpServlet {
 				Integer rm_order_status = new Integer(req.getParameter("rm_order_status"));
 				
 				/*************************** 2.開始查詢資料 ****************************************/
+				// 取得廠商 已取消訂單資料
 				RmOrderService rmOrderSvc = new RmOrderService();
 				List<RmOrderVO> orderlist = 
 						rmOrderSvc.getStoreStatus(store_no, rm_order_status)

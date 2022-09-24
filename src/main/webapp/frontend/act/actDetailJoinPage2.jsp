@@ -51,7 +51,7 @@
         <!-- 右邊 sidebar -->
         <div class="col-lg-3 col-md-12 col-sm-12 right_Details text-center">
           <div class="p-4 shadow ml-lg-4 rounded sticky-top" style="top: 100px">
-            <a class="btn btn-danger text-center" id="reportBtn">
+            <a href="<%=request.getContextPath()%>/frontend/act_rp/act_rp.jsp" class="btn btn-danger text-center" id="reportBtn">
               檢舉活動
             </a>
             <hr class="my-3" />

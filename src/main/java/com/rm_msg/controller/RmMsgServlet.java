@@ -127,5 +127,71 @@ public class RmMsgServlet extends HttpServlet {
 				successView.forward(req, res);
 			
 			}
+			
+			if("rmMsgUpdate".equals(action)) {
+				Map<String, String> errorMsgs = new LinkedHashMap<>();
+				req.setAttribute("errorMsgs", errorMsgs);
+				
+				String storeNO = req.getParameter("storeNO");
+				Integer storeno = Integer.valueOf(storeNO);
+				
+				Rm_msgService rmSvc = new Rm_msgService();
+				Rm_msgVO rm_msgVO = rmSvc.getOnByStoreNumber(storeno);
+				
+				req.setAttribute("rm_msgVO", rm_msgVO);
+				String url = "/frontend/store/rmMsgUpdate.jsp";
+				RequestDispatcher sucessView = req.getRequestDispatcher(url);
+				sucessView.forward(req, res);
+				
+			}
+			
+			if("rmMsgUpdated".equals(action)) {
+				
+				Map<String, String> errorMsgs = new LinkedHashMap<>();
+				req.setAttribute("errorMsgs", errorMsgs);
+				
+				String rm_msg_no = req.getParameter("rm_msg_no");
+				Integer rmmsgno = Integer.valueOf(rm_msg_no);
+				
+				String emp_no = req.getParameter("emp_no");
+				Integer empno = Integer.valueOf(emp_no);
+				
+				String store_no = req.getParameter("store_no");
+				Integer storeno = Integer.valueOf(store_no);
+				
+				java.sql.Date rmmsgdonetime = null;
+				try {
+					rmmsgdonetime = java.sql.Date.valueOf(req.getParameter("rm_msg_donetime"));
+				}catch(IllegalArgumentException e) {
+					rmmsgdonetime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.put("store_reg_date","請輸入日期");
+				}
+				
+				
+				Integer rmmsgstatus = Integer.valueOf(req.getParameter("rm_msg_status"));
+			
+				Rm_msgVO rmmsgVO = new Rm_msgVO();
+				rmmsgVO.setRm_msg_no(rmmsgno);
+				rmmsgVO.setEmp_no(empno);
+				rmmsgVO.setStore_no(storeno);
+				rmmsgVO.setRm_msg_donetime(rmmsgdonetime);
+				rmmsgVO.setRm_msg_status(rmmsgstatus);
+				
+				if(!errorMsgs.isEmpty()) {
+					RequestDispatcher failView = req.getRequestDispatcher("frontend/store/rmMsgUpdate.jsp");
+					failView.forward(req, res);
+					
+				}
+				
+				Rm_msgService rmSvc = new Rm_msgService();
+				rmmsgVO = rmSvc.updateRm_msg(rmmsgno, empno, storeno, rmmsgstatus, rmmsgdonetime);
+				
+				req.setAttribute("rmmsgVO", rmmsgVO);
+				String url = "/frontend/store/rmMsgList.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+				
+			}
 	}
 }
