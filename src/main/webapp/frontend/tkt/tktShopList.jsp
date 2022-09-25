@@ -15,6 +15,9 @@ List<TktVO> list = tktSvc.getAllByStatus();
 pageContext.setAttribute("list", list);
 
 
+/* Integer allNum = (Integer)request.getSession().getAttribute("cartAllNum");
+System.out.println(allNum);  */ // 這邊刷新可取到購物車值
+
 
 /* Integer cartItemNum = (Integer)request.getAttribute("cartItemNum");
 System.out.println(cartItemNum);
@@ -87,7 +90,30 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
 .badgeNum-warning[href] {
   background-color: #c67605;
 }
-	
+
+.cartBtnDrop {
+	left: 50px;
+
+}
+.dropdown-toggle::after {
+	display: none !important;
+}
+/* .padding-20 {
+	padding: 20px;
+} */
+.dropdown-menu {
+	width: 280px;
+	text-align: center;
+	border: 3px solid #5bc6df;
+	border-radius: 15px;
+}
+.pr-15 {
+	padding-right: 15px !important;
+}
+.pd-10 {
+	padding: 10px;
+}
+
 	</style>
 
 </head>
@@ -253,10 +279,38 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
       
        <!-- 可能要加在全站下面 -->
       
- 	  <a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn cartBtn">	
+ 	  <%-- <a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn cartBtn">	
 		<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
-		<!-- <span class="badgeNum badgeNum-warning" id="cartNum">0</span> -->
-      </a>
+		<span class="badgeNum badgeNum-warning" id="cartNum">0</span>
+      </a> --%>
+      
+
+      
+      	<div class="btn-group dropup cartBtn">
+  		<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		<i class="fa fa-shopping-cart cartIcon" aria-hidden="true"></i>      	
+			<span class="badgeNum badgeNum-warning" id="cartNum">0</span>
+  		</button>
+  		<div class="dropdown-menu pd-10">
+  			<p>購物車明細</p>
+  			<div class="dropdown-divider"></div>
+  			<table>
+  				<thead class="all-text-white bg-grad">
+					<tr>
+						<th class="pr-15">票券名稱</th>
+						<th class="pr-15">單價</th>
+						<th class="pr-15">數量</th>
+					</tr>
+				</thead>
+				<tbody class="cartDropUp">
+				</tbody>
+  			</table>
+  			<div class="dropdown-divider"></div>
+    		<a href="<%=request.getContextPath()%>/cart/getCart.do" class="btn btn-primary">前往購物車</a>	
+  	  	</div>
+	 </div>
+	 
+      
 
     </div>
   </div>
@@ -281,9 +335,65 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
 	const addItem = document.querySelectorAll('.addItem');
  	const tkt_no = document.querySelectorAll('.tkt_no');
  	const count = document.querySelectorAll('.count');
- 	/* const cartNum = document.querySelector('#cartNum');
- 	const cartQty = document.querySelector('#cartNum').innerText; */
-
+ 	const cartNum = document.querySelector('#cartNum');
+ 	const cartDropUp = document.querySelector('.cartDropUp');
+ 	/* const cartQty = document.querySelector('#cartNum').innerText; */
+	/* cartNum.innerText = ${allNum} */
+	
+	// 載入商品單一頁面或商品列表頁就自動初始化
+ 	
+	
+	
+	
+ 	function init(){ 
+ 		axios({
+ 	 		"method": "post", 
+ 	 		"url": "/CGA103G1/cart/initCart.do"
+ 		}).then(function (response) {
+ 	    	console.log(response);
+ 	    	getCartNum();
+ 		}).catch(function (error) {
+ 	    	console.log(error);
+ 		});
+ 		
+ 	}
+ 	// 當畫面載入時初始化
+ 	window.onload = init();
+ 	
+ 	// 存購物車商品數量
+ 	/* let cartNums = 0; */
+ 	// 取得後端傳來的購物車JSON
+ 	function getCartNum() {
+ 		axios({
+	 		"method": "post", 
+	 		"url": "/CGA103G1/cart/getCartCount.do"
+		}).then(function (data) {
+			console.log(data);
+			console.log(data.data.length);
+			/* cartNums = data.data.length; */
+			let html ="";
+			cartNum.innerText = data.data.length;
+			for(let i = 0; i < data.data.length; i++) {
+				let obj = data.data[i];
+		 		console.log(obj);
+		 		console.log(obj.tkt_name);
+		 		console.log(obj.count);
+		 		console.log(obj.price);
+		 		
+		 		html += `<tr class="tr">
+		 			<td class="pr-15">\${obj.tkt_name}</td>
+		 			<td class="pr-15">\${obj.price}</td>
+		 			<td class="pr-15">\${obj.count}</td>
+		 		</tr>
+		 		`;
+		 	}
+			cartDropUp.innerHTML = html;
+		}).catch(function (error) {
+	    	console.log(error);
+		});
+ 	}
+ 	
+ 	
  	
  	
  	/* axios({
@@ -301,6 +411,8 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
 		}).catch(function (error) {
 	    	console.log(error);
 		}); */
+		
+	
 		
  	
  	/* sweetalert btn setting*/
@@ -333,6 +445,7 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
   					showConfirmButton: false,
   					timer: 1500
 				})
+				getCartNum();
 				// 加入成功改變數量到 cart icon
 				/* cartNum.innerHTML = parseInt(cartQty) + 1; */
  	        }).catch(function (error) {
@@ -355,21 +468,7 @@ pageContext.setAttribute("cartItemNum", cartItemNum); */
  	
  	
  	
- 	// 載入商品單一頁面或商品列表頁就自動初始化
  	
- 	function init(){ 
- 		axios({
- 	 		"method": "post", 
- 	 		"url": "/CGA103G1/cart/initCart.do"
- 		}).then(function (response) {
- 	    	console.log(response);
- 		}).catch(function (error) {
- 	    	console.log(error);
- 		});
- 		
- 	}
- 	// 當畫面載入時初始化
- 	window.onload = init();
 	
 	</script>
 	

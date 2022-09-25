@@ -180,6 +180,21 @@ public class CartItemJedisDAO {
 		return cartItemVO;
 	}
 	
+	// cartAllNum
+//	public static Integer cartAllNum(String sessionId) {
+//		Jedis jedis = null;
+//		jedis = pool.getResource(); // 連線
+//		jedis.select(1);
+//
+//		List<String> cartItems = getCart(sessionId); // 先取得購物車內容
+//		
+//		Integer cartAllNum = cartItems.size();
+//		
+//		jedis.close();
+//		
+//		return cartAllNum;
+//	}
+	
 	// ------------------- 結帳後更新 tkt 的 sold_amount -------------------
 //	public static void updateTktsoldAmount(String sessionId, Integer tkt_no) {
 //		Gson gson = new Gson();

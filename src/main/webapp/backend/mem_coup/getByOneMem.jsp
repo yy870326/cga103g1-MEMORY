@@ -103,22 +103,20 @@ td, div {
 	<div class="content-body">
 		<div class="container-fluid">
 			<div class="col-12 d-flex justify-content-between mb-5">
-					<h1 class="coup-lis list-h1">優惠券截止日期列表</h1>
-					<a href="<%=request.getContextPath()%>/backend/coup/listAllCoup.jsp" class="btn btn-primary add-btn go-listAll-btn">返回優惠券列表</a>
+					<h1 class="coup-lis list-h1">${mem_no } 號會員_優惠券</h1>
+					<a href="<%=request.getContextPath()%>/backend/mem_coup/listSendMemCoup.jsp" class="btn btn-primary add-btn go-listAll-btn">返回優惠券發放列表</a>
 			</div>
 
 			<div class="col-12">
-				<table class="table fold-table">
+				<table class="table table-hover table-responsive-sm fold-table">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">優惠券編號</th>
+							<th scope="col">編號</th>
+							<th scope="col">會員姓名</th>
 							<th scope="col">優惠券名稱</th>
-							<th scope="col">優惠券介紹</th>
-							<th scope="col">優惠券金額</th>
-							<th scope="col">起始日期</th>
-							<th scope="col">結束日期</th>
+							<th scope="col">折抵金額</th>
+							<th scope="col">到期日</th>
 							<th scope="col">狀態</th>
-							<th scope="col"></th>
 						</tr>
 					</thead>
 					
@@ -126,34 +124,24 @@ td, div {
 					
 					<%@ include file="/backend/coup/pageIndex.file"%>
 					
-					<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<c:forEach var="memCoupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
-								<td>${coupVO.coup_no}</td>
-								<td>${coupVO.coup_name}</td>
-								<td>${coupVO.introduce}</td>
-								<td>${coupVO.discount}</td>
-								<td>${coupVO.startdate}</td>
-								<td>${coupVO.enddate}</td>
+								<td># ${memCoupVO.mem_coup_no}</td>
+								<td>${memCoupVO.memVO.mem_name}</td>
+								<td>${memCoupVO.coupVO.coup_name}</td>
+								<td>${memCoupVO.coupVO.discount}</td>
+								<td>${memCoupVO.coupVO.enddate}</td>
 								<td>
-									<c:if test="${coupVO.status == 0 }">
-										<span class="badge badge-danger light">未上架</span>
+									<c:if test="${memCoupVO.coup_state == 0 }">
+										<span class="badge badge-danger light">未使用</span>
 									</c:if>
-									<c:if test="${coupVO.status == 1 }">
-										<span class="badge badge-primary light">已上架</span>
+									<c:if test="${memCoupVO.coup_state == 1 }">
+										<span class="badge badge-primary light">已使用</span>
+									</c:if>
+									<c:if test="${memCoupVO.coup_state == 2 }">
+										<span class="badge badge-info light">已過期</span>
 									</c:if>
 								</td>
-								<td>
-
-									<form method="post" action="<%=request.getContextPath()%>/coup/updateCoup.do">
-										<button type="submit" class="fa fa-pencil-alt btn" value="">
-										</button>
-										<input type="hidden" name="coup_no" value="${coupVO.coup_no}">
-										<input type="hidden" name="action" value="getOneUpdate">
-									</form>
-									
-								</td>
-
-
 							</tr>
 						</c:forEach>
 

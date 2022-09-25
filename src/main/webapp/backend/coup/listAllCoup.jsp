@@ -108,7 +108,7 @@ td, div {
 				</div>
 				<!-- search -->
 				<form method="post" action="<%=request.getContextPath()%>/coup/getByEnddate.do" class="input-group search-area">
-					<input type="text" class="form-control" placeholder="輸入截止日期" name="enddate" value="${coupVO.enddate}">
+					<input type="text" class="form-control" placeholder="輸入截止日期" name="enddate" value="">
 					<span class="input-group-text"> 
 						<i class="flaticon-381-search-2"></i>
 					</span>

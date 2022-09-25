@@ -7,6 +7,10 @@
 <%@ page import="com.cart.model.*"%>
 <%@ page import="com.tkt.model.*"%>
 <%@ page import="com.mem.model.*"%>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,7 +119,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 					<div class="d-flex justify-content-between">
 						<!-- <div class="d-flex"> -->
 							<a href="<%=request.getContextPath()%>/frontend/tkt/tktShopList.jsp" class="btn btn-outline-primary">繼續購物</a>  <!-- 返回票券列表要動態 -->
-						<button type="submit" class="btn btn-primary checkOut"><i class="fas fa-arrow-circle-right"></i>前往結賬</button>
+						<button type="submit" class="btn btn-primary checkOut" id="checkOut"><i class="fas fa-arrow-circle-right"></i>前往結賬</button>
 					</div>
 					
 				</div>
@@ -157,10 +161,38 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
   const delItem = document.querySelectorAll('.delItem'); 
   const checkbox = document.querySelectorAll('.checkbox'); 
   const checkboxAll = document.querySelector('#checkboxAll'); 
- 
+  const checkOut = document.querySelector('#checkOut'); 
   
  
+  // 當購物車沒商品時，前望結帳按鈕隱藏
+  if(${cartItems.size()} === 0) {
+		checkOut.setAttribute('style', 'display: none');
+  }
+  
+  
   for(let i = 0; i < ${cartItems.size()}; i++) {
+	  
+	  
+	  
+	  
+	  function noItem() {
+			let counts = 0;
+			for(let j = 0; j < ${cartItems.size()}; j++) {
+			   		if(tr[j].style.display === "none") {
+			   			counts++;
+	 		   			console.log(counts);
+	 		   		}
+			}
+			
+			// 當購物車總數和 none 總數一樣，等於所有商品都被刪除了
+			if(${cartItems.size()} === counts) {
+	
+				checkOut.setAttribute('style', 'display: none');
+				
+			}
+		}
+	  	
+	  
 	  
 	  // 全選 checkbox
 	  checkboxAll.addEventListener('change', () => {
@@ -219,6 +251,7 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
 			   				}
 			   		   }).then(function(response) { 
 			   		   		tr[i].setAttribute('style', 'display: none');
+			   		   		noItem();
 			   		   }).catch((error) => console.log(error));
 
 			        }
@@ -317,7 +350,10 @@ List<CartItemVO> cartItems = (List<CartItemVO>)request.getAttribute("cartItems")
  		
    	});
 	  
-	  
+ 	
+	
+	
+	
 	  
  	 
  	 
