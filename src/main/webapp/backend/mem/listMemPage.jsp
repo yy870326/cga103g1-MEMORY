@@ -157,6 +157,7 @@ pageContext.setAttribute("memList", memList);
 	</div>
 	<%@ include file="/backend/commonJS.file"%>
 	<!-- JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script>
 		$(document).ready(function() {
 			$(document).on('shown.bs.modal', function() {
@@ -175,16 +176,32 @@ pageContext.setAttribute("memList", memList);
 			const mobilexp = /^[0-9]{10}$/;
 
 			if (memName === '' || memEmail === '' || memMobile === '') {
-				alert('欄位不能為空');
+				Swal.fire(
+		                "修改作業失敗",
+		                "欄位不得為空",
+		                "error"
+		            );
 				return false;
 			}else if (!namexp.test(memName)) {
-				alert('格式錯誤,請輸入中文姓名');
+				Swal.fire(
+		                "修改作業失敗",
+		                "欄位不得為空",
+		                "error"
+		            );
 				return false;
 			}else if (!emailxp.test(memEmail)) {
-				alert('Email格式錯誤,請重新確認');
+				Swal.fire(
+		                "修改作業失敗",
+		                "Email格式錯誤,請重新確認",
+		                "error"
+		            );
 				return false;
 			}else if (!mobilexp.test(memMobile)) {
-				alert('手機格式錯誤,請重新確認');
+				Swal.fire(
+		                "修改作業失敗",
+		                "手機格式錯誤,請重新確認",
+		                "error"
+		            );
 				return false;
 			}else
 			object.submit();
