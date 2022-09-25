@@ -35,7 +35,7 @@
 								<input type="hidden" name="emp_no" value="${empVO.emp_no}">
 								<input type="submit" value="個人資料" class="dropdown-item ai-icon"></FORM>
 								
-								<a href="<%=request.getContextPath()%>/EmpServlet.do?action=log_out" class="dropdown-item ai-icon">
+								<a href="<%=request.getContextPath()%>/emp/emp.do?action=logOutEmp" class="dropdown-item ai-icon">
 									<i class='bx bx-log-out' style='color:#996a4d'></i>
 									<span class="ms-2">Logout</span>
 								</a>
