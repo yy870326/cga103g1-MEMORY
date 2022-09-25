@@ -266,17 +266,19 @@ public class TktDAO implements I_TktDAO {
 	}
 
 	@Override
-	public void updateSoldAmount(TktVO tktVO) {
+	public void updateSoldAmount(Integer redisCount, Integer tkt_no, Connection con) {
 
-		Connection con = null;
+//		Connection con = null;
 		PreparedStatement ps = null;
+		TktVO tktVO = null;
 
 		try {
+			tktVO = new TktVO();
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_SOLD_AMOUNT);
 
-			ps.setInt(1, tktVO.getSold_amount());
-			ps.setInt(2, tktVO.getTkt_no());
+			ps.setInt(1, redisCount);
+			ps.setInt(2, tkt_no);
 
 			ps.executeUpdate();
 
@@ -300,19 +302,55 @@ public class TktDAO implements I_TktDAO {
 		}
 
 	}
+//	public void updateSoldAmount(TktVO tktVO) {
+//
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//
+//		try {
+//			con = ds.getConnection();
+//			ps = con.prepareStatement(UPDATE_SOLD_AMOUNT);
+//
+//			ps.setInt(1, tktVO.getSold_amount());
+//			ps.setInt(2, tktVO.getTkt_no());
+//
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (ps != null) {
+//				try {
+//					ps.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//
+//	}
 
 	@Override
-	public void updateOriAmount(TktVO tktVO) {
+	public void updateOriAmount(Integer tkt_no, Connection con) {
 
-		Connection con = null;
+//		Connection con = null;
+//		TktVO tktVO = null;
 		PreparedStatement ps = null;
 
 		try {
-
+//			tktVO = new TktVO();
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_ORI_AMOUNT);
 
-			ps.setInt(1, tktVO.getTkt_no());
+//			ps.setInt(1, num);
+			ps.setInt(1, tkt_no);
 
 			ps.executeUpdate();
 
@@ -336,6 +374,40 @@ public class TktDAO implements I_TktDAO {
 		}
 
 	}
+//	public void updateOriAmount(TktVO tktVO) {
+//
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//
+//		try {
+//
+//			con = ds.getConnection();
+//			ps = con.prepareStatement(UPDATE_ORI_AMOUNT);
+//
+//			ps.setInt(1, tktVO.getTkt_no());
+//
+//			ps.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (ps != null) {
+//				try {
+//					ps.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//
+//	}
 
 	// 複合查詢 getAll
 	@Override

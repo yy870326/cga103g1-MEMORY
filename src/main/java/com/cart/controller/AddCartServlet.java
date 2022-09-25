@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cart.model.CartItemJedisDAO;
 import com.cart.model.CartItemService;
 import com.cart.model.CartItemVO;
 import com.google.gson.Gson;
@@ -29,7 +30,7 @@ public class AddCartServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset = UTF-8");
-		
+//		HttpSession session = req.getSession();
 		
 		// ------------ getParameter ------------
 		Integer tkt_no = Integer.valueOf(req.getParameter("tkt_no"));
@@ -43,6 +44,8 @@ public class AddCartServlet extends HttpServlet {
 		CartItemService cartItemSrv = new CartItemService();
 		cartItemSrv.addItemToCart(sessionId, tkt_no, count);
 		
+//		Integer cartAllNum = CartItemJedisDAO.cartAllNum(sessionId);
+//		session.setAttribute("cartAllNum", cartAllNum);
 	}
 
 }
