@@ -58,7 +58,7 @@ h3.card-title {
 }
 
 h4 {
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 600;
 	color: #30504F;
 }
@@ -79,9 +79,6 @@ h5 {
 	cursor: default;
 }
 
-.to-jump:last-child h4 {
-	margin-bottom: 0px;
-}
 
 .to-jump h3 {
 	font-size: 25px;
@@ -90,12 +87,6 @@ h5 {
 	padding-top: 10px;
 }
 
-.to-jump p {
-	font-size: 14px;
-	color: #996A4D;
-	padding: 0;
-	margin: 0;
-}
 
 div.main-content {
 	margin-top: 50px;
@@ -186,6 +177,7 @@ td.sorting_1 {
 
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<%@ include file="/frontend/header.file"%>
 	<!-- sidebar -->
 	<%@ include file="/frontend/store/storeSidebar.file"%>
@@ -522,23 +514,50 @@ td.sorting_1 {
 
 		function checkIn(rm_order_no) {
 			let checkIn = document.getElementById("checkIn"+rm_order_no);
-			if (confirm('確認資料無誤，辦理入住?')) {
-				checkIn.submit();
-			}
+			Swal.fire({
+                title: "操作確認",
+                text: "確認資料無誤，辦理入住?",
+                showCancelButton: true
+            }).then(function(result) {
+               if (result.value) {
+                    checkIn.submit();
+               }
+               else {
+              
+               }
+            });
 		};
 		
 		function checkOut(rm_order_no) {
 			let checkOut = document.getElementById("checkOut"+rm_order_no);
-			if (confirm('確定辦理退房?')) {
-				checkOut.submit();
-			}
+			Swal.fire({
+                title: "操作確認",
+                text: "確定辦理退房?",
+                showCancelButton: true
+            }).then(function(result) {
+               if (result.value) {
+            	   checkOut.submit();
+               }
+               else {
+              
+               }
+            });
 		};
 		
 		function stay(rm_order_no) {
 			let stay = document.getElementById("stay"+rm_order_no);
-			if (confirm('確定提前辦理退房?')) {
-				stay.submit();
-			}
+			Swal.fire({
+                title: "操作確認",
+                text: "確認資料無誤，辦理入住?",
+                showCancelButton: true
+            }).then(function(result) {
+               if (result.value) {
+            	   stay.submit();
+               }
+               else {
+              
+               }
+            });
 		};
 		
 	</script>
