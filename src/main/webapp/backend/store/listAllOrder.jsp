@@ -29,7 +29,7 @@ pageContext.setAttribute("orderlist", orderlist);
 	<!-- loading -->
 	<%@ include file="/backend/header.file"%>
 	<!-- Header -->
-	<%@ include file="/backend/store/sidebar.file"%>
+	<%@ include file="/backend/sidebar.file"%>
 	<!-- sidebar -->
 
 
