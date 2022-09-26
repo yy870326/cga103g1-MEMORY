@@ -328,6 +328,7 @@ div.main-content {
 	<%@ include file="/frontend/footer.file"%>
 	<%@ include file="/frontend/commonJS.file"%>
 	<!-- 放置基本JS檔案 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
 		$(document).ready(function() {
@@ -339,9 +340,18 @@ div.main-content {
 		
 		function cancel(rm_order_no) {
 			let storeCancel = document.getElementById("storeCancel"+rm_order_no);
-		            if (confirm('確定取消訂單?')) {
-		            	storeCancel.submit();
-		            }
+		            Swal.fire({
+		                title: "操作確認",
+		                text: "確定取消訂單?",
+		                showCancelButton: true
+		            }).then(function(result) {
+		               if (result.value) {
+		            	   storeCancel.submit();
+		               }
+		               else {
+		              
+		               }
+		            });
 		        };
 	</script>
 </body>
