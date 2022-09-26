@@ -36,11 +36,12 @@ public class GetOwnActServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         
         HttpSession session = req.getSession();
-        Integer memNo1 = (Integer) session.getAttribute("memNo1");
-        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+        Integer memSpecNo = (Integer) session.getAttribute("memSpecNo");
+//        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+//        Integer memNo2 = (Integer) session.getAttribute("memNo2");
 
 		ActService actService = new ActService();
-		List<ActVO> actList = actService.getOwnActParti(memNo1);
+		List<ActVO> actList = actService.getOwnActParti(memSpecNo);
 		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      

@@ -36,9 +36,26 @@ public class LoginHandler extends HttpServlet {
     // 【取得使用者 帳號(account) 密碼(password)】
     String mem_email = req.getParameter("mem_email");
     String mem_pwd = req.getParameter("mem_pwd");
+    System.out.println(mem_email);
+    System.out.println(mem_pwd);
     MemService memSvc = new MemService();
     MemVO memVO = memSvc.login(mem_email,mem_pwd);
+    MemService memService = new MemService();
 
+    Integer memNo = memService.getall().stream()
+    		.filter(vo -> vo.getMem_email().equals(mem_email))
+    		.filter(vo -> vo.getMem_pwd().equals(mem_pwd))
+    		.findFirst()
+    		.get()
+    		.getMem_no();
+    
+	String memSpecEmail = memService.getall().stream()
+    		.filter(vo -> vo.getMem_email().equals(mem_email))
+    		.filter(vo -> vo.getMem_pwd().equals(mem_pwd))
+    		.findFirst()
+    		.get()
+    		.getMem_email();
+    
     // 【檢查該帳號 , 密碼是否有效】
     if (!allowUser(mem_email, mem_pwd)) {          //【帳號 , 密碼無效時】
       out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
@@ -49,6 +66,8 @@ public class LoginHandler extends HttpServlet {
       HttpSession session = req.getSession();
       session.setAttribute("memVO", memVO);//*工作1: 才在session內做已經登入過的標識
       session.setAttribute("mem_email", mem_email);
+      session.setAttribute("memSpecNo", memNo);
+      session.setAttribute("memSpecEmail", memSpecEmail);
        try {                                                        
          String location = (String) session.getAttribute("location");
          if (location != null) {
