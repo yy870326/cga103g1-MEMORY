@@ -18,9 +18,8 @@
 	class="com.rm_order_list.model.RmOrderListService" />
 
 <%
-
 MemVO memVO = new MemVO();
-memVO = (MemVO)request.getSession().getAttribute("memVO");
+memVO = (MemVO) request.getSession().getAttribute("memVO");
 Integer mem_no = memVO.getMem_no();
 if (request.getAttribute("orderlist") == null) {
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
@@ -177,10 +176,11 @@ div.main-content {
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
-						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
+						<form METHOD="post" id="getOneMem" ACTION="<%=request.getContextPath()%>/RmOrder">
 							<div class="input-group search-area" style="margin-left: 600px;">
-								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號" /> <input type="submit"
+								<input id="rmorderno" class="form-control" type="text"
+									name="rm_order_no" placeholder="請輸入訂單編號" /> <input 
+									type="button" onclick="search();" 
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
 								<input type="hidden" name="mem_no" value="${mem_no}"> <input
 									type="hidden" name="action" value="getOneMem">
@@ -205,7 +205,7 @@ div.main-content {
 			<tbody>
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
-						<td>#${rmOrderVO.rm_order_no}</td>
+						<td class="orderno">${rmOrderVO.rm_order_no}</td>
 						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</td>
 						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_tel}</td>
 						<td>${rmOrderVO.order_date}</td>
@@ -321,6 +321,25 @@ div.main-content {
 			});
 		});
 		
+		// 搜尋訂單編號錯誤處理
+		function search() {
+	     	 const orderno = document.querySelectorAll(".orderno");
+			 let getOneMem = document.getElementById("getOneMem");
+			 let rmorderno = document.getElementById("rmorderno").value;
+	     	 let flag = false;
+	     	 orderno.forEach(function(x) {
+	     		 if(x.innerText === rmorderno){
+	     			getOneMem.submit();
+	     			flag = true;
+	     		 }
+	     	 })
+	     	 if(flag){
+	     		 return ;
+	     	 }
+	     	ordernull();
+		};
+		
+		// 取消訂單錯誤處理
 		function cancel(rm_order_no) {
 		let memCancel = document.getElementById("memCancel"+rm_order_no);
 	    let arrival = new Date(document.getElementById("arrival"+rm_order_no).innerHTML);
@@ -332,14 +351,14 @@ div.main-content {
 	                showCancelButton: true
 	            }).then(function(result) {
 	               if (result.value) {
-	            	   if(date7<1000*60*60*24*7){
+	            	   if(date7 < 1000*60*60*24*7){
 	            		   alert7();
 	            	   }else{   
 	                    memCancel.submit();
 	            	   }
 	               }
 	               else {
-	                  
+	            	   
 	               }
 	            });
 	        };
@@ -351,7 +370,15 @@ div.main-content {
 	                "error"
 	            );
 	        };
-       
+	        
+	        function ordernull() {
+	            Swal.fire(
+	                "查詢作業失敗",
+	                "查無此訂單編號",
+	                "error"
+	            );
+	        };
+   
 	</script>
 </body>
 </html>

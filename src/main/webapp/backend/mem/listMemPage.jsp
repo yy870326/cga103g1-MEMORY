@@ -185,7 +185,7 @@ pageContext.setAttribute("memList", memList);
 			}else if (!namexp.test(memName)) {
 				Swal.fire(
 		                "修改作業失敗",
-		                "欄位不得為空",
+		                "姓名格式錯誤,請重新確認",
 		                "error"
 		            );
 				return false;

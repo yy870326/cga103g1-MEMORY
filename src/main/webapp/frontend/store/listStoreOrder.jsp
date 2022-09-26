@@ -19,7 +19,7 @@
 
 <%
 StoreVO storeVO = new StoreVO();
-storeVO = (StoreVO)request.getSession().getAttribute("storevo");
+storeVO = (StoreVO) request.getSession().getAttribute("storevo");
 Integer store_no = storeVO.getStore_no();
 if (request.getAttribute("orderlist") == null) {
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByStore(store_no);
@@ -168,15 +168,7 @@ div.main-content {
 	<%@ include file="/frontend/header.file"%>
 	<%@ include file="/frontend/store/storeSidebar.file"%>
 	<div class="main-content col-lg-9">
-	<h3 class="mt-5 mb-3">廠商訂單管理</h3>
-		<div style="margin-left: 850px;">
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</c:if>
-		</div>
+		<h3 class="mt-5 mb-3">廠商訂單管理</h3>
 		<div class="d-flex mb-4 align-items-center flex-wrap">
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
@@ -197,10 +189,13 @@ div.main-content {
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
-						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
+						<form METHOD="post" id="getOneStore"
+							ACTION="<%=request.getContextPath()%>/RmOrder">
 							<div class="input-group search-area" style="margin-left: 350px;">
-								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號"/> <input type="submit"
+								<input id="rmorderno" class="form-control" type="text"
+									name="rm_order_no" placeholder="請輸入訂單編號" /> 
+									<input
+									onclick="search();" type="button"
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
 								<input type="hidden" name="store_no" value="${store_no}">
 								<input type="hidden" name="action" value="getOneStore">
@@ -224,7 +219,7 @@ div.main-content {
 			<tbody>
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
-						<td>#${rmOrderVO.rm_order_no}</td>
+						<td class="orderno">${rmOrderVO.rm_order_no}</td>
 						<td>#${rmOrderVO.mem_no}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
@@ -338,6 +333,24 @@ div.main-content {
 			});
 		});
 		
+		// 搜尋訂單編號錯誤處理
+		function search() {
+	     	 const orderno = document.querySelectorAll(".orderno");
+			 let getOneStore = document.getElementById("getOneStore");
+			 let rmorderno = document.getElementById("rmorderno").value;
+	     	 let flag = false;
+	     	 orderno.forEach(function(x) {
+	     		 if(x.innerText === rmorderno){
+	     			getOneStore.submit();
+	     			flag = true;
+	     		 }
+	     	 })
+	     	 if(flag){
+	     		 return ;
+	     	 }
+	     	ordernull();
+		};
+		// 取消訂單確認
 		function cancel(rm_order_no) {
 			let storeCancel = document.getElementById("storeCancel"+rm_order_no);
 		            Swal.fire({
@@ -352,6 +365,14 @@ div.main-content {
 		              
 		               }
 		            });
+		        };
+		        
+        function ordernull() {
+		            Swal.fire(
+		                "查詢作業失敗",
+		                "查無此訂單編號",
+		                "error"
+		            );
 		        };
 	</script>
 </body>
