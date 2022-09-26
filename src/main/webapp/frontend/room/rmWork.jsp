@@ -548,7 +548,7 @@ td.sorting_1 {
 			let stay = document.getElementById("stay"+rm_order_no);
 			Swal.fire({
                 title: "操作確認",
-                text: "確認資料無誤，辦理入住?",
+                text: "確定辦理提前退房?",
                 showCancelButton: true
             }).then(function(result) {
                if (result.value) {
