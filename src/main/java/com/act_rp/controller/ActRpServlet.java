@@ -97,7 +97,7 @@ public class ActRpServlet extends HttpServlet {
 
 			// --------------------- 修改完成,準備轉交 ---------------
 			req.setAttribute("actRpVO", actRpVO);
-			RequestDispatcher successView = req.getRequestDispatcher("/frontend/act/act.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/frontend/homePage.jsp");
 			successView.forward(req, res);
 		}
 
