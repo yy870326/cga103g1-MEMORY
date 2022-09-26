@@ -255,6 +255,16 @@ public class EmpServlet extends HttpServlet{
 			
 		}
 		
+		if("logOutEmp".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			String url = "/backend/emp/logOutEmp.jsp";
+			RequestDispatcher ret = req.getRequestDispatcher(url);
+			ret.forward(req, res);
+			
+			
+		}
+		
 		
 }
 }
