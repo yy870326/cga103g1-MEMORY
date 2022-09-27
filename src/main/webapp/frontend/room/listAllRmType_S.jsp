@@ -42,7 +42,7 @@
     overflow-x: auto;
     padding: 10px 7px;
     -webkit-overflow-scrolling: touch;}
-    
+     
 .btn-secondary1 {
     color: #FFF;
     border: 2px solid #5bc9e2;

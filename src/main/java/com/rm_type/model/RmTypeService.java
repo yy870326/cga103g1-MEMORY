@@ -59,7 +59,7 @@ public class RmTypeService {
 		rmTypeVO.setRm_type_no(rm_type_no);
 		
 		dao.changeState(rm_type_no, rm_update);
-		return rmTypeVO;
+		return rmTypeVO; 
 		
 	}
 

@@ -432,7 +432,7 @@ public class RmTypeServlet extends HttpServlet {
 		}
 		
 		
-		if ("update".equals(action)) {
+		if ("update".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
