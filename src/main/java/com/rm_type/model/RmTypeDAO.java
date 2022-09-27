@@ -17,7 +17,7 @@ public class RmTypeDAO implements I_RmTypeDAO {
 	private static final String INSERT = "INSERT INTO rm_type(store_no, rm_name, rm_total, rm_people, rm_price"
 			+ ", rm_area, rm_intro, rm_update)VALUES(?,?,?,?,?,?,?,0)";
 	private static final String UPDATE = "UPDATE rm_type SET rm_name=?, rm_total=?, rm_people=?, rm_price=?"
-			+ ", rm_area=?, rm_intro=?, rm_update=? WHERE rm_type_no=?";
+			+ ", rm_area=?, rm_intro=?, rm_update=? WHERE rm_type_no=? ";
 	private static final String CHANGE_STATE = "UPDATE rm_type SET rm_update=? WHERE rm_type_no=?";
 	private static final String GET_ONE = "SELECT * FROM rm_type WHERE rm_type_no=?";
 	private static final String GET_ALL = "SELECT * FROM rm_type";
@@ -92,6 +92,7 @@ public class RmTypeDAO implements I_RmTypeDAO {
 			ps.setString(6, rmtypeVO.getRm_intro());
 			ps.setInt(7, rmtypeVO.getRm_update());
 			ps.setInt(8, rmtypeVO.getRm_type_no());
+//			ps.setInt(9, rmtypeVO.getStore_no());
 			ps.executeUpdate();
 
 		} catch (SQLException se) {
