@@ -36,7 +36,13 @@
     border-color: #ffcd22;
     margin: 20px 20px 10px 60px;
 }
-
+.table-responsive1 {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 7px;
+    -webkit-overflow-scrolling: touch;}
+     
 .btn-secondary1 {
     color: #FFF;
     border: 2px solid #5bc9e2;
@@ -105,13 +111,7 @@
 		img {
 			max-width: 100%;
 		}
-		.table-responsive {
-	    display: block;
-	    width: 100%;
-	    overflow-x: auto;
-	    padding: 10px 30px;
-	    -webkit-overflow-scrolling: touch;
-       }
+		
        
        
   
@@ -164,7 +164,7 @@
 				</div>
 			</div>	
 			
-			<div class="table-responsive">
+			<div class="table-responsive1">
 				<table id="roomTypeTable" class="display default-table" style="min-width: 800px;">
 					<thead>
 						<tr>
@@ -172,7 +172,7 @@
 							<th>房型圖片</th>
 							<th>廠商編號</th>
 							<th>房型名稱</th>
-							<th>每房可入住人數</th>
+							<th>可入住人數</th>
 							<th>房間數量</th>
 							<th>價格</th>
 							<th>坪數</th>
@@ -215,7 +215,7 @@
 						<input type="hidden" name="action" value="${rmTypeVO.rm_update == 0 ? 'no' : 'on'}"></FORM>
 						</td>
 						<td>
-			     		<a class="btn btn-secondary1 btn-sm" href="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShowImages"><i class='bx bxs-image'></i>查看/新增圖片</a>
+			     		<a class="btn btn-secondary1 btn-sm" href="<%=request.getContextPath()%>/rmPic/rmPic.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForShowImages"><i class='bx bxs-image'></i>查看/新增照片</a>
 						</td>
 						<td>
 						<a class="btn light btn-secondary1" href="<%=request.getContextPath()%>/rmtype/rmtype.do?rm_type_no=${rmTypeVO.rm_type_no}&action=getOneForUpdate"><i class='bx bxs-pencil'></i>修改</a>

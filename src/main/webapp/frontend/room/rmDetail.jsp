@@ -358,7 +358,7 @@
 						
 						<div class="room-facility-content">
 							<h5>房型設施</h5>
-							<p>*<i class='bx bx-check-circle'></i>為該房型獨有</p>
+<!-- 							<p>*<i class='bx bx-check-circle'></i>為該房型獨有</p> -->
 							<ul>
 								<li><i class='bx bx-hotel' ></i>舒眠級睡床及寢具</li>
 								<li><i class='bx bxs-drink' ></i>免費飲料</li>

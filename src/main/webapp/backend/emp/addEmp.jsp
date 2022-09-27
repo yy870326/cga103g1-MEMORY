@@ -155,6 +155,7 @@ td, div {
 						<!-- hidden input -->
 						<a href="<%=request.getContextPath()%>/backend/emp/listAllEmp.jsp" class="btn btn-secondary" data-dismiss="modal">取消</a>
 						<input type="hidden" name="action" value="insert">
+						<input type="hidden" name="emp_no" value="${empVO.emp_no}">
 						<input type="hidden" name="emp_state" value="1">
 						<input type="submit" class="btn btn-primary" value="儲存">
 					</div>

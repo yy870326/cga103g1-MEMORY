@@ -34,7 +34,7 @@ public class RmTypeService {
 	}
 
 	public RmTypeVO updateRm(String rm_name, Integer rm_total
-			, Integer rm_people, Integer rm_price, Integer rm_area, String rm_intro, Integer rm_update, Integer rm_type_no) {
+			, Integer rm_people, Integer rm_price, Integer rm_area, String rm_intro, Integer rm_update, Integer rm_type_no ,Integer store_no) {
 		RmTypeVO rm = new RmTypeVO();
 
 		rm.setRm_name(rm_name);
@@ -46,6 +46,7 @@ public class RmTypeService {
 		rm.setRm_eval_sum(rm_type_no);
 		rm.setRm_update(rm_update);
 		rm.setRm_type_no(rm_type_no);
+//		rm.setRm_type_no(store_no);
 		
 		return dao.update(rm);
 	}
@@ -58,7 +59,7 @@ public class RmTypeService {
 		rmTypeVO.setRm_type_no(rm_type_no);
 		
 		dao.changeState(rm_type_no, rm_update);
-		return rmTypeVO;
+		return rmTypeVO; 
 		
 	}
 

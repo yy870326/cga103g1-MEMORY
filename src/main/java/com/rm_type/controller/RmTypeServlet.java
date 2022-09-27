@@ -432,7 +432,7 @@ public class RmTypeServlet extends HttpServlet {
 		}
 		
 		
-		if ("update".equals(action)) {
+		if ("update".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -440,6 +440,7 @@ public class RmTypeServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				Integer rm_type_no = new Integer(req.getParameter("rm_type_no").trim());
+				Integer store_no = new Integer(req.getParameter("store_no").trim());
 				String rm_name =req.getParameter("rm_name");
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,10}$";
 				if (rm_name == null || rm_name.trim().length() == 0) {
@@ -451,7 +452,7 @@ public class RmTypeServlet extends HttpServlet {
 				try {
 					rm_total = new Integer(req.getParameter("rm_total").trim());
 				} catch (NumberFormatException e) {
-					rm_total = 5;
+					rm_total = 2;
 					errorMsgs.add("房型數量請填數字");
 				}
 
@@ -495,6 +496,7 @@ public class RmTypeServlet extends HttpServlet {
 				rmTypeVO.setRm_intro(rm_intro);
 				rmTypeVO.setRm_update(0);
 				rmTypeVO.setRm_type_no(rm_type_no);
+				rmTypeVO.setStore_no(store_no);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("rmTypeVO", rmTypeVO); // 含有輸入格式錯誤的VO物件,也存入req
@@ -505,7 +507,7 @@ public class RmTypeServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 ***************************************/
 				RmTypeService rmTypeSvc = new RmTypeService();
-				rmTypeVO = rmTypeSvc.updateRm(rm_name, rm_total, rm_people, rm_price, rm_area, rm_intro, 0, rm_type_no);
+				rmTypeVO = rmTypeSvc.updateRm(rm_name, rm_total, rm_people, rm_price, rm_area, rm_intro, 0, rm_type_no,store_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				String url = "/frontend/room/listAllRmType_S.jsp";

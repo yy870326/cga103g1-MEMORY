@@ -14,7 +14,7 @@ public class EmpService {
 		EmpVO empVO = new EmpVO();
 		empVO.setEmp_acc(emp_acc);
 		empVO.setEmp_pwd(emp_pwd);
-		empVO.setEmp_name(emp_name);
+		empVO.setEmp_name(emp_name); 
 		empVO.setEmp_email(emp_email);
 		empVO.setEmp_state(emp_state);
 

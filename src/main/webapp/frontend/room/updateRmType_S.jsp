@@ -14,7 +14,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html> 
 	<head>
 	<meta charset="UTF-8">
 	<title>修改房型 - Memory</title>

@@ -123,7 +123,7 @@ public class EmpServlet extends HttpServlet{
 					errorMsgs.add("員工姓名: 請勿空白");
 				} else if(!emp_name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-	            }
+	            } 
 				
 				String emp_email =req.getParameter("emp_email").trim();
 				String e_emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
@@ -216,7 +216,7 @@ public class EmpServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/emp/updateEmp.jsp");
+							.getRequestDispatcher("/backend/emp/addEmp.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}

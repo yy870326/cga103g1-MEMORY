@@ -290,7 +290,7 @@ color
 
 
 
-	<script>
+	<script> 
 		function check() {
 			let datepicker = document.getElementById('datepicker').value.trim().length;
 			let datepickerout = document.getElementById('datepicker-out').value

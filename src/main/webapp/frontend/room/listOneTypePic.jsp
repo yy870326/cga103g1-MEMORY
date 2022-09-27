@@ -173,13 +173,13 @@
 			<div class="card col-xl-11">
 				<div class="card-body d-flex justify-content-around">
 					<div class="col-xl-6">
-						<h3 class="title d-flex justify-content-center">圖片列表</h3>
+						<h3 class="title d-flex justify-content-center">照片列表</h3>
 						<c:choose>
 							<c:when test="${images.size() != 0 }">
-								<h4 class="title d-flex justify-content-center">共${images.size()}張圖片</h4>
+								<h4 class="title d-flex justify-content-center">共${images.size()}張照片</h4>
 							</c:when>
 							<c:otherwise>
-								<h4 class="title d-flex justify-content-center">還沒有圖片喔</h4>
+								<h4 class="title d-flex justify-content-center">還沒有照片喔</h4>
 							</c:otherwise>
 						</c:choose>
 						<c:forEach var="img" items="${images}">
@@ -205,7 +205,7 @@
 					</div>
 	
 					<div class="col-xl-6 imgs">
-						<h3 class="title d-flex justify-content-center">新增圖片</h3>
+						<h3 class="title d-flex justify-content-center">新增照片</h3>
 						<form method="post" action="<%=request.getContextPath()%>/rmPic/rmPic.do" enctype="multipart/form-data">
 							<div class="pic-upload">
 								<input type="file" class="form-control upload-pic" id="formFile" accept="image/*" name="imageFile">
