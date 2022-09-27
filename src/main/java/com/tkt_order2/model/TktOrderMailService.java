@@ -36,9 +36,9 @@ public class TktOrderMailService {
 			// ●5-1) 下拉式選單【選取應用程式】--> 選取【郵件】
 			// ●5-2) 下拉式選單【選取裝置】--> 選取【Windows 電腦】
 			// ●5-3) 最後按【產生】密碼
-			final String myGmail = "kay830123@gmail.com";
-			final String myGmail_password = "frhdhtjnljjcgkek";
-//		     final String myGmail_password = "ddjomltcnypgcstn";
+			final String myGmail = "信箱";
+			final String myGmail_password = "密碼";
+//		     final String myGmail_password = "密碼";
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(myGmail, myGmail_password);
