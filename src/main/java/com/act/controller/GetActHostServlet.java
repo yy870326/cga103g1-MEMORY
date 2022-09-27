@@ -27,12 +27,14 @@ public class GetActHostServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
         res.setContentType("text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
+        
         HttpSession session = req.getSession();
-        Integer memNo1 = (Integer) session.getAttribute("memNo1");
-        Integer memNo2 = (Integer) session.getAttribute("memNo2");
-        Integer memNo3 = (Integer) session.getAttribute("memNo3");
+        Integer memSpecNo = (Integer) session.getAttribute("memSpecNo");
+//        Integer memNo1 = (Integer) session.getAttribute("memNo1");
+//        Integer memNo2 = (Integer) session.getAttribute("memNo2");
+//        Integer memNo3 = (Integer) session.getAttribute("memNo3");
         ActService actService = new ActService();
-		List<ActVO> actList = actService.getHostAct(memNo1);		
+		List<ActVO> actList = actService.getHostAct(memSpecNo);		
         GsonBuilder gsonBuilder = new GsonBuilder();  
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());

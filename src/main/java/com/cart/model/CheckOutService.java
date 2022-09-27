@@ -99,14 +99,14 @@ public class CheckOutService {
 			List<TktItem2VO> listForUpdate = list;
 
 			TktVO tktVO = new TktVO();
-			
+			Integer redisCount = 0;
+			Integer sold_amount = 0;
 			for (int i = 0; i < listForUpdate.size(); i++) {
 				TktItem2VO tktItem2VO = listForUpdate.get(i);
 				Integer tkt_no = tktItem2VO.getTkt_no();
 				
 //				List<String> cartItems = CartItemJedisDAO.getCart(sessionId);
-				Integer redisCount = 0;
-				Integer sold_amount = 0;
+				
 				for (int j = 0; j < cartItems.size(); j++) {
 					CartItemVO oldItems = gson.fromJson(cartItems.get(j), CartItemVO.class);
 					
@@ -116,15 +116,17 @@ public class CheckOutService {
 					
 					if (tkt_no.equals(oldItemId)) {
 						redisCount = oldItems.getCount();
-						sold_amount = dao.findByPrimaryKey(tkt_no).getOriginal_amount();
-						tktVO.setSold_amount(sold_amount);
-						tktVO.setTkt_no(tkt_no);
+						sold_amount = dao.findByPrimaryKey(oldItemId).getSold_amount();
+//						tktVO.setSold_amount(sold_amount);
+//						tktVO.setTkt_no(tkt_no);
 //						System.out.println("----------redisCount"+redisCount);
 					}
 				}
+				sold_amount += redisCount;
+				dao.updateSoldAmount(sold_amount, tkt_no, con);
+				dao.updateOriAmount(tkt_no, con);
+//				dao.updateOriAmount( (sold_amount - redisCount)  , tkt_no, con);
 			}
-			dao.updateSoldAmount(tktVO);
-			dao.updateOriAmount(tktVO);
 			
 			
 			// 更改會員優惠券使用狀態

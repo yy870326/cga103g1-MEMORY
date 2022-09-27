@@ -157,7 +157,7 @@ div.main-content {
 	
 		<%@ include file="/backend/loading.file" %> <!-- loading -->
 		<%@ include file="/backend/header.file" %> <!-- Header -->
-		<%@ include file="/backend/store/sidebar.file" %> <!-- sidebar -->
+		<%@ include file="/backend/sidebar.file" %> <!-- sidebar -->
 
 	<div class="main-content">
 	

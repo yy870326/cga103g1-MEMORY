@@ -33,9 +33,10 @@ public class UpdateActConditionServlet extends HttpServlet {
 		  res.setCharacterEncoding("UTF-8");
 	     
 	      HttpSession session = req.getSession();
-	      Integer memNo1 = (Integer) session.getAttribute("memNo1");
-	      Integer memNo2 = (Integer) session.getAttribute("memNo2");
-	      Integer memNo3 = (Integer) session.getAttribute("memNo3");
+	      Integer memSpecNo = (Integer) session.getAttribute("memSpecNo");
+//	      Integer memNo1 = (Integer) session.getAttribute("memNo1");
+//	      Integer memNo2 = (Integer) session.getAttribute("memNo2");
+//	      Integer memNo3 = (Integer) session.getAttribute("memNo3");
 	      
 	      ActService actService = new ActService();
 	      BufferedReader br = req.getReader();
@@ -47,7 +48,7 @@ public class UpdateActConditionServlet extends HttpServlet {
 	      gson = gsonBuilder.setPrettyPrinting().create();
 	      ActVO actVO = gson.fromJson(br, ActVO.class);
 	     
-	      actVO.setMen_no(memNo1);
+	      actVO.setMen_no(memSpecNo);
 	      actService.updateAct(actVO);
 	      
 	      // 設定活動編號參數，給UpdateActImageServlet使用

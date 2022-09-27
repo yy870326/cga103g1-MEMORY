@@ -23,7 +23,7 @@ public class CoupDAO implements I_CoupDAO {
 	private static final String UPDATE = "UPDATE coup SET coup_name = ?, introduce = ?, discount = ?, startdate = ?, enddate = ?, `status` = ? WHERE coup_no = ?;";
 	private static final String UPDATE_STATUS = "UPDATE coup SET status = 0 WHERE coup_no = ?;";
 	private static final String GET_ONE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE coup_no = ?;";
-	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no;";
+	private static final String GET_ALL = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup ORDER BY coup_no DESC;";
 	private static final String GET_ONE_BY_ENDDATE = "SELECT coup_no, coup_name, introduce, discount, startdate, enddate, `status` FROM coup WHERE enddate = ? ORDER BY coup_no;";
 	
 	private static DataSource ds = null;

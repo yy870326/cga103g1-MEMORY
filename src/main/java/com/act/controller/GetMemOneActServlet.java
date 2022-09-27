@@ -29,12 +29,13 @@ public class GetMemOneActServlet extends HttpServlet {
         res.setContentType("application/json, text/html; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
         
-        HttpSession actSession = req.getSession();       
-        Integer memNo1 = (Integer) actSession.getAttribute("memNo1");
-        Integer memNo2 = (Integer) actSession.getAttribute("memNo2");
-        Integer memNo3 = (Integer) actSession.getAttribute("memNo3");
-		ActService actService = new ActService();
+        HttpSession actSession = req.getSession(); 
+        Integer memSpecNo = (Integer) actSession.getAttribute("memSpecNo");
+//        Integer memNo1 = (Integer) actSession.getAttribute("memNo1");
+//        Integer memNo2 = (Integer) actSession.getAttribute("memNo2");
+//        Integer memNo3 = (Integer) actSession.getAttribute("memNo3");
 		
+        ActService actService = new ActService();
 		BufferedReader br = req.getReader();
 		GsonBuilder gsonBuilder = new GsonBuilder();  
 		gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());      
@@ -46,12 +47,12 @@ public class GetMemOneActServlet extends HttpServlet {
 		if(actStream.anyMatch(act -> act.getAct_no() == actfromFront.getAct_no())) {
 			Boolean isActVoExist = actService.getAll().stream()
 					.filter(act -> act.getAct_no() == actfromFront.getAct_no())
-					.anyMatch(act -> act.getMen_no() == memNo1);
+					.anyMatch(act -> act.getMen_no() == memSpecNo);
 			
 			if (isActVoExist) {
 				actVO = actService.getAll().stream()
 						.filter(act -> act.getAct_no() == actfromFront.getAct_no())
-						.filter(act -> act.getMen_no() == memNo1)
+						.filter(act -> act.getMen_no() == memSpecNo)
 						.findFirst().get();
 				String JsonString = gson.toJson(actVO);
 				res.getWriter().write(JsonString);

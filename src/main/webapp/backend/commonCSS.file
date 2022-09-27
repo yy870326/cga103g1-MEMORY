@@ -1,7 +1,7 @@
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MEMORY</title>
-	<link rel="icon" href="<%=request.getContextPath() %>/backend/assets/img/lo.png" type="image/x-icon">
+	<link rel="icon" href="<%=request.getContextPath() %>/backend/assets/img/logo6.png" type="image/x-icon">
 
 	<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/backend/assets/icons/flaticon/flaticon.css" rel="stylesheet">

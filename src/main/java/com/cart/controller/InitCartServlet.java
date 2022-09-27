@@ -50,8 +50,8 @@ public class InitCartServlet extends HttpServlet {
 				// 讓每個頁面可以透過 sessionId 呼叫 CartService 的方法
 				session.setAttribute("sessionId", userCookie.getValue());
 
-				RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp"); // 看能不能改成動態
-				rd.forward(req, res);
+//				RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp"); // 看能不能改成動態
+//				rd.forward(req, res);
 				return;
 			}
 
@@ -60,14 +60,15 @@ public class InitCartServlet extends HttpServlet {
 			Cookie shoppingCart = new Cookie("shoppingCart", session.getId());
 			shoppingCart.setMaxAge(3 * 24 * 60 * 60); // 存活3天，以秒為單位
 			shoppingCart.setHttpOnly(true);
+			shoppingCart.setPath("/");
 
 			session.setAttribute("sessionId", session.getId());
 			res.addCookie(shoppingCart);
 //				System.out.println(shoppingCart);
 
 //			req.setAttribute("cartItems", cartItems);
-			RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
-			rd.forward(req, res);
+//			RequestDispatcher rd = req.getRequestDispatcher("/frontend/cart/testTkt1.jsp");
+//			rd.forward(req, res);
 
 
 		}

@@ -18,12 +18,14 @@
 	class="com.rm_order_list.model.RmOrderListService" />
 
 <%
+MemVO memVO = new MemVO();
+memVO = (MemVO) request.getSession().getAttribute("memVO");
+Integer mem_no = memVO.getMem_no();
 if (request.getAttribute("orderlist") == null) {
-	Integer mem_no = 2;
 	List<RmOrderVO> orderlist = rmOrderSvc.getAllByMem(mem_no);
 	pageContext.setAttribute("orderlist", orderlist);
 }
-pageContext.setAttribute("mem_no", 2);
+pageContext.setAttribute("mem_no", mem_no);
 %>
 
 <!DOCTYPE html>
@@ -83,7 +85,7 @@ div.order-data>div {
 }
 
 table tbody tr td:nth-child(1), table tbody tr td:nth-child(2) {
-	padding-left: 45px;
+	padding-left: 20px;
 }
 
 table.table-striped {
@@ -166,14 +168,6 @@ div.main-content {
 	<%@ include file="/frontend/memSidebar.file"%>
 	<div class="col-lg-9">
 		<h3 class="mt-5 mb-3">會員訂房訂單管理</h3>
-		<div style="margin-left: 750px;">
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</c:if>
-		</div>
 		<div class="d-flex mb-4 align-items-center flex-wrap">
 			<div class="card-tabs mt-3 mt-sm-0">
 				<ul class="nav nav-tabs" role="tablist">
@@ -182,10 +176,11 @@ div.main-content {
 					</a></li>
 					<li class="nav-item">
 						<!-- Search -->
-						<form METHOD="post" ACTION="<%=request.getContextPath()%>/RmOrder">
+						<form METHOD="post" id="getOneMem" ACTION="<%=request.getContextPath()%>/RmOrder">
 							<div class="input-group search-area" style="margin-left: 600px;">
-								<input class="form-control" type="text" name="rm_order_no"
-									placeholder="請輸入訂單編號" /> <input type="submit"
+								<input id="rmorderno" class="form-control" type="text"
+									name="rm_order_no" placeholder="請輸入訂單編號" /> <input 
+									type="button" onclick="search();" 
 									class="btn btn-grad border-radius-left-0 mb-0" value="Search">
 								<input type="hidden" name="mem_no" value="${mem_no}"> <input
 									type="hidden" name="action" value="getOneMem">
@@ -201,6 +196,7 @@ div.main-content {
 				<tr>
 					<th>訂單編號</th>
 					<th>店家名稱</th>
+					<th>店家電話</th>
 					<th>訂單日期</th>
 					<th>總金額</th>
 					<th>訂單狀態</th>
@@ -209,8 +205,9 @@ div.main-content {
 			<tbody>
 				<c:forEach var="rmOrderVO" items="${orderlist}">
 					<tr class="view">
-						<td>#${rmOrderVO.rm_order_no}</td>
+						<td class="orderno">${rmOrderVO.rm_order_no}</td>
 						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_name}</td>
+						<td>${storeSvc.getOneStore(rmOrderVO.store_no).store_tel}</td>
 						<td>${rmOrderVO.order_date}</td>
 						<td><fmt:formatNumber value="${rmOrderVO.rm_charge}"
 								pattern="$###,###,###" /> <c:if
@@ -245,7 +242,7 @@ div.main-content {
 									<h4>
 										<i class='bx bx-credit-card'></i> 付款資料
 									</h4>
-									<div>訂單成立日期： ${rmOrderVO.order_date}</div>
+									<div>訂單成立日期：${rmOrderVO.order_date}</div>
 									<div>信用卡號碼：${memSvc.getOneMem(rmOrderVO.mem_no).mem_card}</div>
 								</div>
 							</div>
@@ -268,7 +265,7 @@ div.main-content {
 											<td><div>${rmTypeSvc.getOneRm(rmOrderListVO.rm_type_no).rm_name}</div></td>
 											<td><div>${rmOrderListVO.rm_price}</div></td>
 											<td><div>${rmOrderListVO.rm_amount}</div></td>
-											<td><div>${rmOrderListVO.arrival_date}</div></td>
+											<td><div id="arrival${rmOrderListVO.rm_order_no}">${rmOrderListVO.arrival_date}</div></td>
 											<td><div>${rmOrderListVO.departure_date}</div></td>
 											<td><div></div></td>
 											<td><div></div></td>
@@ -314,6 +311,7 @@ div.main-content {
 	<%@ include file="/frontend/footer.file"%>
 	<%@ include file="/frontend/commonJS.file"%>
 	<!-- 放置基本JS檔案 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<%@ include file="/backend/commonJS.file"%>
 	<script>
 		$(document).ready(function() {
@@ -323,13 +321,64 @@ div.main-content {
 			});
 		});
 		
+		// 搜尋訂單編號錯誤處理
+		function search() {
+	     	 const orderno = document.querySelectorAll(".orderno");
+			 let getOneMem = document.getElementById("getOneMem");
+			 let rmorderno = document.getElementById("rmorderno").value;
+	     	 let flag = false;
+	     	 orderno.forEach(function(x) {
+	     		 if(x.innerText === rmorderno){
+	     			getOneMem.submit();
+	     			flag = true;
+	     		 }
+	     	 })
+	     	 if(flag){
+	     		 return ;
+	     	 }
+	     	ordernull();
+		};
+		
+		// 取消訂單錯誤處理
 		function cancel(rm_order_no) {
 		let memCancel = document.getElementById("memCancel"+rm_order_no);
-	            if (confirm('確定取消訂單?')) {
-	            	memCancel.submit();
-	            }
+	    let arrival = new Date(document.getElementById("arrival"+rm_order_no).innerHTML);
+	    let date = new Date();
+		let date7 = arrival-date;
+	            Swal.fire({
+	                title: "操作確認",
+	                text: "確定取消訂單?",
+	                showCancelButton: true
+	            }).then(function(result) {
+	               if (result.value) {
+	            	   if(date7 < 1000*60*60*24*7){
+	            		   alert7();
+	            	   }else{   
+	                    memCancel.submit();
+	            	   }
+	               }
+	               else {
+	            	   
+	               }
+	            });
 	        };
-		
+
+	        function alert7() {
+	            Swal.fire(
+	                "取消作業失敗",
+	                "您的住房日期小於七日，請來電洽詢",
+	                "error"
+	            );
+	        };
+	        
+	        function ordernull() {
+	            Swal.fire(
+	                "查詢作業失敗",
+	                "查無此訂單編號",
+	                "error"
+	            );
+	        };
+   
 	</script>
 </body>
 </html>

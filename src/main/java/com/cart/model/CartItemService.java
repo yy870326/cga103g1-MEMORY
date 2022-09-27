@@ -120,8 +120,8 @@ public class CartItemService {
 //				System.out.println("----------redisCount"+redisCount);
 			}
 		}
-		dao.updateSoldAmount(tktVO);
-		dao.updateOriAmount(tktVO);
+//		dao.updateSoldAmount(tktVO);
+//		dao.updateOriAmount(tktVO);
 	}
 	
 	// updateTktoriAmount

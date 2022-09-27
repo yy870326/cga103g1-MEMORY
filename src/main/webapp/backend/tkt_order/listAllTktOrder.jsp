@@ -147,7 +147,7 @@ td, div {
 								<td>NT$ ${tktOrder2VO.ttl_price}</td>
 								<td>${tktOrder2VO.orderdate}</td>
 								<td>
-									<a href="/CGA103G1/tkt_order/tktItemBack.do?tkt_order_no=${tktOrder2VO.tkt_order_no}" class="btn btn-primary">明細</a>
+									<a href="/CGA103G1/tkt_order/tktItemBack.do?tkt_order_no=${tktOrder2VO.tkt_order_no}" class="btn btn-warning">明細</a>
 								</td>
 							</tr>
 						</c:forEach>

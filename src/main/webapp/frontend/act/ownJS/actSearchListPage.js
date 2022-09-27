@@ -140,7 +140,7 @@ function actList(actVO){
             </div>
             <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 Nopadding">
               <div class="listroBoxmain">
-                <h3><a href="activity-detailed-view.html" alt="揪團活動詳情頁面">${actVO.act_title}</a></h3>
+                <h3><a href="/CGA103G1/redirectDetailPage?action=actInner&actNo=${actVO.act_no}" alt="揪團活動詳情頁面">${actVO.act_title}</a></h3>
               </div>
               <ul>
                 <li><span class="Ropen">${actVO.act_status}</span></li>

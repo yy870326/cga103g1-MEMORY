@@ -119,6 +119,7 @@ td, div {
                      </a>
 					
 				</div>
+				
 			</div>
 
 			<div class="col-12 table-responsive">
